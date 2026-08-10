@@ -1,0 +1,361 @@
+﻿@model IEnumerable<string>
+@using DataLayer.Enumarables;
+<div id="sidebar-menu">
+    <ul>
+        <li class="text-muted menu-title">@Resource.Lang.ControlPanel</li>
+
+        <li><a href="~/" class="waves-effect"><i class="fa fa-tachometer" aria-hidden="true"></i> <span> @Resource.Lang.FirstPage </span> </a></li>
+        @if (Model.Contains(Enum_Permission.Setting.ToString()))
+        {
+            <li class="has_sub">
+                <a class="waves-effect"><i class="fa fa-cogs" aria-hidden="true"></i> <span>@Resource.Lang.SystemSetting</span><span class="menu-arrow"></span> </a>
+                <ul class="list-unstyled">
+                    @if (Model.Contains(Enum_Permission.Agreement.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Contracts, "index", new { @area = "setting", @controller = "agreement" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Website.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.WebSite, "index", new { @area = "setting", @controller = "website" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Module.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Modules, "index", new { @area = "setting", @controller = "module" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Language.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Languages, "index", new { @area = "setting", @controller = "language" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Template.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Templates, "index", new { @area = "setting", @controller = "template" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Permission.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Permissions, "index", new { @area = "setting", @controller = "permission" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.EmailHost.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Email, "index", new { @area = "setting", @controller = "emailhost" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.SmsSetting.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.SMS, "index", new { @area = "setting", @controller = "smssetting" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.NotificationProject.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.NotificationServer, "index", new { @area = "setting", @controller = "notification" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.CacheSetting.ToString()))
+                    {
+                        <li>@Html.ActionLink("کش ها", "index", new { @area = "setting", @controller = "cachesetting" })</li>
+                    }
+                </ul>
+            </li>
+        }
+        @if (Model.Contains(Enum_Permission.User.ToString()))
+        {
+            <li class="has_sub">
+                <a class="waves-effect"><i class="fa fa-user" aria-hidden="true"></i> <span> @Resource.Lang.ManageUsers </span><span class="menu-arrow"></span> </a>
+                <ul class="list-unstyled">
+                    @if (Model.Contains(Enum_Permission.UserGroup.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.UserGroup, "index", new { @area = "user", @controller = "usergroup" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.SiteUser.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Users, "index", new { @area = "user", @controller = "siteuser" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.SiteUserShop.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ShopUsers, "index", new { @area = "user", @controller = "Shopsiteuser" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.SiteUserShop_ChangePassword.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ChangePassword, "SiteUserPassword", new { @area = "user", @controller = "Shopsiteuser" })</li>
+                    }
+                </ul>
+            </li>
+        }
+        @if (Model.Contains(Enum_Permission.Crm.ToString()))
+        {
+            <li class="has_sub">
+                <a class="waves-effect"><i class="fa fa-users" aria-hidden="true"></i> <span> @Resource.Lang.ManagementCustomers </span><span class="menu-arrow"></span> </a>
+                <ul class="list-unstyled">
+                    @if (Model.Contains(Enum_Permission.Account.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Customerlist, "index", new { @area = "crm", @controller = "account" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Account.ToString()))
+                    {
+                        <li>@Html.ActionLink("سامانه مربیان", "index", new { @area = "crm", @controller = "Clubs", typeId = DataLayer.Enumarables.Enum_Code.FIELD_CLUB_TEACHERS })</li>
+                        <li>@Html.ActionLink("سامانه ورزشکاران", "index", new { @area = "crm", @controller = "Clubs", typeId = DataLayer.Enumarables.Enum_Code.FIELD_CLUB_ATHENTES })</li>
+                        <li>@Html.ActionLink("سامانه باشگاه داران", "index", new { @area = "crm", @controller = "Clubs", typeId = DataLayer.Enumarables.Enum_Code.FIELD_CLUB_OWNER })</li>
+
+
+                    }
+                    @if (Model.Contains(Enum_Permission.AccountOrder.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.OrdersList, "index", new { @area = "crm", @controller = "accountorder", @statusId = "2068" })</li>
+
+                        <li>@Html.ActionLink("لیست پرداختی های آزمون مجدد", "index", new { @area = "crm", @controller = "PaymentExame" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Account.ToString()))
+                    {
+                        <li>@Html.ActionLink("مدیریت آزمون ها", "index", new { @area = "crm", @controller = "Exame" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Account.ToString()))
+                    {
+                        <li>@Html.ActionLink("مدیریت دروس آزمون ها", "index", new { @area = "crm", @controller = "ExameCourse" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Account.ToString()))
+                    {
+                        <li>@Html.ActionLink("مدیریت پیامک ها", "index", new { @area = "crm", @controller = "SmsSender" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.ProductComment.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.OpinionUsers, "index", new { @area = "crm", @controller = "productcomment" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.StoreComment.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.StoreComment, "index", new { @area = "crm", @controller = "storecomment" })</li>
+
+                    }
+                    @if (Model.Contains(Enum_Permission.NewsletterGroup.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Newsletters, "index", new { @area = "crm", @controller = "newsletter" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.TelegramBot.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.RobotTelegram, "index", new { @area = "crm", @controller = "telegrambot" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.NotificationProject.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.SendNotification, "index", new { @area = "crm", @controller = "pushnotification" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Clearing.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Clearing, "index", new { @area = "crm", @controller = "Clearing" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.OnineOrder.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.OnlineOrder, "index", new { @area = "crm", @controller = "OnlineOrder" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.WebsiteContactForm.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ContactUs, "index", new { @area = "content", @controller = "WebsiteContactForm" })</li>
+                    }
+
+                </ul>
+            </li>
+        }
+        @if (Model.Contains(Enum_Permission.Financial.ToString()))
+        {
+            <li class="has_sub">
+                <a class="waves-effect"><i class="fa fa-calculator" aria-hidden="true"></i> <span>@Resource.Lang.FinancialManagement </span><span class="menu-arrow"></span> </a>
+                <ul class="list-unstyled">
+                    @if (Model.Contains(Enum_Permission.Merchant.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.GateManagement, "index", new { @area = "financial", @controller = "merchant" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Currency.ToString()))
+                    {
+                        <li>@Html.ActionLink("واحد پول", "index", new { @area = "financial", @controller = "currency" })</li>
+                    }
+
+                </ul>
+            </li>
+        }
+        @if (Model.Contains(Enum_Permission.Shop.ToString()))
+        {
+            <li class="has_sub">
+                <a class="waves-effect"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <span> @Resource.Lang.ManageShop </span><span class="menu-arrow"></span> </a>
+                <ul class="list-unstyled">
+                    <li>@Html.ActionLink("سوالات دوره", "index", new { @area = "store", @controller = "QuestionRegister" })</li>
+
+                    @if (Model.Contains(Enum_Permission.Mall.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Passages, "index", new { @area = "store", @controller = "mall" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.SmartOfferQuestion.ToString()))
+                    {
+                        <li>@Html.ActionLink("مشاوره", "index", new { @area = "store", @controller = "SmartOfferQuestion" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Shop_Edit.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Shop, "index", new { @area = "store", @controller = "shop" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Package.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Shoppackage, "index", new { @area = "store", @controller = "package" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.DiscountGroup.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.DiscountManage + (Resource.Lang.Festival), "index", new { @area = "store", @controller = "discountgroup" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Discount.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Discount, "index", new { @area = "store", @controller = "discount" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Rebate.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ManageDiscountCode, "index", new { @area = "store", @controller = "rebate" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.ProductType.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.TypeProduct, "index", new { @area = "store", @controller = "producttype" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.ProductOption.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ProductOptions, "index", new { @area = "store", @controller = "productoption" })</li>
+                    }
+
+                    @if (Model.Contains(Enum_Permission.ProductBrand.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.BrandProduct, "index", new { @area = "store", @controller = "productbrand" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.ProductCategory.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ProductCategory, "index", new { @area = "store", @controller = "productcategory" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.ProductSubCategory.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.SubGroupProducts, "index", new { @area = "store", @controller = "productsubcategory" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Product.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Products, "index", new { @area = "store", @controller = "product" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Shop_Profile.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ShopProfile, "profile", new { @area = "store", @controller = "shop" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Shop_Follow.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ShopFollowers, "follow", new { @area = "store", @controller = "shop" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Shop_Profile.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.InterestedProduct, "index", new { @area = "store", @controller = "product" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Store.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Store, "index", new { @area = "store", @controller = "stores" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.StoreProduct.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.StoreProducts, "index", new { @area = "store", @controller = "storeproduct" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Shop_PriceUnit.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.UnitPrice, "Update", new { @area = "store", @controller = "Unit" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.CompetitiveFeature.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.CompetitiveFeature, "index", new { @area = "store", @controller = "CompetitiveFeature" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.SendSMS.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.SMS, "index", new { @area = "store", @controller = "Sms" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.ProductCategoryCompany.ToString()))
+                    {
+                        <li>@Html.ActionLink("productCategoryCompany", "index", new { @area = "store", @controller = "productCategoryCompany" })</li>
+
+                    }
+                    @if (Model.Contains(Enum_Permission.Delivery.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Shipping, "index", new { @area = "store", @controller = "Delivery" })</li>
+
+                    }
+                </ul>
+            </li>
+        }
+        @if (Model.Contains(Enum_Permission.Content.ToString()))
+        {
+            <li class="has_sub">
+                <a class="waves-effect"><i class="fa fa-file-code-o" aria-hidden="true"></i> <span> @Resource.Lang.ContextManagement </span><span class="menu-arrow"></span> </a>
+                <ul class="list-unstyled">
+                    @if (Model.Contains(Enum_Permission.Menu.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Menues, "index", new { @area = "content", @controller = "menu" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.State.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.State, "index", new { @area = "content", @controller = "state" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.City.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.City, "index", new { @area = "content", @controller = "city" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Category.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Category, "index", new { @area = "content", @controller = "category" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Post.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Posts, "index", new { @area = "content", @controller = "post" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Gallery.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Galleries, "index", new { @area = "content", @controller = "gallery" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Slider.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Slider, "index", new { @area = "content", @controller = "slider" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Banner.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Banners, "index", new { @area = "content", @controller = "banner" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.WebsiteForm.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Forms, "index", new { @area = "content", @controller = "websiteform" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.WebsiteDetail.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.WebsiteDetail, "Index", new { @area = "content", @controller = "WebsiteDetail" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.StaticPage.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.StaticPages, "index", new { @area = "content", @controller = "StaticPage" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.ContactUs.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ContactUs, "index", new { @area = "content", @controller = "ContactUs" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Survey.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Survey, "index", new { @area = "content", @controller = "Survey" })</li>
+
+                    }
+                </ul>
+            </li>
+        }
+        @if (Model.Contains(Enum_Permission.Report.ToString()))
+        {
+            <li class="has_sub">
+                <a class="waves-effect"><i class="fa fa-bar-chart" aria-hidden="true"></i> <span> @Resource.Lang.Reports </span><span class="menu-arrow"></span> </a>
+                <ul class="list-unstyled">
+                    @if (Model.Contains(Enum_Permission.Report_ShopReseller.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Resellerreports, "index", new { @area = "report", @controller = "shopreseller" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Report_Rebate.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ReportDiscountCode, "index", new { @area = "report", @controller = "rebate" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Report_SaleMonth.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.ReportMonthlySell, "index", new { @area = "report", @controller = "salemonth" })</li>
+                    }
+                    @if (Model.Contains(Enum_Permission.Report.ToString()))
+                    {
+                        <li>@Html.ActionLink(Resource.Lang.Reports, "index", new { @area = "report", @controller = "ReportDashboard" })</li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+    <div class="clearfix"></div>
+</div>

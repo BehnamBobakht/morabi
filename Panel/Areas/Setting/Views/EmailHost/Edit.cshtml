@@ -1,0 +1,106 @@
+﻿@using DataLayer.ViewModels;
+@model DataLayer.Entities.EmailHost
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="dropdown pull-right">
+                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("بازگشت", "Index")</li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.HiddenFor(model => model.UserCreatorId)
+                    @Html.HiddenFor(model => model.CreateDatetime)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, "عنوان", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Pop3, "آدرس Pop3", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Pop3, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Pop3, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Smtp, "آدرس Smtp", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Smtp, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Smtp, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Pop3Port, "پورت Pop3", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Pop3Port, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Pop3Port, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SmtpPort, "پورت Smtp", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SmtpPort, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.SmtpPort, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Ssl, "Ssl", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Ssl)
+                                @Html.ValidationMessageFor(model => model.Ssl, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AutoSync, "همسان سازی", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.AutoSync)
+                                @Html.ValidationMessageFor(model => model.AutoSync, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, "فعال/غیرفعال", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Active)
+                                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="ذخیره" class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

@@ -1,0 +1,22 @@
+﻿@model List<DataLayer.ViewModels.ProductTypeVm>
+
+
+
+
+
+
+
+@if (Model.Any())
+{
+    foreach (var item in Model.Where(s => s.Active && s.Deleted != true))
+    {
+        <li class="inner-category-item central">
+            <a href="@item.Href" class="inner-category-link">@item.Name </a>
+        </li>
+    }
+
+}
+
+
+
+

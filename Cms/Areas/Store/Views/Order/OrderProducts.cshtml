@@ -1,0 +1,103 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.AccountOrder
+
+@{
+    Layout = Resources.Default.STORE_LAYOUT;
+}
+
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="body">
+                    <h5><strong>@Resource.Lang.OrderNumber: </strong> @Model.ID</h5>
+                    <div class="row">
+                         @*<div class="col-md-6 col-sm-6">
+                            <address>
+                                <strong>@Model.AccountAddress.NameFamily</strong><br>
+                                @if (Model.AccountAddress.CityId.HasValue)
+                                {
+                                    @(Model.AccountAddress.City.Name + " - ")
+                                }
+                               
+                                @Model.AccountAddress.AddressValue<br>
+                                <abbr title="Phone"></abbr> @Model.AccountAddress.Mobile
+                            </address>
+                        </div>*@
+                        <div class="col-md-6 col-sm-6 text-right">
+                            <p class="mb-0"><strong>@Resource.Lang.Date: </strong>@Model.Datetime.ToPersianComplete()</p>
+                            <p class="mb-0"><strong>@Resource.Lang.OrderStatus: </strong> <span class="badge badge-success">@Model.Code.Name</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover c_table theme-color">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th >@Resource.Lang.Product</th>
+                                        <th></th>
+                                        <th>@Resource.Lang.Variety</th>
+                                        <th>@Resource.Lang.Count</th>
+                                        <th>@Resource.Lang.Price</th>
+                                        <th>@Resource.Lang.Discount</th>
+                                        <th>@Resource.Lang.PriceAfterDiscount</th>
+                                        <th>@Resource.Lang.TotalPrice</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{var counter = 1;}
+                                    @foreach (var item in Model.AccountOrderProduct)
+                                    {
+                                        var option = item.StoreProductQuantity.ProductQuantity.OptionItemId.HasValue ? item.StoreProductQuantity.ProductQuantity.ProductOptionItem.ProductOption.Name +" : "+ item.StoreProductQuantity.ProductQuantity.ProductOptionItem.Value : "-";
+                                        var size = item.StoreProductQuantity.ProductQuantity.SizeId.HasValue ? item.StoreProductQuantity.ProductQuantity.Size.Name : "-";
+                                        var color = item.StoreProductQuantity.ProductQuantity.ColorId.HasValue ? "#" + item.StoreProductQuantity.ProductQuantity.Color.HexValue : "";
+                                        var colorName = item.StoreProductQuantity.ProductQuantity.ColorId.HasValue ? item.StoreProductQuantity.ProductQuantity.Color.Name : "-";
+
+                                        <tr>
+                                            <td>@counter</td>
+                                            <td>@*<img src="@item.Product.Picture.Url" width="40" alt="Product img">*@</td>
+                                            <td>@item.Product.Name</td>
+                                            <td>@Resource.Lang.Size : @size | @Resource.Lang.Color : <span style="background: @color" class="badge ">@colorName</span> | @option </td>
+                                            <td>@item.Count.ToPersian()</td>
+                                            <td>@item.ProductPrice.GetCurrencyFormat().ToPersian() @Resource.Lang.Corrency</td>
+                                            @if (item.ProductDiscount != 0)
+                                            {
+                                                <td>@((item.ProductDiscount * 100) / item.ProductPrice) %</td>
+                                            }
+                                            else
+                                            {
+                                                <td>0 %</td>
+                                            }
+                                            <td>@((item.ProductPrice - item.ProductDiscount).GetCurrencyFormat().ToPersian()) @Resource.Lang.Corrency</td>
+                                            <td>@((item.Price).GetCurrencyFormat().ToPersian()) @Resource.Lang.Toman</td>
+                                        </tr>
+                                        counter++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="row">
+                        @*<div class="col-md-6">
+                            <h5>توجه</h5>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                        </div>*@
+                        <div class="col-md-6 text-right">
+                            <ul class="list-unstyled">
+                                <li><strong>@Resource.Lang.TotalPrice:</strong> @Model.AccountOrderProduct.Sum(s=>s.ProductPrice).GetCurrencyFormat().ToPersian() @Resource.Lang.Corrency</li>
+                                <li class="text-danger"><strong>@Resource.Lang.Discount:-</strong> @Model.AccountOrderProduct.Where(s=>s.ProductDiscount.HasValue).Sum(s => s.ProductDiscount.Value).GetCurrencyFormat().ToPersian() @Resource.Lang.Corrency</li>
+                            </ul>
+                            <h3 class="mb-0 text-success">@Model.Price.GetCurrencyFormat().ToPersian() @Resource.Lang.Corrency</h3>
+                            <a href="javascript:void(0);" class="btn btn-info"><i class="zmdi zmdi-print"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+﻿@using DataLayer.Base;
+@model IEnumerable<DataLayer.ViewModels.RebateVm>
+@{
+    ViewBag.Title = Resource.Lang.ListOfDiscountCode;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    string index = BaseRouteView.GetStringValue(Request, "index");
+    string pageSize = BaseRouteView.GetStringValue(Request, "pageSize");
+    string name = BaseRouteView.GetStringValue(Request, "name");
+    string codevalue = BaseRouteView.GetStringValue(Request, "codevalue");
+
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+            //TableManageButtons.init();
+    </script>
+}
+<form method="get" action="/store/rebate/index">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <span class="control-label font-bold">@Resource.Lang.Name</span>
+                    <div>
+                        <input type="text" class="form-control" name="name" placeholder=@Resource.Lang.Name value="@name" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <span class="control-label font-bold">@Resource.Lang.DiscountCode</span>
+                    <div>
+                        <input type="text" class="form-control" name="codevalue" placeholder=@Resource.Lang.DiscountCode value="@codevalue" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <span class="control-label font-bold">&nbsp;</span>
+                    <div>
+                        <input type="submit" class="btn btn-success col-xs-12" value=@Resource.Lang.Search>
+                    </div>
+                </div>
+                <div class="devider-15"></div>
+            </div>
+
+            <table class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">@Resource.Lang.Store</th>
+                        <th>@Resource.Lang.Title</th>
+                        <th>@Resource.Lang.DiscountCode</th>
+                        <th>@Resource.Lang.Amount</th>
+                        <th>@Resource.Lang.AtMostDiscountAmount</th>
+                        <th>@Resource.Lang.StartDate</th>
+                        <th>@Resource.Lang.EndDate</th>
+                        <th>@Resource.Lang.Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(item.StoreId!=null?item.Store.Name:Resource.Lang.All)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CodeValue)</td>
+                            <td>
+                                @if (item.IsPriceRebate)
+                                {
+                                    <string>@item.PriceValue.GetCurrencyFormat() @Resource.Lang.Toman</string>
+                                }
+                                else
+                                {
+                                    <string>@item.PercentValue @Resource.Lang.Percent</string>
+                                }
+                            </td>   
+                            <td>
+                                @if (item.MaxRebatePrice>0)
+                                {
+                                    <string>@item.MaxRebatePrice.GetCurrencyFormat() @Resource.Lang.Toman</string>
+                                }
+                                else
+                                {
+                                    <string>@Resource.Lang.Undefined</string>
+                                }
+                            </td>
+                            <td>@item.StartDatetime.ToPersian().ToPersian()</td>
+                            <td>@item.EndDatetime.ToPersian().ToPersian()</td>
+                            <td>
+                                @if (item.Active == true)
+                                {
+                                    <span>@Resource.Lang.Active</span>
+                                }
+                                else
+                                {
+                                    <span>@Resource.Lang.Deactive</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.ID }) |
+                                @Html.ActionLink(item.Active ? Resource.Lang.Deactive : Resource.Lang.Active, "active", new { id = item.ID })
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                <ul class="pagination">
+                    @if (StartIndex > 1)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                                        codevalue = codevalue,
+                                        name = name,
+                                        index = 1
+                                    })">@Resource.Lang.FirstPage</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                    <a href="#">@Resource.Lang.FirstPage</a>
+                                </li>
+                            }
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="paginate_button @active" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                                        codevalue = codevalue,
+                                        name = name,
+                                        index = i
+                                    })">@(i.ToPersian())</a>
+                        </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new
+                                    {
+                                        codevalue = codevalue,
+                                        name = name,
+                                        index = EndIndex
+                                    })">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                    <a href="#">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- end col -->
+</form>

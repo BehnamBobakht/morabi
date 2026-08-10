@@ -1,0 +1,29 @@
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@model List<State>
+
+
+@foreach (var item in Model)
+{
+    item.Name = item.Name.ToPersianChar();
+    if (item.ID == 0)
+    {
+        var classState = "list-highcharts-name-" + item.Name.Replace(" ", "-");
+        <li city-name="@item.Name">
+            <button class="state-item  @classState" onClick="window.open( '/club/search?typeId=@item.Latitude&stateId','_blank' );">@item.Name</button>
+
+        </li>
+    }
+    else
+    {
+        var classState = "list-highcharts-name-" + item.Name.Replace(" ", "-");
+        <li city-name="@item.Name">
+            <button class="state-item  @classState" onClick="window.open( '/club/search?typeId=@item.Latitude&stateId=@item.ID','_blank' );">@item.Name</button>
+
+        </li>
+    }
+
+}
+
+
+

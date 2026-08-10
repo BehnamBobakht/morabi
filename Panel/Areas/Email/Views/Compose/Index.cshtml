@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Compose";
+    Layout = "~/Areas/Email/Views/Shared/Layout.cshtml";
+}
+
+<div id="message">
+    <div class="header">
+        <h1 class="page-title">
+            <a href="@Request.UrlReferrer.AbsolutePath" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+            ارسال ایمیل جدید
+        </h1>
+    </div>
+    <div id="message-nano-wrapper" class="nano">
+        <div class="nano-content">
+            <ul class="message-container list-unstyled">
+                <li class="sent">
+                    <div class="details">
+                        <div class="left">
+                            شما
+                            <div class="arrow"></div>
+
+                        </div>
+                        <div class="right ltr-direction"></div>
+                    </div>
+                    <div class="message">
+                        <p>
+
+                        </p>
+                    </div>
+                    <div class="tool-box">
+                        <a href="#" class="circle-icon small glyphicon glyphicon-share-alt"></a>
+                        <a href="#" class="circle-icon small red-hover glyphicon glyphicon-remove"></a>
+                        <a href="#" class="circle-icon small red-hover glyphicon glyphicon-flag"></a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>

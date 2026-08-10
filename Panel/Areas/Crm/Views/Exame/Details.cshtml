@@ -1,0 +1,96 @@
+﻿@model DataLayer.Entities.Exame
+@using DataLayer.Base; 
+@{
+    ViewBag.Title =Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            @foreach (var course in Model.ExameQuestion.Where(s => s.Active != false).GroupBy(s => s.ExameCourse))
+            {
+                <div>
+                    <h3>@course.Key.Name</h3>
+                    <hr />
+                    @{
+                        int i = 1;
+                    }
+                    <div class="row ">
+                        @foreach (var item in course.ToList())
+                        {
+                            <div class="question col-md-12 m-2">
+
+                                <div question-value="@item.ID">
+                                    <input type="hidden" question-name="QuestionId" id="QuestionId@(item.ID)" value="@item.ID" />
+
+
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            @if (item.Formula != null && item.Formula != "")
+                                            {
+                                                <p><strong>@i- </strong>@Html.Raw(item.Formula)</p>
+
+                                            }
+                                            else
+                                            {
+                                                <p><strong>@i- </strong>@item.Text</p>
+
+                                            }
+                                        </div>
+                                        <div class="col-sm-4">
+                                            @if (item.Picture != null)
+                                            {
+                                                <img width="150" height="150" src="@item.Picture.GetUrl()" alt="@item.Text">
+                                            }
+                                        </div>
+
+
+                                    </div>
+                                    <div class="d-flex questionbox">
+                                        @{ int ih = 1;}
+                                        @foreach (var answer in item.ExameAnswerItem.Where(s => s.Active != false))
+                                        {
+                                        <div class="Answer4qoustion">
+
+                                            <label for="answer@(answer.ID)" class="d-flex">
+                                                <input question-name="Answer" type="radio" id="answer@(answer.ID)" name="answerbtn@(item.ID)" value="@answer.ID">
+                                                @ih )  @if (answer.Formula != "" && answer.Formula != null)
+                                                {
+                                                    @Html.Raw(answer.Formula)
+                                                }
+                                                else
+                                                {
+                                                    @answer.Text
+                                                }
+                                            </label>
+                                            @if (answer.Picture != null)
+                                            {
+                                                <img style="max-width:200px;position:unset" src="@answer.Picture.GetUrl()" alt="@answer.Text">
+                                            }
+                                            @{ih++;
+                                            }
+                                            <br>
+                                        </div>
+                                        }
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            i++;
+                        }
+
+                    </div>
+
+                </div>
+
+            }
+
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

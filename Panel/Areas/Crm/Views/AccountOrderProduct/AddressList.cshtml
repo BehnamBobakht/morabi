@@ -1,0 +1,60 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model List<ViewAccountOrder>
+
+@{
+    ViewBag.Title = Resource.Lang.LettrerList;
+    Layout = "~/Views/Shared/PrintLayout.cshtml";
+    int sumCount = 0;
+}
+
+<div class="col-sm-12">
+    <div class="text-left font-bold">
+        @Resource.Lang.Date_TimePrint: @DateTime.Now.ToPersianWithTime().ToPersian()
+    </div>
+    <div class="devider-15"></div>
+    <table class="table-middle table-print table table-striped table-bordered has-first dataTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Resource.Lang.OrderNumber</th>
+                <th>@Resource.Lang.Receiver</th>
+                <th>@Resource.Lang.Address</th>
+                <th>@Resource.Lang.HowToSend</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var order = Model[i];
+                sumCount = sumCount + 1;
+                if (order.AccountAddress != null)
+                {
+                    <tr>
+                        <td>@((i + 1).ToString().ToPersian())</td>
+                        <td>@order.UniqueId</td>
+                        <td>
+                            @if (order.AccountAddress != null)
+                            {
+                                <span>@order.AccountAddress.NameFamily </span>
+                            }
+                        </td>
+                        <td>
+                            @if (order.AccountAddress.State != null && order.AccountAddress.City != null)
+                            {
+                                <text>@order.AccountAddress.State.Name @order.AccountAddress.City.Name </text>
+                            }
+                            @order.AccountAddress.AddressValue
+
+                        </td>
+                        <td>@(order.SendType?.Name)</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+

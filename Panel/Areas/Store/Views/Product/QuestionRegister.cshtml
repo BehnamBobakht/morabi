@@ -1,0 +1,54 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model IEnumerable<DataLayer.Entities.QuestionRegister>
+@{
+    ViewBag.Title = "لیست درخواست گواهی";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    List<QuestionRegisterProduct> list = ViewBag.QuestionRegisterProduct;
+    string backUrl = Url.Action("index", new { @id = ViewBag.Id });
+
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            initializeQuestionRegisterProduct();
+        });
+    </script>
+}
+
+<div class="col-sm-12">
+    <div class="card-box">
+        <div class="row">
+            <div class="col-sm-12" codeprocess-ajax-form="/store/product/QuestionRegister" codeprocess-back-form="@backUrl">
+
+                <div class="row ">
+                    <input id="ProductId" type="hidden" value="@ViewBag.ID" />
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-12">
+                            <input type="checkbox" field-id="@item.ID" class="checkBoxQ" id="ch@(item.ID)" @(list.Any(s => s.FieldId == item.ID) ? "checked" : "") />
+                            <span>@item.Name</span>
+                        </div>
+
+                    }
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12">
+
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-11">
+                                <input id="btnSubmit" type="submit" value=@Resource.Lang.Edit class="btn btn-success" />
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end col -->
+    </div>
+</div>

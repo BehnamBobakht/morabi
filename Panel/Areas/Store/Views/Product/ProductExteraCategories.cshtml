@@ -1,0 +1,68 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model ProductExteraVm
+@{
+    ViewBag.Title = Resource.Lang.Categories;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.ProductId)
+    @Html.HiddenFor(model => model.ProductName)
+
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <h3>@Model.ProductName</h3>
+                <div class="row">
+                    @for (int i = 0; i < Model.Categories.Count(); i++)
+                    {
+                        var type = Model.Categories[i];
+
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input type="hidden" name="Categories[@i].ID" value="@type.ID">
+                            <input type="checkbox" class="form-check-input" name="Categories[@i].Select" value="true" id="type_@type.ID" @(type.Select ? "checked" : "")>
+                            <label class="form-check-label" for="type_@type.ID">@type.Name</label>
+                        </div>
+                        @for (int j = 0; j < type.ProductCategory.Count(); j++)
+                        {
+                            var cat = type.ProductCategory[j];
+                            <div class="form-check " style="margin-right:1rem">
+                                <input type="hidden" name="Categories[@i].ProductCategory[@j].ID" value="@cat.ID">
+                                <input type="checkbox" class="form-check-input" name="Categories[@i].ProductCategory[@j].Select" value="true" id="cat_@cat.ID" @(cat.Select ? "checked" : "")>
+                                <label class="form-check-label" for="cat_@cat.ID">@cat.Name</label>
+                            </div>
+                            for (int k = 0; k < cat.ProductSubCategory.Count(); k++)
+                            {
+                                var sub = cat.ProductSubCategory[k];
+                                <div class="form-check" style="margin-right:2rem">
+                                    <input type="hidden" name="Categories[@i].ProductCategory[@j].ProductSubCategory[@k].ID" value="@sub.ID">
+                                    <input type="checkbox" class="form-check-input" value="true" name="Categories[@i].ProductCategory[@j].ProductSubCategory[@k].Select" id="sub_@sub.ID" @(sub.Select ? "checked" : "")>
+                                    <label class="form-check-label" for="sub_@sub.ID">@sub.Name</label>
+                                </div>
+                            }
+                        }  
+
+                    </div>
+                    }
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12">
+               
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-11">
+                        <input id="btnSubmit" type="submit" value=@Resource.Lang.Edit class="btn btn-success" />
+                        <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

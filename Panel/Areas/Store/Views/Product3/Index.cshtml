@@ -1,0 +1,211 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model IEnumerable<DataLayer.ViewModels.ViewProduct>
+@{
+    ViewBag.Title = Resource.Lang.ListOfProductsRegisteredOnSite;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var setting = BaseWebsite.WebsiteSetting;
+    string index = BaseRouteView.GetStringValue(Request, "index");
+    string brandId = BaseRouteView.GetStringValue(Request, "brandId");
+    string shopId = BaseRouteView.GetStringValue(Request, "shopId");
+    string typeId = BaseRouteView.GetStringValue(Request, "typeId");
+    string categoryId = BaseRouteView.GetStringValue(Request, "categoryId");
+    string subcategoryId = BaseRouteView.GetStringValue(Request, "subCategoryId");
+    string pageSize = BaseRouteView.GetStringValue(Request, "pageSize");
+    string name = BaseRouteView.GetStringValue(Request, "name");
+    string active = BaseRouteView.GetStringValue(Request, "active");
+
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+@section Script {
+    <script type="text/javascript">
+        initializeNewProductScript();
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <input type="hidden" id="isTypeSelected" value="False" />
+    <input type="hidden" id="LastProductTypeId" value="@typeId" />
+    <input type="hidden" id="LastProductCategoryId" value="@categoryId" />
+    <input type="hidden" id="LastProductSubCateogryId" value="@subcategoryId" />
+    <input type="hidden" id="LastBrandId" value="@brandId" />
+    <div>
+        <div class="col-sm-12">
+            <div class="card-box table-responsive">
+                <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+                <a onclick="document.forms[1].submit(); return false;" class="icon circle-icon glyphicon glyphicon-search" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Search></a>
+                <div class="clear"></div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Shop</span>
+                        <div>
+                            <select id="ShopId" name="shopId" class="form-control">
+                                <option value="0">@Resource.Lang.All</option>
+                            </select>
+                            @*@Html.DropDownList("ShopId", null, htmlAttributes: new { @class = "form-control", @name = "shopId" })*@
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.TypeProduct</span>
+                        <div>
+                            <select id="ProductTypeId" name="typeid" class="form-control">
+                                <option value="0">@Resource.Lang.Choice</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Category</span>
+                        <div>
+                            <select id="ProductCategoryId" name="categoryId" class="form-control">
+                                <option value="0">@Resource.Lang.Choice</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Subordinates</span>
+                        <div>
+                            <select id="ProductSubCategoryId" name="subcategoryId" class="form-control">
+                                <option value="0">@Resource.Lang.Choice</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Name</span>
+                        <div>
+                            <input type="text" class="form-control" name="name" placeholder=@Resource.Lang.Name value="@name" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Status</span>
+                        <div>
+                            <select id="active" name="active" class="form-control">
+                                <option  @(active=="true"?"selected":"") value="true">@Resource.Lang.Active</option>
+                                <option  @(active=="false"?"selected":"") value="false">@Resource.Lang.Deactive</option>
+                                <option @(active!="false" && active!="true"? "selected":"") value="all">@Resource.Lang.SelectAll</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="devider-15"></div>
+                </div>
+                <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                    <thead>
+                        <tr>
+                            <th class="first">#</th>
+                            <th>@Resource.Lang.ID</th>
+                            <th>@Resource.Lang.ProductName</th>
+                            <th>@Resource.Lang.Category</th>
+                            <th>@Resource.Lang.Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.RowId)</td>
+                                <td>
+                                    @if (string.IsNullOrEmpty(item.CodeValue) == true)
+                                    {
+                                        if (string.IsNullOrEmpty(item.SyncId) || item.SyncId.IsGuid())
+                                        {
+                                            <span>@item.Id</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.SyncId</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>@item.CodeValue</span>
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductType.Name) -
+                                    @Html.DisplayFor(modelItem => item.ProductCategory.Name) -
+                                    @Html.DisplayFor(modelItem => item.ProductSubCategory.Name)
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Status.Name)</td>
+                                <td>
+                                    @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.Id }) |
+                                    @Html.ActionLink(Resource.Lang.Pictures, "picture", new { id = item.Id }) |
+                                    @Html.ActionLink(Resource.Lang.Stock, "AddToStore", new { productid = item.Id }) |
+                                    @Html.ActionLink(Resource.Lang.Detail, "details", new { id = item.Id }) |
+                                    @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                    <ul class="pagination">
+                        @if (StartIndex > 1)
+                        {
+                            <li class="paginate_button previous" aria-controls="datatable-buttons">
+                                <a href="@Url.Action("index", new {
+                                        shopId = shopId,
+                                        typeId = typeId,
+                                        categoryId = categoryId,
+                                        subcategoryId = subcategoryId,
+                                        brandId = brandId,
+                                        name = name,
+                                        index = 1
+                                    })">@Resource.Lang.FirstPage</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                    <a href="#">@Resource.Lang.FirstPage</a>
+                                </li>
+                            }
+                        @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                        {
+                            var activeIndex = CurrentIndex == i ? "active" : "";
+                            <li class="paginate_button @activeIndex" aria-controls="datatable-buttons">
+                                <a href="@Url.Action("index", new {
+                                        shopId = shopId,
+                                        typeId = typeId,
+                                        categoryId = categoryId,
+                                        subcategoryId = subcategoryId,
+                                        brandId = brandId,
+                                        name = name,
+                                        index = i
+                                    })">@(i.ToPersian())</a>
+                                </li>
+                            }
+                        @if (CurrentIndex < EndIndex)
+                        {
+                            <li class="paginate_button previous" aria-controls="datatable-buttons">
+                                <a href="@Url.Action("index", new
+                                    {
+                                        shopId = shopId,
+                                        typeId = typeId,
+                                        categoryId = categoryId,
+                                        subcategoryId = subcategoryId,
+                                        brandId = brandId,
+                                        name = name,
+                                        index = EndIndex
+                                    })">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                    <a href="#">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+    </div>
+}

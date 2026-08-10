@@ -1,0 +1,41 @@
+﻿@using DataLayer.Enumarables
+@model CartHeader
+
+<div class="nav nav_tabs  basket-tabs">
+    <div class="row w-100 d-flex align-items-center">
+        <div class="col-3 p-0 ">
+            <div class=" bas_Tab">
+                <div class="tab_span @(Model==CartHeader.Index?"activeT":"")  div-cart">
+                    <div class="sendinfo_icon basketIcon"></div>
+                    <strong>@Resource.Lang.Basket</strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 p-0">
+            <div class=" bas_Tab">
+                <div class="tab_span @(Model==CartHeader.Address?"activeT":"")  div-address">
+                    <div class="payment_icon basketIcon"></div>
+                    <strong>@Resource.Lang.Receiver</strong>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-3 p-0">
+            <div class=" bas_Tab ">
+                <div class="tab_span @(Model==CartHeader.Confirm?"activeT":"") div-confirm">
+                    <div class="confirm_icon  basketIcon"></div>
+                    <strong>@Resource.Lang.Invoice</strong>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 p-0">
+            <div class=" bas_Tab ">
+                <div class="tab_span @(Model==CartHeader.CallBack?"activeT":"") ">
+                    <div class="bill_icon basketIcon"></div>
+                    <strong>@Resource.Lang.Receipt</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

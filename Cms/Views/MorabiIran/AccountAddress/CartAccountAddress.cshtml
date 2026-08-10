@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DataLayer.ViewModels.AccountAddressVm>
+@foreach (var item in Model)
+{
+    <div class="user_address_item">
+        <a class="btn  pro-plus-number " data-ajax="true" data-ajax-loading="#ww" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#address-cart" href="/Cart/AddressInner?addressId=@item.ID">
+
+            <div class="address_info">
+                <div class="address_line">
+                    <div class="pick_address p-2">
+                        <label class="lable" for="address1">
+                            <input @(item.ID == ViewBag.addressId ? "checked" : "") disabled type="radio" id="">
+                            <span class="selectRadio"></span>
+                        </label>
+                    </div>
+                    <div class="address_name"><span>@item.NameFamily</span></div>
+                    <div class="address_phone"><span>@item.Mobile</span> </div>
+                </div>
+                <div class="address_line">
+                    <span>@item.State.Name - @item.City.Name - @item.AddressValue</span>
+                </div>
+            </div>
+        </a>
+        <div class="address_btns">
+            <button onclick="showModalAddressForDelete(@item.ID)" type="button" class="btn address_delete m-2">
+                <i class="bi bi-trash"></i>
+            </button>
+            @*<button type="button" class="btn address_edit m-2"
+                    data-bs-toggle="modal" data-bs-target=".editaddress_modal">
+                <i class="bi bi-pen"></i>
+            </button>*@
+
+        </div>
+    </div>
+
+}
+

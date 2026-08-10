@@ -1,0 +1,82 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@model IEnumerable<DataLayer.ViewModels.ViewDiscount>
+@{
+    ViewBag.Title = Resource.Lang.DistcountsList +" "+ ViewBag.DiscountGroup.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("index", new { area = "store", controller = "discountgroup" })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <a href="@Url.Action("create", new { area = "store", controller = "discount", id = ViewBag.DiscountGroup.ID })" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.DiscountType  </th>
+                        <th>@Resource.Lang.Name</th>
+                        <th>@Resource.Lang.MainPrice</th>
+                        <th>@Resource.Lang.DiscountRate</th>
+                        <th>@Resource.Lang.PriceAfterDiscount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.RowId)</td>
+                            <td>@item.Group.Name (@item.Group.GetDiscountString())</td>
+                            <td>@item.GetDiscountName()</td>
+                            <td>
+                                @if (item.Type.Label == Enum_Code.DISCOUNT_TYPE_PRODUCT.ToString())
+                                {
+                                    <span>@item.Product.Price.GetCurrencyFormat().ToPersian()</span>
+                                    @*<span>@Resource.Lang.Toman</span>*@
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </td>
+                            @if (item.GetDiscountValue() == null)
+                            {
+                                <td>-</td>
+                            }
+                            else
+                            {
+                                <td>@item.GetDiscountValue().GetCurrencyFormat().ToPersian() + @Resource.Lang.Toman </td>
+                            }
+                            <td>
+                                @if (item.Type.Label == Enum_Code.DISCOUNT_TYPE_PRODUCT.ToString())
+                                {
+                                    <span>@((item.Product.Price - item.GetDiscountValue()).GetCurrencyFormat().ToPersian())</span>
+                                    @*<span>@Resource.Lang.Toman</span>*@
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.Id }) |
+                                @Html.ActionLink(Resource.Lang.Detail, "details", new { id = item.Id }) |
+                                @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

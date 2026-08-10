@@ -1,0 +1,105 @@
+﻿@using DataLayer.ViewModels;
+@model DataLayer.Entities.SiteUser
+
+@{
+    ViewBag.Title =Resource.Lang.RegisterNewUser ;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Header {
+    <link rel="stylesheet" type="text/css" href="/Assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Script {
+    <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="/assets/plugins/fileuploads/js/dropify.min.js"></script>
+}
+
+@using (Ajax.BeginForm("create", "siteuser", new AjaxOptions {UpdateTargetId="",HttpMethod="POST",InsertionMode=InsertionMode.Replace }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(p => p.CreateDatetime)
+    @Html.HiddenFor(p => p.UserCreatorId)
+    @Html.HiddenFor(p => p.UniqueIdentifier)
+    if (Request.QueryString["shop"] != null)
+    {
+        <input type="hidden" name="isShopUser" value="@Request.QueryString["shop"]" />
+    }
+    else if (ViewBag.isShopUser != null)
+    {
+        <input type="hidden" name="isShopUser" value="@ViewBag.isShopUser.ToString()" />
+    }
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6 no-padding">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FullName, Resource.Lang.Name_Family, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, Resource.Lang.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Mobile, Resource.Lang.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, Resource.Lang.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Password, Resource.Lang.Password, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group display-none">
+                            @Html.LabelFor(model => model.Address, Resource.Lang.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Active, Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Active)
+                                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="row">
+                                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 no-padding-left display-none">
+                        <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="240" />
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="@Resource.Lang.Register" class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

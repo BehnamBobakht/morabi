@@ -1,0 +1,131 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model IEnumerable<DataLayer.Entities.Package>
+@{
+    ViewBag.Title = "انتخاب بسته فروشندگان";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    Shop shop = ViewBag.Shop;
+    List<Package> list = Model.ToList();
+}
+
+@section Header {
+    <style>
+        th, td {
+            text-align: center !important; 
+        }
+    </style>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-sm-12">
+        <div class="card-box">
+            <table class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th style="width: 300px !important;">ویژگی ها</th>
+                        @foreach (Package item in list)
+                        {
+                            <th>@item.Name</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>تعداد کالا</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>@item.ProductCount</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><b>مدت اشتراک</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>@item.DayCount</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><b>تعداد محصول</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>@item.ProductCount</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><b>تعداد نوع محصول</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>@item.ProductTypeCount</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><b>حجم فضای اختصاصی</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>
+                                @if(item.DiskSpace == 1000)
+                                {
+                                    <span>1GB</span>
+                                }
+                                else
+                                {
+                                    <span>@(item.DiskSpace.ToString() + "MB")</span>
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><b>قالب اختصاصی</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>
+                                @if (item.HasTemplate)
+                                {
+                                    <span>دارد</span>
+                                }
+                                else
+                                {
+                                    <span>ندارد</span>
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td><b>دامنه اختصاصی</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>
+                                @if (item.HasDomain)
+                                {
+                                    <span>دارد</span>
+                                }
+                                else
+                                {
+                                    <span>ندارد</span>
+                                }
+                            </td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td><b>قیمت</b></td>
+                        @foreach (Package item in list)
+                        {
+                            <td>
+                                @item.Price.GetCurrencyFormat() تومان <br /><br />
+                                <a class="btn btn-success" 
+                                    href="@Url.Action("startpayment", new {
+                                        @shopId = shop.ID,
+                                        packageId = item.ID
+                                    })">خرید و فعال سازی</a>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

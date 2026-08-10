@@ -1,0 +1,34 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@model ResultVm<CartVm>
+
+<div class="row align-items-center m-0 ">
+    <div class="col-md-12">
+        <strong>@Resource.Lang.RebateCode: </strong>
+        <hr />
+    </div>
+    <div class="col-md-5  p-1">
+        <div class="Newsletter">
+            @Html.TextBox("Model.Model.RebateCode", Model.Model.RebateCode,htmlAttributes:new {@class= "form-control", @placeholder = Resource.Lang.RebateCode })
+        </div>
+    </div>
+    <div class="col-md-2 col-3 p-1">
+        <button class="btn green_btn primary_btn w-100 m-0 rebatecode-btn"><span>@Resource.Lang.Submit</span></button>
+    </div>
+    @if (Model.Status == ResultStatus.Success)
+    {
+        <p class="alert alert-success">
+            <span>@Model.Message</span>
+        </p>
+    }
+    else if (Model.Status == ResultStatus.Error)
+    {
+        <p class="alert alert-danger">
+            <span>@Model.Message</span>
+        </p>
+    }
+
+
+
+
+</div>

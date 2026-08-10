@@ -1,0 +1,53 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostVm
+<div class="col-lg-6">
+    <div class="bottom-blog-item linkitem">
+        <a href="@Model.Href"></a>
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <div class="blog-img bottom-blog-img">
+                    <img src="@Model.Picture.Url" alt="@Model.Name">
+                </div>
+            </div>
+            <div class="col-md-8 p-0">
+                <div class="blog-caption bottom-blog-caption">
+                    <div class="blog-text">
+                        <span>@Model.Name</span>
+                        <p>@Model.Summary.GetSubString(50, true)</p>                     
+                        <a href="@Model.Href">@Resource.Lang.More ...</a>
+                    </div>
+                    <div class="blog-details align justify-content-between">
+                        <div class="blog-info align">
+                            <div class="blog-info-item align">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <mask id="mask0_105_1495" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                        <rect x="0.708984" width="22.7848" height="24" fill="white" />
+                                    </mask>
+                                    <g mask="url(#mask0_105_1495)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.25285 12V14H7.35411V12H9.25285ZM9.25285 16V18H7.35411V16H9.25285ZM11.1516 12V14H13.0503V12H11.1516ZM13.0503 16V18H11.1516V16H13.0503ZM14.9491 12V14H16.8478V12H14.9491ZM16.8478 16V18H14.9491V16H16.8478ZM18.7465 22H5.45538C4.40822 22 3.55664 21.103 3.55664 20V6C3.55664 4.897 4.40822 4 5.45538 4H7.35411V2H9.25285V4H14.9491V2H16.8478V4H18.7465C19.7937 4 20.6453 4.897 20.6453 6V20C20.6453 21.103 19.7937 22 18.7465 22V22ZM18.7467 8L18.7465 6H5.45538V8H18.7467V8ZM18.7468 10L18.7475 20H5.45538V10H18.7468V10Z" fill="#868686" />
+                                    </g>
+                                </svg>
+                                <span>@Model.CreateDateTime.ToPersianComplete()</span>
+                            </div>
+                            <div class="blog-info-item align">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <mask id="mask0_105_2264" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                        <rect x="0.532227" width="22.7848" height="24" fill="white" />
+                                    </mask>
+                                    <g mask="url(#mask0_105_2264)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.07623 12C9.07623 13.642 10.3655 15 11.9243 15C13.4822 15 14.7724 13.642 14.7724 12C14.7724 10.359 13.4822 9 11.9243 9C10.3655 9 9.07623 10.359 9.07623 12ZM2.53076 11.684L2.43066 12L2.52981 12.316C2.55059 12.383 4.71674 19 11.9243 19C19.1319 19 21.2981 12.383 21.3179 12.316L21.418 12L21.3189 11.684C21.2981 11.617 19.1319 5 11.9243 5C4.71674 5 2.55059 11.617 2.53076 11.684ZM4.44007 12C4.91598 10.842 6.87439 7 11.9243 7C16.9771 7 18.9346 10.846 19.4086 12C18.9327 13.158 16.9743 17 11.9243 17C6.87156 17 4.91409 13.154 4.44007 12Z" fill="#868686" />
+                                    </g>
+                                </svg>
+                                <span>@Model.VisitCount نفر</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

@@ -1,0 +1,252 @@
+﻿@using DataLayer.Entities;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels
+
+@model Clubs
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    TempData["Title"] = "";
+    if (Model.Code.Label == "FIELD_CLUB_TEACHERS")
+    {
+        TempData["Title"] = "سامانه مربیان";
+
+    }
+    else if (Model.Code.Label == "FIELD_CLUB_OWNER")
+    {
+        TempData["Title"] = "باشگاه داران";
+    }
+    else
+    {
+        TempData["Title"] = " سامانه ورزشکاران";
+    }
+
+    var breadcrumb = new List<BreadcrumbVm>();
+    breadcrumb.Add(new BreadcrumbVm() { Title = TempData["Title"].ToString(), Url = "/club/search?typeId=" + Model.Code.Label });
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Model.Name, Url = "" });
+
+
+}
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="product-details page-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 p-0">
+                    <div class="product-images">
+                        <div dir="ltr" class="swiper slider4">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="product-image-item linkitem">
+                                        @if (Model.Picture7 != null && Model.ShowImage2==true)
+                                        {
+                                            <a data-fancybox="gallery" href="@Model.Picture.GetUrl()">
+                                                <img src="@Model.Picture7.GetUrl()" />
+                                            </a>
+                                        }
+
+                                    </div>
+                                </div>
+                                @*@if (Model.Pictue2Id != null)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="product-image-item linkitem">
+                                            <a data-fancybox="gallery" href="@Model.Picture7.GetUrl()"></a>
+                                            <img src="@Model.Picture7.GetUrl()" alt="">
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.PictureId1 != null)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="product-image-item linkitem">
+                                            <a data-fancybox="gallery" href="@Model.Picture1.GetUrl()"></a>
+                                            <img src="@Model.Picture1.GetUrl()" alt="">
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.PictureId2 != null)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="product-image-item linkitem">
+                                            <a data-fancybox="gallery" href="@Model.Picture2.GetUrl()"></a>
+                                            <img src="@Model.Picture2.GetUrl()" alt="">
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.PictureId3 != null)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="product-image-item linkitem">
+                                            <a data-fancybox="gallery" href="@Model.Picture3.GetUrl()"></a>
+                                            <img src="@Model.Picture3.GetUrl()" alt="">
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.PictureId4 != null)
+                                {
+                                    <div class="swiper-slide">
+                                        <div class="product-image-item linkitem">
+                                            <a data-fancybox="gallery" href="@Model.Picture4.GetUrl()"></a>
+                                            <img src="@Model.Picture4.GetUrl()" alt="">
+                                        </div>
+                                    </div>
+                                }*@
+
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-sm-7 p-4">
+                    <div class="product-details-box1 d-flex flex-column h-100">
+
+                        <div class="product-name">
+                            @if (Model.ShowName == true)
+                            {
+                                <h1>@Model.FullName</h1>
+                            }
+
+                        </div>
+
+                        <div class="product-text">
+                            @if (Model.Bio != "" && Model.ShowBio==true)
+                            {
+                                <p class="text-green">@Model.Bio</p>
+                            }
+                        </div>
+                        <div class="product-deadlines">
+
+                            @if (Model.StateId != null && Model.CityId != null && Model.ShowState == true)
+                            {
+                                <div class="product-deadline-item">
+                                    <span>استان / شهر</span>
+                                    <span>@Model.State.Name / @Model.City.Name</span>
+                                </div>
+                            }
+                            @if (Model.Mobile != null && Model.Mobile != null && Model.ShowMobile == true)
+                            {
+                                <div class="product-deadline-item">
+                                    <span>شماره موبایل</span>
+                                    <span>@Model.Mobile</span>
+                                </div>
+                            }
+                            @if (Model.Instagram != null && Model.Instagram != "" && Model.ShowInstagram==true)
+                            {
+                                <div class="product-deadline-item">
+                                    <span>اینستاگرام</span>
+                                    <span>@Model.Instagram</span>
+                                </div>
+                            }
+                            @*@if (Model.Field != null && Model.Field != null)
+        {
+        <div class="product-deadline-item">
+            <span>رشته فعالیت</span>
+            <span>@Model.Field</span>
+        </div>
+        }*@
+                            @if (Model.Coaching1 != null && Model.Coaching1 != null && Model.ShowCertificate2 == true)
+                            {
+                                <div class="product-deadline-item">
+                                    <span>درجه مدرک مربیگری</span>
+                                    <span>@Model.Coaching1</span>
+                                </div>}
+                            @*@if (Model.Coaching2 != null && Model.Coaching2 != null)
+                                    {
+                                    <div class="product-deadline-item">
+                                        <label for="phone">مدرک ملی/بین المللی</label>
+                                        <span>@Model.Coaching2</span>
+                                    </div>
+        }
+        @if (Model.Whatapp != null && Model.Whatapp != null)
+                                    {
+                                    <div class="product-deadline-item">
+                                        <span>واتس اپ</span>
+                                        <span>@Model.Whatapp</span>
+                                    </div>
+                                    }
+                                    @if (Model.Mobile != null && Model.Mobile != null)
+                                    {
+                                    <div class="product-deadline-item">
+                                        <span>شماره موبایل</span>
+                                        <span>@Model.Mobile</span>
+                                    </div>
+                                    }
+                                    @if (Model.Telegram != null && Model.Telegram != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span>تلگرام</span>
+                                            <span>@Model.Telegram</span>
+                                        </div>
+                                    }
+                                    @if (Model.Instagram != null && Model.Instagram != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span>اینستاگرام</span>
+                                            <span>@Model.Instagram</span>
+                                        </div>
+                                    }
+                                    @if (Model.Address != null && Model.Address != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span for="phone">آدرس محل فعالیت</span>
+                                            <span>@Model.Address</span>
+                                        </div>
+                                    }
+                                    @if (Model.Address2 != null && Model.Address2 != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span for="phone">آدرس باشگاه</span>
+                                            <span>@Model.Address2</span>
+                                        </div>
+                                    }
+                                    @if (Model.TimeWork != null && Model.TimeWork != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span for="phone">ساعت کاری باشگاه</span>
+                                            <span>@Model.TimeWork</span>
+                                        </div>
+                                    }
+                                    @if (Model.Competitions != null && Model.Competitions != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span for="phone">افتخارات و مسابقات</span>
+                                            <span>@Model.Competitions</span>
+                                        </div>
+                                    }
+                                    @if (Model.Medals != null && Model.Medals != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span for="phone">مدال ها</span>
+                                            <span>@Model.Medals</span>
+                                        </div>
+                                    }
+                                    @if (Model.Resumeh != null && Model.Resumeh != "")
+                                    {
+                                        <div class="product-deadline-item">
+                                            <span for="phone">رزومه</span>
+                                            <span>@Model.Resumeh</span>
+                                        </div>
+                                    }*@
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+
+
+@section endScripts {
+
+
+}

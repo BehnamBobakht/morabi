@@ -1,0 +1,47 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model IEnumerable<DataLayer.Entities.SmartOfferAnswer>
+@{
+    SmartOfferQuestion smartOfferQuestion = ViewBag.SmartOfferQuestion;
+    ViewBag.Title = Resource.Lang.Answer + "'" + smartOfferQuestion.Question + "'";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("index", "SmartOfferQuestion")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <a href="@Url.Action("create", new { id = smartOfferQuestion.ID })" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        
+                        <th>@Resource.Lang.ID</th>
+                        <th>@Resource.Lang.Answer</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                           
+                            <td>@Html.DisplayFor(modelItem => item.Answer)</td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.ID }) |
+                                @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

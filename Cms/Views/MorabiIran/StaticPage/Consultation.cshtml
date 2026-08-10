@@ -1,0 +1,70 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    TempData["Title"] = Resource.Lang.ConsultationRequest;
+    string url = Url.Action("index", "staticpage", new { id = "consultation" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.ConsultationRequest, Url = url });
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/StaticPage.cshtml")
+}
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="consultation-formbox position-relative">
+        @Html.Action("Search", "Banner", new { bacategory = "ConsultationBanner", baviewName = "_ImageBanner", baSize = 1 })
+        <div class="container">
+            <div class="col-lg-6 me-auto">
+                <div class="consultation-form-inner w-100 central flex-column">
+                    <div class="section-title position-relative align ms-auto">
+                        <h1>@Resource.Lang.ConsultationRequest</h1>
+                    </div>
+                    @Html.Action("Search", "Banner", new { bacategory = "ConsultationBanner", baviewName = "_ConsultationBanner", baSize = 1 })
+
+
+                    <div class="consultation-form align contactus-form">
+                        <input class="form-control" type="number" data-bind="value:viewModel.ContactUs.Phone" required
+                               placeholder="@Resource.Lang.EnterMobileNo *">
+                        <button class="btn primary-btn" codeprocess-action="contactUs-add">
+                            درخواست مشاوره
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="consultation-comments page-padding">
+        <div class="container">
+            <div class="section-title position-relative align">
+                <h1>برخی از نظرات کاربران</h1>
+            </div>
+            <div class="row">
+                @Html.Action("Search", "Banner", new { bacategory = "CommentBanner", baviewName = "_CommentBanner", baSize = 100 })
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+
+
+@section endScripts{
+    <script>
+    $(function() {
+    viewModel.ContactUs.Title("@Resource.Lang.ConsultationRequest");
+    })
+    </script>
+
+}
+
+
+
+
+

@@ -1,0 +1,24 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    <div class="col-lg-4 p-0">
+        <div class="home-calculator-img central">
+            @*<img src="@Model.FirstOrDefault().Picture.GetUrl()" alt="">*@
+			<img  class="imgf" src="/assets/@BaseWebsite.WebsiteLabel/images/BMI.png" alt="">
+			<img class="d-none img1" src="/assets/@BaseWebsite.WebsiteLabel/images/BMI1.png" alt="">
+			<img class="d-none img2" src="/assets/@BaseWebsite.WebsiteLabel/images/BMI2.png" alt="">
+			<img class="d-none img3" src="/assets/@BaseWebsite.WebsiteLabel/images/BMI3.png" alt="">
+			<img class="d-none img4" src="/assets/@BaseWebsite.WebsiteLabel/images/BMI4.png" alt="">
+			<img class="d-none img5" src="/assets/@BaseWebsite.WebsiteLabel/images/BMI5.png" alt="">
+        </div>
+    </div>
+    <div class="col-lg-1 p-0"></div>
+    <div class="col-lg-3 p-0 my-3 my-lg-0">
+        <div class="home-calculator-text h-100 justify flex-column">
+            <h1>@Model.FirstOrDefault().GetName()</h1>
+            <p>@Model.FirstOrDefault().GetSummery()</p>
+        </div>
+    </div>
+  
+}

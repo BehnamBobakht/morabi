@@ -1,0 +1,36 @@
+@model List<DataLayer.Entities.ProductType>
+    @using DataLayer.Base;
+@if (Model.Any())
+{
+    
+            foreach (var item in Model.Where(s => s.Active && s.Deleted != true))
+            {
+                <div class="item central">
+                    <div class=" linkitem">
+                        <a href="@item.GetUrlNew()"></a>
+                        <div class="home-category1-item central flex-column linkitem">
+                            <a href="@item.GetUrlNew()"></a>
+                            <picture>
+                                <source media="(min-width:576px)" srcset="@Html.Action("thumburl","picture",new {picurl=item.Picture.GetUrl(),width=576 })">
+                                <img src="@Html.Action("thumburl","picture",new {picurl=item.Picture.GetUrl(),width=576 })" alt="@item.Name">
+                            </picture>
+                            <div class="categort-caption">
+                                <span>@item.Name</span>
+                                <p>@item.Description.GetSubString(100,true)</p>
+                            </div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.90997 19.92L15.43 13.4C16.2 12.63 16.2 11.37 15.43 10.6L8.90997 4.07996" stroke="#FD7C11" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                        </div>
+                    </div>
+                </div>
+                
+            }
+       
+
+}
+
+
+
+

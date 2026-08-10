@@ -1,0 +1,133 @@
+﻿@using DataLayer.Enumarables;
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model IEnumerable<DataLayer.Entities.AccountOrderProduct>
+@{
+    TempData["Title"] = Resource.Lang.Orders;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+
+    string typeId = BaseRouteView.GetStringValue(Request, "typeId").ToString();
+
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+
+}
+
+<div class="row m-0">
+    <div class="col-lg-12 p-1">
+        <div class="tab-content ordersContent" id="v-pills-tabContent">
+            <div class=" table-responsive">
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th scope="col">@Resource.Lang.Code</th>
+
+                            <th scope="col"></th>
+                            <th scope="col"> @Resource.Lang.Name</th>
+                            <th scope="col">تاریخ شروع آزمون</th>
+                            <th scope="col">ساعت شروع آزمون</th>
+                            <th scope="col">مدت زمان آزمون</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() > 0)
+                        {
+
+                            foreach (var orderProduct in Model)
+                            {
+
+                                Product product = orderProduct.Product;
+                                var exame = product.Exame.FirstOrDefault();
+                                <tr>
+                                    <th scope="row">@orderProduct.ID</th>
+
+                                    @if (exame != null)
+                                    {
+                                        if (exame.IsOpen == true && exame.ExameAccountAnswer.FirstOrDefault(s => s.AccountId == CurrentAccount.Id && s.Finish == true) == null)
+                                        {
+                                            <td class="table-btn"><a class="btn primary-btn" href="@Url.Action("index","Exame",new { id=exame.ID},Request.Url.Scheme)">شرکت در آزمون</a></td>
+                                        }
+                                        else if (exame.ExameAccountAnswer.FirstOrDefault(s => s.AccountId == CurrentAccount.Id && s.Finish == null && s.Open == true) != null)
+                                        {
+                                            <td class="table-btn">
+                                                <a class="btn primary-btn" href="@Url.Action("Report","Account",new { exameId=exame.ID},Request.Url.Scheme)">کارنامه</a>
+                                                @*<a class="btn primary-btn" href="@Url.Action("index","Exame",new { id=exame.ID},Request.Url.Scheme)">شرکت در آزمون</a>*@
+                                            </td>
+
+                                        }
+                                        else if (exame.IsOpen == true && exame.ExameAccountAnswer.FirstOrDefault(s => s.AccountId == CurrentAccount.Id && s.Finish == true) != null)
+                                        {
+                                            <td>پاسخ شما ثبت شده است منتظر اعلام نتیجه بمانید</td>
+                                        }
+                                        else if (exame.ShowUser == true && exame.ExameAccountAnswer.FirstOrDefault(s => s.AccountId == CurrentAccount.Id) != null)
+                                        {
+                                            <td class="table-btn align h-100">
+                                                <a class="btn primary-btn" href="@Url.Action("Report","Account",new { exameId=exame.ID},Request.Url.Scheme)">کارنامه</a>
+
+                                            </td>
+                                        }
+                                        <td>@product.GetName()</td>
+                                        <td>
+                                            @exame.StartDate.ToPersian()
+                                        </td>
+                                        if (exame.StartTime != null)
+                                        {
+                                            <td style="direction: ltr;">
+                                                <span> @exame.StartTime.Value.Hours : @exame.StartTime.Value.Minutes</span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>نامشخص</td>
+                                        }
+                                        <td>
+                                            <span> @exame.Time دقیقه</span>
+                                        </td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                        </td>
+
+                                    }
+
+
+                                </tr>
+                            }
+
+
+
+
+
+
+                        }
+                        @Html.Action("SearchCourse", "Product", new { aoStatus = DataLayer.Enumarables.Enum_Code.ORDER_STATUS_SUCCESS, typeId = 2, accountId = CurrentAccount.Id, aoViewName = "ListCourseForExameOldAccount" })
+                    </tbody>
+                </table>
+            </div>
+            @*else
+                {
+                    <div class="tab-pane active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <div class="noResult">
+
+                            <p class="alert"> @Resource.Notify.NotRegistered</p>
+
+                        </div>
+                    </div>
+                }*@
+
+        </div>
+    </div>
+</div>
+
+@section endScripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeOrderSearchScripts();;
+        });
+    </script>
+}

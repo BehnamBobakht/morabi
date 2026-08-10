@@ -1,0 +1,42 @@
+﻿@using DataLayer.Enumarables
+@using DataLayer.Base
+@using DataLayer.ViewModels;
+@{
+    TempData["Title"] = Resource.Lang.Cart;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Cart, Url = "" });
+}
+
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+<section class="basket section-padding">
+    <div class="container">
+        <div class="basket_box">
+            <div class="row w-100 m-0">
+                <div class="basket_tab w-100">
+                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Cart/_CartHeader.cshtml", CartHeader.Index)
+                    <div class="tab_content w-100 ">
+                        @using (Ajax.BeginForm("IndexInner", "Cart", new AjaxOptions()
+                        {
+                            OnBegin = "lodingOn",
+                            OnComplete = "lodingOff",
+                            UpdateTargetId = "cart-index",
+                            LoadingElementId = "ww",
+                        }, htmlAttributes: new { @class = "myform" }))
+                        {
+                            <div class="content-div" id="cart-index">
+                                @Html.Action("IndexInner", "Cart")
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

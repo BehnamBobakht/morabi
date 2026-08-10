@@ -1,0 +1,176 @@
+﻿@using DataLayer.ViewModels
+@model PayingVm2
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Default/Shared/PaymentLayout.cshtml";
+
+}
+@if (Model.Status == DataLayer.Enumarables.ResultStatus.Success)
+{
+    <section class="payment_callback success_payment">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="callback_box">
+                        <div class="callback_img"><img src="~/Assets/Default/Payment/images/Purchase_Success.png" alt=""></div>
+
+                        @if (Model.Payment.IsInPlace)
+                        {
+
+                            <div class="callback_message">
+                                <strong>@Resource.Notify.OperationSuccessful</strong>
+                                <p>@Resource.Notify.YourOrderHasBeenSuccessfullyRegistered</p>
+                            </div>
+                            <ul class="callback_info">
+                                <li>
+                                    <strong>@Resource.Notify.PaymentType</strong>
+                                    <strong>@Resource.Notify.PaymentOnTheSpot</strong>
+                                </li>
+                                <li class="amount_paid">
+                                    <strong>@Resource.Notify.PayableAmount</strong>
+                                    <strong>@Model.Payment.Amount.ToString("n0") @Resource.Lang.Toman</strong>
+                                </li>
+
+                            </ul>
+                        }
+                        else
+                        {
+
+
+                            if (Model.Payment.Type == 2)
+                            {
+                                <div class="callback_message">
+                                    <strong>@Resource.Notify.OperationSuccessful</strong>
+                                    <p>
+                                        درخواست گواهی فیزیکی شما ثبت گردید.
+                                        جهت ارسال مدرک از طریق پست از طریق لینک زیر اقدام فرمایید.
+                                    </p>
+                                    <a href="https://morabiiran.com/pr/1034/post">ارسال گواهی</a>
+
+                                </div>
+                                <ul class="callback_info">
+                                    <li>
+                                        <strong>@Resource.Notify.PaymentType</strong>
+                                        <strong>@Resource.Lang.Online</strong>
+                                    </li>
+                                    <li>
+                                        <strong>@Resource.Lang.Bank</strong>
+                                        <strong>@Model.Payment.Merchant.BankName</strong>
+                                    </li>
+
+                                    <li class="">
+                                        <strong>@Resource.Notify.AmountPaid</strong>
+                                        <strong>@Model.Payment.Amount.ToString("n0") @Resource.Lang.Toman</strong>
+                                    </li>
+                                    <li class="">
+                                        <strong>@Resource.Notify.BankTrackingNumber</strong>
+                                        <strong> @Model.Payment.RefNumber</strong>
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <div class="callback_message">
+                                    <strong>@Resource.Notify.OperationSuccessful</strong>
+                                    <p>گواهینامه الکترونیکی دوره شما ثبت گردید.جهت مشاهده گواهینامه خود وارد پنل کاربری شخصی خود شده بخش دوره ها و برروی دریافت گواهینامه کلیلک کنید</p>
+									
+<a href="https://morabiiran.com/account/searchaccountorder2?aoViewName=OrderCourse&statusId2=2068-2073&typeId=2">دریافت گواهی</a>
+
+                                </div>
+                                <ul class="callback_info">
+                                    <li>
+                                        <strong>@Resource.Notify.PaymentType</strong>
+                                        <strong>@Resource.Lang.Online</strong>
+                                    </li>
+                                    <li>
+                                        <strong>@Resource.Lang.Bank</strong>
+                                        <strong>@Model.Payment.Merchant.BankName</strong>
+                                    </li>
+
+                                    <li class="">
+                                        <strong>@Resource.Notify.AmountPaid</strong>
+                                        <strong>@Model.Payment.Amount.ToString("n0") @Resource.Lang.Toman</strong>
+                                    </li>
+                                    <li class="">
+                                        <strong>@Resource.Notify.BankTrackingNumber</strong>
+                                        <strong> @Model.Payment.RefNumber</strong>
+                                    </li>
+                                </ul>
+                            }
+
+                        }
+
+
+                        <div class="callback_btns">
+
+                            <a href="/" class="btn secondary_btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
+                                </svg>@Resource.Lang.BackToHomePage
+                            </a>
+
+
+                            <a href="@Url.Action("Profile","Account")" class="btn secondary_btn">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                                </svg>@Resource.Lang.OrderInfo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <section class="payment_callback faild_payment">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="callback_box">
+                        <div class="callback_img"><img src="~/Assets/Default/Payment/images/payment-faild.jpg" alt=""></div>
+                        <div class="callback_message">
+                            <strong>@Resource.Notify.FailedOperation</strong>
+                            <p>@Resource.Notify.PaymentWasProblematic</p>
+                        </div>
+                        <ul class="callback_info">
+                            @if (Model.Payment != null)
+                            {
+                                if (Model.Payment.Merchant != null)
+                                {
+                                    <li class="">
+                                        <strong>@Resource.Lang.Bank</strong>
+                                        <strong>@Model.Payment.Merchant.BankName</strong>
+                                    </li>
+                                }
+                                if (!string.IsNullOrEmpty(Model.Payment.RefNumber))
+                                {
+                                    <li class="">
+                                        <strong>@Resource.Notify.BankTrackingNumber</strong>
+                                        <strong> @Model.Payment.RefNumber</strong>
+                                    </li>
+                                }
+                                <li class="">
+                                    <strong> @Resource.Notify.IfTheAmountIsDeductedFromTheBankAccountFollowUpWithTheRelevantBank</strong>
+                                </li>
+
+                            }
+
+                        </ul>
+                        <div class="callback_btns">
+                            <a href="/" class="btn secondary_btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
+                                </svg>@Resource.Lang.BackToHomePage
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

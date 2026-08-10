@@ -1,0 +1,89 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model ProductShowVm
+
+<div class="product-item linkitem">
+    <a href="@Model.ProductUrl"></a>
+
+    <div class="product-img central">
+        <img src="@Html.Action("thumburl","picture",new {picurl=Model.Picture.Url,width=320 })" alt="@Model.Name">
+    </div>
+    <div class="product-caption">
+        <span class="productName">@Model.Name</span>
+        <span class="productDescription">@Model.Summary.GetSubString(70, true) </span>
+        <div class="product-details d-flex justify-content-between flex-wrap">
+
+            @if (Model.Code.Label != DataLayer.Enumarables.Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString())
+            {
+                <div class="product-unavailable-ticket">
+                    <span>@Resource.Lang.NoAvailable</span>
+                </div>
+            }
+            else if (Model.IsOffer == true)
+            {
+                <div class="special-sale">
+                    <span>فروش ویژه</span>
+                </div>
+            }
+            @if (Model.DiscountPercent > 0)
+            {
+                <div class="Discount">
+                    <span>@Model.DiscountPercent% تخفیف</span>
+                </div>
+            }
+
+            @if (Model.Code.Label == DataLayer.Enumarables.Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString())
+            {
+                <div class="product-price-box w-100">
+                    <div class="product-price ">
+                        @if (Model.DiscountValue > 0)
+                        {
+                            <span class="old"><del>@Model.InexpensiveItemBasePrice.GetCurrencyFormat()</del> <span>@Resource.Lang.Toman</span></span>
+
+                        }
+                        <span class="new"><span>@Model.InexpensiveItemPrice.GetCurrencyFormat()</span><span>@Resource.Lang.Toman</span></span>
+                    </div>
+
+                </div>
+            }
+            else if (Model.EuroPrice > 0)
+            {
+                <div class="product-price-box w-100">
+                    <div class="product-price ">
+                        <span class="new"><span>@Model.EuroPrice </span><span>یورو (€)</span></span>
+
+                    </div>
+
+                </div>
+            }
+            @if (Model.Code.Label != DataLayer.Enumarables.Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString())
+            {
+                <div class="product-price-box w-100">
+
+                    <div class="product-unavailable central">
+                        <span>ناموجود</span>
+                    </div>
+                </div>
+            }
+            <div class="add-to-basket">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.5 7.67001V6.70001C7.5 4.45001 9.31 2.24001 11.56 2.03001C14.24 1.77001 16.5 3.88001 16.5 6.51001V7.89001" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8.99995 22H14.9999C19.0199 22 19.7399 20.39 19.9499 18.43L20.6999 12.43C20.9699 9.99 20.2699 8 15.9999 8H7.99995C3.72995 8 3.02995 9.99 3.29995 12.43L4.04995 18.43C4.25995 20.39 4.97995 22 8.99995 22Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M15.4955 12H15.5045" stroke="#292D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8.49451 12H8.50349" stroke="#292D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="ms-4 mt-1">مشاهده مشخصات و خرید</span>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+

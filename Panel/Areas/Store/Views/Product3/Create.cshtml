@@ -1,0 +1,657 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model DataLayer.Entities.Product
+@using DataLayer.Enumarables;
+@{
+    ViewBag.Title = Resource.Lang.RegisterNewProduct;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var setting = BaseWebsite.WebsiteSetting;
+    string PanelUrl = BaseWebsite.PanelUrl;
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
+    @*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6gthJH1gedfNoHYxdVszi7us5_8mpTo&libraries=places&callback=initAutocomplete&language=fa"></script>
+        <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+        <link href="~/Assets/plugins/location-picker-master/src/location-picker.css" rel="stylesheet" />*@
+}
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    @*<script src="~/Assets/plugins/location-picker-master/src/location-picker.js"></script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeNewProductScript();
+        });
+        /**/</script>
+}
+<div codeprocess-back-form="/store/product" codeprocess-ajax-form="/store/product/create">
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.UpdateDatetime)
+    @Html.HiddenFor(model => model.VisitCount)
+    @Html.HiddenFor(model => model.SyncId)
+    @Html.HiddenFor(model => model.SyncDatetime)
+    @Html.HiddenFor(model => model.CreateDateTime)
+    <input type="hidden" id="PanelUrl" value="@PanelUrl" />
+    <input type="hidden" id="LastProductTypeId" value="@Model.ProductTypeId" />
+    <input type="hidden" id="LastProductCategoryId" value="@Model.ProductCategoryId" />
+    <input type="hidden" id="LastProductSubCateogryId" value="@Model.ProductSubCategoryId" />
+    <input type="hidden" id="LastPictureId" value="@Model.PictureId" />
+    <input type="hidden" id="LastBrandId" value="@Model.BrandId" />
+    <input type="hidden" id="LastCompanyId" value="@Model.CompanyId" />
+    <input type="hidden" id="LastProductOptionId" value="@Model.ProductOptionId" />
+    <input type="hidden" id="LastUnitId" value="@Model.UnitId" />
+    <input type="hidden" id="LastDocId" value="@Model.DocId" />
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <legend>@Resource.Lang.ProductInfo</legend>
+                            <div class="row">
+                                @if (setting.HasShop)
+                                {
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ShopId, Resource.Lang.Shop, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("ShopId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.ShopId)
+                                }
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Name, Resource.Lang.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @autofocus = "autofocus" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Summary, Resource.Lang.Summery, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Summary, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Description, Resource.Lang.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                @if (setting.HasCodeValue)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="CodeValue" class="control-label col-md-4">@Resource.Lang.ProductCode</label>
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.CodeValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @autofocus = "autofocus" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasService)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IsService, "خدمات", htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @*@Html.EditorFor(model => model.IsService, new { htmlAttributes = new { } })*@
+                                                <div class="form-check form-check-inline">
+                                                    <input checked class="form-check-input" type="radio" name="IsService" id="IsServiceF" value="false">
+                                                    <label class="form-check-label" for="IsServiceF">خیر</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="IsService" id="IsServiceT" value="true">
+                                                    <label class="form-check-label" for="IsServiceT">بلی</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasCopyProduct)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IsCopy, "ایجاد یک رونوشت از محصول", htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @*@Html.EditorFor(model => model.IsService, new { htmlAttributes = new { } })*@
+                                                <div class="form-check form-check-inline">
+                                                    <input checked class="form-check-input" type="radio" name="IsCopy" id="IsCopyF" value="false">
+                                                    <label class="form-check-label" for="IsCopyF">خیر</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="IsCopy" id="IsCopyT" value="true">
+                                                    <label class="form-check-label" for="IsCopyT">بلی</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasUnit)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="UnitId" class="control-label col-md-4">@Resource.Lang.Unit</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("UnitId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasProductType)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ProductTypeId" class="control-label col-md-4">@Resource.Lang.TypeProduct</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("ProductTypeId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasProductCategory)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ProductCategoryId" class="control-label col-md-4">@Resource.Lang.Category</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("ProductCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasProductSubCategory)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ProductSubCategoryId, Resource.Lang.Subordinates, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("ProductSubCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasBrand)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.BrandId, Resource.Lang.Brand, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("BrandId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasCompany)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.CompanyId, Resource.Lang.Company, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("CompanyId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasStatus)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.StatusId, Resource.Lang.Status, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("StatusId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.StatusId)
+                                }
+                                @if (setting.HasMinOrder)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MinOrder, Resource.Lang.AtleastOrder, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.MinOrder, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.MinOrder)
+                                }
+                                @if (setting.HasShowNumber)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ShowNumber, Resource.Lang.PriorityShow, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.ShowNumber, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.ShowNumber)
+                                }
+                                @if (setting.HasLastPrice)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.LastPrice, Resource.Lang.PriorPrice, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.LastPrice, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.LastPrice)
+                                }
+                                @if (setting.HasPrice)
+                                {
+                                    if (!setting.HasUnitPrice)
+                                    {
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Price, Resource.Lang.Price, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                <div class="col-md-8">
+                                                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.Price)
+                                }
+
+                                @if (setting.HasQuantity)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Quantity, Resource.Lang.Stock, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (setting.HasDocument)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DocId, Resource.Lang.AttachmentFile, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                <input id="DocId" name="DocId" type="file" codeprocess="document" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasShowHomePage)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ShowHomePage, Resource.Lang.FirstPage, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                    @Html.CheckBoxFor(model => model.ShowHomePage)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (setting.HasUnitPrice)
+                                {
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Weight, Resource.Lang.Weight, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                                @if (setting.HasCustomFields)
+                                {
+                                    <h5 class="col-sm-12"> فیلد های اختصاصی</h5>
+                                    <div id="div-custom-part"></div>
+                                }
+                                @if (setting.HasColor)
+                                {
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">@Resource.Lang.ChooseColor</label>
+                                            <div class="col-md-10">
+                                                <div id="div-color-part">
+                                                    <div id="color-container"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasSize)
+                                {
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">@Resource.Lang.ChooseSize</label>
+                                            <div class="col-md-10">
+                                                <div id="div-size-part">
+                                                    <div id="size-container"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+
+                                @if (setting.HasProductOption)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ProductOptionId" class="control-label col-md-4">@Resource.Lang.ProductOption</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("ProductOptionId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (setting.ProductMaxOrderCount)
+                                {
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MaxOrderCount, Resource.Lang.MaxOrderCount, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.MaxOrderCount, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.MaxOrderCount)
+                                }
+                                @if (setting.HasActive)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Active, Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                <select id="Active" class="form-control">
+                                                    <option value="True">@Resource.Lang.Active</option>
+                                                    <option value="False">@Resource.Lang.Deactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.Active)
+                                }
+                                @if (setting.HasSeo)
+                                {
+                                    <h5 class="col-sm-12"> فیلد های مربوط به سئو</h5>
+                                    <div class="col-sm-12  mt-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.H1, "H1", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.H1, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Title, Resource.Lang.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MetaTagDescription, "MetaTagDescription", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.MetaTagDescription, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Url, @Resource.Lang.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" form-group">
+                                        @Html.LabelFor(model => model.Canonical, "Canonical جایگزین", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Canonical, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", autofocus = "on" } })
+                                            @Html.ValidationMessageFor(model => model.Canonical, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class=" form-group">
+                                        @Html.LabelFor(model => model.NoIndex, "NoIndex در Robots", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.NoIndex)
+                                            @Html.ValidationMessageFor(model => model.NoIndex, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class=" form-group">
+                                        @Html.LabelFor(model => model.NoFollow, "NoFollow در Robots", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.NoFollow)
+                                            @Html.ValidationMessageFor(model => model.NoFollow, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Img, " عکس ", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Img, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </fieldset>
+
+                        @foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+                        {
+                            if (lang.Language.Label != Enum_Lang.FA.ToString())
+                            {
+                                <fieldset lang-value="@lang.Language.Label.ToLower()">
+                                    <input type="hidden" lang-name="LanguageId" value="@lang.LanguageId" />
+                                    <legend>@lang.Language.Label</legend>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">@Resource.Lang.Name (@lang.Language.Name)</label>
+                                        <div class="col-md-10">
+                                            <input type="text" lang-name="Name" id="Name@(lang.Language.Label)" class="form-control" autocomplete="off" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">@Resource.Lang.Summery </label>
+                                        <div class="col-md-10">
+                                            <input type="text" lang-name="Summary" id="Summary@(lang.Language.Label)" class="form-control" autocomplete="off" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">@Resource.Lang.Description </label>
+                                        <div class="col-md-10">
+                                            <input type="text" lang-name="Description" id="Description@(lang.Language.Label)" class="form-control" autocomplete="off" codeprocess="editor" />
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                            <label class="control-label col-md-2">Body</label>
+                                            <div class="col-md-10">
+                                                <input type="text" lang-name="Body" id="Body@(lang.Language.Label)" codeprocess="editor" class="form-control" autocomplete="off" autofocus="autofocus" />
+                                            </div>
+                                        </div>*@
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">@Resource.Lang.Address</label>
+                                        <div class="col-md-10">
+                                            <input type="text" lang-name="Url" id="Url@(lang.Language.Label)" class="form-control" autocomplete="off" autofocus="autofocus" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">@Resource.Lang.Title</label>
+                                        <div class="col-md-10">
+                                            <input type="text" lang-name="Title" id="Title@(lang.Language.Label)" class="form-control" autocomplete="off" autofocus="autofocus" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">H1</label>
+                                        <div class="col-md-10">
+                                            <input type="text" lang-name="H1" id="H@(lang.Language.Label)" class="form-control" autocomplete="off" autofocus="autofocus" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            }
+                        }
+                        <div class="devider-15"></div>
+                    </div>
+                    <div class="col-sm-6 no-padding-left">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <fieldset>
+                                    <legend>@Resource.Lang.Image</legend>
+                                    <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="220" />
+                                    <div class="devider-10"></div>
+                                    <div class="devider-10"></div>
+                                    <div class="related-picture-container">
+                                        <div class="row">
+                                            <div class="col-pic-20 add-item">
+                                                <label class="other-picture-item" for="uplOtherPicture">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="display-none">
+                                            <input id="uplOtherPicture" type="file" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        @if (setting.HasService)
+                        {
+                            <div class="row map-div">
+
+                                <div class="col-sm-12  mt-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Latitude, Resource.Lang.Latitude, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Longitude, Resource.Lang.Longitude, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 ">
+                                    <div class="form-group">
+                                        @Html.Label("نقشه", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Partial("~/Views/Partial/LocationPicker.cshtml")
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-sm-6 no-padding-left mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <legend for="CodeValue" class="control-label">@Resource.Lang.Review</legend>
+                            <div class="col-pic-20 add-item text-left addItemParent">
+                                <label class="other-review-item" onclick="addReview();">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="w-100 reviewBox">
+                            @*<div class="rowReview d-flex mt-3">
+                                    <input type="hidden" class="pictureReviewId" value="123" />
+                                    <textarea class="reviewContent w-100 m-2" placeholder="@Resource.Lang.Description" rows="3"></textarea>
+                                    <div class="imgBox d-none">
+                                        <img class="reviewImg m-2" />
+                                        <label class="delete-review-picture m-2">
+                                            @Resource.Lang.RemovePicture
+                                        </label>
+                                    </div>
+                                    <div class="review-picture-item">
+                                        <input class="upoladFile m-2" type="file" />
+                                    </div>
+                                    <label class="remove-review-item m-2">
+                                        <i class="fa fa-close" aria-hidden="true"></i>
+                                    </label>
+                                </div>*@
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <div>
+                                <div class="col-md-10 no-padding-right col-md-offset-2">
+                                    <div class="row error-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-11">
+                                <input id="btnSubmit" type="button" value=@Resource.Lang.Register class="btn btn-success" />
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

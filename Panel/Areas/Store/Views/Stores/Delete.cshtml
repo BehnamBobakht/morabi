@@ -1,0 +1,123 @@
+﻿@using DataLayer.ViewModels;
+@model DataLayer.Entities.Store
+
+@{
+    ViewBag.Title = @Resource.Lang.RemoveShop ;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+
+        <div class="col-sm-12">
+            @if (ViewBag.Alert != null)
+            {
+                <p class="alert alert-danger">@ViewBag.Alert</p>
+
+            }
+            <div class="form-horizontal">
+                <h3>@Resource.Lang.SureDelete </h3>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Resource.Lang.ShopName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.InterestRates
+
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BenefitPercent)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.Address
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.AddressValue)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.FirstCallNumber
+
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone1)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.SecondCallNumber
+
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone2)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.Fax
+
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Fax)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.WebSite
+
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Website)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.Description
+
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.Confirmation
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Approve)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.Active
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Active)
+                    </dd>
+
+                </dl>
+
+            </div>
+            <div class="form-group">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value=@Resource.Lang.Delete class="btn btn-danger" />
+                        <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

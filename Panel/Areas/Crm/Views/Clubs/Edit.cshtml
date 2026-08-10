@@ -1,0 +1,258 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.Clubs
+@{
+    ViewBag.Title = Resource.Lang.Edit;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="phone">نام و نام خانوادگی : </label>
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "نام و نام خانوادگی" } })
+
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="phone">شماره تماس : </label>
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "شماره تماس" } })
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="phone">کد ملی : </label>
+                        @Html.EditorFor(model => model.NatinalCode, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "کد ملی" } })
+                    </div>
+                    <div class="col-sm-6">
+
+                        <label for="phone">استان محل سکونت : </label>
+						 @if (Model.State != null)
+                            {
+                                <span>@Model.State.Name</span>
+                            }
+                       
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="phone">شهر محل سکونت : </label>
+                         @if (Model.City != null)
+                            {
+                                <span>@Model.City.Name</span>
+                            }
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="phone">آدرس دقیق محل فعالیت : </label>
+                        <textarea id="Address" class="form-control" name="Address" required>@Model.Address</textarea>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="phone">بیوگرافی : </label>
+                        <textarea id="Bio" name="Bio" value="" class="form-control" required>@Model.Bio</textarea>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="phone">رزومه : </label>
+                        <textarea id="Resumeh" name="Resumeh" class="form-control" required>@Model.Resumeh</textarea>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="phone">عکس ورزشی : </label>
+                        @if (Model.PictureId != null)
+                        {
+                            <img height="150px" width="150px" src="@Model.Picture.GetUrl()" alt="user" id="imgPictureId">
+
+                        }
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="phone">عکس غیر ورزشی : </label>
+                        @if (Model.Pictue2Id != null)
+                        {
+                            <img height="150px" width="150px" src="@Model.Picture7.GetUrl()" alt="user" id="imgPictue2Id">
+                        }
+                    </div>
+                    @if (Model.Code.Label == DataLayer.Enumarables.Enum_Code.FIELD_CLUB_TEACHERS.ToString())
+                    {
+                        <div class="col-sm-3">
+                            <label for="phone">تصاویر کارت مربیگری : </label>
+                            @if (Model.CoachingPictureId != null)
+                            {
+                                <img height="150px" width="150px" src="@Model.Picture6.GetUrl()" alt="user" id="imgCoachingPictureId">
+                            }
+
+                        </div>
+                    }
+                    <div class="col-sm-4">
+                        <label for="phone">رشته فعالیت مورد نظر : </label>
+                        @Html.EditorFor(model => model.Field, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "رشته فعالیت مورد نظر" } })
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="phone">درجه مدرک مربیگری : </label>
+                        @Html.EditorFor(model => model.Coaching1, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "درجه مدرک مربیگری" } })
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="phone">مدرک ملی/بین المللی: </label>
+                        @Html.EditorFor(model => model.Coaching2, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "مدرک ملی/مربیگری" } })
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="phone">واتس اپ: </label>
+                        @Html.EditorFor(model => model.Whatapp, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "واتس اپ" } })
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="phone">شماره موبایل: </label>
+                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "شماره موبایل" } })
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="phone">تلگرام: </label>
+                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "تلگرام" } })
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="phone">اینستاگرام: </label>
+                        @Html.EditorFor(model => model.Instagram, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "اینستاگرام" } })
+                    </div>
+
+                    @if (Model.Code.Label == DataLayer.Enumarables.Enum_Code.FIELD_CLUB_OWNER.ToString())
+                    {
+                        <div class="col-sm-6">
+                            <label for="phone">آدرس دقیق باشگاه :</label>
+                            <textarea id="Address2" name="Address2" required class="form-control">@Model.Address2</textarea>
+                        </div>
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">مجوز باشگاه : </label>
+                            @if (Model.CertificatePictureId != null)
+                            {
+                                <img height="150px" width="150px" src="@Model.Picture5.GetUrl()" alt="user" id="imgCoachingPictureId">
+                            }
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">تصویر از محیط باشگاه : </label>
+                            @if (Model.PictureId1 != null)
+                            {
+                                <img height="150px" width="150px" src="@Model.Picture1.GetUrl()" alt="user" id="imgCoachingPictureId">
+                            }
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">تصویر از محیط باشگاه :</label>
+                            @if (Model.PictureId2 != null)
+                            {
+                                <img height="150px" width="150px" src="@Model.Picture2.GetUrl()" alt="user" id="imgCoachingPictureId">
+                            }
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">تصویر از محیط باشگاه : </label>
+                            @if (Model.PictureId3 != null)
+                            {
+                                <img height="150px" width="150px" src="@Model.Picture3.GetUrl()" alt="user" id="imgCoachingPictureId">
+                            }
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">تصویر از محیط باشگاه :</label>
+                            @if (Model.PictureId4 != null)
+                            {
+                                <img height="150px" width="150px" src="@Model.Picture4.GetUrl()" alt="user" id="imgCoachingPictureId">
+                            }
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="phone">ساعات کاری باشگاه: </label>
+                            @Html.EditorFor(model => model.TimeWork, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "ساعات کاری باشگاه" } })
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="phone">نوع و حوزه فعالیت باشگاه یک توضیح مختصر از بیوگرافی و مدیر باشگاه و فعالیت ها : </label>
+                            <textarea id="BioClub" name="BioClub" required class="form-control">@Model.BioClub</textarea>
+                        </div>
+                    }
+                    @if (Model.Code.Label == DataLayer.Enumarables.Enum_Code.FIELD_CLUB_ATHENTES.ToString())
+                    {
+                        <div class="col-sm-6">
+                            <label for="phone">افتخارات و مسابقات : </label>
+                            <textarea id="Competitions" name="Competitions" required class="form-control">@Model.Competitions</textarea>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="phone">مدال ها :</label>
+                            <textarea id="Medals" name="Medals" required class="form-control">@Model.Medals</textarea>
+                        </div>
+                    }
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.Active, Resource.Lang.Active, htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.IsTop, "شاخص در استان", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.IsTop, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.IsTopMap, "شاخص در کشور", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.IsTopMap, new { htmlAttributes = new { @class = "", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowName, "نمایش اسم و فامیل", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.ShowName, new { htmlAttributes = new { @class = " ", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowBio, "نمایش بیوگرافی", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.ShowBio, new { htmlAttributes = new { @class = " ", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowState, "نمایش استان", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.ShowState, new { htmlAttributes = new { @class = " ", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowImage2, "نمایش تصویر", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.ShowImage2, new { htmlAttributes = new { @class = " ", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowMobile, "نمایش شماره تماس", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.ShowMobile, new { htmlAttributes = new { @class = " ", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowInstagram, "نمایش اینستاگرام", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.ShowInstagram, new { htmlAttributes = new { @class = " ", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowCertificate2, "نمایش درجه مربیگری", htmlAttributes: new { @class = "control-label col-md-5" })
+                        @Html.EditorFor(model => model.ShowCertificate2, new { htmlAttributes = new { @class = " ", @autocomplete = "off" } })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.ShowNumbr, "الویت نمایش", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.ShowNumbr, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    </div>
+                </div>
+                    <div>
+                        <label> آدرس روی نقشه</label>
+                        <div class="d-none">
+                            @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+
+                            @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+
+                        </div>
+
+                        @Html.Partial("~/Views/Partial/LocationPicker.cshtml")
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

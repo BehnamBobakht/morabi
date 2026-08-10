@@ -1,0 +1,146 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.Rebate
+@{
+    ViewBag.Title = Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                      @Resource.Lang.DiscountType
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Code.Name)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.ShopName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Shop.Name)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.TypeProduct
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductType.SyncId)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Category
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductCategory.Name)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.Subordinates
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductSubCategory.Name)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.Brand
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductBrand.Name)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.DiscountCode
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CodeValue)
+                    </dd>
+                    <dt>
+                      @Resource.Lang.AtLeastFactorAmount
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MinInvoiceValue)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.AtMostFacturAmount
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MaxInvoiceValue)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.AtMostDiscountAmount
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MaxRebatePrice)
+                    </dd>
+                    <dt>
+                    @Resource.Lang.DiscountPercent
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PercentValue)
+                    </dd>
+                    <dt>
+                    @Resource.Lang.DiscontAmount
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PriceValue)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.CountUse
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.UseCount)
+                    </dd>
+                    <dt>
+                     @Resource.Lang.StartDate
+                    </dt>
+                    <dd>
+                        @Model.StartDatetime.ToPersian()
+                    </dd>
+                    <dt>
+                      @Resource.Lang.EndDate
+                    </dt>
+                    <dd>
+                        @Model.EndDatetime.ToPersian()
+                    </dd>
+                    <dt>
+                      @Resource.Lang.Percent / @Resource.Lang.Amount
+                    </dt>
+                    <dd>
+                        @if (Model.IsPriceRebate)
+                        {
+                            <span>@Resource.Lang.Amount</span>
+                        }
+                        else
+                        {
+                            <span>@Resource.Lang.Percent</span>
+                        }
+                    </dd>
+                    <dt>
+                       @Resource.Lang.ActiveDeactive
+                    </dt>
+                    <dd>
+                        @if (Model.Active)
+                        {
+                            <span>@Resource.Lang.Active</span>
+                        }
+                        else
+                        {
+                            <span>@Resource.Lang.Deactive</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink(Resource.Lang.Edit, "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

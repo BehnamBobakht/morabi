@@ -1,0 +1,16 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostSearchVm
+
+
+@foreach (var item in Model.Posts)
+{
+
+    <div  class="btn exelBtn w-100">
+        <a href="@item.WebsiteDocument.Url">دانلود فایل اکسل</a>
+
+    </div>
+   
+
+}
+

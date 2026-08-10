@@ -1,0 +1,118 @@
+﻿
+@using DataLayer.ViewModels;
+
+@using DataLayer.Enumarables;
+
+@model ProductSearchVm
+<div class="search_btns align">
+    <div class="sort">
+        <span>نمایش بر اساس : </span>
+        <div class="showFilter">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.16 6.64999H15.83C16.47 6.64999 16.99 7.16999 16.99 7.80999V9.08999C16.99 9.55999 16.7 10.14 16.41 10.43L13.91 12.64C13.56 12.93 13.33 13.51 13.33 13.98V16.48C13.33 16.83 13.1 17.29 12.81 17.47L12 17.98C11.24 18.45 10.2 17.92 10.2 16.99V13.91C10.2 13.5 9.97 12.98 9.73 12.69L7.52 10.36C7.23 10.08 7 9.54999 7 9.19999V7.86999C7 7.16999 7.52 6.64999 8.16 6.64999Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <ul>
+            <li>
+                <div class="form-check">
+
+                    <input onchange="submit()" value="@Enum_ProductOrder.NEW.ToString()" @(Model.prorder == Enum_ProductOrder.NEW ? "checked" : "") class="form-check-input" type="radio" name="prorder" id="sort1">
+                    <label class="form-check-label" for="sort1">
+                        جدیدترین
+                    </label>
+
+                </div>
+            </li>
+            @if (Model.ProductTypeId == 3)
+            {
+                <li>
+                    <div class="form-check">
+
+                        <input onchange="submit()" value="@Enum_ProductOrder.MORE_SELL.ToString()" @(Model.prorder == Enum_ProductOrder.MORE_SELL ? "checked" : "") class="form-check-input" type="radio" name="prorder" id="sort2">
+                        <label class="form-check-label" for="sort2">
+                            پرفروش ترین
+                        </label>
+
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check">
+
+                        <input onchange="submit()" value="@Enum_ProductOrder.PRICE_MAX_TO_MIN.ToString()" @(Model.prorder == Enum_ProductOrder.PRICE_MAX_TO_MIN ? "checked" : "") class="form-check-input" type="radio" name="prorder" id="sort3">
+                        <label class="form-check-label" for="sort3">
+                            گران ترین
+                        </label>
+
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check">
+
+                        <input onchange="submit()" value="@Enum_ProductOrder.PRICE_MIN_TO_MAX.ToString()" @(Model.prorder == Enum_ProductOrder.PRICE_MIN_TO_MAX ? "checked" : "") class="form-check-input" type="radio" name="prorder" id="sort4">
+                        <label class="form-check-label" for="sort4">
+                            ارزان ترین
+                        </label>
+
+                    </div>
+                </li>
+            }
+            @if (Model.ProductTypeId == 2)
+            {
+
+                if (Model.HasExpire == false)
+                {
+                    <li>
+                        <div class="form-check">
+                            <input onchange="submit()" value="true" @(Model.HasExpire == null ? "checked" : "") class="form-check-input" type="radio" name="hasExpire" id="hasExpire">
+                            <label class="form-check-label" for="hasExpire">
+                                همه دوره ها
+                            </label>
+
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <div class="form-check">
+                            <input onchange="submit()" value="false" @(Model.HasExpire == false ? "checked" : "") class="form-check-input" type="radio" name="hasExpire" id="hasExpire">
+                            <label class="form-check-label" for="hasExpire">
+                                دوره های در حال ثبت نام
+                            </label>
+
+                        </div>
+                    </li>
+                }
+            }
+            @*@Html.Action("SearchPage", "ProductCustomField", Model)*@
+
+        </ul>
+    </div>
+    @if (Model.ProductTypeId == 2)
+    {
+        <div class="show-available align me-auto @(Model.Prstock == true ? "show" : "")">
+            <span>فقط نمایش دوره های موجود</span>
+			@if(Model.Prstock == true){
+			<input class="form-check-input d-none" value="null" onclick="submit()" type="radio" name="prstock" id="stock-on" @(Model.Prstock == true ? "checked" : "")>
+			}
+			else{
+			<input class="form-check-input d-none" value="true" onclick="submit()" type="radio" name="prstock" id="stock-on" @(Model.Prstock == true ? "checked" : "")>}
+			<label for="stock-on">
+				<div class="show-available-parent position-relative @(Model.Prstock == true ? "show" : "")">
+                
+					<div class="show-available-child">
+
+					</div>
+
+				</div>
+			</label>
+            
+        </div>
+    }
+    </div>
+
+
+
+
+

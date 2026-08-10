@@ -1,0 +1,14 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@model ResultVm<CartVm>
+
+<div class="merchant-container px-1">
+    @foreach (var item in Model.Model.MerchantList)
+    {
+        bool active = Model.Model.MerchantId == item.ID;
+        <a class="merchant_item pro-plus-number @(active?"active":"deactive")" data-ajax-begin="beginProssess" data-ajax-complete="endProssess" data-ajax="true"  data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#merchant-div" href="/Cart/SetMerchant?merchantId=@item.ID">
+            <img width="100" height="100" src="@item.Picture" class="merchant-img " />
+        </a>
+    }
+</div>
+

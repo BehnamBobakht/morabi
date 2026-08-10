@@ -1,0 +1,8 @@
+﻿<div class="form-group">
+    <select class="form-control" onchange="CountryDrop()" id="selectedCountry" >
+        <option value="0">@Resource.Lang.Select</option>
+        <!--ko foreach: viewModel.Country.CountryList() -->
+        <option data-bind="value:Id , text:FaName"></option>
+        <!--/ko-->
+    </select>
+</div>

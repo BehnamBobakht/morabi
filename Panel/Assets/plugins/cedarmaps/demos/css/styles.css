@@ -1,0 +1,107 @@
+html,
+body {
+    font-family: IRANSans;
+}
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+p {
+    text-align: right;
+    direction: rtl;
+    color: #cccccc;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.text-ltr {
+    direction: ltr;
+    text-align: left;
+}
+
+#map {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar {
+    color: #fff;
+    background: #131425;
+    height: 60px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar.navbar-transparent {
+    background: transparent !important;
+    padding-top: 25px;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.icon-locate {
+    margin-top: 5px;
+}
+
+.jumbotron {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    margin-bottom: 0;
+    background-color: #222439;
+}
+
+@media (min-width: 768px) {
+    .jumbotron {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+    }
+}
+
+.landing {
+    background-color: #131425;
+}
+
+.jumbotron p:last-child {
+    margin-bottom: 0;
+}
+
+.jumbotron-heading {
+    font-weight: 300;
+}
+
+.jumbotron .container {
+    max-width: 40rem;
+}
+
+footer {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
+[data-toggle=buttons]>.btn input[type=radio],
+[data-toggle=buttons]>.btn-group>.btn input[type=radio],
+[data-toggle=buttons]>.btn input[type=checkbox],
+[data-toggle=buttons]>.btn-group>.btn input[type=checkbox] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}

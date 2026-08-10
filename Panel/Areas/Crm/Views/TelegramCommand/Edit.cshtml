@@ -1,0 +1,101 @@
+﻿@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model DataLayer.Entities.TelegramCommand
+@{
+    TelegramBot bot = ViewBag.TelegramBot;
+    ViewBag.Title =Resource.Lang.EditInstructionRobot + bot.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.BotId)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index", new { botId = bot.ID })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, Resource.Lang.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @autofocus = "on" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Command, Resource.Lang.InstructionsContext, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Command, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Command, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeId, Resource.Lang.ResponseType, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control", @codeprocess = "show-part" })
+                            @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TextMessage, Resource.Lang.ResponseContxet, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TextMessage, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.TextMessage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group" show-part="2078">
+                        @Html.LabelFor(model => model.KeyboardId, Resource.Lang.KeyBoards, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("KeyBoardId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.KeyboardId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ParseMode, Resource.Lang.Coding, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <select id="ParseMode" name="ParseMode" class="form-control">
+                                <option value="Default">Default</option>
+                                <option value="Markdown">Markdown</option>
+                                <option value="Html">Html</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DisableWebPagePreview, Resource.Lang.ShowWebsite, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.DisableWebPagePreview)
+                                @Html.ValidationMessageFor(model => model.DisableWebPagePreview, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DisableNotification, Resource.Lang.SendNotification, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.DisableNotification)
+                                @Html.ValidationMessageFor(model => model.DisableNotification, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index", new { botId = bot.ID })</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

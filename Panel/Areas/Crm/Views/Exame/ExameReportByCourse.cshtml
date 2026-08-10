@@ -1,0 +1,55 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+
+@model List<DataLayer.Entities.ExameReportByCourse>
+@{
+
+    Exame exame = ViewBag.Exame;
+    ViewBag.Title = "نمرات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+<div codeprocess-back-form="/crm/Exame/Users?exameId=@exame.ID" codeprocess-ajax-form="/crm/Exame/ExameReportByCourse">
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="form-horizontal">
+			 @{ int i = 1;}
+                @foreach (var item in Model.Distinct())
+                {
+                    <div class="row" question-value="@item.ID">
+                        <input type="hidden" question-name="ID" value="@item.ID" />
+                         <span>@i -  @item.ExameCourse.Name</span>
+                        <input type="text" question-name="TotalRate" value="@item.TotalRate" />
+                        @if (item.ExameAccountAnswer.PaymentExame.Any(s => s.PaymentExameCourseId.Any(x => x.CourseId == item.CourseId)))
+                        {
+                            <strong>تاریخچه نمرات</strong>
+                            foreach (var cat in item.ExameAccountAnswer.PaymentExame.Where(s => s.PaymentExameCourseId.Any(x => x.CourseId == item.CourseId) && s.StatusId==1072))
+                            {
+                                <strong>@cat.PaymentExameCourseId.FirstOrDefault(s => s.CourseId == item.CourseId).Number -</strong>
+                            }
+                        }
+
+                        <hr />
+                    </div>
+					 i++;
+                }
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                        <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index", new { id = exame.ID })</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+@section Script {
+    <script>
+        initializeExameReportByCoursePageScript();
+    </script>
+}

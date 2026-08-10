@@ -1,0 +1,11 @@
+﻿@model IEnumerable<DataLayer.Entities.SetupLevel>
+
+<ul class="nav nav-tabs nav-justified">
+    @foreach (var item in Model)
+    {
+        <li role="presentation" class="@item.IsCurrent">
+            @Html.ActionLink(item.Name.ToLower(), item.ActionName.ToLower())
+        </li>
+    }
+</ul>
+

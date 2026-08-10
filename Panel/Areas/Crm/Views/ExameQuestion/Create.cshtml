@@ -1,0 +1,129 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+
+@model DataLayer.Entities.ExameQuestion
+@{
+    Exame exame = ViewBag.Exame;
+
+    ViewBag.Title = "سوال " + exame.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm("create", "ExameQuestion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="ExameId" value="@exame.ID" />
+
+    @*@Html.AntiForgeryToken()*@
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index",new { id=exame.ID})" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    @*<div>
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="row">
+                                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                                </div>
+                            </div>
+                        </div>*@
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ExameCourseId, "درس", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ExameCourseId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control category_id" })
+                            @Html.ValidationMessageFor(model => model.ExameCourseId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @*
+                        <div class="form-group">
+                            <label for="CategoryId" class="control-label col-md-2">@Resource.Lang.Category</label>
+                            <div class="col-md-10" id="category-dropDown">
+                                @Html.Action("CategoryDropDown", "ExameCourseCategory", new { area = "crm", Id = Model.ExameCourseId, value = Model.ExameCourseCategoryId })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Text, Resource.Lang.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <textarea id="Text" class="form-control" name="Text" rows="5" cols="100"></textarea>
+
+                            @*@Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })*@
+                            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @*<textarea id="mytextarea"></textarea>*@
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.Formula, "فرمول", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+
+                                @Html.EditorFor(model => model.Formula, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @codeprocess = "editor2" } })
+                                @Html.ValidationMessageFor(model => model.Formula, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AnswerDetails, "پاسخ تشریحی", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*<textarea id="AnswerDetails" class="form-control" name="AnswerDetails" rows="5" cols="100"></textarea>*@
+
+                            @Html.EditorFor(model => model.AnswerDetails, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @codeprocess = "editor2" } })
+                            @Html.ValidationMessageFor(model => model.AnswerDetails, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, Resource.Lang.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PictureId, Resource.Lang.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload-n" data-height="150" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index", new { id = exame.ID })</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="/panel/Assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+
+@section Script {
+    <script src="/panel/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    @*<script src="~/assets/plugins/tinymce/tinymce.min.js"></script>*@
+    <script src="~/assets/plugins/tinymceV6/js/tinymce/tinymce.min.js"></script>
+
+    <script src="~/assets/plugins/tinymce/plugins/eqneditor/eqneditor.js"></script>
+
+    @*<script src="~/assets/plugins/tinymceV6/js/tinymce/tinymce.min.js"></script>
+        <script src="~/assets/plugins/tinymceV6/js/tinymce/plugins/eqneditor/eqneditor.js"></script>*@
+
+
+    <script>
+        $(document).on("change", "#ExameCourseId", function () {
+            $("#category-dropDown").addClass("disable-content");
+            var request = createRequest();
+            request.url = base_admin_url + "/crm/ExameCourseCategory/CategoryDropDown";
+            request.type = "Get";
+            request.data = { Id: $(this).val() };
+            request.contentType = "html";
+            request.success = function (result) {
+                $("#category-dropDown").html(result);
+                $("#category-dropDown").removeClass("disable-content");
+
+            };
+            $.ajax(request);
+        });
+    </script>
+}

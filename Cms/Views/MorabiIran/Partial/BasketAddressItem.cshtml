@@ -1,0 +1,28 @@
+@model bool
+
+<div class="user_address_item">
+    <div class="address_info">
+        <div class="address_line">
+            <div class="pick_address p-2">
+                <input type="radio" name="addressId" data-bind="attr:{id:'add'+Id},value:Id,checked:viewModel.Basket.Address.AddressId" />
+            </div>
+            <div class="address_name "><span data-bind="text: NameFamily "> </span></div>
+            <div class="address_phone"><span data-bind="text: Mobile"></span> </div>
+        </div>
+        <div class="address_line">
+            <span data-bind="text: AddressValue"></span>
+        </div>
+    </div>
+
+
+    <div class="address_btns">
+        <button data-bind="click: showModalAddressForDelete" type="button" class="btn address_delete m-2"
+                >
+            <i class="bi bi-trash"></i>
+        </button>
+        <button data-bind="click: showModalAddressForEdit" type="button" class="btn address_edit m-2"
+                >
+            <i class="bi bi-pen"></i>
+        </button>
+    </div>
+</div>

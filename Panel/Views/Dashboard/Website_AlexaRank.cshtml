@@ -1,0 +1,45 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+
+@model IEnumerable<DataLayer.Entities.AlexaRank>
+
+@foreach (AlexaRank rank in Model)
+{
+    string domain = rank.WebsiteDomain.Domain;
+    domain = domain.Replace("https://", "");
+    domain = domain.Replace("http://", "");
+    domain = domain.Replace("/", "");
+
+    string link = "https://www.alexa.com/siteinfo/" + domain;
+
+    <div class="col-lg-12 col-md-6">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30">@Resource.Lang.Alex <span class="english-only">(@domain)</span></h4>
+            <div class="widget-chart-1">
+                <div class="widget-chart-box-1">
+                    <a target="_blank" href="@link"><i class="fa fa-amazon home-shop-icon" aria-hidden="true"></i></a>
+                </div>
+                <div class="widget-detail-1">
+                    <a target="_blank" href="@link">
+                        <img src="https://traffic.alexa.com/graph?o=lt&y=t&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=30&c=1&h=150&w=340&u=@domain" />
+                    </a>
+                </div>
+                <div class="widget-detail-1">
+                    <a target="_blank" href="@link">
+                        <img src="https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=@domain" />
+                    </a>
+                </div>
+                <div class="widget-detail-1">
+                    <h2 class="p-t-10 m-b-0"> @rank.GlobalRank.GetCurrencyFormat()</h2>
+                    <p class="text-muted">@Resource.Lang.WorldRank</p>
+                </div>
+                <div class="widget-detail-1">
+                    <h2 class="p-t-10 m-b-0"> @rank.CountryRank.GetCurrencyFormat()</h2>
+                    <p class="text-muted">@rank.CountryName</p>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+}
+

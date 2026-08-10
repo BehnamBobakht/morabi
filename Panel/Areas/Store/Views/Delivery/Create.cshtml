@@ -1,0 +1,112 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model DataLayer.ViewModels.DeliveryVm
+@{
+    ViewBag.Title = Resource.Lang.Shipping;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Script {
+    <script type="text/javascript">
+        initializeStateCityScript();
+    </script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DeliveryTypeId, @Resource.Lang.DeliveryType, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("DeliveryTypeId", null, new { @class = "form-control", @autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger" })
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StoreId, @Resource.Lang.Store, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("StoreId", null, new { @class = "form-control", @autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StateId, Resource.Lang.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.Action("GetStatesDD", "StateCity", new { area = "BaseInfo", stateId = Model.StateId,withAll=true })
+                            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CityId, Resource.Lang.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10 cities-div">
+                            @Html.Action("GetCitiesDD", "StateCity", new { area = "BaseInfo", stateId = Model.StateId, cityId = Model.CityId,withAll=true })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsUnknownPrice, Resource.Lang.UnknownAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.IsUnknownPrice)
+                            @Html.ValidationMessageFor(model => model.IsUnknownPrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BasePrice, Resource.Lang.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.BasePrice, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.BasePrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MinPriceForFree, Resource.Lang.MinPriceForFree, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.MinPriceForFree, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.MinPriceForFree, "", new { @class = "text-danger" })
+                        </div>
+                    </div>             
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CashOnDeliveryMaxPrice, Resource.Lang.CashOnDeliveryMaxPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CashOnDeliveryMaxPrice, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.CashOnDeliveryMaxPrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MaxDays, Resource.Lang.DeliveryMaxDays, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.MaxDays, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.MaxDays, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, Resource.Lang.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Active)
+                            @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

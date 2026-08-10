@@ -1,0 +1,15 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostSearchVm
+
+
+@foreach (var item in Model.Posts)
+{
+    <div class="item">
+        <a href="@item.Href" class="related_card">
+            <div class="related_img"><img src="@item.Picture.Url" alt="@item.Name"></div>
+            <strong>@item.Name</strong>
+        </a>
+    </div>
+}
+

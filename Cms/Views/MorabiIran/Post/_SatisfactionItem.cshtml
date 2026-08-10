@@ -1,0 +1,38 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostSearchVm
+
+@if (Model.Posts.Any())
+{
+
+    foreach (var item in Model.Posts)
+    {
+
+        <div class="branshes-title">
+            <span>@item.Name</span>
+            <p>
+                @Html.Raw(item.Body)
+            </p>
+        </div>
+        <div class="branshes-details">
+            <div class="branshes-details-item">
+                @if (item.FileId != null)
+                {
+                    <audio controls="" preload="none">
+                        <source src="@item.WebsiteDocument.Url">
+                    </audio>
+                }
+
+
+            </div>
+
+        </div>
+        
+        
+
+
+
+    }
+}
+
+

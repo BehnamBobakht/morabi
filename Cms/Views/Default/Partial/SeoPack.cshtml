@@ -1,0 +1,28 @@
+﻿@model DataLayer.ViewModels.ViewSeoPack
+
+<title>@Model.Title</title>
+<meta charset="UTF-8">
+<meta name="description" content="@Model.Description" />
+<meta name="keywords" content="@Model.Keywords" />
+@if (Model.OpenGraph != null)
+{
+    <meta property='og:site_name' value='@Model.OpenGraph.SiteName' />
+    <meta property='og:title' content='@Model.OpenGraph.Title' />
+    <meta property='og:url' content='@Model.OpenGraph.Url' />
+    <meta property='og:image' content='@Model.OpenGraph.Image' />
+    <meta property='og:image:url' content='@Model.OpenGraph.Image' />
+    <meta property='og:image:width' content='@Model.OpenGraph.Image_Width' />
+    <meta property='og:image:height' content='@Model.OpenGraph.Image_Height' />
+    <meta property='og:image:type' content='@Model.OpenGraph.Image_Type' />
+    <meta property='og:description' content='@Model.Description' />
+    <meta property='og:price:amount' content='@Model.OpenGraph.Amount' />
+    <meta property='og:price:currency' content='@Model.OpenGraph.Currency' />
+    <meta property='og:locale' content='@Model.OpenGraph.Locale' />
+    <meta property="og:type" content="@Model.OpenGraph.Image_Type" />
+    <meta name="author" content="codeprocess.ir">
+    <meta name="twitter:card" content="@Model.OpenGraph.Image" />
+    <meta name="twitter:title" content="@Model.Title" />
+    <meta name="twitter:description" content="@Model.Description" />
+    <meta name="twitter:site" content="@Model.OpenGraph.SiteName" />
+    <meta name='twitter:image' content='@Model.OpenGraph.Image' />
+}

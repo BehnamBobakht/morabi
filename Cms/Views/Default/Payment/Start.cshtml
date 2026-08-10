@@ -1,0 +1,79 @@
+﻿@using DataLayer.ViewModels
+@model PayingVm
+@{
+    ViewBag.Title = Resource.Notify.TransferringToPaymentGateway + " " + Model.BankName;
+    Layout = "~/Views/Default/Shared/PaymentLayout.cshtml";
+}
+@if (Model.Status == DataLayer.Enumarables.ResultStatus.Success && !string.IsNullOrEmpty(Model.Link))
+{
+    <section class="connecting_page">
+        <div class="container">
+            <div class="connecting_box">
+                <div class="connecting" style="font-size:200px;--duration:2s;">
+                    <div class="circle"></div>
+                </div>
+                <div class="connecting_message">
+                    <p>@Resource.Notify.YouWillBeConnectedToThePaymentGatewayInAFewMoments</p>
+
+
+                    <div class="dots-container">
+                        <div class="pulse-dot pulse-dot-1"></div>
+                        <div class="pulse-dot pulse-dot-2"></div>
+                        <div class="pulse-dot pulse-dot-3"> </div>
+                    </div>
+                </div>
+                <div class="connecting_message">
+                    <p><a class="btn btn-success" onclick="submitForm()">@Resource.Lang.FastTransfer <span class="count-down"></span></a></p>
+                    <p><a href="/" class="btn btn-danger">@Resource.Lang.Cancel</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="d-none">
+        @Html.Raw(Model.Link)
+    </div>
+}
+else
+{
+    <section class="payment_callback faild_payment">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="callback_box">
+                        <div class="callback_img"><img src="~/Assets/Default/Payment/images/payment-faild.jpg" alt=""></div>
+                        <div class="callback_message">
+                            <strong>@Resource.Notify.FailedOperation</strong>
+                            <p>@Resource.Notify.PaymentWasProblematic</p>
+                        </div>                       
+                        <div class="callback_btns">
+                            <a href="/" class="btn secondary_btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
+                                </svg>@Resource.Lang.BackToHomePage
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section end{
+    <script>
+        var counter = 9;
+        var interval = setInterval(function () {
+            $(".count-down").html(counter);
+            counter--;
+            if (counter == 0) {
+                submitForm();
+            }
+        }, 1000);
+        function submitForm() {
+            $("form")[0].submit();
+        }
+    </script>
+}
+
+

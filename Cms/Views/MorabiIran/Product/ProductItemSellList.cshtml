@@ -1,0 +1,12 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Base
+@model ProductSearchVm
+
+@foreach (var item in Model.Products)
+{
+    <div class="col-lg-3  p-1">
+        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/ProductItemSell.cshtml", item)
+    </div>
+}
+
+

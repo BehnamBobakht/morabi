@@ -1,0 +1,168 @@
+﻿﻿﻿﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model List<DataLayer.Entities.Account>
+ @{
+    ViewBag.Title = "پرینت گواهی فیزیکی "+Model.Count() ;;
+    Layout = "~/Views/Shared/PrintLayout2.cshtml";
+
+} 
+	<style>
+	.paper img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+.LatName {
+	position: absolute;
+	top: 530px;
+	right: 578px;
+	font-size: 30px;
+	font-family: 'Iran-Sans', Calibri;
+}
+.DateFa {
+	position: absolute;
+	top: 636px;
+	right: 931px;
+	font-size: 30px;
+	font-family: 'Iran-Sans', Calibri;
+}
+.HoursFa {
+	position: absolute;
+	top: 636px;
+	right: 721px;
+	font-size: 30px;
+	font-family: 'Iran-Sans', Calibri;
+}
+.NationalCode {
+	position: absolute;
+	top: 585px;
+	right: 312px;
+	font-size: 30px;
+	font-family: 'Iran-Sans', Calibri !important;
+}
+.DateEn{
+position: absolute;
+  top: 810px;
+  left: 421px;
+  font-size: 30px;
+}
+.Hours {
+	position: absolute;
+	top: 810px;
+	left: 300px;
+	font-size: 30px;
+	
+}
+.TeacherNameEn {
+	position: absolute;
+	top: 810px;
+	left: 646px;
+	font-size: 30px;
+}
+.NameEn {
+	position: absolute;
+	top: 756px;
+	left: 979px;
+	font-size: 30px;
+}
+.TeacherNameFa {
+	position: absolute;
+	top: 638px;
+	right: 340px;
+	font-family: 'Iran-Sans', Calibri;
+	font-size: 30px;
+}
+.FullNameEn {
+	position: absolute;
+	top: 704px;
+	left: 611px;
+	font-size: 30px;
+	width: max-content;
+}
+.Name {
+	position: absolute;
+	top: 590px;
+	right: 840px;
+	font-size: 30px;
+}
+
+.DatePrint {
+	position: absolute;
+	top: 248px;
+	left: 147px;
+	font-size: 23px;
+	font-family: 'Iran-Sans', Calibri !important;
+}
+body {
+  margin: 0;
+
+}
+	.paper{
+	position: relative;
+	}
+	.NumberString{
+position: absolute;
+  top: 295px;
+  left: 147px;
+  font-size: 21px;
+  font-family: 'Iran-Sans', Calibri;
+	}
+	.NationalCodeEn{
+	position: absolute;
+  top: 756px;
+  left: 366px;
+  font-size: 30px;
+	}
+	</style>
+<div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+@if (Model.Any())
+{
+
+
+    foreach (var item in Model)
+    {
+        <div class="paper">
+            <img  src="/assets/MorabiIran/images/cer.jpg">
+            <div class="report-back-details repoText">
+
+                    <span class="NumberString">@ViewBag.NumberString</span>
+                
+
+                    <span class="DatePrint">@ViewBag.DatePrint</span>
+               
+           
+               
+          
+                <p class="LatName">
+                         @item.FullName @item.LatName
+                </p>
+				<p class="NationalCode">@item.NationalCode</p>
+				<p class="Name"> @ViewBag.Name</p>
+				<p class="TeacherNameFa">@ViewBag.TeacherNameFa </p>
+				<p class="HoursFa"> @ViewBag.Hours</p>
+				<p class="DateFa">@ViewBag.DateFa</p>
+				
+                <p class="FullNameEn"> @item.FullNameEn @item.LatNameEn </p>
+                
+				<p class="NationalCodeEn">@item.NationalCode.ToEnglishDigit() </p>
+				<p class="NameEn">"@ViewBag.NameEn"</p>
+				<p class="Hours"> @ViewBag.Hours</p>
+				<p class="DateEn"> @ViewBag.DateEn </p>
+				<p class="TeacherNameEn"> @ViewBag.TeacherNameEn</p>
+				
+                      
+                   
+
+                
+            </div>
+            
+
+        </div>
+
+        
+    }
+	
+
+}
+</div>

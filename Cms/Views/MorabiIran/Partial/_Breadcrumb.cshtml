@@ -1,0 +1,40 @@
+﻿@using DataLayer.Base
+@model List<DataLayer.ViewModels.BreadcrumbVm>
+<div class="site_loaction">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"> @Resource.Lang.Home</a></li>
+                @if (Model != null && Model.Any())
+                {
+                    for (int i = 0; i < Model.Count(); i++)
+                    {
+
+                        if (i + 1 == Model.Count())
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">@Model[i].Title</li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item"><a href="@Model[i].Url">@Model[i].Title</a></li>
+                        }
+
+                    }
+                }
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

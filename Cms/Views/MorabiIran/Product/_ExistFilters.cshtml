@@ -1,0 +1,111 @@
+﻿@model DataLayer.ViewModels.ProductSearchVm
+@using DataLayer.Base
+@{
+    bool stockCondition = Model.Prstock.HasValue;
+    bool hasDiscountCondition = Model.HasDiscount.HasValue;
+    bool colorCondition = Model.Colors != null && Model.Colors.Any() && Model.SelectedColors != null && Model.SelectedColors.Any();
+    bool brandCondition = Model.ProductBrand != null && Model.ProductBrand.Any() && Model.SelectedBrands != null && Model.SelectedBrands.Any();
+    bool customFieldsCondition = Model.ProductCustomFields != null && Model.ProductCustomFields.Any() && Model.SelectedCustomFields != null && Model.SelectedCustomFields.Any();
+    bool priceCondition = ((Model.PriceFrom != null && Model.PriceFrom > 0) || (Model.PriceTo != null && Model.PriceTo < Model.MaxPrice && Model.PriceTo != 0));
+
+}
+@if (stockCondition || hasDiscountCondition || colorCondition || brandCondition || customFieldsCondition || priceCondition)
+{
+    
+    <div class="search_filters">
+        @if (stockCondition)
+        {
+            <label for="stock-all" class="search_link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+                @(Model.Prstock.Value? Resource.Lang.OnlyAvailables: Resource.Lang.OnlyNotAvailables)
+            </label>
+        }
+
+        @if (hasDiscountCondition)
+        {
+            <label for="discount-all" class="search_link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+                @(Model.HasDiscount.Value? Resource.Lang.OnlyDiscounted: Resource.Lang.OnlyWithoutDiscounts)
+            </label>
+        }
+
+        @if (colorCondition)
+        {
+            foreach (var item in Model.Colors)
+            {
+                if (Model.SelectedColors.Any(e => e.Equals(item.ID)))
+                {
+                    <label for="color_@item.ID" class="search_link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        @Resource.Lang.Color : @item.Name
+                    </label>
+                }
+
+            }
+        }
+        @if (brandCondition)
+        {
+            foreach (var item in Model.ProductBrand)
+            {
+                if (Model.SelectedBrands.Any(e => e.Equals(item.ID)))
+                {
+                    <label for="brand_@item.ID" class="search_link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        @Resource.Lang.Brand : @item.Name
+                    </label>
+                }
+
+            }
+        }
+        @if (customFieldsCondition)
+        {
+            foreach (var item in Model.ProductCustomFields)
+            {
+                if (Model.SelectedCustomFields.Any(e => e.Equals(item.ID)))
+                {
+                    <label for="custom_@item.ID" class="search_link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        @Resource.Lang.Brand : @item.Name
+                    </label>
+                }
+
+            }
+        }
+        @if (priceCondition)
+        {
+            <label class="search_link price-range-filter-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+                @Resource.Lang.PriceRange : @Model.PriceFrom.GetCurrencyFormat() @Resource.Lang.To @Model.PriceTo.Value.GetCurrencyFormat() @Resource.Lang.Toman
+            </label>
+        }
+
+        <a href="@Model.PageUrl" class="search_link text-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+            @Resource.Lang.ClearAll
+        </a>
+
+    </div>
+}
+
+

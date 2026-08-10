@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>CedarMaps - Address Locator Tool</title>
+	<script src='https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.js'></script>
+<link href='https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.css' rel='stylesheet' />
+</head>
+
+<body>
+<!-- CedarMap CSS SDK -->
+
+<!-- CedarMap Container -->
+<div id="map_nmejhe"></div>
+
+<!-- StyleSheet -->
+<style>
+  #map_nmejhe {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    max-width: 100%;
+  }
+</style>
+<script>
+  function nearby() {
+    // Initialized CedarMap
+    L.cedarmaps.accessToken = "d2a68b8e5b64b0dcf303e023935edda196c55a18";
+    // Nearby options
+    var nb = window.L.cedarmaps.nearby('map_nmejhe', [35.744842, 51.375321], {
+      centerMarkerIcon: window.L.icon({"slug":"@default","iconUrl":"https://api.cedarmaps.com/v1/markers/marker-default.png","iconRetinaUrl":"https://api.cedarmaps.com/v1/markers/marker-default@2x.png","iconSize":[82,98]}),
+      categories: ["bus","park","shopping","hospital","school"],
+      searchDistance: 5,
+      defaultZoom: 15
+    });
+  };
+  
+  (function(c,e,d,a){
+    var p = c.createElement(e);
+    p.async = 1; p.src = d;
+    p.onload = a;
+    c.body.appendChild(p);
+  })(document, 'script', 'https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.js', nearby);
+</script>
+</body>
+
+</html>

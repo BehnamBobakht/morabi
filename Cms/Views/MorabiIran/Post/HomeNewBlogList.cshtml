@@ -1,0 +1,26 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model PostSearchVm
+
+
+
+
+
+
+
+
+@foreach (var item in Model.Posts)
+{
+<li>
+    <a href="@item.Href">
+        <span class="date">@item.CreateDateTime.ToPersian()</span>
+        <span>@item.Name</span>
+
+    </a>
+</li>
+   
+    
+
+}
+

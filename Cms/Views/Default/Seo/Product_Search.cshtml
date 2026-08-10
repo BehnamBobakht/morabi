@@ -1,0 +1,29 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model ProductSearchVm
+@{
+    TempData["Title"] = Model.Title + BaseContent.WebsiteDetail.OtherTitle;
+    TempData["MetaDescription"] = Model.MetaDescription;
+    TempData["url"] = Model.PageUrl;
+    TempData["OgImage"] = Model.PictureUrl;
+    TempData["OgUrl"] = Model.PageUrl;
+    TempData["canonical"] = Model.PageCanonical;
+    TempData["noIndex"] = Model.NoIndex;
+    TempData["noFollow"] = Model.NoFollow;
+    TempData["OgImageType"] = null;
+}
+
+<script type="application/ld+json">
+    {
+    "@@context": "http://schema.org",
+    "@@type": "WebPage",
+    "mainEntity":{
+    "@@type": "WebPage",
+    "image": "@Model.PictureUrl",
+    "name": "@Model.Title",
+    "alternateName":"@Model.Title",
+    "description": "@Model.MetaDescription"
+    }
+    }
+</script>

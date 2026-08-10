@@ -1,0 +1,163 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+
+@model IEnumerable<DataLayer.ViewModels.ViewClearing>
+
+@{
+    Layout = Resources.Default.STORE_LAYOUT;
+
+    string index = BaseRouteView.GetStringValue(Request, "index");
+    var pageSizeRequest = BaseRouteView.GetStringValue(Request, "pageSize");
+    string pageSize = pageSizeRequest != null ? pageSizeRequest : ViewBag.pageSize;
+    string to = BaseRouteView.GetStringValue(Request, "to");
+    string from = BaseRouteView.GetStringValue(Request, "from");
+
+
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+@section head{
+
+    <link href="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.js"></script>
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.fa.min.js"></script>
+    <script>
+        $(".datepicker").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'yy/mm/dd',
+        });
+    </script>
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active">@Resource.Lang.Clearing</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card project_list">
+                @using (Html.BeginForm("Index", "Clearing", FormMethod.Get))
+                {
+
+                    <div class="row clearfix">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" value="@from" name="from" autocomplete="off" class="form-control datepicker" placeholder="از تاریخ">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" value="@to" name="to" autocomplete="off" class="form-control datepicker" placeholder="تا تاریخ">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" value="@Resource.Lang.Search" />
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <div class="table-responsive">
+                    <table class="table table-hover c_table theme-color">
+                        <thead>
+                            <tr>
+                                <th>@Resource.Lang.Code</th>
+                                <th>@Resource.Lang.Type</th>
+                                <th>@Resource.Lang.FromAccount</th>
+                                <th>@Resource.Lang.ToAccount</th>
+                                <th>@Resource.Lang.Date</th>
+                                <th>@Resource.Lang.Amount (@Resource.Lang.Corrency)</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr row-order-id="@item.Id" row-selected="false">
+
+                                    <td>@item.Id.ToPersian()</td>
+                                    <td>@item.Code.Name</td>
+                                    <td>@item.FromAccount</td>
+                                    <td>@item.ToAccount</td>
+                                    <td>@item.CreateDate.ToPersian().ToPersian()</td>
+                                    <td>@item.Price.GetCurrencyFormat().ToPersian()</td>
+                                </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ul class="pagination pagination-primary mt-4">
+                        @if (StartIndex > 1)
+                        {
+                            <li class="page-item ">
+                                <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        index = 1,
+                                        from=from,
+                                        to=to,
+                                    })">1</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <a class="page-link" href="#"><i class="zmdi zmdi-arrow-left"></i></a>
+                            </li>
+                        }
+                        @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                        {
+                            var active = CurrentIndex == i ? "active" : "";
+                            <li class="page-item @active">
+                                <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        index = i,
+                                        from=from,
+                                        to=to,
+                                    })">@(i.ToPersian())</a>
+                                </li>
+                        }
+                        @if (CurrentIndex < EndIndex)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("index", new
+                                    {
+                                        pageSize=pageSize,
+                                        index = EndIndex,
+                                        from=from,
+                                        to=to,
+                                    })">@Resource.Lang.LastPage</a>
+                                </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="zmdi zmdi-arrow-right"></i></a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

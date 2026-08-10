@@ -1,0 +1,120 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model DataLayer.Entities.Account
+
+@{ TempData["Title"] = Resource.Lang.SignIn;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    if (ViewBag.back == null)
+    {
+        ViewBag.back = "/";
+    }
+    if (ViewBag.Message == null)
+    {
+        ViewBag.Message = new ViewMessage();
+    }
+    var message = (ViewMessage)ViewBag.Message;
+    var breadcrumb = new List<BreadcrumbVm>();
+    TempData["noIndex"] = true;
+    TempData["noFollow"] = true;
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.SignIn, Url = "" });
+}
+
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+<section class="form_page loginRegister page-padding" id="login_register">
+    <div class="container">
+        <div class="row section-padding">
+            <div class="col-lg-8">
+                <div class="loginRegister-textbox central h-100 d-none">
+                    @Html.Action("Search", "Banner", new { bacategory = "LoginBanner1", baviewName = "_LoginText", baSize = 1 })
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 p-0 login_col">
+                <div class="loginBox">
+                    <div class="section-title central flex-column">
+                        <h1>@Resource.Lang.SignIn</h1>
+                    </div>
+                    <div class="login-register-text">
+                        @Html.Action("Search", "Banner", new { bacategory = "LoginBanner2", baviewName = "_LoginText", baSize = 1 })
+                    </div>
+                    <div class="form_page_content mt-3">
+                        <div class="form_box">
+                            @using (Html.BeginForm())
+                            {
+                                if (!string.IsNullOrEmpty(message.Body))
+                                {
+                                    <p class="alert alert-danger">@message.Body</p>
+                                }
+                                <input type="hidden" name="back" value="@ViewBag.back" />
+
+
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = @Resource.Lang.EnterEmailOrMobile } })
+                                <div class="position-relative">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = @Resource.Lang.EnterPassword, @type = "password" } })
+                                    <div class="see-pass d-none">
+                                        <a href="#" class="">
+                                            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.4276 15.28C10.2376 15.28 10.0476 15.21 9.89756 15.06C9.07756 14.24 8.62756 13.15 8.62756 12C8.62756 9.61004 10.5676 7.67004 12.9576 7.67004C14.1076 7.67004 15.1976 8.12004 16.0176 8.94004C16.1576 9.08004 16.2376 9.27004 16.2376 9.47004C16.2376 9.67004 16.1576 9.86004 16.0176 10L10.9576 15.06C10.8076 15.21 10.6176 15.28 10.4276 15.28ZM12.9576 9.17004C11.3976 9.17004 10.1276 10.44 10.1276 12C10.1276 12.5 10.2576 12.98 10.4976 13.4L14.3576 9.54004C13.9376 9.30004 13.4576 9.17004 12.9576 9.17004Z" fill="#fff" />
+                                                <path d="M6.55749 18.51C6.38749 18.51 6.20749 18.45 6.06749 18.33C4.99749 17.42 4.03749 16.3 3.21749 15C2.15749 13.35 2.15749 10.66 3.21749 8.99998C5.65749 5.17998 9.20749 2.97998 12.9575 2.97998C15.1575 2.97998 17.3275 3.73998 19.2275 5.16998C19.5575 5.41998 19.6275 5.88998 19.3775 6.21998C19.1275 6.54998 18.6575 6.61998 18.3275 6.36998C16.6875 5.12998 14.8275 4.47998 12.9575 4.47998C9.72749 4.47998 6.63749 6.41998 4.47749 9.80998C3.72749 10.98 3.72749 13.02 4.47749 14.19C5.22749 15.36 6.08749 16.37 7.03749 17.19C7.34749 17.46 7.38749 17.93 7.11749 18.25C6.97749 18.42 6.76749 18.51 6.55749 18.51Z" fill="#fff" />
+                                                <path d="M12.9576 21.02C11.6276 21.02 10.3276 20.75 9.07758 20.22C8.69758 20.06 8.51758 19.62 8.67758 19.24C8.83758 18.86 9.27758 18.68 9.65758 18.84C10.7176 19.29 11.8276 19.52 12.9476 19.52C16.1776 19.52 19.2676 17.58 21.4276 14.19C22.1776 13.02 22.1776 10.98 21.4276 9.81C21.1176 9.32 20.7776 8.85 20.4176 8.41C20.1576 8.09 20.2076 7.62 20.5276 7.35C20.8476 7.09 21.3176 7.13 21.5876 7.46C21.9776 7.94 22.3576 8.46 22.6976 9C23.7576 10.65 23.7576 13.34 22.6976 15C20.2576 18.82 16.7076 21.02 12.9576 21.02Z" fill="#fff" />
+                                                <path d="M13.6475 16.27C13.2975 16.27 12.9775 16.02 12.9075 15.66C12.8275 15.25 13.0975 14.86 13.5075 14.79C14.6075 14.59 15.5275 13.67 15.7275 12.57C15.8075 12.16 16.1975 11.9 16.6075 11.97C17.0175 12.05 17.2875 12.44 17.2075 12.85C16.8875 14.58 15.5075 15.95 13.7875 16.27C13.7375 16.26 13.6975 16.27 13.6475 16.27Z" fill="#fff" />
+                                                <path d="M2.95746 22.75C2.76746 22.75 2.57746 22.68 2.42746 22.53C2.13746 22.24 2.13746 21.76 2.42746 21.47L9.89746 14C10.1875 13.71 10.6675 13.71 10.9575 14C11.2475 14.29 11.2475 14.77 10.9575 15.06L3.48746 22.53C3.33746 22.68 3.14746 22.75 2.95746 22.75Z" fill="#fff" />
+                                                <path d="M15.4875 10.2199C15.2975 10.2199 15.1075 10.1499 14.9575 9.99994C14.6675 9.70994 14.6675 9.22994 14.9575 8.93994L22.4275 1.46994C22.7175 1.17994 23.1975 1.17994 23.4875 1.46994C23.7775 1.75994 23.7775 2.23994 23.4875 2.52994L16.0175 9.99994C15.8675 10.1499 15.6775 10.2199 15.4875 10.2199Z" fill="#fff" />
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="unactive">
+                                            <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M8.42756 13.28C8.23756 13.28 8.04756 13.21 7.89756 13.06C7.07756 12.24 6.62756 11.15 6.62756 10C6.62756 7.61004 8.56756 5.67004 10.9576 5.67004C12.1076 5.67004 13.1976 6.12004 14.0176 6.94004C14.1576 7.08004 14.2376 7.27004 14.2376 7.47004C14.2376 7.67004 14.1576 7.86004 14.0176 8.00004L8.95756 13.06C8.80756 13.21 8.61756 13.28 8.42756 13.28ZM10.9576 7.17004C9.39756 7.17004 8.12756 8.44004 8.12756 10C8.12756 10.5 8.25756 10.98 8.49756 11.4L12.3576 7.54004C11.9376 7.30004 11.4576 7.17004 10.9576 7.17004Z" fill="#fff" />
+                                                <path d="M4.55749 16.51C4.38749 16.51 4.20749 16.45 4.06749 16.33C2.99749 15.42 2.03749 14.3 1.21749 13C0.157485 11.35 0.157485 8.65998 1.21749 6.99998C3.65749 3.17998 7.20749 0.97998 10.9575 0.97998C13.1575 0.97998 15.3275 1.73998 17.2275 3.16998C17.5575 3.41998 17.6275 3.88998 17.3775 4.21998C17.1275 4.54998 16.6575 4.61998 16.3275 4.36998C14.6875 3.12998 12.8275 2.47998 10.9575 2.47998C7.72749 2.47998 4.63749 4.41998 2.47749 7.80998C1.72749 8.97998 1.72749 11.02 2.47749 12.19C3.22749 13.36 4.08749 14.37 5.03749 15.19C5.34749 15.46 5.38749 15.93 5.11749 16.25C4.97749 16.42 4.76749 16.51 4.55749 16.51Z" fill="#fff" />
+                                                <path d="M10.9576 19.02C9.62758 19.02 8.32758 18.75 7.07758 18.22C6.69758 18.06 6.51758 17.62 6.67758 17.24C6.83758 16.86 7.27758 16.68 7.65758 16.84C8.71758 17.29 9.82758 17.52 10.9476 17.52C14.1776 17.52 17.2676 15.58 19.4276 12.19C20.1776 11.02 20.1776 8.98 19.4276 7.81C19.1176 7.32 18.7776 6.85 18.4176 6.41C18.1576 6.09 18.2076 5.62 18.5276 5.35C18.8476 5.09 19.3176 5.13 19.5876 5.46C19.9776 5.94 20.3576 6.46 20.6976 7C21.7576 8.65 21.7576 11.34 20.6976 13C18.2576 16.82 14.7076 19.02 10.9576 19.02Z" fill="#fff" />
+                                                <path d="M11.6475 14.27C11.2975 14.27 10.9775 14.02 10.9075 13.66C10.8275 13.25 11.0975 12.86 11.5075 12.79C12.6075 12.59 13.5275 11.67 13.7275 10.57C13.8075 10.16 14.1975 9.89998 14.6075 9.96998C15.0175 10.05 15.2875 10.44 15.2075 10.85C14.8875 12.58 13.5075 13.95 11.7875 14.27C11.7375 14.26 11.6975 14.27 11.6475 14.27Z" fill="#fff" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="align justify-content-between flex-wrap">
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="" name="remember" id="brand1">
+                                        <label class="form-check-label" for="brand1">
+                                            @Resource.Lang.RememberMe
+                                        </label>
+                                    </div>
+                                    <a href="@Url.Action("Forget","Account",new {back= ViewBag.back})" class="recoverPass_btn">@Resource.Lang.RecoveryPassword</a>
+
+
+                                </div>
+                                <div class="loginFooter">
+                                    <button class="btn login_btn" type="submit">
+                                        @Resource.Lang.SignIn
+                                    </button>
+                                    <a href="@Url.Action("Register","Account",new {back= ViewBag.back})" class="btn">@Resource.Lang.SignUp</a>
+                                </div>
+
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

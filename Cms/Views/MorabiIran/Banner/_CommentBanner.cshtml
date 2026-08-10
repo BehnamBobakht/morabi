@@ -1,0 +1,26 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 p-2">
+            <div class="consultation-comment-item">
+                <div class="row">
+                    <div class="col-4 p-0">
+                        <div class="consultation-comment-img w-100 h-100 central">
+                            <img src="@item.Picture.GetUrl()" alt="">
+                        </div>
+                    </div>
+                    <div class="col-8 p-0">
+                        <div class="consultation-comment-text">
+                            <span>@item.GetName()</span>
+                            <p>@item.GetSummery()</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}

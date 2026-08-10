@@ -1,0 +1,92 @@
+﻿
+<div class="modal fade modal-first-message" id="mymodalstore" tabindex="-1" role="dialog" aria-labelledby="addaddress_modal_Title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body p-4">
+                <button type="button" class="close closeMsg" data-bs-dismiss="modal" aria-label="Close">
+                    x
+                </button>
+                <!--ko if:viewModel.Account.StoreUserComment()!=null-->
+
+                <div class="product_rating">
+                    <!--ko if:viewModel.Account.StoreUserComment().Rate == 0  -->
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.StoreUserComment().Rate == 1 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.StoreUserComment().Rate == 2 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.StoreUserComment().Rate == 3 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.StoreUserComment().Rate == 4 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.StoreUserComment().Rate == 5 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <!--/ko-->
+
+                </div>
+
+
+                <p>
+                    @Resource.Lang.StoreName
+                    <br />
+
+                    <span data-bind="text: viewModel.Account.StoreUserComment().NameStore"></span>
+                </p>
+                <hr />
+                <!--ko if:viewModel.Account.StoreUserComment().Approved == true -->
+                <span> @Resource.Lang.Accepted</span>
+                <!--/ko-->
+                <!--ko if:viewModel.Account.StoreUserComment().Approved == false -->
+                <span> @Resource.Lang.Failed</span>
+                <!--/ko-->
+                <!--ko if:viewModel.Account.StoreUserComment().Approved == null -->
+                <span> @Resource.Lang.NotChecked</span>
+                <!--/ko-->
+                <hr />
+                <p>
+                    @Resource.Lang.Text
+                    <br />
+                    <span data-bind="text: viewModel.Account.StoreUserComment().Body"></span>
+                </p>
+                <hr />
+                <p>
+                    @Resource.Lang.AnswerAdmin
+                    <br />
+                    <span data-bind="text: viewModel.Account.StoreUserComment().AnswerString"></span>
+                </p>
+                <hr />
+                <!--/ko-->
+            </div>
+        </div>
+    </div>
+</div>

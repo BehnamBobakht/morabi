@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="payment.soap" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="Verify" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:s2="Token" name="Application" targetNamespace="payment.soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="payment.soap">
+      <xs:import namespace="Verify" />
+      <xs:import namespace="Token" />
+      <xs:import namespace="http://www.w3.org/2001/XMLSchema" />
+      <xs:complexType name="PaymentVerification">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="api_key" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="order_id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="amount" nillable="true" type="xs:integer" />
+          <xs:element minOccurs="0" name="trans_id" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PaymentVerificationResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PaymentVerificationResult" nillable="true" type="s1:Verify" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TokenGenerator">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="api_key" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="order_id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="amount" nillable="true" type="xs:integer" />
+          <xs:element minOccurs="0" name="callback_uri" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TokenGeneratorResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TokenGeneratorResult" nillable="true" type="s2:Token" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="PaymentVerification" type="tns:PaymentVerification" />
+      <xs:element name="PaymentVerificationResponse" type="tns:PaymentVerificationResponse" />
+      <xs:element name="TokenGenerator" type="tns:TokenGenerator" />
+      <xs:element name="TokenGeneratorResponse" type="tns:TokenGeneratorResponse" />
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="Verify">
+      <xs:import namespace="http://www.w3.org/2001/XMLSchema" />
+      <xs:complexType name="Verify">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" nillable="true" type="xs:integer" />
+          <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="card_holder" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Verify" type="s1:Verify" />
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="Token">
+      <xs:import namespace="http://www.w3.org/2001/XMLSchema" />
+      <xs:complexType name="Token">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" nillable="true" type="xs:integer" />
+          <xs:element minOccurs="0" name="trans_id" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Token" type="s2:Token" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="PaymentVerification">
+    <wsdl:part name="PaymentVerification" element="tns:PaymentVerification" />
+  </wsdl:message>
+  <wsdl:message name="PaymentVerificationResponse">
+    <wsdl:part name="PaymentVerificationResponse" element="tns:PaymentVerificationResponse" />
+  </wsdl:message>
+  <wsdl:message name="TokenGenerator">
+    <wsdl:part name="TokenGenerator" element="tns:TokenGenerator" />
+  </wsdl:message>
+  <wsdl:message name="TokenGeneratorResponse">
+    <wsdl:part name="TokenGeneratorResponse" element="tns:TokenGeneratorResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Application">
+    <wsdl:operation name="PaymentVerification" parameterOrder="PaymentVerification">
+      <wsdl:input name="PaymentVerification" message="tns:PaymentVerification" />
+      <wsdl:output name="PaymentVerificationResponse" message="tns:PaymentVerificationResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="TokenGenerator" parameterOrder="TokenGenerator">
+      <wsdl:input name="TokenGenerator" message="tns:TokenGenerator" />
+      <wsdl:output name="TokenGeneratorResponse" message="tns:TokenGeneratorResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Application" type="tns:Application">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PaymentVerification">
+      <soap:operation soapAction="PaymentVerification" style="document" />
+      <wsdl:input name="PaymentVerification">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="PaymentVerificationResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TokenGenerator">
+      <soap:operation soapAction="TokenGenerator" style="document" />
+      <wsdl:input name="TokenGenerator">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="TokenGeneratorResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Application">
+    <wsdl:port name="Application" binding="tns:Application">
+      <soap:address location="https://api.nextpay.org/gateway/verify" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

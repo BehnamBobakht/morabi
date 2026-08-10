@@ -1,0 +1,22 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/Assets/Default/Payment/css/style.css" rel="stylesheet" />
+    <link href="~/Assets/Default/Payment/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="payment-page">
+    <div>
+        @RenderBody()
+    </div>
+    <script src="~/Assets/Default/Payment/js/jquery.js"></script>
+    <script src="~/Assets/Default/Payment/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("end",false)
+</body>
+</html>

@@ -1,0 +1,17 @@
+﻿@using DataLayer.Base
+@model  DataLayer.ViewModels.PostVm
+
+@{
+    TempData["Title"] = Model.H1!="" && Model.H1 !=null? Model.H1 + BaseContent.WebsiteDetail.OtherTitle : Model.Name + BaseContent.WebsiteDetail.OtherTitle;
+    TempData["MetaDescription"] = Model.Summary;
+    TempData["url"] = Model.Href;
+    TempData["OgImage"] = Model.Picture.Url;
+    TempData["OgUrl"] = Model.Href;
+    TempData["canonical"] = Model.Canonical;
+    TempData["noIndex"] = Model.NoIndex;
+    TempData["noFollow"] = Model.NoFollow;
+    TempData["OgImageType"] = null;
+}
+
+
+

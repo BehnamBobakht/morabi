@@ -1,0 +1,98 @@
+﻿<style>
+
+
+    .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 250px;
+        height: 250px;
+    }
+
+    .cropit-preview-image-container {
+        cursor: move;
+    }
+
+    .image-size-label {
+        margin-top: 10px;
+    }
+
+    input, .export {
+        display: block;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+
+    /*.cropit-image-input::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+    .cropit-image-input::before {
+      content: 'Select some files';
+      display: inline-block;
+      background: linear-gradient(top, #f9f9f9, #e3e3e3);
+      border: 1px solid #999;
+      border-radius: 3px;
+      padding: 5px 8px;
+      outline: none;
+      white-space: nowrap;
+      -webkit-user-select: none;
+      cursor: pointer;
+      text-shadow: 1px 1px #fff;
+      font-weight: 700;
+      font-size: 10pt;
+    }
+    .cropit-image-input:hover::before {
+      border-color: black;
+    }
+    .cropit-image-input:active::before {
+      background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+    }*/
+</style>
+
+<div class="modal fade modal-croper">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Select Picture</h4>
+                @*<button type="button" class="close" data-bs-dismiss="modal">&times;</button>*@
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <div style="direction:ltr" class="image-editor d-flex flex-column justify-content align-items">
+                    <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp" class="cropit-image-input  mb-1">
+                    <div class="cropit-preview m-auto rounded"></div>
+                    <div class="image-size-label">
+                        Zoom
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <input type="range" class="cropit-image-zoom-input form-control mt-1 mr-1">
+                        @*<div class="d-flex align-items-center">
+                                <button class="rotate-ccw btn border"><i class="fab fa-rotate-right"></i></button>
+                                <button class="rotate-cw btn border ml-1"><i class="fab fa-rotate-left"></i></button>
+                            </div>*@
+                    </div>
+
+                    <input id="export" type="hidden" />
+                </div>
+
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" codeprocess-action="image-cropp" codeprocess-callback="closeModal" class="btn btnPink m-1 btn-block btn-sm export">Select</button>
+                <button type="button" class="btn btnWhite btn-sm m-1" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+

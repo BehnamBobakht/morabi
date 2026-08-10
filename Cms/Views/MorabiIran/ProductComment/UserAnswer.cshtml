@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DataLayer.Entities.ProductComment>
+@using DataLayer.Base
+@{
+    DataLayer.Entities.ProductComment ModelSearch = Model.FirstOrDefault();
+}
+@if (Model.Count() > 0)
+{
+    <div class="modal fade modal-first-message" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="addaddress_modal_Title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body p-4">
+                    <button type="button" class="close closeMsg" data-dismiss="modal" aria-label="Close">
+                        x
+                    </button>
+                    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/ShowRate.cshtml", ModelSearch.Rate, new ViewDataDictionary())
+                    <p>
+
+                        @Resource.Lang.ProductName
+                        <br />
+                        <a href="@ModelSearch.Product.GetLinkWithUrl()">
+                            <span> @Html.Raw(ModelSearch.Product.GetName())</span>
+                        </a>
+                    </p>
+                    <hr />
+                    <p>
+                        @Resource.Lang.Text @Resource.Lang.Messages
+                        <br />
+                        @Html.Raw(ModelSearch.Body)
+                    </p>
+                    <hr />
+                    <p>
+                        @Resource.Lang.AnswerAdmin
+                        <br />
+                        @Html.Raw(ModelSearch.AnswerString)
+                    </p>
+                    <hr />
+                    @*<p>
+                            @Html.Raw(ModelSearch.)
+                        </p>*@
+                </div>
+            </div>
+        </div>
+    </div>
+}

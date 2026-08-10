@@ -1,0 +1,64 @@
+﻿@using DataLayer.Base;
+@model IEnumerable<DataLayer.Entities.EmailInbox>
+@{
+    ViewBag.Title = "صندوق ورودی";
+    Layout = "~/Areas/Email/Views/Shared/Layout.cshtml";
+}
+
+<div class="overlay"></div>
+<header class="header">
+
+    <h1 class="page-title">
+        <a class="sidebar-toggle-btn trigger-toggle-sidebar">
+            <span class="line"></span><span class="line"></span><span class="line"></span><span class="line line-angle1"></span><span class="line line-angle2"></span>
+        </a>
+    </h1>
+    <div class="action-bar pull-left">
+        <ul class="list-inline m-b-0">
+            <li>
+                <a class="icon circle-icon glyphicon glyphicon-refresh"></a>
+            </li>
+            <li>
+                <a class="icon circle-icon glyphicon glyphicon-share-alt"></a>
+            </li>
+            <li>
+                <a class="icon circle-icon red glyphicon glyphicon-remove"></a>
+            </li>
+            <li>
+                <a class="icon circle-icon red glyphicon glyphicon-flag"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="search-box pull-left">
+        <input placeholder="جستجو..."><span class="icon glyphicon glyphicon-search"></span>
+    </div>
+
+    <div class="clearfix"></div>
+
+</header>
+
+<div id="main-nano-wrapper" class="nano">
+    <div class="nano-content">
+        <ul class="message-list">
+            @foreach (var item in Model)
+            {
+                <li class="unread" is-unread="@(!item.IsRead)">
+                    <div class="col col-1">
+                        <span class="dot" style="border-color:@item.EmailAddress.Color"></span>
+                        <p class="title">@item.FromDisplayName</p>
+                    </div>
+                    <div class="col col-2">
+                        <div class="subject">
+                            <a href="/email/inbox/item/@item.ID">@item.Subject</a>
+                        </div>
+                        <div class="date">
+                            <label for="check-box-@item.ID">@item.EmailDatetime.Value.ToPersian().ToPersian()</label>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <a href="#" class="load-more-link">نمایش پیام های بیشتر</a>
+    </div>
+</div>
+

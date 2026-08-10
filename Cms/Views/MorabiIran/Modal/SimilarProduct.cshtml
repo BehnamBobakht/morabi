@@ -1,0 +1,70 @@
+﻿@using DataLayer.Base
+<div class="modal fade suggestionModal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Resource.Lang.SimilarProducts </h5>
+                <button type="button" class="close m-0 me-auto btn" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="lastItem">
+                    <img class="" data-bind="attr: { src: viewModel.FavoriteSimilarProduct.PictureProduct }">
+                    <div class="lastItemTxt">
+                        <span data-bind="text:viewModel.FavoriteSimilarProduct.NameProduct">@Resource.Lang.ProductName: @Resource.Enum.TheProductYouWant </span>
+                        <div class="d-flex">
+                            <span>@Resource.Lang.Price:</span>  <span data-bind="text:toCurrency(viewModel.FavoriteSimilarProduct.Price())">  </span> @Resource.Lang.Toman
+                        </div>
+                    </div>
+                </div>
+                <div class="profileTitle mt-2">
+                    <h6>@Resource.Lang.SimilarProducts</h6>
+                </div>
+
+                <!--ko if:viewModel.FavoriteSimilarProduct.Items().length != 0-->
+                <div class="row">
+                    <!--ko foreach: viewModel.FavoriteSimilarProduct.Items-->
+                    <div class="col-md-6 p-1">
+                        <div class="item justify">
+                            <div class="product-item linkitem">
+                                <a data-bind="attr: { href: ProductUrl }"></a>
+
+
+                                <div class="product-img central">
+                                    <img data-bind="attr: { src: Picture.Url }" alt="SimilarProduct" title="SimilarProduct">
+                                </div>
+                                <div class="product-caption">
+                                    <span class="productName" data-bind="text:Name">نام محصول</span>
+
+                                    <div class="product-details d-flex justify-content-between flex-wrap">
+                                        
+                                        <div class="product-price-box w-100">
+                                            <div class="product-price ">
+                                                <!--ko if:DiscountPercent>0-->
+                                                <span class="old"> <del data-bind="text:toCurrency(InexpensiveItemBasePrice)">۱.۴۵۰.۰۰۰</del> <span>تومان</span></span>
+                                                <!--/ko-->
+                                                <span class="new" data-bind="text:toCurrency(InexpensiveItemPrice)"><span>۱.۲۵۰.۰۰۰ </span><span>تومان</span></span>
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <!-- <div class="product-unavailable central">
+            <span>ناموجود</span>
+        </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--/ko-->
+                </div>
+                <!--/ko-->
+
+            </div>
+        </div>
+    </div>
+</div>

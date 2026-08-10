@@ -1,0 +1,63 @@
+﻿@using DataLayer.Base
+@using DataLayer.Enumarables
+@using DataLayer.ViewModels
+@model DataLayer.ViewModels.PostSearchVm
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var title = Resource.Lang.Articles;
+    TempData["Title"] = title;
+    TempData["MetaDescription"] = BaseContent.WebsiteDetail.Summary;
+    string url = Url.Action("page", "post", new
+    {
+        pocategory = "blog"
+    }, Request.Url.Scheme);
+    TempData["url"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+    ViewBag.PageName = "blog";
+    breadcrumb.Add(new BreadcrumbVm() { Title = title, Url = url });
+}
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="blog-top page-padding">
+        <div class="container position-relative">
+            <div class="section-title position-relative align">
+                <h1>@Resource.Lang.Articles</h1>
+            </div>
+            <div class="blog-search col-lg-6 mxs-auto">
+                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Post/_Search.cshtml")
+            </div>
+            <div class="row">
+                @Html.Action("Search", "Post", new { poviewName = "_LatestBlogList", poSize = 4, poorder = Enum_PostOrder.MORE_VISIT, pocategory = "Blog", poIndex = 1 })
+            </div>
+        </div>
+    </section>
+    <section class="blog-bottom">
+        <div class="container">
+            <div class="section-title position-relative align">
+                <h1>@Resource.Lang.LastArticle</h1>
+            </div>
+            <div class="row">
+                
+                @foreach (var item in Model.Posts)
+                {
+                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Post/_BlogItemInner.cshtml", item)
+                }
+            </div>
+            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Post/_Pagination.cshtml", Model)
+
+        </div>
+    </section>
+</main>
+
+
+
+@section endScripts{
+    <script>
+        $(document).ready(function () {
+            initializeBlogSearchScripts("blog");
+        });
+    </script>
+}
+
+

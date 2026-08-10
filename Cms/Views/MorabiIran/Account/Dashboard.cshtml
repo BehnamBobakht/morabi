@@ -1,0 +1,123 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model Account
+@{
+    TempData["Title"] = Resource.Lang.Profile;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+
+    string status_payed_successfull = Enum_Code.ORDER_STATUS_SUCCESS.ToString();
+    string status_post = Enum_Code.ORDER_STATUS_POST.ToString();
+    string status_process = Enum_Code.ORDER_STATUS_PROCESS.ToString();
+
+    List<AccountOrder> listOrder = Model.AccountOrder.Where(p =>
+       //p.ParentId != null &&
+
+       (p.Code.Label == status_payed_successfull ||
+        p.Code.Label == status_post ||
+        p.Code.Label == status_process))
+    .OrderByDescending(s => s.ID).Take(5)
+    .ToList();
+}
+<div class="row m-0">
+    <div class="col-lg-6 p-1">
+        <div class="profileBoxParent">
+            <div class="profileTitle">
+                <h6>@Resource.Lang.PersonalInformation</h6>
+            </div>
+            <div class="profileBox">
+                <div class="infoItem">
+                    <span>@Resource.Lang.Name</span>
+                    <strong data-bind="text: viewModel.Account.FullName"> </strong>
+                    @*<strong  data-bind="value: viewModel.Account.FullName"></strong>*@
+
+                </div>
+                <div class="infoItem">
+                    <span>@Resource.Lang.Email</span>
+                    <strong data-bind="text:viewModel.Account.Email"> </strong>
+                </div>
+                <div class="infoItem">
+                    <span>@Resource.Lang.NationalCode</span>
+                    <strong data-bind="text: viewModel.Account.NationalCode"> </strong>
+                </div>
+                <div class="infoItem">
+                    <span>@Resource.Lang.Mobile</span>
+                    <strong data-bind="text: viewModel.Account.Mobile"> </strong>
+                </div>
+                <div class="infoItem">
+                    <span>@Resource.Lang.Newsletters</span>
+                    <strong> @Html.Action("Search", "NewsLetter", new { nlEmail = Model.Email, nlviewName = "ExistNewsLetter" })</strong>
+                </div>
+                <div class="infoItem bankCart">
+                    <span>@Resource.Lang.BankAccountCardNo</span>
+                    @*@if (Model.CardNumber.Trim().Length==16)
+                        {
+                            <strong>**** - **** - **** - @Model.CardNumber.Substring(12, 4)</strong>
+                        }*@
+                    <strong data-bind="text:viewModel.Account.CardNumber"></strong>
+
+                </div>
+                <div class="seeMore">
+                    <div class="seeMore"><button onclick="showEditProfile()" class="btn default_btn"> @Resource.Lang.EditProfile</button></div>
+                    <button class="editeDashboard" data-bs-toggle="modal" data-bs-target="#change_password_modal">
+                        <img src="/assets/@BaseWebsite.WebsiteLabel/images/profile/edite.png">
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/LastFavorite.cshtml")
+
+        @*@Html.Action("Search", "ProductLike", new { plAccountId = Model.ID, pageSize = 3, plviewName = "LastFavorite" })*@
+    </div>
+    <div class="col-lg-12 mt-2">
+        <div class="profileBoxParent">
+            <div class="profileTitle">
+                <h6> @Resource.Lang.LastOrder</h6>
+            </div>
+            @if (listOrder.Count > 0)
+            {
+                var counter = 1;
+                <div class="profileBox table-responsive">
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Resource.Lang.Row</th>
+                                <th scope="col"> @Resource.Lang.OrderNumber</th>
+                                <th scope="col">@Resource.Lang.Date </th>
+                                <th scope="col">@Resource.Lang.ShippingPrice</th>
+                                <th scope="col">@Resource.Lang.TotalPrice</th>
+                                <th scope="col">@Resource.Lang.Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (AccountOrder item in listOrder)
+                            {
+                                <tr>
+                                    <th scope="row">@counter</th>
+                                    <td>@item.ID.ToPersian()</td>
+                                    <td>@item.Datetime.ToPersianComplete()</td>
+
+                                    <td>@item.DeliveryPrice.GetCurrencyFormat().ToPersian()</td>
+                                    <td>@item.Price.GetCurrencyFormat().ToPersian()</td>
+                                    <td>@item.Code.Name</td>
+                                </tr>
+                                counter++;
+                            }
+
+                        </tbody>
+                    </table>
+                    <div class="seeMore">
+                        <a href="@Url.Action("SearchAccountOrder", "Account", new { aoViewName = "Order", aoStatus =DataLayer.Enumarables.Enum_Code.ORDER_STATUS_INSERTED.ToString()})" class="optionItem">@Resource.Lang.SeeAll</a>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

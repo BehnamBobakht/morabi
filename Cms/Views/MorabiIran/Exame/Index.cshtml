@@ -1,0 +1,211 @@
+﻿﻿@using DataLayer.Base
+@using DataLayer.Enumarables
+@using DataLayer.ViewModels
+@model  DataLayer.ViewModels.ViewExameStart
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+
+    var breadcrumb = new List<BreadcrumbVm>();
+    ViewAccount currentUser = BaseWebsite.CurrentAccount;
+    var accountId = currentUser.Id;
+    Model.AccountAnswer.QuestionAnswer = Model.AccountAnswer.QuestionAnswer == null ? "" : Model.AccountAnswer.QuestionAnswer;
+    breadcrumb.Add(new BreadcrumbVm()
+    {
+        Title = Model.Exame.Name,
+        Url = ""
+    });
+}
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+<input name="exameId" id="exameId" type="hidden" value="@Model.Exame.ID" />
+<input name="accountId" id="accountId" type="hidden" value="@accountId" />
+<input name="accountId" id="accountAnswerId" type="hidden" value="@Model.AccountAnswer.ID" />
+
+<section class="quiz-inner page-padding">
+    <div class="container">
+        <div class="ruls_content">
+            <div class="section-title position-relative align">
+                <h1>@Model.Exame.Name</h1>
+            </div>
+            <div class="">
+                <div class="text-center">
+                    <p class="alert alert-warning">برا ثبت پاسخ های هر درس در انتهای سوالات دروس دکمه ثبت پاسخ های درس مربوطه را بزنید</p>
+                </div>
+                @{ int c = 0;
+                    int conter = 1;
+                    foreach (var course in Model.Exame.ExameQuestion.Where(s => s.Active != false && !(Model.AccountAnswer.QuestionAnswer.Contains("-" + s.ExameCourseId.ToString() + "-"))).GroupBy(s => s.ExameCourse))
+                    {
+                        foreach (var item in course.ToList().OrderBy(s => s.IDRandom))
+                        {
+
+                        }
+                        c++;
+                    }
+                }
+                @foreach (var course in Model.Exame.ExameQuestion.Where(s => s.Active != false && !(Model.AccountAnswer.QuestionAnswer.Contains("-" + s.ExameCourseId.ToString() + "-"))).GroupBy(s => s.ExameCourse))
+                {
+                    var classCorse = "corseClass" + course.Key.ID;
+                    <div class="@(conter==1?"":"d-none")">
+                        <h3>@course.Key.Name</h3>
+                        <hr />
+                        @{
+                            int i = 1;
+                            foreach (var item in course.ToList())
+                            {
+                                item.IDRandom = item.ID + Model.AccountAnswer.IDRandom;
+                                if (item.IDRandom % 2 == 0)
+                                {
+                                    item.IDRandom += 4;
+                                }
+                                else
+                                {
+                                    item.IDRandom -= 3;
+                                }
+                            }
+                        }
+                    <div class="row @classCorse">
+                        @foreach (var item in course.ToList().OrderBy(s => s.IDRandom))
+                        {
+
+                            <div class="quiz-questionbox ">
+                                <div class="question quiz-question">
+
+                                    <div question-value="@item.ID">
+                                        <input type="hidden" question-name="QuestionId" id="QuestionId@(item.ID)" value="@item.ID" />
+
+                                        <p><strong>@i- </strong>@item.Text</p>
+                                        @if (item.Picture != null)
+                                        {
+                                            <img src="@item.Picture.GetUrl()" alt="@item.Text">
+                                        }
+
+                                        <div class="questionbox quiz-question-answerbox">
+                                            <div class="row">
+                                                @{int k = 1;}
+                                                @foreach (var answer in item.ExameAnswerItem.Where(s => s.Active != false))
+                                                {
+                                                    <div class="Answer4qoustion col-md-12 col-6 px-1">
+                                                        <div class="quiz-question-answers align">
+                                                            <input question-name="Answer" @*onchange="AddExame(@item.ID,@answer.ID)"*@ type="radio" @*@(Model.AccountAnswer.ExameAccountAnswerDetails.Any(s => s.AnswerId == answer.ID && s.QuestionId == item.ID) ? "checked" : "")*@ id="answer@(answer.ID)" name="answerbtn@(item.ID)" value="@answer.ID">
+                                                            <label for="answer@(answer.ID)">
+
+                                                                @k )@answer.Text
+
+
+                                                            </label>
+                                                        </div>
+
+                                                        @if (answer.Picture != null)
+                                                        {
+                                                            <img style="max-width:200px;position:unset" src="@answer.Picture.GetUrl()" alt="@answer.Text">
+                                                        }
+                                                        <br>
+                                                    </div>
+                                                    k++;
+                                                }
+                                            </div>
+
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            i++;
+
+                        }
+
+                        @if (c == 1)
+                        {
+                         
+                            <input id="open2" value="@Model.AccountAnswer.Open.ToString()" type="hidden" />
+                            <button type="submit" onclick="SendAnswer('@classCorse',@course.Key.ID,@Model.Exame.ID,true);" class="btn secondary-btn w-100">ثبت پاسخ های این درس</button>
+
+                        }
+                        else if (course.ToList().Count > 1)
+                        {
+                           
+                            <input id="open2" value="@Model.AccountAnswer.Open.ToString()" type="hidden" />
+                            <button type="submit" onclick="SendAnswer('@classCorse',@course.Key.ID,@Model.Exame.ID,false);" class="btn secondary-btn w-100">ثبت پاسخ های این درس و رفتن به درس بعدی</button>
+
+                        }
+
+                    </div>
+
+                    </div>
+                    conter++;
+                }
+
+
+                <!-- Add more questions here -->
+                @*<button type="submit" onclick="FinishExame();" class="btn secondary-btn w-100">ثبت کل پاسخنامه</button>*@
+
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+@section endScripts {
+    <script type="text/javascript">
+        @*$(function () {
+            // Config
+            var minstemp = '@ViewBag.Minute'; // Min test time
+            var mins=parseInt(minstemp);
+            var secs = 0; // Seconds (In addition to min) test time
+            var timerDisplay = $('#timerText');
+
+            //Globals:
+            var timeExpired = false;
+
+            // Test time in seconds
+            var totalTime = secs + (mins * 60);
+
+            var countDown = function (callback) {
+                var interval;
+                interval = setInterval(function () {
+                    if (secs === 0) {
+                        if (mins === 0) {
+                            timerDisplay.text('0:00');
+                            clearInterval(interval);
+                            callback();
+                            return;
+                        } else {
+                            mins--;
+                            secs = 60;
+                        }
+                    }
+                    var minute_text;
+                    if (mins > 0) {
+                        minute_text = mins;
+                    } else {
+                        minute_text = '0';
+                    }
+                    var second_text = secs < 10 ? ('0' + secs) : secs;
+
+                    timerDisplay.text(minute_text + ':' + second_text);
+                    secs--;
+                }, 1000, timeUp);
+            };
+
+            // When time elapses: submit form
+            var timeUp = function () {
+
+                timeExpired = true;
+                FinishExame();
+             /*   document.getElementById('myquiz').submit();*/
+            };
+
+            // Start the clock
+            countDown(timeUp);
+
+        });*@
+    </script>
+
+
+}

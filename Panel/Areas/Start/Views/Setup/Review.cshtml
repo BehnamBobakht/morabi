@@ -1,0 +1,104 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+
+@{
+    ViewBag.Title = "نصب تنظیمات و اطلاعات وبسایت";
+    Layout = "~/Areas/Start/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="col-sm-12 no-padding">
+        <h4>اطلاعات دامنه های نرم افزار</h4>
+        @foreach (WebsiteDomain item in ViewBag.Domains)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2 no-padding">@item.Name</label>
+                <div class="col-md-10">
+                    <span class="ltr">@item.Domain</span>
+                </div>
+            </div>
+        }
+        <hr />
+        <h4>انتخاب زبان ها</h4>
+        @foreach (Language item in ViewBag.Languages)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2 no-padding">@item.Name</label>
+                <div class="col-md-10">
+                    @if (item.IsSelected)
+                    {
+                        <span class="green"><i class="fa fa-check" aria-hidden="true"></i></span>
+                    }
+                    else
+                    {
+                        <span class="red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                    }
+                </div>
+            </div>
+        }
+        <hr />
+        <h4>انتخاب ماژول ها</h4>
+        @foreach (Module item in ViewBag.Modules)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2 no-padding">@item.Name</label>
+                <div class="col-md-10">
+                    @if (item.IsSelected)
+                    {
+                        <span class="green"><i class="fa fa-check" aria-hidden="true"></i></span>
+                    }
+                    else
+                    {
+                        <span class="red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                    }
+                </div>
+            </div>
+        }
+        <hr />
+        @if (ViewBag.Email != null)
+        {
+            <h4>ایمیل</h4>
+            <div class="form-group">
+                <label class="control-label col-md-2 no-padding">POP3</label>
+                <div class="col-md-10">
+                    <span>@ViewBag.Email.Pop3</span><span>:@ViewBag.Email.Pop3Port</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2 no-padding">SMTP</label>
+                <div class="col-md-10">
+                    <span>@ViewBag.Email.Smtp</span><span>:@ViewBag.Email.SmtpPort</span>
+                </div>
+            </div>
+            <hr />
+        }
+        @if (ViewBag.Sms != null)
+        {
+            <h4>پیامک</h4>
+            <div class="form-group">
+                <label class="control-label col-md-2 no-padding">فراهم کننده</label>
+                <div class="col-md-10">
+                    <span>@ViewBag.Sms.SmsService.Name (@ViewBag.Sms.SmsService.WebsiteDomain)</span>
+                </div>
+            </div>
+            <hr />
+        }
+        <div>
+            <div class="col-md-10 col-md-offset-2">
+                <div class="row">
+                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت نهایی و شروع نرم افزار" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

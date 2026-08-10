@@ -1,0 +1,144 @@
+﻿@model DataLayer.Entities.SendType
+
+@{
+    ViewBag.Title = Resource.Lang.Shipping;
+    Layout = Resources.Default.STORE_LAYOUT;
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/store/dashboard"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active">حمل و نقل در استان ها</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-sm-2">
+            <span>کشور</span>
+
+            <div class="form-group">
+                <select class="form-control" onchange="CountryDropShipping()" id="selectedCountryShipping" disabled>
+                    <option value="-1">@Resource.Lang.Select</option>
+                    <option value="0">همه کشور ها</option>
+                    <!--ko foreach: viewModel.Country.CountryList() -->
+                    <option data-bind="value:Id , text:FaName"></option>
+                    <!--/ko-->
+                </select>
+            </div>
+
+        </div>
+        <div class="col-sm-2">
+            <span>استان</span>
+            <div class="form-group">
+                <select class="form-control country" onchange="stateDropShipping()" id="selectedStateShipping" @*data-bind="value:viewModel.Account.StateId"*@>
+                    <option value="-1">@Resource.Lang.Select</option>
+                    <option value="0">همه استان ها</option>
+                    <!--ko foreach: viewModel.State.StateList() -->
+                    <option data-bind="value:Id , text:Name"></option>
+                    <!--/ko-->
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <span>شهر</span>
+            <div class="form-group">
+                <select class="form-control" id="selectedCityShipping">
+
+                    <option value="-1">@Resource.Lang.Select</option>
+                    <option value="0">همه شهر ها</option>
+                    <!--ko foreach: viewModel.City.CityList() -->
+                    <option data-bind="value:Id , text:Name"></option>
+                    <!--/ko-->
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <span>زمان ارسال</span>
+            <input type="number" class="form-control" id="sendTime" />
+        </div>
+        <div class="col-sm-2">
+            <span>هزینه ارسال به تومان</span>
+            <input type="number" class="form-control" id="sendPrice" />
+        </div>
+        <div class="col-sm-2 d-flex justify-content-center align-items-center">
+            <input type="button" class="btn btn-success" value="افزودن" onclick="AddShippingCity()" />
+        </div>
+    </div>
+
+    <p class="pt-2 pb-2 alert-warning">
+        در صورت انتخاب همه استان ها، شهر ها و استان های قبلی  حذف شده و همه استان ها در محاسبات لحاظ میشود.
+    </p>
+    <p class="alert-warning">
+    <p class="pt-2 pb-2  alert-warning">
+        در صورت انتخاب همه  شهر ها، شهر های قبلی درج شده در آن استان حذف شده و همه  شهر های استان انتخابی در محاسبات لحاظ میشود.
+    </p>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover c_table theme-color">
+                <thead>
+                    <tr>
+
+                        <th>کشور</th>
+                        <th>استان</th>
+                        <th>شهر</th>
+                        <th>زمان ارسال</th>
+                        <th>هزینه ارسال</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--ko foreach:viewModel.Shipping.List-->
+                    <tr>
+                        <td>
+                            <span data-bind="text:CountyName"></span>
+                        </td>
+
+                        <td>
+                            <span data-bind="text:StateName"></span>
+
+                        </td>
+                        <td>
+                            <span data-bind="text:CityName"></span>
+
+                        </td>
+                        <td>
+                            <span data-bind="text:SendTime"></span>
+                            روز
+                        </td>
+                        <td>
+                            <span data-bind="text:toCurrency(SendPrice)"></span>
+                            تومان
+
+                        </td>
+                        <td>
+                            <button type="button" data-bind="click: function(data, event) { RemoveShippingCity(Id, data, event) }" class="btn btn-primary">حذف</button>
+                        </td>
+                    </tr>
+                    <!--/ko-->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            doGetCountryShipping();
+            doGetListShippingCity();
+            
+            
+           
+
+        });
+    </script>
+
+
+}

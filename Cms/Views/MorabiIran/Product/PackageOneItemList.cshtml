@@ -1,0 +1,40 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model  ProductSearchVm
+@{
+   
+}
+<p class="alert alert-warning">لطفا از میان دوره ها یکی را انتخاب نمایید و سپس روی ثبت نام در دوره کلیک کنید</p>
+@foreach (var item in Model.Products2)
+{
+    bool isAvailable = item.Code.Label == Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString();
+    StoreProductQuantityVm firstStoreProductQuantity = null;
+    if (isAvailable && item.Variety.storeProductQuantities.Any())
+    {
+        firstStoreProductQuantity = item.Variety.storeProductQuantities[0];
+    }
+    <div class=" m-2">
+        @if (isAvailable)
+        {
+            <div class="home-course-link central">
+                <label for="@("package"+item.ID)">
+                    <input quantityId="@firstStoreProductQuantity.ID" type="radio" name="addPackage" id="@("package"+item.ID)" />
+                    <span>@item.Name</span>
+                    <span>@firstStoreProductQuantity.Price.GetCurrencyFormat() @Resource.Lang.Toman</span>
+                </label>
+            </div>
+        }
+
+    </div>
+}
+
+
+
+
+
+
+
+
+
+

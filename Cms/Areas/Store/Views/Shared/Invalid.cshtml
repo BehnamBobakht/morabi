@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = Resource.Lang.Error;
+    Layout = Resources.Default.STORE_LAYOUT_BLANK;
+
+}
+
+<div class="card auth_form">
+
+    <div class="header">
+        <img class="logo" src="/areas/store/assets/images/logo.svg" alt="">
+        <h5>@Resource.Lang.InvalidRequest</h5>
+
+    </div>
+    <div class="body">
+        <a href="/store/dashboard" class="btn btn-primary btn-block waves-effect waves-light">@Resource.Lang.Dashboard</a>
+      
+    </div>
+</div>
+
+
+
+
+
+@section picture{
+    <img src="~/areas/store/assets/images/404.svg" />
+}

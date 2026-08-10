@@ -1,0 +1,97 @@
+﻿
+    <div class="modal fade modal-first-message" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="addaddress_modal_Title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+               
+                <div class="modal-body p-4">
+                    <button type="button" class="close closeMsg" data-bs-dismiss="modal" aria-label="Close">
+                        x
+                    </button>
+                    @*viewModel.Account.UserComment().Rate*@
+                    @*<input type="text" id="rate" data-bind="value: viewModel.Account.UserComment().Rate" />*@
+
+
+                    <!--ko if:viewModel.Account.UserComment()!=null-->
+
+                <div class="product_rating">
+
+
+
+                    <!--ko if:viewModel.Account.UserComment().Rate == 0  -->
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.UserComment().Rate == 1 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.UserComment().Rate == 2 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.UserComment().Rate == 3 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.UserComment().Rate == 4 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="far fa-star"></i></a>
+                    <!--/ko-->
+                    <!--ko if:viewModel.Account.UserComment().Rate == 5 -->
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <a class="rateStar"><i class="fas fa-star"></i></a>
+                    <!--/ko-->
+
+                </div>
+
+                    @*@Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/ShowRate.cshtml", Convert.ToDouble(2), new ViewDataDictionary())*@
+
+                    <p>
+                        @Resource.Lang.ProductName
+                        <br />
+
+                        <span data-bind="text: viewModel.Account.UserComment().NameProduct"></span>
+                        @*@Html.Raw(ModelSearch.Product.GetName())*@
+                    </p>
+                    <hr />
+                    <p>
+                        @Resource.Lang.Text
+                        <br />
+                        <span data-bind="text: viewModel.Account.UserComment().Body"></span>
+
+                        @*@Html.Raw(ModelSearch.Body)*@
+                    </p>
+                    <hr />
+                    <p>
+                        @Resource.Lang.AnswerAdmin
+                        <br />
+                        <span data-bind="text: viewModel.Account.UserComment().AnswerString"></span>
+                        @*@Html.Raw(ModelSearch.AnswerString)*@
+                    </p>
+                    <hr />
+                    <!--/ko-->
+                    @*<p>
+            @Html.Raw(ModelSearch.)
+        </p>*@
+                </div>
+            </div>
+        </div>
+    </div>

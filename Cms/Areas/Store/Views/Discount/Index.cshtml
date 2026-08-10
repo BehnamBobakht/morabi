@@ -1,0 +1,184 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+
+@model IEnumerable<DataLayer.ViewModels.CreateDiscountVm>
+
+@{
+    Layout = Resources.Default.STORE_LAYOUT;
+
+    string index = BaseRouteView.GetStringValue(Request, "index");
+    var pageSizeRequest = BaseRouteView.GetStringValue(Request, "pageSize");
+    string pageSize = pageSizeRequest != null ? pageSizeRequest : ViewBag.pageSize;
+   
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+@section head{
+
+    <link href="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.js"></script>
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.fa.min.js"></script>
+    <script>
+        $(".datepicker").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'yy/mm/dd',
+        });
+    </script>
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active">@Resource.Lang.Discount</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <a class="btn btn-success btn-icon float-right" href="/store/discount/create"><i class="zmdi zmdi-plus"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card project_list">
+
+                <div class="table-responsive">
+                    <table class="table table-hover c_table theme-color">
+                        <thead>
+                            <tr>
+                                @*<th style="width: 30px;">#</th>*@
+                                @*<th>نوع تخفیف  </th>*@
+                                <th>نام</th>
+                                <th>تاریخ شروع</th>
+                                <th>تاریخ پایان</th>
+                                <th>وضعیت</th>
+
+                                @*<th>قیمت اصلی</th>
+                                <th>میزان تخفیف</th>
+                                <th>قیمت نهایی</th>*@
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    @*<td>@Html.DisplayFor(modelItem => item.RowId)</td>*@
+                                    @*<td>@item.Group.Name (@item.Group.GetDiscountString())</td>*@
+                                    <td>@item.GroupName</td>
+                                    @*<td>
+                                        @if (item.Type.Label == Enum_Code.DISCOUNT_TYPE_PRODUCT.ToString())
+                                        {
+                                            <span>@item.Product.Price.GetCurrencyFormat().ToPersian()</span>
+                                            <span>@Resource.Lang.Corrency</span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                    @if (item.GetDiscountValue() == null)
+                                    {
+                                        <td>-</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.GetDiscountValue().GetCurrencyFormat().ToPersian() + @Resource.Lang.Corrency </td>
+                                    }
+                                    <td>
+                                        @if (item.Type.Label == Enum_Code.DISCOUNT_TYPE_PRODUCT.ToString())
+                                        {
+                                            <span>@((item.Product.Price - item.GetDiscountValue()).GetCurrencyFormat().ToPersian())</span>
+                                            <span>@Resource.Lang.Corrency</span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>*@
+                                    <td>
+                                        @(item.StartDatetime.HasValue? item.StartDatetime.ToPersian() : "-") 
+                                    </td>
+                                    <td>
+                                        @(item.EndDatetime.HasValue ? item.EndDatetime.ToPersian() : "-")
+                                    </td>
+                                    <td>
+                                        @((item.Active) ? Resource.Lang.Active : Resource.Lang.Deactive)
+                                    </td>
+                                    <td>
+                                        <a href="/Store/discount/edit/@item.ID" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="/Store/discount/Delete/@item.ID" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
+
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <ul class="pagination pagination-primary mt-4">
+                    @if (StartIndex > 1)
+                    {
+                        <li class="page-item ">
+                            <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        index = 1,
+                                       
+                                    })">1</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item ">
+                            <a class="page-link" href="#"><i class="zmdi zmdi-arrow-left"></i></a>
+                        </li>
+                    }
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="page-item @active">
+                            <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        index = i,
+                                      
+                                    })">@(i.ToPersian())</a>
+                                </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("index", new
+                                    {
+                                        pageSize=pageSize,
+                                        index = EndIndex,
+                                      
+                                    })">@Resource.Lang.LastPage</a>
+                                </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="#"><i class="zmdi zmdi-arrow-right"></i></a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+

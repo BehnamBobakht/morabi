@@ -1,0 +1,461 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model IEnumerable<ViewStoreProduct>
+
+@{
+    Layout = Resources.Default.STORE_LAYOUT;
+
+    string index = BaseRouteView.GetStringValue(Request, "index");
+    var pageSizeRequest = BaseRouteView.GetStringValue(Request, "pageSize");
+    string pageSize = pageSizeRequest != null ? pageSizeRequest : ViewBag.pageSize;
+    string name = BaseRouteView.GetStringValue(Request, "name");
+
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active">@Resource.Lang.Products</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-icon float-right" data-toggle="modal" data-target="#excelModal">
+                <i class="zmdi zmdi-upload"></i>
+            </button>
+            <a class="btn btn-success btn-icon float-right" href="/store/products/create"><i class="zmdi zmdi-plus"></i></a>
+            <a class="btn btn-primary btn-icon float-right" href="@Url.Action("DownloadExcel")"><i class="zmdi zmdi-download"></i></a>
+            <button type="button" class="btn btn-info btn-icon float-left" data-toggle="modal" data-target="#priceModal">
+                <i class="zmdi zmdi-money"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="excelModal" tabindex="-1" role="dialog" aria-labelledby="excelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="Products/UploadExcel" method="post" enctype="multipart/form-data" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="excelModalLabel">
+                    بارگزاری فایل کالاها
+                </h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <div>دقت کنید که موجودی کالاها با موجودی فعلی <strong>جمع</strong> خواهد شد</div>
+                <input type="file" name="file" required />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resource.Lang.Cancel</button>
+                <input type="submit" class="btn btn-primary" value="@Resource.Lang.FileUpload" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <form action="Products/UpdatePrice" method="post" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="priceModalLabel">
+                    تغییر گروهی قیمت کالاها
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="GroupPricingType" class="col-form-label">تغییر قیمت برای:</label>
+                        <select id="GroupPricingType" name="groupPricingType" class="form-control">
+                            <option value="0">@Resource.Lang.Shop</option>
+                            <option value="1">@Resource.Lang.ProductType</option>
+                            <option value="2">@Resource.Lang.ProductCategory</option>
+                            <option value="3">@Resource.Lang.ProductSubCategory</option>
+                            <option value="4">@Resource.Lang.Product</option>
+                            <option value="5">@Resource.Lang.Variety</option>
+                        </select>
+                    </div>
+                    <div id="ProductTypeDiv" class="form-group col-sm-6 d-none">
+                        <label class="col-form-label">@Resource.Lang.ProductType:</label>
+                        <select id="ProductTypeId" name="productTypeId" class="form-control"></select>
+                    </div>
+                    <div id="ProductCategoryDiv" class="form-group col-sm-6 d-none">
+                        <label class="col-form-label">@Resource.Lang.ProductCategory:</label>
+                        <select id="ProductCategoryId" name="productCategoryId" class="form-control"></select>
+                    </div>
+                    <div id="ProductSubCategoryDiv" class="form-group col-sm-6 d-none">
+                        <label class="col-form-label">@Resource.Lang.ProductSubCategory:</label>
+                        <select id="ProductSubCategoryId" name="productSubCategoryId" class="form-control"></select>
+                    </div>
+                    <div id="ProductDiv" class="form-group col-sm-6 d-none">
+                        <label class="col-form-label">@Resource.Lang.Product:</label>
+                        <select id="ProductId" name="productId" class="form-control"></select>
+                    </div>
+                    <div id="QuantityDiv" class="form-group col-sm-6 d-none">
+                        <label class="col-form-label">@Resource.Lang.Variety:</label>
+                        <select id="QuantityId" name="QuantityId" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label class="col-form-label">@Resource.Lang.Type:</label>
+                        <select id="percent" name="percent" class="form-control">
+                            <option value="true">درصدی</option>
+                            <option value="false">مبلغی</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="ChangeAmount" class="col-form-label">درصد / مبلغ</label>
+                        <input dir="ltr" id="ChangeAmount" name="changeAmount" type="number" min="0" step="0.01" class="form-control text-left" autocomplete="off">
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label class="col-form-label">افزایش / کاهش:</label>
+                        <select id="increase" name="increase" class="form-control">
+                            <option value="true">افزایش</option>
+                            <option value="false">کاهش</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resource.Lang.Cancel</button>
+                <input type="submit" class="btn btn-primary" value="@Resource.Lang.Submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="col-sm-10">
+
+    <div class="row">
+        <div class="col-lg-5">
+
+            <input type="text" class="form-control" name="txtSearch" id="txtSearch" value="@name" placeholder=@Resource.Lang.Search />
+            @*@Html.ActionLink("search", "index", "Products", new { name = "searchtext", index = "1", pageSize = pageSize }, new { @class = "link" })*@
+
+        </div>
+        <div class="col-lg-2">
+            @*<input type="button" name="button"
+                class="button1" value="@Resource.Lang.Search" />*@
+            <a class="btn btn-primary link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        name = "searchtext",
+                                        index = 1,
+                                        activeLocation=false
+                                    })">@Resource.Lang.Search</a>
+
+
+                                </div>
+
+                            </div>
+                            <div class="container-fluid">
+                                <div class="row clearfix">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card project_list">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover c_table theme-color">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:50px;">@Resource.Lang.Product</th>
+                                                            <th></th>
+                                                            @*<th>@Resource.Lang.Status </th>*@
+
+                                                            <th>@Resource.Lang.Date </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <img class="rounded avatar" src="@item.Product.Picture.GetUrl()" alt="">
+                                                                </td>
+
+                                                                <td>
+                                                                    <strong>@item.Product.Name</strong><br>
+                                                                    @*<small>Cost: $215</small>*@
+                                                                </td>
+
+                                                                @*<td>@item.Status.Name</td>*@
+
+                                                                <td>@item.CreateDate.ToPersian()</td>
+                                                                <td>
+                                                                    <a href="/Store/Products/productquantity/@item.ID" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-edit"></i></a>
+                                                                    <a href="/Store/Products/Delete/@item.ID" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <ul class="pagination pagination-primary mt-4">
+                                                @if (StartIndex > 1)
+                                                {
+                                                    <li class="page-item ">
+                                                        <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        name = name,
+                                        index = 1,
+                                        activeLocation=false
+                                    })">1</a>
+                                                    </li>
+                                                }
+                                                @*else
+                                                    {
+                                                        <li class="page-item ">
+                                                            <a class="page-link" href="#"><i class="zmdi zmdi-arrow-left"></i></a>
+                                                        </li>
+                                                    }*@
+                                                @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                                                {
+                                                    var active = CurrentIndex == i ? "active" : "";
+                                                    <li class="page-item @active">
+                                                        <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        name = name,
+                                        index = i
+                                    })">@(i.ToPersian())</a>
+                                                    </li>
+                                                }
+                                                @if (CurrentIndex < EndIndex)
+                                                {
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="@Url.Action("index", new
+                                    {
+                                        pageSize=pageSize,
+                                        name = name,
+                                        index = EndIndex,
+                                        activeLocation=false
+                                    })">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                            @*else
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="zmdi zmdi-arrow-right"></i></a>
+                                    </li>
+                                }*@
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+@section script
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.link').click(function () {
+                var name = $("#txtSearch").val();
+                this.href = this.href.replace("searchtext", name);
+            });
+
+            restType();
+
+            $("select#GroupPricingType").change(function () {
+                controlType();
+            });
+
+            $("select#ProductTypeId").change(function() {
+                var type = $("select#GroupPricingType").val();
+                var typeNumber = parseInt(type);
+                if (typeNumber >= 2) {
+                    var id = $(this).val();
+                    loadProductCategories(id);
+                }
+            });
+
+            $("select#ProductCategoryId").change(function () {
+                var type = $("select#GroupPricingType").val();
+                var typeNumber = parseInt(type);
+                if (typeNumber >= 3) {
+                    var id = $(this).val();
+                    loadProductSubCategories(id);
+                }
+            });
+
+            $("select#ProductSubCategoryId").change(function () {
+                var type = $("select#GroupPricingType").val();
+                var typeNumber = parseInt(type);
+                if (typeNumber >= 4) {
+                    var id = $(this).val();
+                    loadProducts(id);
+                }
+            });
+
+            $("select#ProductId").change(function () {
+                var type = $("select#GroupPricingType").val();
+                var typeNumber = parseInt(type);
+                if (typeNumber >= 5) {
+                    var id = $(this).val();
+                    loadQuantities(id);
+                }
+            });
+        });
+
+        function restType() {
+            $("select#GroupPricingType").val('0');
+            $("select#ProductTypeId").find('option').remove().end();
+            $("select#ProductCategoryId").find('option').remove().end();
+            $("select#ProductSubCategoryId").find('option').remove().end();
+            $("select#ProductId").find('option').remove().end();
+            $("select#QuantityId").find('option').remove().end();
+        }
+
+        function controlType() {
+            $("div[id^=Product]").addClass('d-none');
+            var type = $("select#GroupPricingType").val();
+            var typeNumber = parseInt(type);
+            if (typeNumber > 0) {
+                loadProductTypes();
+            }
+        }
+
+        function loadProductTypes() {
+            $.ajax({
+                type: "GET",
+                url: "/store/products/LoadProductTypes",
+                beforeSend: function () {
+                    $("div#ProductTypeDiv").removeClass('d-none');
+                    $("select#ProductTypeId").find('option').remove().end();
+                    $("select#ProductTypeId").append("<option>@Resource.Lang.Loading</option>");
+                },
+                success: function (result, status, xhr) {
+                    $("select#ProductTypeId").find('option').remove().end();
+                    $.each(result, function (i, obj) {
+                        var optionHtml = "<option value=" + obj.Value + ">" + obj.Text + "</option>";
+                        $("select#ProductTypeId").append(optionHtml);
+                    });
+                    $("select#ProductTypeId").trigger("change");
+                },
+                error: function () {
+                    $("div#ProductDiv").addClass('d-none');
+                }
+            });
+        }
+
+        function loadProductCategories(productTypeId) {
+            $.ajax({
+                type: "GET",
+                url: "/store/products/LoadProductCategories",
+                data: {
+                    productTypeId: productTypeId
+                },
+                beforeSend: function () {
+                    $("div#ProductCategoryDiv").removeClass('d-none');
+                    $("select#ProductCategoryId").find('option').remove().end();
+                    $("select#ProductCategoryId").append("<option>@Resource.Lang.Loading</option>");
+                },
+                success: function (result, status, xhr) {
+                    $("select#ProductCategoryId").find('option').remove().end();
+                    $.each(result, function (i, obj) {
+                        var optionHtml = "<option value=" + obj.Value + ">" + obj.Text + "</option>";
+                        $("select#ProductCategoryId").append(optionHtml);
+                    });
+                    $("select#ProductCategoryId").trigger("change");
+                },
+                error: function () {
+                    $("div#ProductDiv").addClass('d-none');
+                }
+            });
+        }
+
+        function loadProductSubCategories(productCategoryId) {
+            $.ajax({
+                type: "GET",
+                url: "/store/products/LoadProductSubCategories",
+                data: {
+                    productCategoryId: productCategoryId
+                },
+                beforeSend: function () {
+                    $("div#ProductSubCategoryDiv").removeClass('d-none');
+                    $("select#ProductSubCategoryId").find('option').remove().end();
+                    $("select#ProductSubCategoryId").append("<option>@Resource.Lang.Loading</option>");
+                },
+                success: function (result, status, xhr) {
+                    $("select#ProductSubCategoryId").find('option').remove().end();
+                    $.each(result, function (i, obj) {
+                        var optionHtml = "<option value=" + obj.Value + ">" + obj.Text + "</option>";
+                        $("select#ProductSubCategoryId").append(optionHtml);
+                    });
+                    $("select#ProductSubCategoryId").trigger("change");
+                },
+                error: function () {
+                    $("div#ProductDiv").addClass('d-none');
+                }
+            });
+        }
+
+        function loadProducts(productSubCategoryId) {
+            $.ajax({
+                type: "GET",
+                url: "/store/products/LoadProducts",
+                data: {
+                    productSubCategoryId: productSubCategoryId
+                },
+                beforeSend: function () {
+                    $("div#ProductDiv").removeClass('d-none');
+                    $("select#ProductId").find('option').remove().end();
+                    $("select#ProductId").append("<option>@Resource.Lang.Loading</option>");
+                },
+                success: function (result, status, xhr) {
+                    $("select#ProductId").find('option').remove().end();
+                    $.each(result, function (i, obj) {
+                        var optionHtml = "<option value=" + obj.Value + ">" + obj.Text + "</option>";
+                        $("select#ProductId").append(optionHtml);
+                    });
+                    $("select#ProductId").trigger("change");
+                },
+                error: function() {
+                    $("div#ProductDiv").addClass('d-none');
+                }
+            });
+        }
+
+        function loadQuantities(productId) {
+            $.ajax({
+                type: "GET",
+                url: "/store/products/LoadProductQuantities",
+                data: {
+                    productId: productId
+                },
+                beforeSend: function () {
+                    $("div#QuantityDiv").removeClass('d-none');
+                    $("select#QuantityId").find('option').remove().end();
+                    $("select#QuantityId").append("<option>@Resource.Lang.Loading</option>");
+                },
+                success: function (result, status, xhr) {
+                    $("select#QuantityId").find('option').remove().end();
+                    $.each(result, function (i, obj) {
+                        var optionHtml = "<option value=" + obj.Value + ">" + obj.Text + "</option>";
+                        $("select#QuantityId").append(optionHtml);
+                    });
+                },
+                error: function() {
+                    $("div#QuantityDiv").addClass('d-none');
+                }
+            });
+        }
+
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Profile/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="m-t-40 card-box">
+        <div class="text-center">
+            <h4 class="text-uppercase font-bold m-b-0">بازیابی رمز عبور</h4>
+            <p class="text-muted m-b-0 font-13 m-t-20">برای بازیابی رمز عبور، ایمیل خود را وارد کنید تا لینک بازیابی برای شما ارسال شود</p>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal m-t-20">
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input class="form-control text-center ltr" type="text" name="email" autocomplete="off" autofocus placeholder="آدرس ایمیل">
+                    </div>
+                </div>
+
+                @Html.Partial("~/Views/Public/Message.cshtml", (DataLayer.ViewMessage)ViewBag.Message)
+
+                <div class="form-group text-center m-t-20 m-b-0">
+                    <div class="col-xs-12">
+                        <button class="btn btn-custom btn-bordred btn-block waves-effect waves-light" type="submit">ارسال ایمیل بازیابی</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+}

@@ -1,0 +1,68 @@
+﻿@using DataLayer.Base
+@model IEnumerable<DataLayer.ViewModels.ViewSurveyAnswer>
+@{
+    ViewBag.Title = Resource.Lang.Forms;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+
+
+@*@using (Html.BeginForm())
+{*@
+    <div>
+        <div class="col-lg-12">
+            <div class="card-box table-responsive">
+                <div class="clear"></div>
+
+                <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                    <thead>
+                        <tr>
+                            <th class="first">#</th>
+                            <th>@Resource.Lang.Code</th>
+                            <th>@Resource.Lang.DateTime</th>
+                            <th>@Resource.Lang.Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.RowId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Id) </td>
+                            <td>@item.CreateDateTime.ToPersianWithTime()</td>
+                            <td>
+                                @item.Name
+                                @if (item.Account != null)
+                                {
+                                    @item.Account.FullName
+                                    <br />
+                                    @item.Account.Email
+                                    <br />
+                                    @item.Account.Phone
+                                }
+
+                            </td>
+                            <td>
+
+                                @Html.ActionLink(Resource.Lang.Details, "Details", new { id = item.Id, Controller = "SurveyAnswer" })
+
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <a href="@Url.Action("index","Survey")" class="icon circle-icon glyphicon 	glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+
+            </div>
+        </div><!-- end col -->
+    </div>
+@*}*@

@@ -1,0 +1,100 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model DataLayer.Entities.Shop
+@{
+    ViewBag.Title = Resource.Lang.EditShop;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+}
+
+@using (Html.BeginForm("edit", "shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.PictureId)
+    @Html.HiddenFor(model => model.Approved)
+    @Html.HiddenFor(model => model.Active)
+    @Html.HiddenFor(model => model.UserCreatorId)
+    @Html.HiddenFor(model => model.TemplateId)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6 no-padding">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.ID)
+                        <div>
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="row">
+                                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.WebsiteId, Resource.Lang.WebSite, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("WebsiteId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.WebsiteId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CityId, Resource.Lang.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("CityId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, Resource.Lang.ShopName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Label, Resource.Lang.Lable, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Label, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Label, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 no-padding-left">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @if (Model.Picture != null)
+                                {
+                                    <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="210" data-default-file="@Model.Picture.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="210" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

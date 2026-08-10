@@ -1,0 +1,190 @@
+﻿@model DataLayer.Entities.Discount
+@using DataLayer.ViewModels;
+
+@{
+    ViewBag.Title = Resource.Lang.NewDiscount;
+    Layout = Resources.Default.STORE_LAYOUT;
+}
+@section head{
+
+    <link href="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.js"></script>
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.fa.min.js"></script>
+    <script>
+        $(".datepicker").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'yy/mm/dd',
+        });
+        $(document).ready(function () {
+            $(".ValueTypeId .form-group").hide();
+            $(".TypeId .form-group").hide();
+            setValueType();
+            setType();
+
+            $("#ValueTypeId").change(function () {
+                setValueType();
+            });
+            $("#TypeId").change(function () {
+                setType();
+            });
+            function setValueType() {
+                var valueTypeId = $("#ValueTypeId").val();
+                if (valueTypeId != "")
+                {
+                    $(".ValueTypeId .form-group").hide();
+                    $(".ValueTypeId [show-part=" + valueTypeId + "]").show();
+
+
+                    $(".ValueTypeId input[showpart != " + valueTypeId + "]").val("");
+
+                }
+              
+            }
+            function setType() {
+                var typeId = $("#TypeId").val();
+                if (typeId != "") {
+                    $(".TypeId .form-group").hide();
+                    $(".TypeId [show-part=" + typeId + "]").show();
+                }
+            }
+        });
+          
+
+          
+
+    </script>
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/store/dashboard"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active">@Resource.Lang.EditDiscount</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <a class="btn btn-primary btn-icon float-right right_icon_toggle_btn" href="/store/discount"><i class="zmdi zmdi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card ">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @if (ViewBag.Message != null)
+                        {
+                            @Html.Partial("Message", (ViewMessage)ViewBag.Message)
+                        }
+                      
+                        @Html.HiddenFor(model=>model.ID)
+                        <div class="form-group">
+                            @Html.Label(Resource.Lang.DiscountType, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TypeId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control", @codeprocess = "show-part" })
+                            </div>
+                        </div>
+                        <div class="TypeId">
+                            <div show-part="41" class="form-group">
+                                @Html.LabelFor(model => model.ProductTypeId, Resource.Lang.ProductType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("ProductTypeId", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div show-part="42" class="form-group">
+                                @Html.LabelFor(model => model.ProductCategoryId, Resource.Lang.ProductCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("ProductCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div show-part="43" class="form-group">
+                                @Html.LabelFor(model => model.ProductSubCategoryId, Resource.Lang.ProductSubCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("ProductSubCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div show-part="44" class="form-group">
+                                @Html.LabelFor(model => model.ProductId, Resource.Lang.Products, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div show-part="3099" class="form-group">
+                                @Html.LabelFor(model => model.ProductId, Resource.Lang.Variety, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("StoreProductQuantityId", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label(Resource.Lang.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("ValueTypeId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control", @codeprocess = "show-part" })
+                            </div>
+                        </div>
+                        <div class="ValueTypeId">
+                            <div show-part="52" class="form-group">
+                                @Html.LabelFor(model => model.PriceValue, Resource.Lang.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.PriceValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off",@showpart = "52" } })
+                                </div>
+                            </div>
+
+                            <div show-part="53" class="form-group">
+                                @Html.LabelFor(model => model.PercentValue, Resource.Lang.Percent, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.PercentValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off",@showpart="53" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StartDatetime, Resource.Lang.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input id="start_date" name="start_date" class="form-control datepicker" autocomplete="off" codeprocess="date" value="@ViewBag.start_date" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EndDatetime, Resource.Lang.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input id="end_date" name="end_date" class="form-control datepicker" autocomplete="off" codeprocess="date" value="@ViewBag.end_date" />
+                            </div>
+                        </div>
+                     
+                        <div class="form-group ">
+                            <div class=" ">
+                                @Html.LabelFor(model => model.Active, Resource.Lang.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="radio">
+                                    <input type="radio" value="true" name="Active" id="Active1" @(Model.Active ? " checked " : "") />
+                                    @Html.Label(Resource.Lang.Active, new { @for = "Active1" })
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" value="false" name="Active" id="Active2" @(Model.Active ? "" : "checked") />
+                                    @Html.Label(Resource.Lang.Deactive, new { @for = "Active2" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="@Resource.Lang.Submit" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,52 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+
+@model DataLayer.Entities.ProductBrand
+
+@{
+    ViewBag.Title = Resource.Lang.ListOfBrandUsers + Model.Name;
+    List<SiteUser> list = ViewBag.User;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="BrandId" value="@Model.ID" />
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-12 no-padding">
+                        @foreach (var item in list)
+                        {
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    @if (Model.ProductBrandUser.Any(p => p.UserId == item.ID))
+                                    {
+                                        <input id="checkbox-@item.ID" type="checkbox" value="@item.ID" name="UserId" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input id="checkbox-@item.ID" type="checkbox" value="@item.ID" name="UserId" />
+                                    }
+                                    <label for="checkbox-@item.ID" class="control-label no-padding">@item.FullName (@item.Email)</label>
+                                </div>
+                            </div>
+                            
+                        }
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+
+
+

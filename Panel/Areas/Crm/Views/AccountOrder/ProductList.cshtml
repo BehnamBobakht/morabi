@@ -1,0 +1,59 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model List<KeyValuePair<Product, int>>
+
+@{
+    ViewBag.Title = Resource.Lang.ProductList;
+    Layout = "~/Views/Shared/PrintLayout.cshtml";
+    double sumPrice = 0;
+    int sumCount = 0;
+}
+
+<div class="col-sm-12">
+    <div class="text-left font-bold">
+       @Resource.Lang.Date_TimePrint: @DateTime.Now.ToPersianWithTime().ToPersian()
+    </div>
+    <div class="devider-15"></div>
+    <table class="table-middle table-print table table-striped table-bordered has-first dataTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Resource.Lang.ProductCode</th>
+                <th>@Resource.Lang.ProductName</th>
+                <th>@Resource.Lang.CurrentPrice</th>
+                <th>@Resource.Lang.Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                KeyValuePair<Product, int> item = Model[i];
+                sumPrice = sumPrice + (item.Value * item.Key.Price.GetValueOrDefault());
+                sumCount = sumCount + item.Value;
+
+                <tr>
+                    <td>@((i + 1).ToString().ToPersian())</td>
+                    <td>
+                        @if (string.IsNullOrEmpty(item.Key.SyncId) == false && item.Key.SyncId.IsGuid() == false)
+                        {
+                            <span>@item.Key.SyncId</span>
+                        }
+                        else
+                        {
+                            <span>@item.Key.ID</span>
+                        }
+                    </td>
+                    <td>@item.Key.Name</td>
+                    <td>@item.Key.Price.GetCurrencyFormat().ToPersian()</td>
+                    <td>@item.Value.ToPersian()</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3"></td>
+                <td>@sumPrice.GetCurrencyFormat().ToPersian()</td>
+                <td>@sumCount</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

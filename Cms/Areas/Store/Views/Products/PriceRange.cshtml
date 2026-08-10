@@ -1,0 +1,131 @@
+﻿@using DataLayer.Entities;
+@using DataLayer.Base;
+
+@model PriceRange
+
+@{
+    List<PriceRange> priceList = ViewBag.PriceList;
+    ViewBag.Title = Resource.Lang.Price;
+}
+
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item">@Resource.Lang.Product</li>
+                <li class="breadcrumb-item ">@Resource.Lang.PriceRange</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <a class="btn btn-primary btn-icon float-right right_icon_toggle_btn" href="/store/products"><i class="zmdi zmdi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card project_list">
+                @using (Html.BeginForm())
+                {
+                    @*@Html.AntiForgeryToken()*@
+                    @Html.Hidden("StoreProductQuantityId", Model.StoreProductQuantityId)
+                    <div class="row clearfix input-box">
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.StartCount, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.EndCount, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" value="@Resource.Lang.New" />
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <div class="table-responsive">
+                    <table class="table table-hover c_table theme-color">
+                        <thead>
+                            <tr>
+                                <th>@Resource.Lang.From </th>
+                                <th>@Resource.Lang.To </th>
+                                <th>@Resource.Lang.Price (@Resource.Lang.Corrency)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in priceList.OrderBy(s => s.StartCount))
+                            {
+
+                                <tr>
+                                    <td>
+                                        <strong>@item.StartCount</strong><br>
+                                    </td>
+                                    <td>
+                                        <strong>@item.EndCount</strong><br>
+                                    </td>
+                                    <td>@item.Price.GetCurrencyFormat()</td>
+                                    <td>
+                                        <button type="button" class="btn btn-default waves-effect waves-float btn-sm waves-red" data-toggle="modal" data-target="#exampleModal" data-whatever="@item.ID">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form action="DeletePriceRange" method="post" class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">حذف محدوده‌ی قیمت</h5>
+                                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>*@
+                            </div>
+                            <div class="modal-body">
+                                <input name="id" type="hidden" value="" />
+                                آیا از حذف این مورد اطمینان دارید؟
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resource.Lang.Cancel</button>
+                                <input type="submit" class="btn btn-danger" value="@Resource.Lang.Delete" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var recipient = button.data('whatever'); // Extract info from data-* attributes
+            var modal = $(this);
+            modal.find('.modal-body input').val(recipient);
+        })
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Enumarables;
+
+@{ 
+    Enum_Lang currentLanguage = BaseLanguage.GetCurrentLanguage();
+}
+
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <div class="change-language">
+            @if (currentLanguage != Enum_Lang.EN)
+            {
+                <a href="@Url.Action("index", "changelanguage", new { id = "en", back = Request.RawUrl })" class="text-custom lang-icon">
+                    <img src="~/assets/images/flag/english.png" />
+                </a>
+            }
+            @if (currentLanguage != Enum_Lang.FA)
+            {
+                <a href="@Url.Action("index", "changelanguage", new { id = "fa", back = Request.RawUrl })" class="text-custom lang-icon">
+                    <img src="~/assets/images/flag/persian.png" />
+                </a>
+            }
+        </div>
+    </li>
+    <li>
+        <!-- Notification -->
+        <div class="notification-box">
+            <ul class="list-inline m-b-0">
+                <li>
+                    <a href="javascript:void(0);" class="right-bar-toggle">
+                        <i class="zmdi zmdi-notifications-none"></i>
+                    </a>
+                    <div class="noti-dot">
+                        <span class="dot"></span>
+                        <span class="pulse"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- End Notification bar -->
+    </li>
+    <li class="hidden-xs" style="display:none">
+        <form role="search" class="app-search" >
+            <input type="text" placeholder="@Resource.Lang.Search..."
+                   class="form-control">
+            <a href=""><i class="fa fa-search"></i></a>
+        </form>
+    </li>
+</ul>

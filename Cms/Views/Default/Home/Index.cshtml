@@ -1,0 +1,37 @@
+﻿@using DataLayer.Entities;
+
+<div style="text-align:center; font-family:Calibri;">
+    <br />
+    POWERED BY <a href="https://behpardazan.com/">beno.biz</a>
+    <br />
+
+    @{ 
+        Uri url = HttpContext.Current.Request.Url;
+        string label = url.Host == "localhost" ? url.Host + ":" + url.Port : url.Host;
+        if (label.Count(p => p == '.') > 1)
+        {
+            string[] domains = label.Split(new char[] { '.' });
+            string subDomain = domains[0];
+            label = label.Replace(subDomain + ".", "");
+        }
+        <span>@label</span>
+        
+        UnitOfWork _context = new UnitOfWork();
+
+        var temp = Session["WEBSITE_LABEL"];
+
+        WebsiteDomain domain = _context
+                        .WebsiteDomain
+                        .FirstOrDefault(p =>
+                            p.Domain == "http://" + label + "/" ||
+                            p.Domain == "http://" + label ||
+                            p.Domain == "https://" + label + "/" ||
+                            p.Domain == "https://" + label ||
+                            p.Domain == label);
+
+
+    }
+
+    <div>SESSION VALUE: @temp</div><br />
+    <div>DOMAIN: @domain</div>
+</div>

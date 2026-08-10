@@ -1,0 +1,119 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+@model DataLayer.Entities.Gallery
+@{
+    ViewBag.Title = @Resource.Lang.EditGalleryInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Script {
+    <script>
+        initializeGalleryPageScript();
+    </script>
+}
+
+<div codeprocess-back-form="/Content/Gallery" codeprocess-ajax-form="/Content/Gallery/Edit">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.CreateDateTime)
+    @Html.HiddenFor(model => model.UpdateDateTime)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WebsiteId, @Resource.Lang.WebSite, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("WebsiteId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.WebsiteId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CategoryId, @Resource.Lang.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, @Resource.Lang.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Body, @Resource.Lang.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <textarea cols="60" class="form-control" rows="10" name="Body" id="Body">@Model.Body</textarea>
+
+                            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShowNumber, @Resource.Lang.PriorityShow, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ShowNumber, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.ShowNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, @Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Active)
+                                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+                    {
+                        if (lang.Language.Label != Enum_Lang.FA.ToString())
+                        {
+                            GalleryLanguage bannerLanguage = Model.GalleryLanguage.FirstOrDefault(p => p.LanguageId == lang.LanguageId);
+                            <fieldset lang-value="@lang.Language.Label.ToLower()" class="ltr-fieldset">
+
+                                <input type="hidden" lang-name="LanguageId" value="@lang.LanguageId" />
+                                <legend>@lang.Language.Label</legend>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">@lang.Language.Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" lang-name="Name" id="Name@(lang.Language.Label)" class="form-control" autocomplete="off" value="@(bannerLanguage != null ? bannerLanguage.Name : "")" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Description</label>
+                                    <div class="col-md-10">
+                                        <input type="text" lang-name="Description" id="Description@(lang.Language.Label)" class="form-control" autocomplete="off" value="@(bannerLanguage != null ? bannerLanguage.Description : "")" />
+                                    </div>
+                                </div>
+
+
+                            </fieldset>
+                        }
+                    }
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Save id="btnSubmit" class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(@Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

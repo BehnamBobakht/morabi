@@ -1,0 +1,94 @@
+﻿@model DataLayer.Entities.Store
+@using DataLayer.ViewModels
+@using DataLayer.Api;
+
+@{
+    ViewBag.Title = Resource.Lang.StoreSignUp;
+    Layout = Resources.Default.STORE_LAYOUT_BLANK;
+
+}
+
+@using (Html.BeginForm())
+{
+    <div class="card auth_form">
+
+        <div class="header">
+            <img class="logo" src="/areas/store/assets/images/logo.svg" alt="">
+            <h5>@Resource.Lang.SignUp</h5>
+            <span>@ViewBag.Title</span>
+          
+        </div>
+        <div class="body">
+            @if (ViewBag.Message != null)
+            {
+                var result = (ApiResult)ViewBag.Message;
+                if (result.Code==ApiResult.ResponseCode.Success)
+                {
+                    <div class="alert alert-success">
+                        @(result.Message)
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        <i class="zmdi zmdi-alert-triangle"> </i>
+                        @(result.Message)
+                    </div>
+                }
+            }
+
+            <div class="input-group mb-3">
+
+                @*<input type="text" class="form-control" placeholder="@Resource.Lang.Store_NAME">*@
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @placeholder = @Resource.Lang.StoreName } })
+
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="zmdi zmdi-store"></i></span>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @*<input type="text" class="form-control" placeholder="@Resource.Lang.Address">*@
+                @Html.EditorFor(model => model.AddressValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @placeholder = @Resource.Lang.Address } })
+
+
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="zmdi zmdi-pin"></i></span>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                @*<textarea type="text" class="form-control" placeholder="@Resource.Lang.Detail"></textarea>*@
+                @Html.TextAreaFor(model => model.Description, 4,10, new { @class = "form-control", @autocomplete = "off", @placeholder = @Resource.Lang.Detail  })
+
+
+                @*<div class="input-group-append">
+                        <span class="input-group-text"><i class="zmdi zmdi-lock"></i></span>
+                    </div>*@
+            </div>
+            <div class="checkbox">
+                <input id="accept-rules" type="checkbox">
+                <label for="accept-rules"><u><a target="_blank" href="@Url.Action("Rules","Content")">@Resource.Lang.IAcceptedSiteTerms</a></u></label>
+            </div>
+            <button disabled class="btn-register btn btn-primary btn-block waves-effect waves-light">@Resource.Lang.SignUp</button>
+            <div class="signin_with mt-3">
+                    <a class="link" href="/">@Resource.Lang.BackToHomePage</a>
+                </div>
+        </div>
+    </div>
+
+}
+
+@section picture{
+    <img src="/areas/store/assets/images/signin.svg" />
+    }
+@section script{
+    <script>
+        $("#accept-rules").change(function () {
+            if (this.checked) {
+                $('.btn-register').prop("disabled", false);
+            }
+            else {
+                $('.btn-register').prop("disabled", true);
+            }
+        });
+    </script>
+    }

@@ -1,0 +1,187 @@
+﻿<div class="modal fade" id="edit_profile_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header producttotal justify-content-start">
+                <h5 class="modal-title" id="edit_profile_modal">@Resource.Lang.EditProfile</h5>
+            </div>
+            <div class="modal-body text-right">
+                <form action="">
+                    <div class="row">
+                        <div class="address_modal_input col-lg-6 text-center">
+                            <input type="hidden" id="ProfilePicId" name="" />
+                            <label for="name">تصویر پرسنلی : </label>
+                            <input type="file" id="PictureId" file-type="picture" class="upload-file1" name="PictureId" target-name="PictureId" data-height="220" />
+                            <!--ko if:viewModel.Account.PictureUrl()==null || viewModel.Account.PictureUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.PictureUrl()==null || viewModel.Account.PictureUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.PictureUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic1" onclick="RemovePic1()">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6 text-center">
+
+                            <label for="name">تصویر کارت ملی : </label>
+                            <input type="file" id="NationalPictureId" file-type="picture" class="upload-file2" name="NationalPictureId" target-name="1" data-height="220" />
+                            <!--ko if:viewModel.Account.NationalPictureUrl()==null || viewModel.Account.NationalPictureUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.NationalPictureUrl()==null || viewModel.Account.NationalPictureUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.NationalPictureUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(1)">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6 text-center">
+
+                            <label for="name">تصویر شناسنامه : </label>
+                            <input type="file" id="ShenasnamehPictureId" file-type="picture" class="upload-file2" name="ShenasnamehPictureId" target-name="2" data-height="220" />
+                            <!--ko if:viewModel.Account.ShenasnamehPictureUrl()==null || viewModel.Account.ShenasnamehPictureUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.ShenasnamehPictureUrl()==null || viewModel.Account.ShenasnamehPictureUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.ShenasnamehPictureUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(2)">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6 text-center">
+
+                            <label for="name">تصویر پاسپورت : </label>
+                            <input type="file" id="PassportPictureId" file-type="picture" class="upload-file2" name="PassportPictureId" target-name="3" data-height="220" />
+                            <!--ko if:viewModel.Account.PassportPictureUrl()==null || viewModel.Account.PassportPictureUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.PassportPictureUrl()==null || viewModel.Account.PassportPictureUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.PassportPictureUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(3)">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6 text-center">
+
+                            <label for="name">تصویر بیمه ورزشی : </label>
+                            <input type="file" id="InsurancePictureId" file-type="picture" class="upload-file2" name="InsurancePictureId" target-name="4" data-height="220" />
+                            <!--ko if:viewModel.Account.InsurancePictureUrl()==null || viewModel.Account.InsurancePictureUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.InsurancePictureUrl()==null || viewModel.Account.InsurancePictureUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.InsurancePictureUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(4)">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6 text-center">
+
+                            <label for="name">تصویر مدرک تحصیلی : </label>
+                            <input type="file" id="EduactionPictureId" file-type="picture" class="upload-file2" name="EduactionPictureId" target-name="5" data-height="220" />
+                            <!--ko if:viewModel.Account.EduactionPictureUrl()==null || viewModel.Account.EduactionPictureUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.EduactionPictureUrl()==null || viewModel.Account.EduactionPictureUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.EduactionPictureUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(5)">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6 text-center">
+
+                            <label for="name">تصویر مدرک مربیگری درجه 2 : </label>
+                            <input type="file" id="Coaching2PictureId" file-type="picture" class="upload-file2" name="Coaching2PictureId" target-name="6" data-height="220" />
+                            <!--ko if:viewModel.Account.Coaching2PicturerUrl()==null || viewModel.Account.Coaching2PicturerUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.Coaching2PicturerUrl()==null || viewModel.Account.Coaching2PicturerUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.Coaching2PicturerUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(6)">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6 text-center">
+
+                            <label for="name">تصویر مدرک مربیگری درجه 3 : </label>
+                            <input type="file" id="Coaching3PictureId" file-type="picture" class="upload-file2" name="Coaching3PictureId" target-name="7" data-height="220" />
+                            <!--ko if:viewModel.Account.Coaching3PicturerUrl()==null || viewModel.Account.Coaching3PicturerUrl()==''-->
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                            <!--/ko-->
+                            <!--ko ifnot:viewModel.Account.Coaching3PicturerUrl()==null || viewModel.Account.Coaching3PicturerUrl()==''-->
+                            <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.Coaching3PicturerUrl}" />
+                            <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(7)">@Resource.Lang.Delete</button>
+                            <!--/ko-->
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">@Resource.Lang.Name : </label>
+                            <input type="text" name="name" class="form-control" data-bind="value: viewModel.Account.FullName">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">نام خانوادگی : </label>
+                            <input type="text" name="name" class="form-control" data-bind="value: viewModel.Account.LatName">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">نام انگلیسی : </label>
+                            <input type="text" name="FullNameEn" class="form-control" data-bind="value: viewModel.Account.FullNameEn">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">نام خانوادگی انگلیسی : </label>
+                            <input type="text" name="FullNameEn" class="form-control" data-bind="value: viewModel.Account.LatNameEn">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">نام پدر : </label>
+                            <input type="text" name="FatherName" class="form-control" data-bind="value: viewModel.Account.FatherName">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">نام پدر انگلیسی : </label>
+                            <input type="text" name="FatherNameEn" class="form-control" data-bind="value: viewModel.Account.FatherNameEn">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">@Resource.Lang.NationalCode : </label>
+                            <input type="text" name="NationalCode" class="form-control" data-bind="value: viewModel.Account.NationalCode">
+                        </div>
+                        @*<div class="address_modal_input col-lg-6">
+            <label for="mobile">@Resource.Lang.Mobile : </label>
+            <input type="text" name="mobile" data-bind="value: viewModel.Account.Mobile" class="form-control">
+        </div>*@
+                        <div class="address_modal_input col-lg-6">
+                            <label for="phone">@Resource.Lang.BankAccountCardNo : </label>
+                            <input type="text" name="BankAccountCardNo" maxlength="16" data-bind="value: viewModel.Account.CardNumber" class="form-control">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="phone">@Resource.Lang.Email : </label>
+                            <input type="email" name="email" data-bind="value: viewModel.Account.Email" class="form-control">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="phone">@Resource.Lang.BirthDate : </label>
+                            <input type="text" name="birthdate" data-bind="value: viewModel.Account.FaBirthDay" class="form-control datepicker">
+                        </div>
+
+                        <div class="address_modal_input col-lg-12">
+                            <label for="phone">@Resource.Lang.Country : </label>
+                            <select class="form-control country" onchange="ProfileCountryDropShipping()" id="profileSelectedCountryShipping" disabled>
+                                <option value="-1">@Resource.Lang.Select</option>
+                                <!--ko foreach: viewModel.Country.CountryList() -->
+                                <option data-bind="value:Id , text:FaName"></option>
+                                <!--/ko-->
+                            </select>
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="phone">@Resource.Lang.State : </label>
+                            @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/_State.cshtml")
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="phone">@Resource.Lang.City : </label>
+                            @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/_City.cshtml")
+                        </div>
+
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">آدرس : </label>
+                            <input type="text" name="Address" class="form-control" data-bind="value: viewModel.Account.Address">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">کدپستی : </label>
+                            <input type="text" name="ZipCode" class="form-control" data-bind="value: viewModel.Account.ZipCode">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex">
+                <button type="button" class="btn default_btn  flex-fill m-3" data-bs-dismiss="modal">@Resource.Lang.Close</button>
+                <button type="button" class="btn primary_btn  flex-fill m-3" codeprocess-action="account-edit" codeprocess-callback="closeModal,reLoadPage"><span>@Resource.Lang.Register</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/ModalLoading.cshtml")

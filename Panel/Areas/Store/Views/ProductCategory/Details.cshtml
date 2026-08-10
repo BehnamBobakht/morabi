@@ -1,0 +1,91 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.ProductCategory
+@{
+    ViewBag.Title =Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Resource.Lang.TypeProduct
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductType.Name)
+                    </dd>
+
+
+                    <dt>
+                        @Resource.Lang.CategoryName
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.Description
+                    </dt>
+
+                    <dd>
+                        @Model.Description
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.DateTimeUpdate
+                    </dt>
+
+                    <dd>
+                        @Model.UpdateDatetime.ToPersian().ToPersian()
+                    </dd>
+
+                    <dt>
+                        Url
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Url)
+                    </dd>
+                    <dt>
+                        CustomLabel
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CustomLabel)
+                    </dd>
+
+
+                    <dt>
+                        توضیحات برای تگ متا
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DescriptionMeta)
+                    </dd>
+
+                    <dt>
+                        عنوان صفحه
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TitlePage)
+                    </dd>
+
+                    <dt>
+                        متن H1
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.H1)
+                    </dd>
+
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink(Resource.Lang.Edit, "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

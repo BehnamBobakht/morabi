@@ -1,0 +1,88 @@
+@font-face {
+    font-family: 'Iran-Sans';
+    src: url('../fonts/iran-sans.woff'), url('../fonts/iran-sans.eot'), url('../fonts/iran-sans.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 100;
+	src: url('../fonts/yekanbakh/woff/YekanBakhFaNum-thin.woff') format('woff'),   
+	url('fonts/yekanbakh/woff2/YekanBakhFaNum-thin.woff2') format('woff2');		
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 300;
+	src: url('../fonts/yekanbakh/woff/YekanBakhFaNum-Light.woff') format('woff'),   
+	url('../fonts/yekanbakh/woff2/YekanBakhFaNum-Light.woff2') format('woff2');	
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: normal;
+	src: url('../fonts/yekanbakh/woff/YekanBakhFaNum-Regular.woff') format('woff'),   
+	url('../fonts/yekanbakh/woff2/YekanBakhFaNum-Regular.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 600;
+	src: url('../fonts/yekanbakh/woff/YekanBakhFaNum-SemiBold.woff') format('woff'),   
+	url('../fonts/yekanbakh/woff2/YekanBakhFaNum-SemiBold.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: bold;
+	src: url('../fonts/yekanbakh/woff/YekanBakhFaNum-Bold.woff') format('woff'),   
+	url('../fonts/yekanbakh/woff2/YekanBakhFaNum-Bold.woff2') format('woff2'); 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 800;
+	src: url('../fonts/yekanbakh/woff/Yekan Bakh FaNum-ExtraBold.woff') format('woff'),   
+	url('../fonts/yekanbakh/woff2/Yekan Bakh FaNum-ExtraBold.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 900;
+	src: url('../fonts/yekanbakh/woff/Yekan Bakh FaNum-Black.woff') format('woff'),   
+	url('../fonts/yekanbakh/woff2/Yekan Bakh FaNum-Black.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 950;
+	src: url('../fonts/yekanbakh/woff/Yekan Bakh FaNum-ExtraBlack.woff') format('woff'),   
+	url('../fonts/yekanbakh/woff2/Yekan Bakh FaNum-ExtraBlack.woff2') format('woff2');		 
+}
+
+body {
+        margin: 0;
+        font-size: 35px;
+    }
+    
+    .paper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    
+    .paper img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    
+  

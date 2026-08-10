@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DataLayer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DataLayer_ir_shaparak_pna_TechnoPaymentWebServiceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://pna.shaparak.ir:443/ref-payment2/jax/merchantService</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,75 @@
+﻿
+@using DataLayer.ViewModels;
+
+@using DataLayer.Enumarables;
+
+@model ProductBrandSerachVm
+@{
+    int StartIndex = Model.ProductSearchVm.PageIndex > 4 ? Model.ProductSearchVm.PageIndex - 4 : 1;
+    int EndIndex = (Model.ProductSearchVm.TotalCount / Model.ProductSearchVm.PageSize);
+    int Mod = (Model.ProductSearchVm.TotalCount % Model.ProductSearchVm.PageSize);
+    int CurrentIndex = Model.ProductSearchVm.PageIndex > 0 ? Model.ProductSearchVm.PageIndex : 1;
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+
+@if (EndIndex > 1)
+{
+    <nav class="Page navigation example">
+        <ul class="pagination">
+            @if (Model.ProductSearchVm.PageIndex < EndIndex)
+            {
+                <li class="page-item">
+                    <a class='page-link' title="@Resource.Lang.LastPage" aria-label="Previous" href="
+                       @Url.Action("index", "Brand",new {
+           @brbrandId = Model.ProductBrandVm.ID,
+           @prindex = EndIndex,
+           @prpageSize = Model.ProductSearchVm.PageSize
+
+       })">
+                        <span aria-hidden="true">
+                            <svg width="20" height="10" viewBox="0 0 10 6" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 2.62963C0.79545 2.62963 0.62963 2.79545 0.62963 3C0.62963 3.20455 0.79545 3.37037 1 3.37037L1 2.62963ZM9.03967 3.26189C9.18431 3.11725 9.18431 2.88275 9.03967 2.73811L6.68265 0.381086C6.53801 0.236447 6.3035 0.236447 6.15886 0.381086C6.01422 0.525725 6.01422 0.76023 6.15886 0.904869L8.25399 3L6.15886 5.09513C6.01422 5.23977 6.01422 5.47428 6.15886 5.61891C6.3035 5.76355 6.53801 5.76355 6.68265 5.61891L9.03967 3.26189ZM1 3.37037L8.77778 3.37037V2.62963L1 2.62963L1 3.37037Z"
+                                      fill="currentColor" />
+                            </svg>
+                        </span>
+                    </a>
+                </li>
+            }
+            @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+            {
+                var active = CurrentIndex == i ? "active" : "";
+                <li class="page-item @active">
+                    <a class='page-link' href="
+                       @Url.Action("index", "Brand",new {
+             @brbrandId = Model.ProductBrandVm.ID,
+           @prindex = i,
+           @prpageSize = Model.ProductSearchVm.PageSize
+       })">@i</a>
+</li>
+}
+
+            @if (Model.ProductSearchVm.PageIndex > 1)
+            {
+                <li class="page-item ">
+                    <a class='page-link' title="@Resource.Lang.FirstPage" aria-label="Next" href="
+                       @Url.Action("index", "Brand",new {
+          @brbrandId = Model.ProductBrandVm.ID,
+           @prindex = 1,
+           @prpageSize = Model.ProductSearchVm.PageSize
+       })">
+                        <span aria-hidden="true">
+                            <svg width="20" height="10" viewBox="0 0 11 6" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.1746 3.6295C10.3791 3.63527 10.5495 3.4742 10.5553 3.26973C10.5611 3.06526 10.4 2.89483 10.1955 2.88905L10.1746 3.6295ZM0.745603 2.73082C0.596941 2.87132 0.590324 3.10574 0.730823 3.2544L3.0204 5.67699C3.1609 5.82565 3.39531 5.83227 3.54397 5.69177C3.69264 5.55127 3.69925 5.31686 3.55875 5.16819L1.52357 3.01478L3.67699 0.979601C3.82565 0.839101 3.83227 0.604689 3.69177 0.456027C3.55127 0.307364 3.31686 0.300747 3.16819 0.441247L0.745603 2.73082ZM10.1955 2.88905L1.01045 2.62978L0.98955 3.37022L10.1746 3.6295L10.1955 2.88905Z"
+                                      fill="currentColor" />
+                            </svg>
+                        </span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+
+

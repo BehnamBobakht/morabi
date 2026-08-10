@@ -1,0 +1,25 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model ProductMinVm
+@{
+    var list = Model.ProductCustomValue.Where(s => s.ProductCustomField.InSearchResult == true).ToList();
+}
+@if (Model.Latitude != null && Model.Longitude != null && Model.Latitude != "" && Model.Longitude != "")
+{
+    <span class="loc-item" lat="@Model.Latitude" lng="@Model.Longitude" name="@Model.Name">
+       
+        <strong>@Model.Name</strong>
+
+
+        <a href="@Model.ProductUrl">@Resource.Lang.See</a>
+
+    </span>
+}
+
+
+
+
+
+
+

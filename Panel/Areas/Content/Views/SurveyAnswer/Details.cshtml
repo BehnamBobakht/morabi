@@ -1,0 +1,108 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.SurveyAnswer
+@{
+    ViewBag.Title = Resource.Lang.Question;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div id="print-content" class="form-horizontal container ">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <strong>   @Resource.Lang.Type </strong>
+                    </div>
+                    <div class="col-lg-8">
+                        @Model.Survey.GetName()
+                    </div>
+                    <div class="col-lg-4">
+                        <strong>  @Resource.Lang.DateTime</strong>
+                    </div>
+                    <div class="col-lg8">
+                        @Model.CreateDateTime.ToPersianWithTime()
+                    </div>
+                    <div class="col-lg-4">
+                        <strong>    @Resource.Lang.Name</strong>
+                    </div>
+                    <div class="col-lg-8">
+                        @Html.DisplayFor(model => model.Name)
+                        @if (Model.Account != null)
+                        {
+                            <br />
+                            @Model.Account.FullName
+                            <br />
+                            @Model.Account.Mobile
+                            <br />
+                            @Model.Account.Email
+                        }
+
+                    </div>
+                    <hr />
+                    @foreach (var item in Model.SurveyAnswerDetail)
+                    {
+                        <div class="row" style="padding-top:10px">
+                            <div class="col-lg-4">
+                                <strong>@item.SurveyQuestion.Question</strong>
+                            </div>
+
+                            <div class="col-lg-8">
+
+                                @*@if (item.AnswerBool != null)
+                                    {
+                                        @item.AnswerBool
+                                    }*@
+                                @if (item.SurveyAnswerDetailItem != null && item.SurveyAnswerDetailItem.Any())
+                                {
+                                    foreach (var sItem in item.SurveyAnswerDetailItem)
+                                    {
+                                        <span>@sItem.SurveyQuestionItem.Name</span><span> | </span>
+                                    }
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(item.AnswerText))
+                                {
+                                    @item.AnswerText
+                                }
+                                @if (item.FileId != null)
+                                {
+                                    <a target="_blank" href="@item.WebsiteDocument.GetUrl()">مشاهده فایل</a>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <hr />
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index", new { @surveyId = Model.SurveyId })</span>
+                    <span class="btn btn-info"><a onclick="PrintElem()">@Resource.Lang.Print</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+@section Script {
+    <script>
+        function PrintElem() {
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+            mywindow.document.write('<html><head><title>' + document.title + '</title>');
+            mywindow.document.write('</head><body style="direction:rtl">');
+            mywindow.document.write('<h1>' + document.title + '</h1>');
+            mywindow.document.write(document.getElementById("print-content").innerHTML);
+            mywindow.document.write('</body></html>');
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        }
+    </script>
+}

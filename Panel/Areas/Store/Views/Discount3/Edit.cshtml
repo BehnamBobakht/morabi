@@ -1,0 +1,154 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model DataLayer.Entities.Discount
+@{
+    DiscountGroup group = ViewBag.DiscountGroup;
+    ViewBag.Title =Resource.Lang.EditDiscountCase + " - " + group.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.GroupId)
+    @Html.HiddenFor(model => model.UserId)
+    
+    if (Model.ProductId != null)
+    {
+        <input id="ProductId" name="ProductId" type="hidden" class="form-control col-sm-2" value="@Model.ProductId" />
+    }
+    else
+    {
+        <input id="ProductId" name="ProductId" type="hidden" class="form-control col-sm-2" />
+    }
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index", new { id = Model.GroupId })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeId, @Resource.Lang.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control", @codeprocess = "show-part" })
+                        </div>
+                    </div>
+                    <div show-part="40" class="form-group">
+                        @Html.LabelFor(model => model.ShopId, @Resource.Lang.Shop, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ShopId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div show-part="41" class="form-group">
+                        @Html.LabelFor(model => model.ProductTypeId, @Resource.Lang.TypeProduct, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ProductTypeId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div show-part="42" class="form-group">
+                        @Html.LabelFor(model => model.ProductCategoryId, @Resource.Lang.ProductCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ProductCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div show-part="43" class="form-group">
+                        @Html.LabelFor(model => model.ProductSubCategoryId, @Resource.Lang.Subordinates, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ProductSubCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div show-part="44" class="form-group">
+                        @Html.LabelFor(model => model.ProductId, @Resource.Lang.Product, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @if (Model.ProductId != null)
+                            {
+                                <input id="ProductBox" class="form-control col-sm-2" value="@Model.Product.Name" />
+                            }
+                            else
+                            {
+                                <input id="ProductBox" class="form-control col-sm-2" />
+                            }
+                        </div>
+                    </div>
+                    @if (ViewBag.DiscountGroup.PriceValue != null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PriceValue, @Resource.Lang.Amount, htmlAttributes: new { @class = "control -label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.PriceValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.DiscountGroup.PercentValue != null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PercentValue, @Resource.Lang.Percent, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.PercentValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StartDatetime, @Resource.Lang.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="text" id="StartDatetime" name="StartDatetime" class="form-control" autocomplete="off" codeprocess="date" value="@Model.StartDatetime.ToPersian()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EndDatetime, @Resource.Lang.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="text" id="EndDatetime" name="EndDatetime" class="form-control" autocomplete="off" codeprocess="date" value="@Model.EndDatetime.ToPersian()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, @Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Active)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsTop, @Resource.Lang.MainPriority, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsTop)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 no-padding">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@Resource.Lang.Description</label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(@Resource.Lang.Back, "Index", new { id = Model.GroupId })</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeDiscountScript();
+        });
+    </script>
+}

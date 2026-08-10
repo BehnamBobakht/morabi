@@ -1,0 +1,61 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.SmartOfferAnswer
+@{
+    SmartOfferQuestion SmartOfferQuestion = ViewBag.SmartOfferQuestion;
+    ViewBag.Title = Resource.Lang.Answer + "'" + SmartOfferQuestion.Question + "'";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div codeprocess-ajax-form="/store/SmartOfferAnswer/create" codeprocess-back-form="/store/SmartOfferAnswer/index/@SmartOfferQuestion.ID">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="QuestionId" id="QuestionId" value="@SmartOfferQuestion.ID" />
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index", new { id = SmartOfferQuestion.ID })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Answer, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Answer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index", new { id = SmartOfferQuestion.ID })</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeSmartOfferAnswerScript();
+        });
+    </script>
+}

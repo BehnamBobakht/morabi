@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "مدیریت ایمیل ها";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Header {
+    <link href="/assets/plugins/summernote/dist/summernote.css" rel="stylesheet" /><!-- Custom box css -->
+    <link href="/assets/plugins/custombox/dist/custombox.min.css" rel="stylesheet">
+}
+
+@section Script {
+    <!--
+    <script src="/assets/pages/jquery.inbox.js"></script>
+    <script src="/assets/plugins/summernote/dist/summernote.min.js"></script>
+    <script src="/assets/plugins/custombox/dist/custombox.min.js"></script>
+    <script src="/assets/plugins/custombox/dist/legacy.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            $('.summernote').summernote({
+                height: 320,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+                focus: false                 // set focus to editable area after initializing summernote
+            });
+        });
+    </script>
+    -->
+}
+
+<div class="col-sm-12">
+    <div class="inbox-app-main">
+        <div class="row">
+            <div class="col-md-3">
+                <aside id="sidebar" class="nano">
+                    <div class="nano-content">
+
+                        <div class="text-center">
+                            <a href="/email/compose" class="btn btn-danger btn-rounded w-lg waves-effect waves-light m-b-20 m-t-30" data-animation="fadein" data-plugin="custommodal"
+                               data-overlaySpeed="200" data-overlayColor="#36404a">ارسال ایمیل</a>
+                        </div>
+                        <menu class="menu-segment">
+                            <ul class="list-unstyled">
+                                <li class="active">
+                                    <a href="/email/inbox">صندوق ورودی
+                                        <span>
+                                            @if (ViewBag.EmailStatus != null)
+                                            {
+                                                <span>(</span>@ViewBag.EmailStatus.Inbox<span>)</span>
+                                            }
+                                        </span>
+                                    </a>
+                                </li>
+                                <li><a href="/email/inbox/important">پیام های مهم</a></li>
+                                <li><a href="/email/inbox/sent">ارسال شده ها</a></li>
+                                <li><a href="/email/inbox/draft">پیش نویس ها</a></li>
+                                <li><a href="/email/inbox/trash">پاک شده ها</a></li>
+                            </ul>
+                        </menu>
+                        <div class="separator"></div>
+                        <div class="menu-segment">
+                            <ul class="labels list-unstyled">
+                                <li class="title">ایمیل های من</li>
+                                <li><a href="#">torabi6@gmail.com<span class="ball pink"></span></a></li>
+                                <li><a href="#">info@karbalad.com<span class="ball green"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="separator"></div>
+                    </div>
+                </aside>
+            </div> <!-- end col -->
+
+            <div class="col-md-9">
+                <main id="main">
+                    @RenderBody()
+                </main>
+                
+            </div> <!-- end col -->
+        </div><!-- end row -->
+    </div>
+
+</div>

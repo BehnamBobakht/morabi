@@ -1,0 +1,15 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model ResultVm<CartVm>
+
+
+@if (Model.Message != "" && Model.Message!=null) {
+<input id="error"  value="1" type="hidden"/>
+<p id="cart-error" class="alert alert-danger">@Model.Message  <a href="/cart" class="mt-2 btn secondary-btn">مشاهده سبد خرید</a></p>
+
+}
+else{
+
+@Model.Model.ItemCount
+}
+

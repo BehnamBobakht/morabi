@@ -1,0 +1,12 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    
+        <div class="alert alert-warning">
+            <span>@Model.FirstOrDefault().Summary</span>
+        </div>
+
+    
+
+}

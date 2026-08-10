@@ -1,0 +1,41 @@
+﻿@model DataLayer.Entities.WebsiteDomain
+@{
+    ViewBag.Title = "نمایش اطلاعات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index", new { @controller="domain", @id=Model.WebsiteId })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                        عنوان وبسایت
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Website.Title)
+                    </dd>
+                    <dt>
+                        دامنه
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Domain)
+                    </dd>
+                    <dt>
+                        کد فعال سازی
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ActivationKey)
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink("ویرایش", "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index", new { @id = Model.WebsiteId })</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

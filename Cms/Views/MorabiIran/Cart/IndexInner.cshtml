@@ -1,0 +1,468 @@
+﻿
+@using DataLayer.Base
+
+@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@model ResultVm<CartVm>
+<div id="home" class="tab_pane w-100  sendinfo_content home active">
+
+    <div class="payment_information">
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <p class="alert alert-warning">
+                @Model.Message
+            </p>
+        }
+        @if (Model.Model == null || (Model.Model != null && Model.Model.ItemCount < 1))
+        {
+            <div class="no_item">
+                <span>@Resource.Lang.BasketIsEmpty</span>
+            </div>
+
+        }
+        else
+        {
+            <div class="basketOrders">
+                <div class="basketpro_titles ">
+                    <div class="row w-100 d-flex align-items-center m-0">
+
+
+                        <div class="col-4 p-0">
+                            <div class="tab_titlee">
+                                <strong>@Resource.Lang.Product</strong>
+                            </div>
+                        </div>
+                        <div class="col-3 p-0">
+                            <div class="tab_titlee">
+                                <strong>@Resource.Lang.Price (@Resource.Lang.Toman)</strong>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="tab_titlee">
+                                <strong>@Resource.Lang.Count</strong>
+                            </div>
+                        </div>
+                        <div class="col-3 p-0">
+                            <div class="tab_titlee">
+                                <strong>@Resource.Lang.TotalPrice (@Resource.Lang.Toman)</strong>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="basketpaymentItems">
+
+                    @foreach (var storeItem in Model.Model.CartStoreList)
+                    {<div class="paymentItem">
+
+
+
+                            @foreach (var item in storeItem.CartStoreItemList)
+                            {
+                                <div class="shop_product_item">
+                                    <div class="row d-flex align-items-center w-100 m-0">
+                                        <div class="col-md-4  p-0">
+                                            <div class="basketproduct">
+                                                @if (item.Product.Picture.Url != "" && item.Product.Picture.Url != null)
+
+                                                {
+                                                    <a href="@item.Product.ProductUrl">
+                                                        <img src="@item.Product.Picture.Url" alt="@item.ProductName">
+                                                    </a>
+                                                }
+                                                <div class="basketProInfo">
+                                                    <a href="@item.Product.ProductUrl">
+                                                        <strong>@item.ProductName</strong>
+
+                                                    </a>
+                                                    <div class="infoPrime ">
+                                                        @if (item.Product.Weight > 0)
+                                                        {
+                                                            <span class="detailspan">
+                                                                <span class="colorSpan proinfospan"> @Resource.Lang.Weight :</span>
+                                                                <span class="p-1 rounded ">
+                                                                    @item.Product.Weight @Resource.Lang.Gram
+                                                                </span>
+                                                            </span>
+                                                        }
+                                                        @if (item.Color != null)
+                                                        {
+                                                            <span class="detailspan">
+                                                                <span class="proinfospan"> @Resource.Lang.Color :</span>
+                                                                <span class="rounded " style="background-color:#@item.Color.HexValue">
+                                                                    @item.Color.Name
+                                                                </span>
+                                                            </span>
+                                                        }
+                                                        @if (item.Size != null)
+                                                        {
+                                                            <span class="pl-2 detailspan">
+                                                                <span class="proinfospan "> @Resource.Lang.Size :</span>
+                                                                <span class="p-1 rounded ">
+                                                                    @item.Size.Name
+                                                                </span>
+                                                            </span>
+                                                        }
+
+                                                        @if (item.ProductOptionItem != null)
+                                                        {
+                                                            <br />
+                                                            <span class="detailspan">
+                                                                <span class="proinfospan">
+                                                                    @item.ProductOptionItem.OptionName
+                                                                </span>
+
+                                                                :
+                                                                <span>
+                                                                    @item.ProductOptionItem.Value
+                                                                </span>
+                                                            </span>
+                                                        }
+                                                        @if (item.Description != "" && item.Description != null)
+                                                        {
+                                                            <strong>@item.Description</strong>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-7 p-0">
+                                            <div class="productprice">
+                                                <span class="mobile_title">@Resource.Lang.Price:</span>
+                                                <div class=" discount">
+                                                    @if (item.Product.ProductTypeId != 1)
+                                                    {
+                                                        if (item.Product.IsFree)
+                                                        {
+                                                            <strong class="text-success">رایگان</strong>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.SingleDiscount > 0)
+                                                            {
+
+                                                                <div class="pre_discounted_price">
+                                                                    <span>@item.SingleBasePrice.ToString("n0")</span>
+                                                                </div>
+                                                            }
+
+                                                            <strong class="text-success">@item.SinglePrice.ToString("n0")</strong>
+
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <strong class="text-success">53000</strong>
+
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-5 p-0">
+                                            @if (item.Product.IsService == false && item.Product.ProductTypeId != 1 && item.Product.ProductTypeId != 2)
+                                            {
+                                                <div class="productCount">
+                                                    @Ajax.ActionLink(linkText: "+",
+                                actionName: "IndexInner",
+                                controllerName: "Cart",
+                                routeValues: new { cartUpdateType = CartUpdateType.Increase, quantityId = item.StoreProductQuantityId },
+                                htmlAttributes: new { @class = "btn pro_plus_count " },
+                                ajaxOptions: new AjaxOptions
+                                {
+                                OnBegin = "beginProssess",
+                                OnComplete = "endProssess",
+                                HttpMethod = "GET",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "cart-index",
+                                LoadingElementId = "ww"
+                                })
+
+
+                                                    <span class="p-2">@item.Count</span>
+                                                    @Ajax.ActionLink(linkText: "-",
+                                actionName: "IndexInner",
+                                controllerName: "Cart",
+                                routeValues: new { cartUpdateType = CartUpdateType.Decrease, quantityId = item.StoreProductQuantityId },
+                                htmlAttributes: new { @class = "btn pro_minus_count " },
+                                ajaxOptions: new AjaxOptions
+                                {
+                                OnBegin = "beginProssess",
+                                OnComplete = "endProssess",
+                                HttpMethod = "GET",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "cart-index",
+                                LoadingElementId = "ww"
+                                })
+
+                                                </div>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="productCount">
+                                                    <span class="p-2">@item.Count</span>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="col-md-3 p-0 d-flex justify-content-around align-items-center">
+                                            <div class="pro-total">
+                                                <span class="mobile_title">@Resource.Lang.TotalPrice:</span>
+                                                @if (item.Product.IsFree)
+                                                {
+                                                    <strong class="text-success">رایگان</strong>
+
+                                                }
+                                                else
+                                                {
+                                                    <div class=" discount">
+                                                        @if (item.Product.ProductTypeId != 1)
+                                                        {
+                                                            <strong class="text-success">@item.TotalPrice.ToString("n0")</strong>
+                                                        }
+                                                        else
+                                                        {
+                                                            <strong class="text-success">53000</strong>
+
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                            @Ajax.ActionLink(linkText: @"x",
+                            actionName: "IndexInner",
+                            controllerName: "Cart",
+                            routeValues: new { cartUpdateType = CartUpdateType.Delete, quantityId = item.StoreProductQuantityId },
+                            htmlAttributes: new { @class = "btn deleteProBtn" },
+                            ajaxOptions: new AjaxOptions
+                            {
+                            OnBegin = "beginProssess",
+                            OnComplete = "endProssess",
+                            HttpMethod = "GET",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "cart-index",
+                            LoadingElementId = "ww"
+                            })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                            <div class="shop_totalprice">
+                                <ul>
+                                    <li>
+                                        <div class="invoice_price ">
+                                            <strong>@Resource.Lang.Sum :</strong>
+                                            @if (storeItem.BasePrice == 1)
+                                            {
+                                                <span>رایگان</span>
+                                            }
+                                            else
+                                            {
+                                                if (Model.Model.BasePrice != 1000)
+                                                {
+                                                    <span>@storeItem.BasePrice.ToString("n0") @Resource.Lang.Toman</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>53,000</span>
+                                                }
+
+                                            }
+
+                                        </div>
+                                    </li>
+                                    @if (Model.Model.Discount > 0)
+                                    {
+                                        <li>
+                                            <div class="invoice_price">
+                                                <strong>@Resource.Lang.Discount :</strong>
+                                                <span>@storeItem.Discount.ToString("n0") @Resource.Lang.Toman</span>
+                                            </div>
+                                        </li>
+                                    }
+                                    <li>
+                                        <div class="invoice_price_total text-primary border-top">
+                                            <strong>@Resource.Lang.TotalPrice :</strong>
+                                            @if (storeItem.BasePrice == 1)
+                                            {
+                                                <span>رایگان</span>
+                                            }
+                                            else
+                                            {
+                                                if (Model.Model.TotalPrice != 1000)
+                                                {
+                                                    <span>@storeItem.TotalPrice.ToString("n0") @Resource.Lang.Toman</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>53,000</span>
+                                                }
+                                            }
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    }
+
+
+
+
+                </div>
+                @if (Model.Model.CartStoreList.Count > 1)
+                {
+                    <div class="shop_totalprice">
+                        <ul>
+                            <li>
+                                <div class="invoice_price ">
+                                    <strong>@Resource.Lang.Sum :</strong>
+
+                                    @if (Model.Model.BasePrice != 1000)
+                                    {
+                                        <span>@Model.Model.BasePrice.ToString("n0") @Resource.Lang.Toman</span>
+
+                                    }
+                                    else
+                                    {
+                                        <span>53,000 @Resource.Lang.Toman</span>
+
+                                    }
+                                </div>
+                            </li>
+                            @if (Model.Model.Discount > 0)
+                            {
+                                <li>
+                                    <div class="invoice_price">
+                                        <strong>@Resource.Lang.Discount :</strong>
+                                        <span>@Model.Model.Discount.ToString("n0") @Resource.Lang.Toman</span>
+                                    </div>
+                                </li>
+                            }
+                            <li>
+                                <div class="invoice_price_total text-primary border-top">
+                                    <strong>@Resource.Lang.TotalPrice :</strong>
+                                    <span>@Model.Model.TotalPrice.ToString("n0") @Resource.Lang.Toman</span>
+                                </div>
+                            </li>
+                            <li>
+                            </li>
+                        </ul>
+
+                    </div>
+                }
+
+            </div>
+
+
+
+        }
+    </div>
+
+</div>
+<div class="basketbtns mt-3">
+    <a href="/" class="btn secondary_btn prev_tab">
+        <i class="bi bi-arrow-right"></i>
+        <span> @Resource.Lang.HomePage</span>
+    </a>
+    @if (BaseWebsite.CurrentAccount == null)
+    {
+        <a href=""
+           data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn primary_btn next_tab">
+            <span>@Resource.Lang.Next</span>
+            <i class="bi bi-arrow-left"></i>
+        </a>
+    }
+    else
+    {
+        if (Model.Model != null)
+        {
+            if (Model.Model.HaveAddress == true)
+            {
+                <a href="@Url.Action("Address", "Cart")" class="btn primary_btn next_tab">
+                    <span>@Resource.Lang.Next</span>
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Confirm", "Cart")" class="btn primary_btn next_tab">
+                    <span>@Resource.Lang.Next</span>
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+            }
+        }
+    }
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Resource.Lang.SignIn </h5>
+                <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="width: 120px;height: 120px;fill: #3A5F9B;border: 4px solid #3A5F9B;border-radius: 50%;padding: 10px;">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: none;
+                                stroke: #fff;
+                                stroke-linecap: round;
+                                stroke-miterlimit: 10;
+                                stroke-width: 2px;
+                            }
+                        </style>
+                    </defs>
+                    <title />
+                    <path d="M0,32A32,32,0,1,0,32,0,32,32,0,0,0,0,32Z" />
+                    <g id="User"><path class="cls-1" d="M46,42.18v5.91a0.91,0.91,0,0,1-.9.91H18a0.91,0.91,0,0,1-.9-0.91V42.18c0-4.77,6.47-8.64,14.45-8.64S46,37.41,46,42.18Z" /><ellipse class="cls-1" cx="31.55" cy="21.18" rx="6.42" ry="6.18" /></g>
+                </svg>
+            </div>
+            <div class="modal-footer d-flex flex-column">
+                @if (Model.Model != null)
+                {
+                    if (Model.Model.HaveAddress == true)
+                    {
+                        <a href="@Url.Action("Login","Account",new {back=Url.Action("Address","Cart") })"
+                           class="btn primary_btn w-100">
+                            <span>@Resource.Lang.IhaveCode</span>
+                        </a>
+                        <a href="@Url.Action("Register","Account",new {back=Url.Action("Address","Cart") })" class="btn secondary_btn w-100">@Resource.Lang.IHaveNotRegisteredBefore </a>
+
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Login","Account",new {back=Url.Action("Confirm","Cart") })"
+                           class="btn primary_btn w-100">
+                            <span>@Resource.Lang.IhaveCode</span>
+                        </a>
+                        <a href="@Url.Action("Register","Account",new {back=Url.Action("Confirm","Cart") })" class="btn secondary_btn w-100">@Resource.Lang.IHaveNotRegisteredBefore </a>
+
+                    }
+                }
+
+                else
+                {
+                    <a href="@Url.Action("Login","Account",new {back=Url.Action("Confirm","Cart") })"
+                       class="btn primary_btn w-100">
+                        <span>@Resource.Lang.IhaveCode</span>
+                    </a>
+                    <a href="@Url.Action("Register","Account",new {back=Url.Action("Confirm","Cart") })" class="btn secondary_btn w-100">@Resource.Lang.IHaveNotRegisteredBefore </a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

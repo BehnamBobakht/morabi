@@ -1,0 +1,148 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.Gallery
+
+@{
+    ViewBag.Title = @Resource.Lang.GalleryImages ;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                @Html.HiddenFor(model => model.ID)
+                <div class="port m-b-20">
+                    <div class="portfolioContainer">
+                        @foreach (var item in Model.GalleryPictures.OrderByDescending(p => p.ID))
+                        {
+                            <div class="col-sm-6 col-lg-3 col-md-4">
+                                <div class="gal-detail thumb">
+                                    @using (Html.BeginForm("pictureDelete", "gallery", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="GalleryId" value="@Model.ID" />
+                                        <input type="hidden" name="PictureId" value="@item.ID" />
+                                        @*<input type="text" class="dropify" name="name" data-height="150" />*@
+                                        @item.Name
+                                        foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+                                        {
+                                            if (lang.Language.Label != Enum_Lang.FA.ToString())
+                                            {
+                                               <hr />
+                                               <span>NameEn:  @item.NameEn</span>
+
+                                            }
+                                        }
+                                        if (item.Picture.Url.Contains(".mp4"))
+                                        {
+                                            <a href="@item.Picture.GetUrl()" class="image-popup" title="@item.Gallery.Name">
+                                                <video width="250" height="250" controls>
+                                                    <source src="@item.Picture.GetUrl()" type="video/mp4">
+
+                                                </video>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@item.Picture.GetUrl()" class="image-popup" title="@item.Gallery.Name">
+                                                <img src="@item.Picture.GetUrl()" class="thumb-img" alt="@item.Gallery.Name">
+                                            </a>
+                                        }
+                                        <div class="text-center">
+                                            <div class="devider-10"></div>
+                                            <input type="submit" value=@Resource.Lang.Delete class="btn btn-danger" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <div class="col-sm-6 col-lg-3 col-md-4 natural creative personal">
+                            <div class="gal-detail thumb">
+                                @using (Html.BeginForm("picture", "gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    <input type="text" class="form-control" placeholder="@Resource.Lang.Name" name="name" data-height="150" />
+                                    foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+                                    {
+                                        if (lang.Language.Label != Enum_Lang.FA.ToString())
+                                        {
+                                            <input type="text" class="form-control" placeholder="NameEn" name="nameEn" data-height="150" />
+
+                                        }
+                                    }
+                                    <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload-n" data-height="150" />
+                                    <div class="text-center">
+                                        <div class="devider-10"></div>
+                                        <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div><!-- end portfoliocontainer-->
+                </div> <!-- End row -->
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+@section Header {
+    <link rel="stylesheet" href="/panel/assets/plugins/magnific-popup/dist/magnific-popup.css" />
+    <link rel="stylesheet" type="text/css" href="/panel/Assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Footer {
+    <script type="text/javascript" src="/panel/assets/plugins/isotope/dist/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/panel/assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+}
+@section Script {
+    <script src="/panel/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="/panel/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            var $container = $('.portfolioContainer');
+            $container.isotope({
+                filter: '*',
+                animationOptions: {
+                    duration: 750,
+                    easing: 'linear',
+                    queue: false
+                }
+            });
+
+            $('.portfolioFilter a').click(function () {
+                $('.portfolioFilter .current').removeClass('current');
+                $(this).addClass('current');
+
+                var selector = $(this).attr('data-filter');
+                $container.isotope({
+                    filter: selector,
+                    animationOptions: {
+                        duration: 750,
+                        easing: 'linear',
+                        queue: false
+                    }
+                });
+                return false;
+            });
+        });
+        $(document).ready(function () {
+            $('.image-popup').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                mainClass: 'mfp-fade',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                }
+            });
+        });
+    </script>
+}

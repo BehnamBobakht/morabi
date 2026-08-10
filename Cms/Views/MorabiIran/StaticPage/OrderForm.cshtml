@@ -1,0 +1,72 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    TempData["Title"] = "سفارشات خاص";
+    string url = Url.Action("index", "staticpage", new { id = "orderForm" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.ConsultationRequest, Url = url });
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/StaticPage.cshtml")
+}
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+<section class="form_page loginRegister page-padding" id="login_register">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 p-0 register_col">
+                <div class="loginBox registerBox">
+                    @Html.Action("Search", "Banner", new { bacategory = "OrderFormBanner", baSize = 1, baviewName = "_OrderFormBanner" })
+                    <div class="form_page_content mt-3 contactus-form">
+                        <div class="form_box">
+                            <input class="form-control mb-2" type="text" data-bind="value:viewModel.ContactUs.Name" required
+                                   placeholder="@Resource.Lang.EnterFullName *">
+                            <input class="form-control mb-2" type="text" data-bind="value:viewModel.ContactUs.Phone" required
+                                   placeholder="شماره تلفن همراه خود را وارد کنید *">
+                            <input type="text" class="form-control mb-2 contactus-field" name="تعداد" placeholder="تعداد ">
+                            <input type="text" class="form-control mb-2 contactus-field" name="شماره فنی" placeholder="شماره فنی ">
+                            <textarea class="form-control mb-2" name="" id="" rows="5" data-bind="value:viewModel.ContactUs.Body" required
+                                      placeholder="شرح کالا *"></textarea>
+                            @Html.Action("Search", "post", new { pocategory = "OrderFormFile", poSize = 1, poviewName = "_OrderFormFile", poorder = Enum_PostOrder.NEW })
+                            <div href="" class="btn exelBtn w-100">
+                                <label for="contact-upload">آپلودفایل اکسل</label>
+                                <input id="contact-upload" type="file" class="d-none">
+                                <input type="hidden" name="documentId" id="DocumentId" />
+                            </div>
+                            <a href="#" target="_blank" id="FileUpload" class="btn btn-default d-none">مشاهده فایل</a>
+
+                            <div class="loginFooter">
+                                <button class="btn" codeprocess-action="contactUs-add">
+                                    @Resource.Lang.Send
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+@section endScripts{
+    <script>
+        $(function () {
+            viewModel.ContactUs.Title("ثبت سفارش");
+        })
+    </script>
+
+}
+
+
+
+
+

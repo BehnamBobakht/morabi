@@ -1,0 +1,29 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@{
+    ViewBag.Title = "پرینت گواهی فیزیکی " ;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    int TotalCount = ViewBag.TotalCount;
+    int index = ViewBag.TotalCount / 50;
+    int Mod = (TotalCount % 50);
+
+    int id = ViewBag.Id;
+    index = Mod > 0 ? index + 1 : index;
+}
+
+<strong>تعداد کل: @ViewBag.TotalCount</strong>
+<div style="position: relative;width: 100%;max-width: 1024px;margin: auto;">
+    <ul class="pagination">
+
+        @for (int i = 1; i <= index; i++)
+        {
+
+            <li class="paginate_button" aria-controls="datatable-buttons">
+                <a href="/Panel/store/product/PrintReportCertificateAll?id=@ViewBag.Id&&index=@i">@(i.ToPersian())</a>
+            </li>
+        }
+
+
+    </ul>
+</div>

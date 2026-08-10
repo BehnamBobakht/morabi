@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://webservice.tosan.connector.core.scm.tosantechno.com/" targetNamespace="http://webservice.tosan.connector.core.scm.tosantechno.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="EKeyValue">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetCardInfoResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CardInfo" type="tns:CardInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CardInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CardHolderId" type="xs:string" />
+      <xs:element minOccurs="0" name="CardNumber" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpDate" type="xs:string" />
+      <xs:element minOccurs="0" name="CardHolderName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EThpData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ItemId" type="xs:int" />
+      <xs:element minOccurs="0" name="ItemValue" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="enTransType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="enGoods" />
+      <xs:enumeration value="enBillPay" />
+      <xs:enumeration value="enVocher" />
+      <xs:enumeration value="enTopUp" />
+      <xs:enumeration value="enThpPay" />
+      <xs:enumeration value="enBillInquery" />
+      <xs:enumeration value="enThpInquery" />
+      <xs:enumeration value="enBalance" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enScmTransResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="erSucceed" />
+      <xs:enumeration value="erScm_ParamIsNull" />
+      <xs:enumeration value="erScm_ParamItemIsNull" />
+      <xs:enumeration value="erScm_InvalidAcceptor" />
+      <xs:enumeration value="erScm_InvalidTerminal" />
+      <xs:enumeration value="erScm_NotBelongTerminalToAcceptor" />
+      <xs:enumeration value="erScm_InvalidAmount" />
+      <xs:enumeration value="erScm_InvalidLocalDate" />
+      <xs:enumeration value="erScm_InvalidTraceNo" />
+      <xs:enumeration value="erScm_InvalidTransType" />
+      <xs:enumeration value="erScm_InvalidBillId" />
+      <xs:enumeration value="erScm_InvalidPayId" />
+      <xs:enumeration value="erScm_InvalidToken" />
+      <xs:enumeration value="erScm_InvalidVoucherType" />
+      <xs:enumeration value="erScm_InvalidReserveNum" />
+      <xs:enumeration value="erScm_InvalidCardData" />
+      <xs:enumeration value="erScm_InvalidCardDataPan" />
+      <xs:enumeration value="erScm_InvalidCardDataCvv2" />
+      <xs:enumeration value="erScm_InvalidCardDataPin2" />
+      <xs:enumeration value="erScm_InvalidCardDataExpireData" />
+      <xs:enumeration value="erScm_erOrgTransNotApproved" />
+      <xs:enumeration value="erScm_InvalidRedirectUrl" />
+      <xs:enumeration value="erScm_InvalidDiagKey" />
+      <xs:enumeration value="erScm_InvalidLanguage" />
+      <xs:enumeration value="erScm_NotBindUserIdToANyAcceptor" />
+      <xs:enumeration value="erScm_BindUserIdToManyTerminal" />
+      <xs:enumeration value="erScm_TransactionDonebefore" />
+      <xs:enumeration value="erScm_InvalidReferenceNum" />
+      <xs:enumeration value="erScm_InvalidSessionId" />
+      <xs:enumeration value="erScm_OrgTransVerifiedBefore" />
+      <xs:enumeration value="erScm_AmountNotEqualWithOrgTransAmount" />
+      <xs:enumeration value="erScm_ResNumNotEqualWithOrgTransResNum" />
+      <xs:enumeration value="erScm_OrgTransReversedBefore" />
+      <xs:enumeration value="erScm_InvalidTransKey" />
+      <xs:enumeration value="erScm_CompleteTransBefore" />
+      <xs:enumeration value="erScm_QueueStoreError" />
+      <xs:enumeration value="erScm_DecideTransNotFound" />
+      <xs:enumeration value="erScm_InvalidParam" />
+      <xs:enumeration value="erScm_NotApproveFromSwitch" />
+      <xs:enumeration value="erScm_TimeoutFromSwitch" />
+      <xs:enumeration value="erScm_NotConnectSwitch" />
+      <xs:enumeration value="erScm_ProcessException" />
+      <xs:enumeration value="erScm_InvalidUseridOrPass" />
+      <xs:enumeration value="erScm_TimeMismatch" />
+      <xs:enumeration value="erScm_WaitTimeForTransIsFinished" />
+      <xs:enumeration value="erScm_TransRepeatCountIsLimited" />
+      <xs:enumeration value="erScm_TransactionCompletebefore" />
+      <xs:enumeration value="erScm_AcceptorHaveManyTerminal" />
+      <xs:enumeration value="erScm_InvalidAcceptorType" />
+      <xs:enumeration value="erScm_InquryNotApprove" />
+      <xs:enumeration value="erScm_InvalidPorductId" />
+      <xs:enumeration value="erScm_InvalidRequestParam" />
+      <xs:enumeration value="erScm_InvalidMobileNo" />
+      <xs:enumeration value="erScm_BillPaymentIsRepeated" />
+      <xs:enumeration value="erScm_ReverseNotAllowed" />
+      <xs:enumeration value="erScm_TransactionNotPermitted" />
+      <xs:enumeration value="erScm_InvalidParamLength" />
+      <xs:enumeration value="erScm_InvalidGoodsReferenceIdLen" />
+      <xs:enumeration value="erScm_InvalidMerchantGoodsReferenceIdLen" />
+      <xs:enumeration value="erScm_InvalidEmailAddLen" />
+      <xs:enumeration value="erScm_InvalidSourceIP" />
+      <xs:enumeration value="erScm_InvalidBillList" />
+      <xs:enumeration value="erScm_RepeatedBillId" />
+      <xs:enumeration value="erScm_AcceptorWebInfoNotDefined" />
+      <xs:enumeration value="erScm_Repeat" />
+      <xs:enumeration value="erScm_InvalidChannelId" />
+      <xs:enumeration value="erScm_InvalidUserId" />
+      <xs:enumeration value="erScm_InvalidAcceptorStatus" />
+      <xs:enumeration value="erScm_InvalidTerminalStatus" />
+      <xs:enumeration value="erScm_MerchantNotHaveOrManySomeProduct" />
+      <xs:enumeration value="erScm_VerifyUserNotEqualWithTransUser" />
+      <xs:enumeration value="erScm_TransAmountNotEqualWithSrvcAmnt" />
+      <xs:enumeration value="erScm_DBException" />
+      <xs:enumeration value="erScm_erOrgTransNotExists" />
+      <xs:enumeration value="erScm_InvalidServiceValues" />
+      <xs:enumeration value="erScm_InvalidServiceId" />
+      <xs:enumeration value="erScm_TransactionHaveManyApprove" />
+      <xs:enumeration value="erScm_InvalidTerminalSerial" />
+      <xs:enumeration value="erScm_TerminalPinKeyNotFound" />
+      <xs:enumeration value="erScm_TerminalDpkKeyNotFound" />
+      <xs:enumeration value="erScm_TerminalKeyNotFound" />
+      <xs:enumeration value="erScm_InvalidCardPresentTerminal" />
+      <xs:enumeration value="erScm_TerminalBDKKeyNotFound" />
+      <xs:enumeration value="erScm_InvalidTransKsnSequence" />
+      <xs:enumeration value="erScm_InvalidTransKsnSerial" />
+      <xs:enumeration value="erScm_TerminalExIdNotDefined" />
+      <xs:enumeration value="erScm_ReserveNumIsAlreadyExisted" />
+      <xs:enumeration value="erScm_DuplicatedPayment" />
+      <xs:enumeration value="erScm_InValidKSN" />
+      <xs:enumeration value="erScm_InValidDukPT" />
+      <xs:enumeration value="erScm_InvalidMerchantId" />
+      <xs:enumeration value="erScm_UnregisteredRedirectUrl" />
+      <xs:enumeration value="erScm_UnregisteredPostUrl" />
+      <xs:enumeration value="erScm_InvalidPaypalId" />
+      <xs:enumeration value="erScm_NoApportionmentAccount" />
+      <xs:enumeration value="erScm_ApportionmentAccountNotExists" />
+      <xs:enumeration value="erScm_InvalidCardHolderId" />
+      <xs:enumeration value="erScm_PanNotFound" />
+      <xs:enumeration value="erScm_InvalidAcceptorName" />
+      <xs:enumeration value="erScm_InvalidPeerInfo" />
+      <xs:enumeration value="erFailed" />
+      <xs:enumeration value="erScm_UnknownError" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

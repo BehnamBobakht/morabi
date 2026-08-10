@@ -1,0 +1,62 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.StoreComment
+@{
+    ViewBag.Title = Resource.Lang.RemoveUsersOpinion;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            @if (ViewBag.Alert != null)
+            {
+                <p class="alert alert-danger">@ViewBag.Alert</p>
+
+            }
+            <div class="form-horizontal">
+                <h3>@Resource.Lang.SureDelete</h3>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Resource.Lang.CustomerInfo
+                    </dt>
+                    <dd>
+                        @if (Model.AccountId == null)
+                        {
+                            <span>@Model.NameFamily (@Model.EmailAddress)</span>
+                        }
+                        else
+                        {
+                            <span>@Model.Account.FullName (@Model.Account.Email)</span>
+                        }
+                    </dd>
+                    <dt>@Resource.Lang.OpinionContext</dt>
+                    <dd>@Html.Raw(Model.Body)</dd>
+                    <dt>@Resource.Lang.RegisteredDate</dt>
+                    <dd>@Model.Datetime.ToPersianWithTime().ToPersian()</dd>
+                    <dt>@Resource.Lang.Status</dt>
+                    <dd>
+                        @if (Model.Approved == true)
+                        {
+                            <span>@Resource.Lang.Confirmation</span>
+                        }
+                        else
+                        {
+                            <span>@Resource.Lang.NotChecked</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <input type="submit" value=@Resource.Lang.Delete class="btn btn-danger" />
+                        <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

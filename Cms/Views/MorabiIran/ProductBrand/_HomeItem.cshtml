@@ -1,0 +1,15 @@
+﻿@model List<DataLayer.ViewModels.ProductBrandVm>
+@if (Model.Any())
+{
+
+    foreach (var item in Model)
+    {
+        <div class="swiper-slide justify">
+            <div class="brandBox linkitem">
+                <a href="@item.Href"></a>
+                <img src="@item.Picture.Url" alt="@item.Name">
+            </div>
+        </div>
+    }
+}
+

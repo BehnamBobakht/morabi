@@ -1,0 +1,352 @@
+@font-face {
+    font-family: 'SiteFont';
+    src: url('../fonts/IRANSansWeb.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+body{
+    direction: rtl;
+    margin: 0;
+    font-family: 'SiteFont';
+}
+ul{
+    padding: 0;
+}
+.container {
+    max-width: 1350px;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.secondary_btn {
+    padding: 7px;
+    background-color: #fff;
+    border-radius: 0px;
+    min-width: 130px;
+    font-size: 14px;
+    color: #0d0257;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5px;
+    border: 1px solid #0d0257 !important;
+    width: fit-content;
+    width: -moz-fit-content;
+}
+.secondary_btn:hover {
+    background-color: #0d0257;
+    color: #fff !important;
+}
+.primary_btn {
+    padding: 7px;
+    border-radius: 0px;
+    min-width: 130px;
+    font-size: 14px;
+    color: #fff;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5px;
+    transition: all 0.5s;
+    position: relative;
+    width: fit-content;
+    width: -moz-fit-content;
+    z-index: 10;
+}
+
+.primary_btn span,
+.primary_btn i {
+    z-index: 1;
+}
+
+.primary_btn:hover {
+    color: #0d0257;
+}
+
+.primary_btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #0d0257;
+    transition: all 0.3s;
+    border-radius: 0px;
+}
+
+.primary_btn:hover::before {
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+}
+
+.primary_btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.3s;
+    transform: scale(1.2, 1.2);
+    border-radius: 0px;
+    background: #0d02572b;
+}
+
+.primary_btn:hover::after {
+    opacity: 1;
+    transform: scale(1, 1);
+}
+    /*-------------------------------callback-----------------------------------*/
+    
+    @media (min-width: 992px){
+        .col-lg-7 {
+           flex: 0 0 auto;
+           width: 58.3333333333%;
+       } 
+   }
+   .row {
+   width: 100%;
+   justify-content: center;
+   display: flex;
+   }
+   .container{
+       width: 100%;
+   }
+     
+       .callback_box {
+           background-color: #fff;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: center;
+           border-radius: 40px;
+           box-shadow: 0 0 21px 0px #e5e5e5;
+           padding: 30px;
+       }
+       .payment_callback {
+           min-height: 100vh;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           background: #e5e8ef;
+       }
+       .callback_message{
+           text-align: center;
+           margin-top: 20px;
+       }
+       .callback_message strong{
+           font-size: 30px;
+       }
+       .callback_message p{
+           font-size: 20px;
+           margin-top: 10px;
+       }
+       .callback_info {
+           margin: 40px 0;
+           width: 100%;
+       }
+       .callback_info li{
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           line-height: 2;
+       }
+       .callback_info li span{
+           color: rgb(112, 111, 111);
+       }
+       .amount_paid{
+           font-size: 18px;
+           padding: 10px 0;
+       }
+       .code_tracking strong{
+           border: 1px solid gainsboro;
+           padding: 5px 10px;box-shadow: 0 0 5px 0 gainsboro;
+           color: #fff;
+       }
+       .callback_btns{
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           flex-wrap: wrap;
+           width: 100%;
+       }
+       .callback_btns .btn{
+           flex: 1 1 auto;
+           padding: 10px;
+       }
+       .callback_img img{
+           width: 100%;
+           object-fit: contain;
+           max-height: 150px;
+       }
+       .success_payment .callback_message{
+           color: #09a909;
+       }
+       .success_payment .code_tracking strong{
+           background-color: #09a909;
+       }
+       .faild_payment .callback_message{
+           color: #fa113d;
+       }
+       .faild_payment .code_tracking strong{
+           background-color: #fa113d;
+       }
+   .faild_payment .callback_btns .btn{
+       flex: unset;
+   }
+       @media (max-width:600px){
+           .callback_info {
+               font-size: 12px;
+           }
+           .amount_paid {
+               font-size: 14px;
+           }
+           .callback_message strong {
+               font-size: 25px;
+           }
+           .callback_message p {
+               font-size: 17px;
+           }
+           .callback_box {
+               padding: 15px;
+           }
+           .callback_img img{
+               max-height: 80px;
+           }
+       }
+       /*---------------------------connecting------------------------*/
+       .connecting_page {
+           background: #e5e5e5;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+       }
+       .connecting{
+           font-size:100px; /* Default style */
+           --duration:2s; /* Default style */
+         }
+         .connecting .circle{
+           position:absolute;
+           left:.15em;
+           top:.15em;
+           right:.15em;
+           bottom:.15em;
+           border-radius:.5em;
+           border:.1em solid white;
+           border-color:white transparent transparent transparent;
+           animation:rotate var(--duration) linear infinite;
+         }
+         @keyframes rotate {
+           0%{
+             transform:rotate(0deg);
+           }
+           100%{
+             transform:rotate(360deg);
+           }
+         }
+         
+         .connecting_box {
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+           align-items: center;
+           height: 100vh;
+       }
+       .connecting_message{
+           display: flex;
+           align-items: center;
+           flex-wrap: wrap;
+           justify-content: center;
+           margin-top: 30px;
+           font-size: 20px;
+       }
+         .connecting{
+         /*  Box style only  */
+           width:1em;
+           aspect-ratio:1;
+           border-radius:.2em;
+           background-image:linear-gradient(135deg, rgb(200,200,200), rgb(0,0,0));
+           box-shadow:3px 3px 5px rgba(0,0,0,.8);
+           position:relative;
+         }
+         /* Box style only */
+         .connecting::before{
+           content:'';
+           position:absolute;
+           top:1px;
+           left:1px;
+           right:1px;
+           bottom:1px;
+           border-radius:.2em;
+           background-color:rgb(50,50,50);
+         }
+         
+   
+     .dots-container {
+       width: 50px;
+       display: flex;
+       justify-content: space-between;
+       margin: 0 10px;
+     }
+     
+     .pulse-dot {
+       width: 10px;
+       height: 10px;
+       border-radius: 25px;
+       background-color: #00aeff;
+     }
+     
+     .pulse-dot-1 {
+       opacity: 0.5;
+       animation: pulse 1.5s ease infinite;
+     }
+     
+     .pulse-dot-2 {
+       animation: pulse 1.5s ease infinite;
+       animation-delay: 0.5s;
+     }
+     
+     .pulse-dot-3 {
+       animation: pulse 1.5s ease infinite;
+       animation-delay: 1s;
+     }
+     
+     @keyframes pulse {
+       0% {
+         opacity: 0.4;
+         transform: scale(1, 1);
+       }
+     
+       50% {
+         opacity: 1;
+         transform: scale(1.2, 1.2);
+       }
+     
+       100% {
+         opacity: 0.4;
+         transform: scale(1, 1);
+       }
+     }
+.callback_btns .btn svg {
+    margin-left: 10px;
+}

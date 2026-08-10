@@ -1,0 +1,187 @@
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 100;
+	src: url('yekanbakh/woff/YekanBakhFaNum-thin.woff') format('woff'),   
+	url('fonts/yekanbakh/woff2/YekanBakhFaNum-thin.woff2') format('woff2');		
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 300;
+	src: url('yekanbakh/woff/YekanBakhFaNum-Light.woff') format('woff'),   
+	url('yekanbakh/woff2/YekanBakhFaNum-Light.woff2') format('woff2');	
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: normal;
+	src: url('yekanbakh/woff/YekanBakhFaNum-Regular.woff') format('woff'),   
+	url('yekanbakh/woff2/YekanBakhFaNum-Regular.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 600;
+	src: url('yekanbakh/woff/YekanBakhFaNum-SemiBold.woff') format('woff'),   
+	url('yekanbakh/woff2/YekanBakhFaNum-SemiBold.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: bold;
+	src: url('yekanbakh/woff/YekanBakhFaNum-Bold.woff') format('woff'),   
+	url('yekanbakh/woff2/YekanBakhFaNum-Bold.woff2') format('woff2'); 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 800;
+	src: url('yekanbakh/woff/Yekan Bakh FaNum-ExtraBold.woff') format('woff'),   
+	url('yekanbakh/woff2/Yekan Bakh FaNum-ExtraBold.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 900;
+	src: url('yekanbakh/woff/Yekan Bakh FaNum-Black.woff') format('woff'),   
+	url('yekanbakh/woff2/Yekan Bakh FaNum-Black.woff2') format('woff2');		 
+}
+
+@font-face {
+	font-family: 'sitefont';
+	font-style: normal;
+	font-weight: 950;
+	src: url('yekanbakh/woff/Yekan Bakh FaNum-ExtraBlack.woff') format('woff'),   
+	url('yekanbakh/woff2/Yekan Bakh FaNum-ExtraBlack.woff2') format('woff2');		 
+}
+
+
+#container {
+    height: 800px;
+    min-width: 800px;
+    max-width: 800px;
+    margin: 0 auto;
+        border-radius: 16px;
+
+}
+
+.loading {
+    margin-top: 10em;
+    text-align: center;
+    color: gray;
+}
+
+.map-parent{
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    width: 90%;
+
+
+}
+body{
+    background-color: rgb(238, 238, 238);
+    margin: 0;
+    direction: rtl;
+    font-family:sitefont !important;
+}
+
+*{
+    font-family:sitefont !important;
+
+}
+
+.map-page .stateList{
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 16px;
+    margin-right: 10px;
+}
+.map-page ul {
+	list-style: none;
+	display: flex;
+	width: 100%;
+	overflow: hidden;
+	flex-wrap: wrap;
+}
+
+.map-page .stateList li {
+	padding: 5px;
+	width: 33%;
+	box-sizing: border-box;
+}
+.map-page .listHeader{
+    min-width: 100%;
+    background: linear-gradient(#576eff,#2e4aff);
+    text-align: center;
+    color: #fff;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+a,a:hover{
+    text-decoration: none;
+    color: inherit;
+}
+
+.map-page .stateList li button{
+	display: inline-block;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+	width: 100%;
+    background-color: rgb(230, 230, 230);
+    display: block;
+    text-align: center;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #333;
+    transition: 0.3s;
+}
+.stateList li button:hover{
+    color: #fff;
+
+  background-color: rgb(233, 126, 5);
+
+}
+
+
+@media(max-width:650px){
+   .map-page #container{
+        width: 100%;
+        min-width: 100%;
+        height: 400px;
+    }
+   .map-page .map-parent{
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+.map-page .stateList{
+        max-width: calc(100% - 30px) !important;
+        margin: auto !important;
+    }
+}
+

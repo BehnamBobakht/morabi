@@ -1,0 +1,6 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    <img src="@Model.FirstOrDefault().Picture.GetUrl()" alt="@Model.FirstOrDefault().GetName()" class="comlaintImg">
+}

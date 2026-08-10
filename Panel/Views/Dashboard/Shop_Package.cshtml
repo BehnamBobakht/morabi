@@ -1,0 +1,34 @@
+﻿
+@model DataLayer.Entities.Package
+@{ 
+    int shopId = ViewBag.ShopId;
+}
+
+<div class="col-lg-4 col-md-6">
+    <div class="card-box">
+        <h4 class="header-title m-t-0 m-b-30">
+            @if (Model != null)
+            {
+                <span>@Model.Name</span>
+            }
+            else
+            {
+                <span>@Resource.Lang.FreSubscribe  </span>
+            }
+        </h4>
+        <div class="widget-chart-1">
+            <div class="widget-chart-box-1">
+                <a href="@Url.Action("select", new { @controller = "package", @area = "store", shopId = shopId })" >
+                    <i class="fa fa-trophy home-shop-icon" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <div class="widget-detail-1">
+                <h2 class="p-t-10 m-b-0"></h2>
+                <p class="text-muted">@Resource.Lang.DaysToCompletion  </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

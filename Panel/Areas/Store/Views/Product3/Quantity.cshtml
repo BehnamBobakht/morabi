@@ -1,0 +1,179 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model IEnumerable<DataLayer.Entities.ProductQuantity>
+@{
+    Product product = ViewBag.Product;
+    var setting = BaseWebsite.WebsiteSetting;
+
+    ViewBag.Title = Resource.Lang.StockStatus + product.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    List<ProductQuantity> listQuantity = Model
+        //.Where(p => p.ColorId != null || p.SizeId != null || p.OptionItemId != null)
+        .ToList();
+    bool hasColor = listQuantity.Any(p => p.ColorId != null);
+    bool hasSize = listQuantity.Any(p => p.SizeId != null);
+    string productOptionName = null;
+    if (listQuantity.Any(p => p.OptionItemId != null))
+    {
+        productOptionName = listQuantity.First().ProductOptionItem.ProductOption.Name;
+    }
+    if (hasColor && hasSize)
+    {
+        listQuantity = listQuantity.OrderBy(p => p.Color.Name).ThenBy(p => p.Size.Name).ToList();
+    }
+    else if (hasColor && !hasSize)
+    {
+        listQuantity = listQuantity.OrderBy(p => p.Color.Name).ToList();
+    }
+    else if (!hasColor && hasSize)
+    {
+        listQuantity = listQuantity.OrderBy(p => p.Size.Name).ToList();
+    }
+}
+<div codeprocess-ajax-form="/store/product/quantity" codeprocess-back-form="/store/product">
+        <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <input type="hidden"  name="ProductId" value="@product.ID" />
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt></dt>
+                    <dd></dd>
+                    @if (product.ProductTypeId != null)
+                    {
+                        <dt>@Resource.Lang.TypeProduct</dt>
+                        <dd>@product.ProductType.Name</dd>
+                    }
+                    @if (product.ProductCategoryId != null)
+                    {
+                        <dt>@Resource.Lang.CategoryName</dt>
+                        <dd>@product.ProductCategory.Name</dd>
+                    }
+                    @if (product.ProductSubCategoryId != null)
+                    {
+                        <dt>@Resource.Lang.SubordinateName</dt>
+                        <dd>@product.ProductSubCategory.Name</dd>
+                    }
+                    <dt>@Resource.Lang.ProductName</dt>
+                    <dd>@product.Name</dd>
+                </dl>
+            </div>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.Code</th>
+                        <th>@Resource.Lang.ProductName</th>
+                        @if (hasColor == true)
+                        {
+                            <th>@Resource.Lang.Color</th>
+                        }
+                        @if (hasSize == true)
+                        {
+                            <th>@Resource.Lang.Size</th>
+                        }
+                        @if (!string.IsNullOrEmpty(productOptionName))
+                        {
+                            <th>@productOptionName</th>
+                        }
+                        @if (!setting.HasStore)
+                        {
+                            <th>@Resource.Lang.Price</th>
+                            <th>@Resource.Lang.Count</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < listQuantity.Count; i++)
+                    {
+                        ProductQuantity quantity = listQuantity[i];
+                        <tr quantity-id="@quantity.ID">
+                            <td>@((i + 1).ToPersian())</td>
+                            @if (quantity.SyncId != null)
+                            {
+                                if (quantity.SyncId.IsGuid() == false)
+                                {
+                                    <td>@quantity.SyncId</td>
+                                }
+                                else
+                                {
+                                    <td>@quantity.ID</td>
+                                }
+                            }
+                            else
+                            {
+                                <td>@quantity.ID</td>
+                            }
+                            <td>@quantity.Product.Name</td>
+                            @if (hasColor)
+                            {
+                                if (quantity.ColorId != null)
+                                {
+                                    <td>@quantity.Color.Name</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            @if (hasSize)
+                            {
+                                if (quantity.SizeId != null)
+                                {
+                                    <td>@quantity.Size.Name</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            @if (!string.IsNullOrEmpty(productOptionName))
+                            {
+                                if (quantity.OptionItemId != null)
+                                {
+                                    <td>@quantity.ProductOptionItem.Value</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            @if (!setting.HasStore)
+                            {
+                                <td><input class="price text-center" type="text" value="@quantity.Price" /></td>
+                                <td><input class="count text-center" type="number" value="@quantity.Count" /></td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="devider-30"></div>
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <div>
+                        <div class="col-md-10 no-padding-right col-md-offset-2">
+                            <div class="row error-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="text-center">
+                        <input id="btnSubmit" type="button" value=@Resource.Lang.Register class="btn btn-success" />
+                        <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeProductQuantityScript();
+        });
+    </script>
+}
+
+
+

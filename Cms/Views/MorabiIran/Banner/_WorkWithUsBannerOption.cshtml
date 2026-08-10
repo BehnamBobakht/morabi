@@ -1,0 +1,17 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="optionItem">
+            <div class="optionItemBox">
+                <img src="@item.Picture.GetUrl()" alt="@item.GetName()">
+            </div>
+            <p>@item.GetName()</p>
+        </div>
+    }
+}
+

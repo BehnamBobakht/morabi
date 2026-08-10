@@ -1,0 +1,331 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.Shop
+@{
+    ViewBag.Title = Resource.Lang.ShopProfile;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    List<PaymentType> listPaymentType = ViewBag.PaymentType;
+    List<ProductType> listTypes = ViewBag.ProductType;
+    List<ShopContact> listContact = Model.ShopContact.ToList();
+    List<ShopAddress> listAddress = Model.ShopAddress.ToList();
+}
+
+@section Header {
+    <link rel="stylesheet" type="text/css" href="/Assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+<div codeprocess-ajax-form="/store/shop/profile">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.Label)
+    @Html.HiddenFor(model => model.PictureId)
+    @Html.HiddenFor(model => model.UserCreatorId)
+    @Html.HiddenFor(model => model.WebsiteId)
+    @Html.HiddenFor(model => model.Approved)
+    @Html.HiddenFor(model => model.Active)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6 no-padding">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, Resource.Lang.ShopName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TypeId, Resource.Lang.BusinessType, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CityId, Resource.Lang.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("CityId", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@Resource.Lang.Address</label>
+                            <div class="col-md-10">
+                                @if (listAddress.Count > 0)
+                                {
+                                    <input id="AddressId" name="AddressId" type="hidden" value="@listAddress[0].ID" />
+                                    <input id="Address" name="Address" type="text" class="form-control" value="@listAddress[0].Address" />
+                                }
+                                else
+                                {
+                                    <input id="AddressId" name="AddressId" type="hidden" value="0" />
+                                    <input id="Address" name="Address" type="text" class="form-control" />
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@Resource.Lang.TypeProduct <span class="required">(*)</span></label>
+                            <div class="col-sm-10">
+                                @foreach (ProductType item in listTypes)
+                                {
+                                    <label class="custom-checkbox">
+                                        @if (Model.ShopProductType.Any(p => p.ProductTypeId == item.ID))
+                                        {
+                                            <input type="checkbox" value="@item.ID" name="ProductType" checked="checked" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" value="@item.ID" name="ProductType" />
+                                        }
+                                        @item.Name
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@Resource.Lang.PaymentMethods</label>
+                            <div class="col-sm-10">
+                                @foreach (PaymentType item in listPaymentType)
+                                {
+                                    <label class="custom-checkbox">
+                                        @if (Model.ShopPaymentType.Any(p => p.PaymentTypeId == item.ID))
+                                        {
+                                            <input type="checkbox" value="@item.ID" name="PaymentType" checked="checked" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" value="@item.ID" name="PaymentType" />
+                                        }
+                                        @item.Name
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group ltr-fieldset">
+                            <label class="control-label col-md-2">@Resource.Lang.CommunicationWays</label>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-telegram" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_TELEGRAM.ToString()))
+                                                {
+                                                    <input id="Telegram" name="Telegram" type="text" contact-id="39" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Telegram  value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_TELEGRAM.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Telegram" name="Telegram" type="text" contact-id="39" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Telegram />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_INSTAGRAM.ToString()))
+                                                {
+                                                    <input id="Instagram" name="Instagram" type="text" contact-id="59" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Instagram value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_INSTAGRAM.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Instagram" name="Instagram" type="text" contact-id="59" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Instagram />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-wordpress" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_WEBSITE.ToString()))
+                                                {
+                                                    <input id="Website" name="Website" type="text" contact-id="38" class="form-control" data-toggle="tooltip" title=@Resource.Lang.WebSite value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_WEBSITE.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Website" name="Website" type="text" contact-id="38" class="form-control" data-toggle="tooltip" title=@Resource.Lang.WebSite />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-mobile" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_MOBILE.ToString()))
+                                                {
+                                                    <input id="Mobile" name="Mobile" type="text" contact-id="37" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Mobile value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_MOBILE.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Mobile" name="Mobile" type="text" contact-id="37" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Mobile />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_PHONE.ToString()))
+                                                {
+                                                    <input id="Phone" name="Phone" type="text" contact-id="35" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Phone value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_PHONE.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Phone" name="Phone" type="text" contact-id="35" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Phone />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-fax" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_FAX.ToString()))
+                                                {
+                                                    <input id="Fax" name="Fax" type="text" contact-id="60" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Fax value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_FAX.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Fax" name="Fax" type="text" contact-id="60" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Fax />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_EMAIL.ToString()))
+                                                {
+                                                    <input id="Email" name="Email" type="text" contact-id="61" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Email value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_EMAIL.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Email" name="Email" type="text" contact-id="61" class="form-control" data-toggle="tooltip" title=@Resource.Lang.Email />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_WHATSAPP.ToString()))
+                                                {
+                                                    <input id="Whatsapp" name="Whatsapp" type="text" contact-id="63" class="form-control" data-toggle="tooltip" title=@Resource.Lang.WhatsApp value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_WHATSAPP.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="Whatsapp" name="Whatsapp" type="text" contact-id="63" class="form-control" data-toggle="tooltip" title=@Resource.Lang.WhatsApp />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_LINKEDIN.ToString()))
+                                                {
+                                                    <input id="LinkedIn" name="LinkedIn" type="text" contact-id="65" class="form-control" data-toggle="tooltip" title=@Resource.Lang.linkedin value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_LINKEDIN.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="LinkedIn" name="LinkedIn" type="text" contact-id="65" class="form-control" data-toggle="tooltip" title=@Resource.Lang.linkedin />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <label class="col-xs-2 social-content">
+                                                <i class="fa fa-weixin" aria-hidden="true"></i>
+                                            </label>
+                                            <div class="col-xs-10">
+                                                @if (listContact.Any(p => p.Code.Label == Enum_Code.CONTACT_TYPE_WECHAT.ToString()))
+                                                {
+                                                    <input id="WeChat" name="WeChat" type="text" contact-id="64" class="form-control" data-toggle="tooltip" title=@Resource.Lang.WeChat  value="@listContact.FirstOrDefault(p => p.Code.Label == Enum_Code.CONTACT_TYPE_WECHAT.ToString()).Value" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="WeChat" name="WeChat" type="text" contact-id="64" class="form-control" data-toggle="tooltip" title=@Resource.Lang.WeChat />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, Resource.Lang.AdditionalInformation, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 no-padding-left">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @if (Model.Picture != null)
+                                {
+                                    <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="210" data-default-file="@Model.Picture.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="210" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <input id="btnSubmit" type="button" value=@Resource.Lang.Save class="btn btn-success" />
+                            <a class="btn btn-success" href="@Url.Action("create", new { area = "store", controller = "product", shopId = Model.ID })">@Resource.Lang.RegisterProductOfThisShop</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script type="text/javascript" src="/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeShopProfileScript();
+        });
+</script>
+}

@@ -1,0 +1,46 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var title = Resource.Lang.AboutUs;
+    TempData["Title"] = title;
+    string url = Url.Action("index", "staticpage", new { id = "aboutus" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+    breadcrumb.Add(new BreadcrumbVm() { Title = title, Url = url });
+    ViewBag.PageName = "aboutUs";
+
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/StaticPage.cshtml")
+}
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="about page-padding">
+        <div class="container">
+            <div class="section-title position-relative align">
+                <h1>@Resource.Lang.AboutUs</h1>
+            </div>
+            <div class="about-item first mb-5">
+                <div class="row">
+                    @Html.Action("Search", "Post", new { pocategory = "AboutUs", poviewName = "_AboutUs", poSize = 1 })
+                </div>
+            </div>
+            <div class="about-item mb-5">
+                <div class="row">
+                    @Html.Action("Search", "Post", new { pocategory = "Goals", poviewName = "_Goals", poSize = 1 })
+
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="about-banner">
+        @Html.Action("Search", "Banner", new { bacategory = "AboutUsBanner", baSize = 1, baviewName = "_AboutUsBanner" })
+
+    </section>
+</main>
+
+

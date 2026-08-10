@@ -1,0 +1,183 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+@model IEnumerable<DataLayer.Entities.PaymentExame>
+@{
+    ViewBag.Title = "آزمون مجدد";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    var setting = BaseWebsite.WebsiteSetting;
+    string index = ViewBag.PageIndex;
+    string pageSize = ViewBag.PageSize;
+    string fullName = ViewBag.fullName;
+    string NationalCode = ViewBag.NationalCode;
+    string Mobile = ViewBag.Mobile;
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+    string fromDatetime = ViewBag.FromDatetime;
+    string toDatetime = ViewBag.ToDatetime;
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+
+            <div class="devider-15"></div>
+            <form method="get" id="account-form" action="~/crm/PaymentExame">
+                <div class="list_search row card-box m-0">
+                    <div class="form-group mb-0 col-md-3">
+                        <label for="orderid" class="control-labe">@Resource.Lang.FullName</label>
+                        <input id="fullName" name="fullName" class="form-control" value="@fullName" />
+                    </div>
+                    <div class="form-group mb-0 col-md-3">
+                        <label for="date" class="control-label">@Resource.Lang.FromDate</label>
+                        <input id="from" class="form-control" autocomplete="off" codeprocess="date" name="fromDate" value="@fromDatetime" />
+                    </div>
+                    <div class="form-group mb-0 col-md-3">
+                        <label for="NationalCode" class="control-label">@Resource.Lang.NationalCode</label>
+                        <input id="NationalCode" class="form-control" autocomplete="off" name="NationalCode" value="@NationalCode" />
+                    </div>
+                    <div class="form-group mb-0 col-md-3">
+                        <label for="Mobile" class="control-label">@Resource.Lang.Mobile</label>
+                        <input id="Mobile" class="form-control" autocomplete="off" name="Mobile" value="@Mobile" />
+                    </div>
+
+                    <div class="form-group mb-0 col-md-2">
+                        <input type="submit" class="btn btn-success col-xs-12" value=@Resource.Lang.Search>
+                    </div>
+                </div>
+            </form>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+
+
+                        <th style="width: 30px;">#</th>
+
+                        <th>@Resource.Lang.Name_Family</th>
+
+                        <th>نوع پرداخت</th>
+                        <th>نام درس</th>
+                        <th>@Resource.Lang.PaiedAmount (@Resource.Lang.Toman)</th>
+                        <th>@Resource.Lang.Status</th>
+
+                        <th>@Resource.Lang.Date</th>
+                        <th>کد رهگیری</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+
+                            <td>@Html.DisplayFor(modelItem => item.ID)</td>
+
+                            
+                            <td>@item.Account.FullName @item.Account.LatName</td>
+							<th>
+                                @if (item.IsMulti == true)
+                                {
+                                    <span>چند تایی</span>
+                                }
+                                else
+                                {
+                                    <span>تکی</span>
+                                }
+                            </th>
+                            @if (item.PaymentExameCourseId.Any())
+                            {
+                                <td>
+                                    @foreach (var cat in item.PaymentExameCourseId)
+                                    {
+                                        <span>@cat.ExameCourse.Name </span>
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+							if(item.ExameCourse!=null){
+							  <td>@item.ExameCourse.Name</td>
+							}
+                              
+                            }
+
+                            <td>
+                                @item.Amount.GetCurrencyFormat().ToPersian()
+                            </td>
+                            <td>@item.Code.Name</td>
+
+                            <td>@item.Datetime.ToPersianWithTime().ToPersian()</td>
+
+                            <td>@item.RefNumber</td>
+
+                        </tr>
+
+
+                    }
+                </tbody>
+                
+        </table>
+<div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+
+
+                    <ul class="pagination">
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                            @fullName = fullName,
+                            @NationalCode = NationalCode,
+                           
+                            @pageIndex = 1,
+                            @pageSize = pageSize
+
+                        })">@Resource.Lang.FirstPage</a>
+                    </li>
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="paginate_button @active" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                                    @fullName = fullName,
+                                    @NationalCode = NationalCode,
+                         
+                                    @pageIndex = i,
+                                    @pageSize = pageSize
+                            })">@(i.ToPersian())</a>
+                        </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new
+                                    {
+                                    @fullName = fullName,
+                                    @NationalCode = NationalCode,
+                           
+                                    @pageIndex = EndIndex,
+                                    @pageSize = pageSize
+                            })">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                            <a href="#">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+    </div>
+</div>
+<!-- end col -->
+</div>

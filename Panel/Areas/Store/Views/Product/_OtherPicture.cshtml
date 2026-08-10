@@ -1,0 +1,16 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model PictureVm
+
+<div class="box-item picture-item col-pic-20">
+    <label class="other-picture-item">
+        <img src="@Model.Url">
+        <input class="has-pattern" name-pattern="ProductPictures[index].ID" name="" type="hidden" value="@Model.ID">
+        <input class="has-pattern" name-pattern="ProductPictures[index].Url" name="" type="hidden" value="@Model.Url">
+        <label class="delete-other-picture">
+            <i class="fa fa-close" aria-hidden="true"></i>
+        </label>      
+    </label>
+</div>
+
+

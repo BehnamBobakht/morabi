@@ -1,0 +1,54 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+
+@{
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+}
+
+    <div class="modal fade loginModal" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">@Resource.Lang.SignIn</h5>
+
+                </div>
+                <div class="modal-body">
+                        @Html.Partial("~/Views/"+BaseWebsite.WebsiteLabel+"/Partial/_Login.cshtml")
+                        <div class="login_links">
+                            <a href="javascript://" class="forgetpass show-register-modal">@Resource.Lang.IHaveNotRegisteredBefore</a>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn border" data-bs-dismiss="modal"> @Resource.Lang.Cancel </button>
+                    <button type="button" codeprocess-action="login" codeprocess-callback="closeModal,reLoadPage" class="btn btn-success"><span>@Resource.Lang.SignIn </span></button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade signupModal" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">@Resource.Lang.SignUp</h5>
+
+                </div>
+                <div class="modal-body">
+                        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Register.cshtml")
+                        <div class="login_links">
+                            <a href="javascript://" class="forgetpass show-login-modal">@Resource.Lang.HaveYouRegisteredBefor</a>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn border" data-bs-dismiss="modal"> @Resource.Lang.Cancel </button>
+                    <button type="button" codeprocess-action="register" codeprocess-callback="closeModal,reLoadPage" class="btn btn-success "><span>@Resource.Lang.SignUp</span> </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+

@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddedCart" xml:space="preserve">
+    <value>به سبد خرید اضافه شد !</value>
+  </data>
+  <data name="BasketIsEmpty" xml:space="preserve">
+    <value>سبد خرید خالی است</value>
+  </data>
+  <data name="CanNotDelete" xml:space="preserve">
+    <value>حذف این مورد امکان پذیر نیست</value>
+  </data>
+  <data name="CartIsEmpty" xml:space="preserve">
+    <value>سبد خرید خالی است</value>
+  </data>
+  <data name="ChooseAddress" xml:space="preserve">
+    <value>آدرس خود را انتخاب کنید</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>ارتباطی نزدیک‌تر و صمیمی‌تر؛ ما با شما دوست هستیم</value>
+  </data>
+  <data name="ContactUs1" xml:space="preserve">
+    <value>کاربر گرامی، لطفاً در صورت وجود هرگونه سوال یا ابهامی، پیش از ارسال ایمیل یا تماس تلفنی با خوش‌کالا، بخش پرسش‏های متداول را ملاحظه فرمایید و در صورتی که پاسخ خود را نیافتید، با ما تماس بگیرید.</value>
+  </data>
+  <data name="ContinueBuyingProcess" xml:space="preserve">
+    <value>ادامه فرایند خرید</value>
+  </data>
+  <data name="DoYouLeave" xml:space="preserve">
+    <value>آیا مایل به خروج هستید</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>خطا</value>
+  </data>
+  <data name="IAcceptRules" xml:space="preserve">
+    <value>قوانین و مقررات سایت را قبول دارم</value>
+  </data>
+  <data name="IDoNotUsername" xml:space="preserve">
+    <value>نام کاربری ندارم و می خواهم در سایت ثبت نام کنم</value>
+  </data>
+  <data name="IHaveUsername" xml:space="preserve">
+    <value>نام کاربری دارم و میخواهم وارد سایت شوم</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>اطلاع رسانی</value>
+  </data>
+  <data name="ItIsNotTimeToUseTheRebateCode" xml:space="preserve">
+    <value>زمان استفاده از کد تخفیف فرا نرسیده است</value>
+  </data>
+  <data name="LabelDuplicate" xml:space="preserve">
+    <value>برچسب تکراری است</value>
+  </data>
+  <data name="LoginToAccount" xml:space="preserve">
+    <value>ورود به حساب کاربری</value>
+  </data>
+  <data name="MerchantIsNotActive" xml:space="preserve">
+    <value>درگاه پرداخت فعال نیست</value>
+  </data>
+  <data name="MessageVerified" xml:space="preserve">
+    <value>هنوز پیغام شما بررسی نشده است</value>
+  </data>
+  <data name="NothingFound" xml:space="preserve">
+    <value>موردی یافت نشد</value>
+  </data>
+  <data name="NotRegistered" xml:space="preserve">
+    <value>سفارشی ثبت نشده است</value>
+  </data>
+  <data name="OperationSuccessful" xml:space="preserve">
+    <value>عملیات شما با موفقیت انجام شد</value>
+  </data>
+  <data name="OrderSuccessful" xml:space="preserve">
+    <value> بدین وسیله گواهی می شود خرید با مشخصات ذکر شده از طریق وبسایت انجام شده است</value>
+  </data>
+  <data name="OrderTracking" xml:space="preserve">
+    <value>پیگیری سفارش</value>
+  </data>
+  <data name="PleaseInsertTheCode" xml:space="preserve">
+    <value>لطفا کد را وارد نمایید</value>
+  </data>
+  <data name="PleaseInsertTheName" xml:space="preserve">
+    <value>لطفا نام را وارد نمایید</value>
+  </data>
+  <data name="PleaseInsertThePercent" xml:space="preserve">
+    <value>لطفا درصد را وارد نمایید</value>
+  </data>
+  <data name="PleaseInsertThePrice" xml:space="preserve">
+    <value>لطفا مبلغ را وارد نمایید</value>
+  </data>
+  <data name="PleaseRequired" xml:space="preserve">
+    <value>لطفا فیلدهای اجباری را پر کنید</value>
+  </data>
+  <data name="PleaseSelectAddress" xml:space="preserve">
+    <value>لطفا آدرس خود را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectBank" xml:space="preserve">
+    <value>لطفا درگاه بانک را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheShippingType" xml:space="preserve">
+    <value>لطفا نوع ارسال مرسوله را انتخاب کنید</value>
+  </data>
+  <data name="PleaseSpecifyThePaymentGateway" xml:space="preserve">
+    <value>لطفا درگاه پرداخت را مشخص نمایید</value>
+  </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>محصول مورد نظر یافت نشد</value>
+  </data>
+  <data name="PurchaseCertificate" xml:space="preserve">
+    <value>جهت تکمیل فرآیند خرید دکمه زیر را فشار دهید و یا منتظر بمانید تا چند لحظه دیگر به سایت پذیرنده هدایت شوید</value>
+  </data>
+  <data name="RebateCodeIsDuplicate" xml:space="preserve">
+    <value>کد تخفیف تکراری است</value>
+  </data>
+  <data name="ReturnMainPage" xml:space="preserve">
+    <value>بازگشت به صفحه اصلی</value>
+  </data>
+  <data name="SearchContent" xml:space="preserve">
+    <value>مطلب مورد نظر خود را جستجو نمایید</value>
+  </data>
+  <data name="success" xml:space="preserve">
+    <value>موفقیت آمیز</value>
+  </data>
+  <data name="TeackingCodeInvalid" xml:space="preserve">
+    <value>کد رهگیری وارد شده نا معتبر است</value>
+  </data>
+  <data name="TheCountOfDiscountCodesHasBeenCompleted" xml:space="preserve">
+    <value>تعداد استفاده از کد تخفیف به اتمام رسیده است</value>
+  </data>
+  <data name="TheCountOfOrderShouldNotBeLessThanOne" xml:space="preserve">
+    <value>تعداد سفارش نباید کمتر از یک باشد</value>
+  </data>
+  <data name="TheCountOfYourOrderIsMoreThanTheMaximumOrderCount" xml:space="preserve">
+    <value>تعداد سفارش شما از حداکثر سفارش بیشتر است</value>
+  </data>
+  <data name="TheCountOfYourOrdersIsMoreThanTheInventoryOfThisStore" xml:space="preserve">
+    <value>تعداد سفارش شما بیشتر از موجودی این فروشگاه است</value>
+  </data>
+  <data name="TheInformationEnteredIsDuplicate" xml:space="preserve">
+    <value>اطلاعات وارد شده تکراری است</value>
+  </data>
+  <data name="TheProductIsNotAvailable" xml:space="preserve">
+    <value>محصول مورد نظر موجود نیست</value>
+  </data>
+  <data name="TheRebateCodeHasExpired" xml:space="preserve">
+    <value>زمان استفاده از کد تخفیف به اتمام رسیده</value>
+  </data>
+  <data name="TheRebateCodeIsWrong" xml:space="preserve">
+    <value>کد تخفیف اشتباه است</value>
+  </data>
+  <data name="TheStartDateIsLargerThanTheEnd" xml:space="preserve">
+    <value>تاریخ شروع از پایان بزرگتر است</value>
+  </data>
+  <data name="UnfortunatelyNoProductWasFound" xml:space="preserve">
+    <value>متاسفانه محصولی یافت نشد</value>
+  </data>
+  <data name="UnspecifiedError" xml:space="preserve">
+    <value>خطای نا مشخص</value>
+  </data>
+  <data name="UseDiscountCode" xml:space="preserve">
+    <value>استفاده از کد تخفیف</value>
+  </data>
+  <data name="ViewCart" xml:space="preserve">
+    <value>مشاهده سبد خرید</value>
+  </data>
+  <data name="warning" xml:space="preserve">
+    <value>هشدار</value>
+  </data>
+  <data name="YouHaveNotPurchasedThisDiscountCodeFromTheStore" xml:space="preserve">
+    <value>شما از فروشگاه مربوط به این کد تخفیف خرید نکرده اید</value>
+  </data>
+  <data name="YourPurchaseAmountHasNotReachedTheQuorum" xml:space="preserve">
+    <value>مبلغ خرید شما به حد نصاب نرسیده است</value>
+  </data>
+  <data name="PleaseFillInOrSelectTheRequiredFields" xml:space="preserve">
+    <value>لطفا فیلد های اجباری را پر یا انتخاب کنید</value>
+  </data>
+  <data name="InvalidPriceRange" xml:space="preserve">
+    <value>رنج تعداد اشتباه است</value>
+  </data>
+  <data name="TheInformationIsIncorrect" xml:space="preserve">
+    <value>اطلاعات وارد شده صحیح نیست</value>
+  </data>
+  <data name="DurationMustBeGreaterThanZero" xml:space="preserve">
+    <value>مدت باید بیشتر از صفر باشد</value>
+  </data>
+  <data name="PaymentWasProblematic" xml:space="preserve">
+    <value>پرداخت با مشکل همراه شد</value>
+  </data>
+  <data name="TransferringToPaymentGateway" xml:space="preserve">
+    <value>در حال انتقال به درگاه پرداخت</value>
+  </data>
+  <data name="YouWillBeConnectedToThePaymentGatewayInAFewMoments" xml:space="preserve">
+    <value>تا لحظاتی دیگر به درگاه پرداخت متصل میشوید</value>
+  </data>
+  <data name="AmountPaid" xml:space="preserve">
+    <value>مبلغ پرداخت شده</value>
+  </data>
+  <data name="BankTrackingNumber" xml:space="preserve">
+    <value>شماره پیگیری بانک</value>
+  </data>
+  <data name="FailedOperation" xml:space="preserve">
+    <value>عملیات ناموفق</value>
+  </data>
+  <data name="IfTheAmountIsDeductedFromTheBankAccountFollowUpWithTheRelevantBank" xml:space="preserve">
+    <value>در صورت کم شدن مبلغ از حساب بانکی، از بانک مربوطه پیگیری نمایید</value>
+  </data>
+  <data name="PayableAmount" xml:space="preserve">
+    <value>مبلغ قابل پرداخت</value>
+  </data>
+  <data name="PaymentOnTheSpot" xml:space="preserve">
+    <value>پرداخت در محل</value>
+  </data>
+  <data name="PaymentType" xml:space="preserve">
+    <value>نوع پرداخت</value>
+  </data>
+  <data name="SuccessfulOperation" xml:space="preserve">
+    <value>عملیات موفق</value>
+  </data>
+  <data name="YourOrderHasBeenSuccessfullyRegistered" xml:space="preserve">
+    <value>سفارش شما با موفقیت ثبت شد</value>
+  </data>
+  <data name="YourPaymentWasSuccessful" xml:space="preserve">
+    <value>پرداخت شما با موفقیت انجام شد</value>
+  </data>
+  <data name="IDoNotHaveAnAccountAndIWantToRegister" xml:space="preserve">
+    <value>حساب کاربری ندارم و میخواهم ثبت نام کنم</value>
+  </data>
+  <data name="IHaveAnAccountAndIWantToLogin" xml:space="preserve">
+    <value>حساب کاربری دارم و میخواهم وارد شوم</value>
+  </data>
+  <data name="PleaseEnterTheAmount" xml:space="preserve">
+    <value>لطفا مبلغ را وارد نمایید</value>
+  </data>
+  <data name="PleaseEnterThePercent" xml:space="preserve">
+    <value>لطفا درصد را وارد نمایید</value>
+  </data>
+  <data name="PleaseEnterThePercentageCorrectly" xml:space="preserve">
+    <value>لطفا درصد را در بازه درست وارد نمایید</value>
+  </data>
+  <data name="PleaseSelectTheBrand" xml:space="preserve">
+    <value>لطفا برند را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheProduct" xml:space="preserve">
+    <value>لطفا محصول را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheProductCategory" xml:space="preserve">
+    <value>لطفا دسته بندی محصول را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheProductSubCategory" xml:space="preserve">
+    <value>لطفا زیر دسته محصول را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheProductType" xml:space="preserve">
+    <value>لطفا نوع محصول را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheSeller" xml:space="preserve">
+    <value>لطفا فروشنده را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheTypeOfAmount" xml:space="preserve">
+    <value>لطفا نوع مقدار را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheTypeOfDiscount" xml:space="preserve">
+    <value>لطفا نوع تخفیف را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseSelectTheVarity" xml:space="preserve">
+    <value>لطفا تنوع محصول را انتخاب نمایید</value>
+  </data>
+  <data name="PleaseEnterTheStartDate" xml:space="preserve">
+    <value>لطفا تاریخ شروع را وارد نمایید</value>
+  </data>
+  <data name="PleaseEnterTheTimePeriodCorrectly" xml:space="preserve">
+    <value>لطفا بازه زمانی را درست وارد نمایید</value>
+  </data>
+  <data name="ASimilarItemHasAlreadyBeenRegistered" xml:space="preserve">
+    <value>مشابه این آیتم قبلا ثبت شده است</value>
+  </data>
+  <data name="TheTimePeriodEnteredDoesNotMatchTheTimePeriodOfTheDiscountGroup" xml:space="preserve">
+    <value>بازه زمانی وارد شده با بازه زمانی گروه تخفیف همخوانی ندارد</value>
+  </data>
+  <data name="PleaseAnswerAllQuestions" xml:space="preserve">
+    <value>لطفا به همه سوالها پاسخ دهید</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>صفحه مورد نظر یافت نشد</value>
+  </data>
+  <data name="InvalidMobile" xml:space="preserve">
+    <value>شماره موبایل وارد شده اشتباه است</value>
+  </data>
+  <data name="NotRegister" xml:space="preserve">
+    <value>شما قبلا ثبت نام نکرده اید</value>
+  </data>
+  <data name="PleaseInsertTheFullName" xml:space="preserve">
+    <value>لطفا نام و نام خانوادگی را وارد نمایید</value>
+  </data>
+  <data name="PleaseInsertTheMobile" xml:space="preserve">
+    <value>لطفا شماره موبایل خود را وارد نمایید</value>
+  </data>
+  <data name="TheCodeEnteredIsIncorrect" xml:space="preserve">
+    <value>کد وارد شده اشتباه است</value>
+  </data>
+  <data name="TheCodeWasSentSuccessfully" xml:space="preserve">
+    <value>کد با موفقیت ارسال شد</value>
+  </data>
+  <data name="TheMobileNumberIsDuplicate" xml:space="preserve">
+    <value>شماره موبایل تکراری است</value>
+  </data>
+  <data name="YourWrongNumberIsMoreThanAllowed" xml:space="preserve">
+    <value>تعداد اشتباه شما بیشتر از حد مجاز است</value>
+  </data>
+  <data name="CodeInvalid" xml:space="preserve">
+    <value>کد معرف اشتباه است</value>
+  </data>
+  <data name="CodeValid" xml:space="preserve">
+    <value>کد معرف معتبر است</value>
+  </data>
+  <data name="OrderDuplicate" xml:space="preserve">
+    <value>شما قبلا در این دوره ثبت نام کرده اید</value>
+  </data>
+</root>

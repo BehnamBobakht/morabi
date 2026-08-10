@@ -1,0 +1,34 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.SiteUser
+
+<div class="user-box">
+    <div class="user-img" style="display: none;">
+        <a>
+            @if (Model.PictureId == null)
+            {
+                <img src="~/assets/images/users/avatar-1.jpg" alt="user-img" title="@Model.FullName" class="img-circle img-thumbnail img-responsive">
+            }
+            else
+            {
+                <img src="@Model.Picture.GetUrl()" alt="user-img" title="@Model.FullName" class="img-circle img-thumbnail img-responsive">
+            }
+        </a>
+        <div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>
+    </div>
+    <h5>
+        <a>@Model.FullName</a>
+        <br />
+    </h5>
+    <ul class="list-inline">
+        <li class="display-none">
+            <a>
+                <i class="zmdi zmdi-settings"></i>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("logout", "profile")" class="text-custom">
+                <i class="zmdi zmdi-power"></i>
+            </a>
+        </li>
+    </ul>
+</div>

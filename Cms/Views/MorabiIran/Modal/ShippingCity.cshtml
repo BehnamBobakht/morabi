@@ -1,0 +1,83 @@
+﻿@{ 
+
+    var currentAccount = DataLayer.Base.BaseWebsite.CurrentAccount;
+}
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">@Resource.Lang.ChooseAddress</h5>
+                <button type="button" class="close m-0 mr-auto" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    if (currentAccount == null)
+                    {
+                        <select class="form-control country d-none" onchange="CountryDropAddress()" id="locationCountry" disabled>
+                            <option value="-1">@Resource.Lang.Select</option>
+                            <!--ko foreach: viewModel.Country.CountryList() -->
+                            <option data-bind="value:Id , text:FaName"></option>
+                            <!--/ko-->
+                        </select>
+                        <div class="selectBox selectBox1">
+                            <div class="selected">
+                                <span>@Resource.Lang.State : </span>
+                                <strong data-bind="text:viewModel.State.StateName">@Resource.Lang.NotChoice</strong>
+                            </div>
+                            <hr />
+
+                            <div class="selectItems">
+                                <!--ko foreach: viewModel.State.StateList() -->
+                                <div class="radioBox">
+                                    <input data-bind="attr:{id:'st'+Id}" class="update-stateLocation" type="radio" name="locationstate">
+                                    <div class="selector"></div>
+                                    <label data-bind="attr:{for:'st'+Id},text:Name,click: function(data, event) { GetCityByStateIdLocation(Id,Name,data, event) }" class="label-stateLocation"></label>
+                                </div>
+                                <!--/ko-->
+
+
+                            </div>
+                        </div>
+                        <div class="selectBox selectBox2 mt-3">
+                            <div class="selected">
+                                <span>@Resource.Lang.City : </span>
+                                <strong data-bind="text:viewModel.City.CityName">@Resource.Lang.NotChoice</strong>
+                            </div>
+                            <hr />
+                            <div class="selectItems">
+                                <!--ko if:viewModel.City.CityList().length==0-->
+                                <div class="noResult h-100">
+                                    <span class="alert alert-warning">@Resource.Enum.NoCitiesSelected</span>
+                                </div>
+                                <!--/ko-->
+                                <!--ko foreach: viewModel.City.CityList() -->
+                                <div class="radioBox">
+                                    <input data-bind="attr:{id:'ci'+Id}" class="update-stateLocation" type="radio" name="locationstate">
+                                    <div class="selector"></div>
+                                    <label data-bind="attr:{for:'ci'+Id},text:Name,click: function(data, event) { GetSelectCityIdlocation(Id,Name,data, event) }" class="label-stateLocation"></label>
+                                </div>
+                                <!--/ko-->
+                            </div>
+
+                            @*<div class="selectItems">
+                        <div class="noResult h-100">
+                            <span class="alert alert-warning">هیچ استانی انتخاب نشده</span>
+                        </div>
+                    </div>*@
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/AddressLocation.cshtml")
+                        @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/AddAddress.cshtml")
+                        @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/RemoveAddress.cshtml")
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>

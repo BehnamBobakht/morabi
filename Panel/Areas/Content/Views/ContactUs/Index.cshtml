@@ -1,0 +1,199 @@
+﻿@using DataLayer.Base
+@model IEnumerable<DataLayer.Entities.ContactUs>
+@{
+    ViewBag.Title = Resource.Lang.ContactUs;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    string index = ViewBag.PageIndex;
+    string size = ViewBag.PageSize;
+    string name = ViewBag.pagename;
+    string title = ViewBag.Pagetitle;
+    string fromDatetime = ViewBag.fromDatetime;
+    string toDatetime = ViewBag.toDatetime;
+    var counter = 1;
+
+    int TotalCount = ViewBag.TotalCount;
+
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = size.IsInteger() ? size.GetInteger() : 50;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+
+@section Footer {
+}
+
+@section Script {
+   
+}
+@using (Html.BeginForm("Index","ContactUs",method:FormMethod.Get))
+{
+    <div>
+        <div class="col-sm-12">
+            <div class="card-box table-responsive">
+                <button type="submit" class="icon circle-icon glyphicon glyphicon-search" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Search></button>
+                <a href="@Url.Action("ExelExport",new { title=title,name=name,from=fromDatetime,to=toDatetime})" target="_blank" class="icon circle-icon glyphicon glyphicon-print" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Reports></a>
+                <div class="clear"></div>
+                <div class="row">
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="" class="control-label col-md-4">@Resource.Lang.Title</label>
+                            <div class="col-md-8 row">
+                                <input id="title" class="form-control" name="title" value="@title" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+
+                        <div class="form-group">
+                            <label for="" class="control-label col-md-4">@Resource.Lang.Name</label>
+                            <div class="col-md-8 row">
+                                <input id="name" class="form-control" name="name" value="@name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+
+                        <div class="form-group">
+                            <label for="" class="control-label col-md-4">@Resource.Lang.FromDate</label>
+                            <div class="col-md-8 row">
+                                <input id="fromDatetime" class="form-control" autocomplete="off" codeprocess="date" name="from" value="@fromDatetime" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+
+                        <div class="form-group">
+                            <label for="date" class="control-label col-md-4">@Resource.Lang.ToDate</label>
+                            <div class="col-md-8 row">
+                                <input id="toDatetime" class="form-control" autocomplete="off" codeprocess="date" name="to" value="@toDatetime" />
+                            </div>
+                        </div>
+                        </div>
+                    <div class="devider-15"></div>
+                </div>
+                <table id="datatable-buttons" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="first">#</th>
+
+                            <th>@Resource.Lang.Title</th>
+                            <th>@Resource.Lang.PersonalDetails</th>
+                            <th>@Resource.Lang.Options</th>
+                            <th>@Resource.Lang.Files</th>
+                            <th>@Resource.Lang.Detail</th>
+                            <th>-</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@counter</td>
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>
+                                    @Resource.Lang.DateTime : @item.CreateDate.ToPersianWithTime()
+                                    <br />
+                                    @Resource.Lang.FullName : @Html.DisplayFor(modelItem => item.Name)
+                                    <br />
+                                    @Resource.Lang.Phone :  @Html.DisplayFor(modelItem => item.Phone)
+                                    <br />
+                                    @Resource.Lang.Email :  @Html.DisplayFor(modelItem => item.Email)
+                                    @if (!string.IsNullOrEmpty(item.TrackingCode))
+                                    {
+                                        <br />
+                                        <div>  @Resource.Lang.TrackingCode :</div> <div> @Html.DisplayFor(modelItem => item.TrackingCode)</div>
+                                    }
+
+                                </td>
+
+                                <td>
+                                    @foreach (var field in item.ContactUsField)
+                                    {
+                                        <span>@string.Format("{0} : {1}", field.Name, field.Value)</span>
+                                        <br />
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.PictureId.HasValue)
+                                    {
+                                        <a href="@item.Picture.GetUrl()" target="_blank">
+                                            <img src="@item.Picture.GetUrl()" width="80px" height="80px" />
+                                        </a>
+
+                                    }
+                                    @if (item.DocumentId.HasValue)
+                                    {
+                                        <br />
+                                        <a href="@item.WebsiteDocument.GetUrl()" target="_blank">
+                                            @Resource.Lang.DownloadFile 1
+                                        </a>
+                                    }
+ 
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Body)</td>
+                                <td>
+                                    @Html.ActionLink("ثبت پیام", "Edit", new { id = item.ID })
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                    </tbody>
+                </table>
+                <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                    <ul class="pagination">
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                      
+                            @pageIndex = 1,
+                            @pageSize = size,
+                            @title=title,
+                                    @name=name,
+                                    @from=fromDatetime,
+                                    @to=toDatetime
+     
+                        })">@Resource.Lang.FirstPage</a>
+                    </li>
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="paginate_button @active" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                          @pageIndex = i,
+                            @pageSize = size,
+                            @title=title,
+                                    @name=name,
+                                    @from=fromDatetime,
+                                    @to=toDatetime
+                            })">@(i.ToPersian())</a>
+                        </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new
+                                    {
+                                       @pageIndex = EndIndex,
+                            @pageSize = size,
+                            @title=title,
+                                    @name=name,
+                                    @from=fromDatetime,
+                                    @to=toDatetime
+                            })">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                            <a href="#">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            </div>
+        </div><!-- end col -->
+    </div>
+}

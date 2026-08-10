@@ -1,0 +1,82 @@
+﻿@model List<DataLayer.Entities.Students>
+@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+@{
+
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+}
+
+@foreach (var orderProduct in Model)
+{
+    <div class="col-sm-4">
+
+        <div class="home-course-item linkitem in-progress">
+            @{Product product = orderProduct.Product;}
+
+            <a href="@product.GetLinkWithUrl()"></a>
+            <div class="home-course-img central position-relative">
+                @if (product.Image != "" && product.Image != null)
+                {<img src="@("https://morabiiran.ir/"+product.Image)" alt="@product.Name">
+
+                }
+                else
+                {
+                    <img src="@Html.Action("thumburl","picture",new {picurl=product.Picture.GetUrl(),width=320 })" alt="@product.Name">
+
+                }
+                <div class="home-course-in-progress central">
+
+                    <span>@product.Name</span>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div>
+            @if (CurrentAccount.NationalCode != "" && CurrentAccount.NationalCode != null && CurrentAccount.FullName != "" && CurrentAccount.FullName != null && CurrentAccount.FullNameEn != "" && CurrentAccount.FullNameEn != null && CurrentAccount.FatherName != null && CurrentAccount.FatherNameEn != null && CurrentAccount.FatherName != "" && CurrentAccount.FatherNameEn != "" && CurrentAccount.Address != "" && CurrentAccount.Address != null)
+            {
+                bool isShow = true;
+                if (product.IsParport == true)
+                {
+                    if (!(CurrentAccount.PassportPictureId != null || CurrentAccount.PassportPictureUrl != null))
+                    {
+                        isShow = false;
+                    }
+                }
+                if (product.IsPictureId == true)
+                {
+                    if (!(CurrentAccount.PictureID != null || CurrentAccount.PassportPictureUrl != null))
+                    {
+
+                        isShow = false;
+                    }
+                }
+                if (product.IsNationalId == true)
+                {
+                    if (!(CurrentAccount.NationalPictureId != null || CurrentAccount.NationalPictureUrl != null))
+                    {
+                        isShow = false;
+                    }
+                }
+                if (isShow == true)
+                {
+                    <a href="@product.LinkTelegram">کانال تلگرام: @product.LinkTelegram </a>
+
+                }
+            }
+
+        </div>
+    </div>
+
+}
+
+
+
+
+
+
+
+
+

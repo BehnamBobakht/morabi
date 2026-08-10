@@ -1,0 +1,18 @@
+﻿
+@using DataLayer.ViewModels;
+@using DataLayer.Base;
+@{ViewAccount currentUser = BaseWebsite.CurrentAccount; }
+
+
+                            
+
+
+@if (currentUser == null)
+{
+    <a href="@Url.Action("SignUp","Account")" class="btn primary_btn my-4">@Resource.Lang.LoginAndRegister</a>
+}
+
+else
+{
+    <a href="@Url.Action("Profile","Account")" class="btn primary_btn my-4">@Resource.Lang.ViewProfile</a>
+}

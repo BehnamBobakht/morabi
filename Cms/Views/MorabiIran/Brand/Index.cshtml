@@ -1,0 +1,73 @@
+﻿﻿﻿@using DataLayer.Entities;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+
+@model ProductBrandSerachVm
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var breadcrumb = new List<BreadcrumbVm>();
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Brands, Url = BaseWebsite.ShopUrl + "brands" });
+    breadcrumb.Add(new BreadcrumbVm() { Title = Model.ProductBrandVm.Name, Url = Model.ProductBrandVm.Href });
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/Brand.cshtml", Model)
+}
+
+		@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)	
+
+
+
+<section class="category page-padding">
+    <div class="container">
+        <article class="category-details">
+            <div class="row">
+                <div class="col-lg-4 px-lg-1">
+                    <div class="category-details-img central">
+                        <img src="@Model.ProductBrandVm.Picture.Url" alt="@Model.ProductBrandVm.Name">
+                    </div>
+                </div>
+                <div class="col-lg-8 px-lg-1">
+                    <div class="category-details-text justify flex-column">
+                      @*  <p class="fw-bold">@Model.ProductBrandVm.Name</p> *@
+                        <div class="limit1">
+							
+                            @Html.Raw(Model.ProductBrandVm.Description)
+                        </div>
+						  
+                    </div>
+                </div>
+            </div>
+        </article>
+        <hr />
+        <div class="products_box">
+            <div class="row">
+                @if (Model.ProductSearchVm.Products.Count > 0)
+                {
+                    foreach (var item in Model.ProductSearchVm.Products)
+                    {
+                        <div class="col-lg-3 col-md-4 p-1">
+                            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/ProductItem.cshtml", item)
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="alert alert-info">
+                        @Resource.Lang.NothingFound
+                    </p>
+                }
+                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Brand/_Pagination.cshtml", Model)
+
+            </div>
+        </div>
+    </div>
+</section>
+@section endScripts {
+
+    <script type="text/javascript">
+
+        initializeSearchPageScript()
+    </script>
+}

@@ -1,0 +1,328 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@model DataLayer.ViewModels.ProductSearchVm
+@{
+    ViewBag.Title = Resource.Lang.ListOfProductsRegisteredOnSite;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    int TotalCount = Model.TotalCount;
+    int CurrentIndex = Model.PageIndex;
+    int PageSize = Model.PageSize;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+    var setting = BaseWebsite.WebsiteSetting;
+    int counter = 0;
+
+}
+
+@using (Html.BeginForm())
+{
+
+    <div>
+        <div class="col-sm-12">
+            <div class="card-box table-responsive">
+                <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+                <button type="button" class="btn btn-primary btn-icon float-right" data-toggle="modal" data-target="#excelModal">
+                    <i class="zmdi zmdi-download"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-icon float-right" data-toggle="modal" data-target="#excelModal2">
+                    <i class="zmdi zmdi-upload"></i>
+                </button>
+                <button class="icon circle-icon glyphicon glyphicon-search" title=@Resource.Lang.Search></button>
+                <div class="clear"></div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.TypeProduct</span>
+                        <div>
+                            @Html.DropDownList("ProductTypeId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Category</span>
+                        <div id="Product-category-dropDown">
+                            @Html.Action("ProductCategoryDropDown", "ProductCategory", new { area = "store", typeId = Model.ProductTypeId, value = Model.ProductCategoryId })
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Subordinates</span>
+                        <div id="Product-sub-category-dropDown">
+                            @Html.Action("ProductSubCategoryDropDown", "ProductSubCategory", new { area = "store", categoryId = Model.ProductCategoryId, value = Model.ProductSubCategoryId })
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Name</span>
+                        <div>
+                            <input type="text" class="form-control" name="name" placeholder=@Resource.Lang.Name value="@Model.Name" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Status</span>
+                        <div>
+                            @Html.DropDownList("Status", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="control-label font-bold">@Resource.Lang.Active</span>
+                        <div>
+                            @*<select class="form-control" name="active">
+                    <option @(Model.Active==null?"selected":"") >@Resource.Lang.Select</option>
+                    <option @(Model.Active==true?"selected":"")>@Resource.Lang.Active</option>
+                    <option @(Model.Active==false?"selected":"")>@Resource.Lang.Deactive</option>
+                </select>*@
+                        </div>
+                    </div>
+                    <div class="devider-15"></div>
+                </div>
+                @if (Model.TotalCount > 0)
+                {
+                    <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                        <thead>
+                            <tr>
+                                <th class="first">#</th>
+                                <th>@Resource.Lang.ID</th>
+                                <th>@Resource.Lang.ProductName</th>
+                                <th>@Resource.Lang.Category</th>
+                                <th>@Resource.Lang.Viewed</th>
+                                <th>قیمت به یورو</th>
+
+                                @if (setting.HasPrice)
+                                {
+                                    <th>@Resource.Lang.Price</th>
+                                    <th>@Resource.Lang.Status</th>
+                                }
+                                <td></td>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.Products)
+                            {
+                                counter++;
+                                <tr>
+                                    <td>@counter</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProductTypeName) -
+                                        @Html.DisplayFor(modelItem => item.ProductCategoryName) -
+                                        @Html.DisplayFor(modelItem => item.ProductSubCategoryName)
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.VisitCount)</td>
+                                    <td>@item.EuroPrice</td>
+                                    @if (setting.HasPrice)
+                                    {
+                                        <td>
+                                            @if (item.Code.Label == Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString())
+                                            {
+                                                <string> @item.InexpensiveItemPrice.ToString("n0") - @item.InexpensiveItemBasePrice.ToString("n0")</string>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Code.Name)
+                                            @(item.HasEarnest ? "(امکان بیعانه)" : "")
+                                        </td>
+                                    }
+                                    @if (item.ProductTypeId == 2)
+                                    {
+                                        <td>
+                                            <a href="/panel/crm/account?productId=@item.ID">شرکت کنندگان  </a>
+                                        </td>
+
+                                    }
+                                    else if (item.ProductTypeId == 1001)
+                                    {
+                                        <td>
+                                            <a href="/panel/crm/account?productId=@item.ID">ثبت نام کنندگان آزمون</a>
+
+                                        </td>
+                                    }
+                                    else if (item.ProductTypeId == 3)
+                                    {
+                                        <td>
+                                            <a href="/panel/crm/account?productId=@item.ID&&typeId=3">خریداران</a>
+
+
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                <td>
+                                    @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.ID }) |
+                                    @Html.ActionLink("لینک معرف", "InterUser", new { productidInter = item.ID }) |
+                                    @Html.ActionLink("انتخاب سوالات", "QuestionRegister", new { id = item.ID }) |
+
+                                    @Html.ActionLink("پرینت گواهی", "PrintReport", new { id = item.ID }) |
+                                    @Html.ActionLink("درخواست گواهی", "PaymentCertificate", new { id = item.ID }) |
+                                    @Html.ActionLink("پرینت کل گواهی فیزیکی", "PrintReportCertificateAllNumber", new { id = item.ID }) |
+                                    @Html.ActionLink("پرینت گواهی فیزیکی", "PrintReportCertificate", new { id = item.ID }) |
+                                    @Html.ActionLink("لیست گواهی فیزیکی", "ExcelCertificate", new { id = item.ID }) |
+                                    @Html.ActionLink("لیست گواهی آنلاین", "ExcelCertificateOnline", new { id = item.ID }) |
+
+                                    @if (setting.HasQuantity)
+                                    {
+                                        @Html.ActionLink(Resource.Lang.Stock, "AddToStore", new { productid = item.ID })<span>|</span>
+                                    }
+                                    @Html.ActionLink(Resource.Lang.OtherCategories, "ProductExteraCategories", new { id = item.ID }) |
+                                    @if (setting.HasCustomFields)
+                                    {
+                                        @Html.ActionLink(Resource.Lang.CustomFields, "EditCustomFields", new { id = item.ID })<span>|</span>
+                                    }
+                                    @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.ID })
+                                </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                        <ul class="pagination">
+                            @if (StartIndex > 1)
+                            {
+                                <li class="paginate_button previous" aria-controls="datatable-buttons">
+                                    <a href="@Url.Action("index", new {
+                                            productTypeId = Model.ProductTypeId,
+                                            productCategoryId = Model.ProductCategoryId,
+                                            productSubCategoryId = Model.ProductSubCategoryId,
+                                            name = Model.Name,
+                                            status = Model.Status,
+                                            prindex = 1
+                                        } )">@Resource.Lang.FirstPage</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                        <a href="#">@Resource.Lang.FirstPage</a>
+                                    </li>
+                                }
+                            @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                            {
+                                var activeIndex = CurrentIndex == i ? "active" : "";
+                                <li class="paginate_button @activeIndex" aria-controls="datatable-buttons">
+                                    <a href="@Url.Action("index", new {
+                                            productTypeId = Model.ProductTypeId,
+                                            productCategoryId = Model.ProductCategoryId,
+                                            productSubCategoryId = Model.ProductSubCategoryId,
+                                            name = Model.Name,
+                                            status = Model.Status,
+                                            prindex = i
+                                        } )">@(i.ToPersian())</a>
+                                </li>
+                            }
+                            @if (CurrentIndex < EndIndex)
+                            {
+                                <li class="paginate_button previous" aria-controls="datatable-buttons">
+                                    <a href="@Url.Action("index", new
+                                        {
+                                            productTypeId = Model.ProductTypeId,
+                                            productCategoryId = Model.ProductCategoryId,
+                                            productSubCategoryId = Model.ProductSubCategoryId,
+                                            name = Model.Name,
+                                            status = Model.Status,
+                                            prindex = EndIndex
+                                        } )">@Resource.Lang.LastPage</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                        <a href="#">@Resource.Lang.LastPage</a>
+                                    </li>
+                                }
+
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <p class="alert alert-danger">@Resource.Notify.NothingFound</p>
+                }
+
+            </div>
+        </div>
+        <!-- end col -->
+    </div>
+}
+<div class="modal fade" id="excelModal" tabindex="-1" role="dialog" aria-labelledby="excelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="Product/DownloadExcel" method="get" enctype="multipart/form-data" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="excelModalLabel">
+                    دانلود فایل اکسل موجودی
+                </h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <span class="control-label font-bold">@Resource.Lang.Seller</span>
+                <div>
+                    @Html.DropDownList("StoreId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control selectpicker" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resource.Lang.Cancel</button>
+                <input type="submit" class="btn btn-primary" value="@Resource.Lang.DownloadFile" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="excelModal2" tabindex="-1" role="dialog" aria-labelledby="excelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="Product/UploadExcel" method="post" enctype="multipart/form-data" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="excelModalLabel">
+                    بروز رسانی قیمت و موجودی
+                </h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <span class="control-label font-bold">آپلود فایل اکسل</span>
+                <div>
+                    <input type="file" name="file" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resource.Lang.Cancel</button>
+                <input type="submit" class="btn btn-primary" value="@Resource.Lang.FileUpload" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Script {
+    <script>
+        $(document).on("change", "#ProductTypeId", function () {
+            var request = createRequest();
+            request.url = base_admin_url + "/store/ProductCategory/ProductCategoryDropDown";
+            request.type = "Get";
+            request.data = { typeId: $(this).val() },
+                request.contentType = "html";
+
+            request.success = function (result) {
+                $("#Product-category-dropDown").html(result);
+            };
+            $.ajax(request);
+        })
+        $(document).on("change", "#ProductCategoryId", function () {
+            var request = createRequest();
+            request.url = base_admin_url + "/store/ProductSubCategory/ProductSubCategoryDropDown";
+            request.type = "Get";
+            request.data = { categoryId: $(this).val() },
+                request.contentType = "html";
+
+            request.success = function (result) {
+                $("#Product-sub-category-dropDown").html(result);
+            };
+            $.ajax(request);
+        })
+    </script>
+} 

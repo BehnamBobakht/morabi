@@ -1,0 +1,118 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model ProductMinVm
+@{
+    var levelFilds = Model.ProductCustomValue.FirstOrDefault(s => s.ProductCustomField.SyncName == "Level");
+
+}
+<div class="home-course-item linkitem in-progress">
+    @if (Model.HasExpire == false)
+    {
+        <a href="@Model.ProductUrl"></a>}
+
+    @if (Model.DiscountValue > 0)
+    {
+        <div class="home-course-discount central">@Model.DiscountPercent%</div>
+    }
+
+    <div class="home-course-img central position-relative">
+        @if (Model.Image != "" && Model.Image != null)
+        {
+            <img src="@("https://morabiiran.ir/"+Model.Image)" alt="@Model.Name">
+        }
+        else
+        {
+            <img src="@Html.Action("thumburl","picture",new {picurl=Model.Picture.Url,width=320 })" alt="@Model.Name">
+        }
+        <div class="home-course-in-progress central">
+            @if (Model.HasExpire == false)
+            {
+                <span>دوره در حال ثبت نام است</span>
+            }
+            else
+            {
+                <span>مهلت ثبت نام به پایان رسیده </span>
+            }
+        </div>
+    </div>
+    <div class="home-course-caption">
+        <span>@Model.Name</span>
+        <div class="home-course-price">
+            @if (Model.IsFree)
+            {
+                <div class="home-course-price-new central">
+                   
+                    <span>رایگان</span>
+                </div>
+            }
+            else if (Model.EuroPrice > 0)
+            {
+                <div class="home-course-price-new central">
+                    <span>@Resource.Lang.Price</span>
+                    <span>@Model.EuroPrice</span>
+                    <span>یورو</span>
+                </div>
+
+            }
+            else
+            {
+                if (Model.DiscountValue > 0)
+                {
+                    <div class="home-course-price-old central">
+                        <span>@Resource.Lang.Price</span>
+                        <span>@Model.InexpensiveItemBasePrice.GetCurrencyFormat()</span>
+                        <span>@Resource.Lang.Toman</span>
+                    </div>
+                    <div class="home-course-price-new central">
+                        <span>با تخفیف</span>
+                        <span>@Model.InexpensiveItemPrice.GetCurrencyFormat()</span>
+                        <span>@Resource.Lang.Toman</span>
+                    </div>
+
+                }
+                else
+                {
+                    if (Model.IsSelectMulti == true)
+                    {
+
+                    }
+                    else
+                    {
+                        <div class="home-course-price-new central">
+                            <span>@Resource.Lang.Price</span>
+                            <span>@Model.InexpensiveItemPrice.GetCurrencyFormat()</span>
+                            <span>@Resource.Lang.Toman</span>
+                        </div>
+                    }
+
+                }
+
+            }
+
+        </div>
+        @if (Model.HasExpire == false)
+        {
+            <div class="home-course-link central">
+                <span>مشاهده و ثبت نام دوره</span>
+            </div>
+        }
+        else
+        {
+            <div class="home-course-unavailable central">
+                <span>اتمام اعتبار</span>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

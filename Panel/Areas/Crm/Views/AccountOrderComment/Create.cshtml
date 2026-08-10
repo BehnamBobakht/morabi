@@ -1,0 +1,51 @@
+﻿@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model DataLayer.Entities.AccountOrderComment
+@{
+    AccountOrder order = ViewBag.Order;
+    ViewBag.Title = Resource.Lang.RecordNoteForNumberOrder + order.ID;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.OrderId)
+    @Html.HiddenFor(model => model.SiteUserId)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index", new { id = order.ID })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Body, Resource.Lang.NoteText, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Body, htmlAttributes: new { @class = "form-control", @autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("ارسال پیام به کاربر؟", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="checkbox" name="sendMessage" value="true" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-primary">@Html.ActionLink(Resource.Lang.ViewOrder, "edit", new { id = order.ID, controller = "accountorder" }, new { target = "_blank" })</span>
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index", new { id = order.ID })</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

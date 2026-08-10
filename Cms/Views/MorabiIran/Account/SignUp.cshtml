@@ -1,0 +1,100 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model SignUpVm
+
+@{ TempData["Title"] = Resource.Lang.SignUp;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    if (ViewBag.back == null)
+    {
+        ViewBag.back = "/";
+    }
+    if (ViewBag.Message == null)
+    {
+        ViewBag.Message = new ViewMessage();
+    }
+    var message = (ViewMessage)ViewBag.Message;
+    var breadcrumb = new List<BreadcrumbVm>();
+    TempData["noIndex"] = true;
+    TempData["noFollow"] = true;
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.SignUp, Url = "" });
+}
+@section Head{
+
+    <link href="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.css" rel="stylesheet" />
+}
+@section endScripts{
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.js"></script>
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.fa.min.js"></script>
+    <script>
+        $(".datepicker").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'yy/mm/dd',
+            changeMonth: true,
+            changeYear: true,
+        });
+    </script>
+}
+
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+<section class="form_page loginRegister page-padding" id="login_register">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-6 col-md-6 p-0">
+                <div class="login-register-img">
+                    @Html.Action("Search", "Banner", new { bacategory = "RegisterBanner", baviewName = "_ImageBanner", baSize = 1 })
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 p-0 register_col">
+                <div class="loginBox registerBox">
+                    <div class="section-title central flex-column align-items-start">
+                        <h1>ثبت نام</h1>
+                    </div>
+                    <div class="login-register-text">
+                        @Html.Action("Search", "Banner", new { bacategory = "RegisterBanner", baviewName = "_LoginText", baSize = 1 })
+                    </div>
+                    <div class="form_page_content mt-3">
+                        <div class="form_page_content mt-3">
+                            <div class="form_box">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.HiddenFor(model => model.BackUrl)
+                                    if (!string.IsNullOrEmpty(Model.Message))
+                                    {
+                                        <p class="alert @(Model.Status==DataLayer.Enumarables.ResultStatus.Error?"alert-danger":"alert-success") ">@Model.Message</p>}
+
+                                    @Html.TextBoxFor(model => model.Mobile, htmlAttributes: new { @class = "form-control mb-2", @placeholder = Resource.Lang.MobileNumber })
+
+                                    @Html.TextBoxFor(model => model.FullName, htmlAttributes: new { @class = "form-control mb-2", @placeholder = Resource.Lang.FullName })
+                                    <div class="loginFooter">
+                                        <button type="submit" class="btn"><span>@Resource.Lang.SignUp</span></button>
+                                        <a href="@Url.Action("SignIn","account",new { back=Model.BackUrl})" class="btn">
+                                           
+                                                حساب کاربری دارم و میخواهم وارد شوم
+                                           
+                                        </a>
+                                    </div>
+
+
+                                }
+
+                                
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+

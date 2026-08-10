@@ -1,0 +1,54 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model IEnumerable<DataLayer.Entities.AccountOrderComment>
+@{
+    AccountOrder order = ViewBag.Order;
+    ViewBag.Title = Resource.Lang.ListOfNumberOrderNotes + order.ID;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    List<AccountOrderComment> listComment = Model.ToList();
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("edit", "accountorder", new { id = order.ID })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <a href="@Url.Action("create", new { id = order.ID })" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.UserName</th>
+                        <th>@Resource.Lang.OrderNumber</th>
+                        <th>@Resource.Lang.NoteText</th>
+                        <th>@Resource.Lang.DateTime</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        AccountOrderComment item = listComment[i];
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@(item.SiteUser.FullName)</td>
+                            <td><a class="font-bold" href="@Url.Action("edit", "accountorder", new { id = item.OrderId })">@item.OrderId</a></td>
+                            <td>@(item.Body)</td>
+                            <td>@(item.Datetime.ToPersianWithTime())</td>
+                            <td>
+                                @Html.ActionLink(@Resource.Lang.Detail, "details", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

@@ -1,0 +1,94 @@
+﻿
+@using DataLayer.ViewModels;
+
+@using DataLayer.Enumarables;
+
+@model ProductSearchVm
+@{
+    int StartIndex = Model.PageIndex > 4 ? Model.PageIndex - 4 : 1;
+    int EndIndex = (Model.TotalCount / Model.PageSize);
+    int Mod = (Model.TotalCount % Model.PageSize);
+    int CurrentIndex = Model.PageIndex > 0 ? Model.PageIndex : 1;
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+
+@if (EndIndex > 1)
+{
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.PageIndex > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Search", "product",new {
+           @prcustomLabel = Model.PrcustomLabel,
+           @prindex = 1,
+           @prname=Model.Name,
+           @prorder = Model.prorder,
+           @prpagesize = Model.PageSize,
+           @brandId=Model.BrandId,
+           @hasDiscount=Model.HasDiscount,
+           @prstock=Model.Prstock,
+           @pricefrom=Model.PriceFrom,
+           @priceto=Model.PriceTo,
+           @hasexpire=Model.HasExpire,
+       })" aria-label="Previous">
+                        <span aria-hidden="true">
+                            <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.6066 5.89393C15.9416 6.22892 15.9416 6.77206 15.6066 7.10705L10.1475 12.5661C9.8125 12.9011 9.26937 12.9011 8.93438 12.5661C8.59938 12.2311 8.59938 11.688 8.93438 11.353L13.7869 6.50049L8.93438 1.64799C8.59938 1.31299 8.59938 0.769859 8.93438 0.434864C9.26937 0.0998683 9.8125 0.0998683 10.1475 0.434864L15.6066 5.89393ZM1 7.3583C0.526246 7.3583 0.142192 6.97424 0.142192 6.50049C0.142192 6.02673 0.526246 5.64268 1 5.64268V7.3583ZM15 7.3583L1 7.3583V5.64268L15 5.64268V7.3583Z" fill="#fff" />
+                            </svg>
+                        </span>
+                    </a>
+
+                </li>
+
+            }
+            @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+            {
+                var active = CurrentIndex == i ? "active" : "";
+                <li class="page-item @active">
+                    <a class="page-link" href="@Url.Action("Search", "product",new {
+           @prcustomLabel = Model.PrcustomLabel,
+           @prindex = i,
+           @prname=Model.Name,
+           @prorder = Model.prorder,
+           @prpagesize = Model.PageSize,
+           @brandId=Model.BrandId,
+           @hasDiscount=Model.HasDiscount,
+           @prstock=Model.Prstock,
+           @pricefrom=Model.PriceFrom,
+           @priceto=Model.PriceTo,
+            @hasexpire=Model.HasExpire,
+       })">@i</a>
+</li>
+
+}
+            @if (Model.PageIndex < EndIndex)
+            {
+                <li class="page-item">
+                    <a class="page-link" href=" @Url.Action("Search", "product",new {
+           @prcustomLabel = Model.PrcustomLabel,
+           @prindex = EndIndex,
+           @prname=Model.Name,
+           @prorder = Model.prorder,
+           @prpagesize = Model.PageSize,
+           @brandId=Model.BrandId,
+           @hasDiscount=Model.HasDiscount,
+           @prstock=Model.Prstock,
+           @pricefrom=Model.PriceFrom,
+           @priceto=Model.PriceTo,
+            @hasexpire=Model.HasExpire,
+       })" aria-label="Next">
+                        <span aria-hidden="true">
+                            <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.393438 7.10705C0.0584423 6.77206 0.0584423 6.22892 0.393438 5.89393L5.8525 0.434864C6.1875 0.0998683 6.73063 0.0998683 7.06562 0.434864C7.40062 0.769859 7.40062 1.31299 7.06562 1.64799L2.21312 6.50049L7.06562 11.353C7.40062 11.688 7.40062 12.2311 7.06562 12.5661C6.73063 12.9011 6.1875 12.9011 5.8525 12.5661L0.393438 7.10705ZM15 5.64268C15.4738 5.64268 15.8578 6.02673 15.8578 6.50049C15.8578 6.97424 15.4738 7.3583 15 7.3583V5.64268ZM1 5.64268L15 5.64268V7.3583L1 7.3583V5.64268Z" fill="#fff" />
+                            </svg>
+                        </span>
+                    </a>
+                </li>
+
+            }
+
+        </ul>
+    </nav>}
+
+

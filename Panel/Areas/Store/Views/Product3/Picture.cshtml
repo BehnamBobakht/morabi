@@ -1,0 +1,143 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model DataLayer.Entities.Product
+
+@{
+    ViewBag.Title =Resource.Lang.ProductImages + " - " + Model.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    List<ProductColor> listColors = Model.ProductColor.ToList();
+}
+
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="port m-b-20">
+                        <div class="portfolioContainer">
+                            @foreach (var item in Model.ProductPicture)
+                            {
+                                <div class="col-sm-6 col-lg-3 col-md-4">
+                                    <div class="gal-detail thumb">
+                                        @using (Html.BeginForm("pictureDelete", "product", FormMethod.Post))
+                                        {
+                                            <input type="hidden" name="ProductId" value="@Model.ID" />
+                                            <input type="hidden" name="PictureId" value="@item.ID" />
+                                            <a href="@item.Picture.GetUrl()" class="image-popup" title="@item.Product.Name">
+                                                <img src="@item.Picture.GetUrl()" class="thumb-img" alt="@item.Product.Name">
+                                            </a>
+                                             <div class="text-center">
+                                                <div class="devider-10"></div>
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        @if (item.ColorId != null)
+                                                        {
+                                                            <div class="picture-color-item" data-toggle="tooltip" title="@item.Color.Name" style="background-color:#@item.Color.HexValue"></div>
+                                                        }
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <input type="submit" value=@Resource.Lang.Delete class="btn btn-danger fit-width" />
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-sm-6 col-lg-3 col-md-4 natural creative personal">
+                                <div class="gal-detail thumb">
+                                    @using (Html.BeginForm("picture", "product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload-n" data-height="150" />
+                                        <div class="text-center">
+                                            <div class="devider-10"></div>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    @if (listColors.Count > 0)
+                                                    {
+                                                        <select class="form-control" name="ColorId">
+                                                            @foreach (ProductColor productColor in listColors)
+                                                            {
+                                                                <option value="@productColor.ColorId">@productColor.Color.Name</option>
+                                                            }
+                                                        </select>
+                                                    }
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <input type="submit" value=@Resource.Lang.Register class="btn btn-success fit-width" />
+                                                </div>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    }                                    
+                                </div>
+                            </div>
+                            
+                        </div><!-- end portfoliocontainer-->
+                    </div> <!-- End row -->
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+@section Header {
+    <link rel="stylesheet" href="~/assets/plugins/magnific-popup/dist/magnific-popup.css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Footer {
+    <script type="text/javascript" src="~/assets/plugins/isotope/dist/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="~/assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+}
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            var $container = $('.portfolioContainer');
+            $container.isotope({
+                filter: '*',
+                animationOptions: {
+                    duration: 750,
+                    easing: 'linear',
+                    queue: false
+                }
+            });
+
+            $('.portfolioFilter a').click(function () {
+                $('.portfolioFilter .current').removeClass('current');
+                $(this).addClass('current');
+
+                var selector = $(this).attr('data-filter');
+                $container.isotope({
+                    filter: selector,
+                    animationOptions: {
+                        duration: 750,
+                        easing: 'linear',
+                        queue: false
+                    }
+                });
+                return false;
+            });
+        });
+        $(document).ready(function () {
+            $('.image-popup').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                mainClass: 'mfp-fade',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                }
+            });
+        });
+    </script>
+}

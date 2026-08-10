@@ -1,0 +1,136 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@model ResultVm<CartVm>
+@{
+    TempData["Title"] = Resource.Lang.Cart;
+
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Cart, Url = BaseWebsite.ShopUrl + "cart" });
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Address, Url = BaseWebsite.ShopUrl + "cart/address" });
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Payment, Url = "" });
+}
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+<section class="basket section-padding">
+    <div class="container">
+        <div class="basket_box">
+            <div class="row w-100 m-0">
+                <div class="basket-tab w-100">
+                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Cart/_CartHeader.cshtml", model: CartHeader.Confirm)
+                    <div class="tab_content w-100 ">
+
+                        <div id="home" class="tab_pane w-100  sendinfo_content  active">
+                            <div class="invoice">
+
+
+                                @if (!string.IsNullOrEmpty(Model.Message))
+                                {
+                                    <p class="alert alert-warning">
+                                        @Model.Message
+                                    </p>
+                                }
+
+                                @if (Model.Model == null || (Model.Model != null && Model.Model.ItemCount < 1))
+                                {
+                                    <div class="blank-basket">
+                                        <p>@Resource.Lang.BasketIsEmpty</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    using (Ajax.BeginForm("ConfirmInner", "Cart", new AjaxOptions()
+                                    {
+                                        UpdateTargetId = "confirm-cart",
+                                        HttpMethod = "get",
+                                        LoadingElementId = "ww",
+                                    },
+htmlAttributes: new { @class = "confirm-cart" }))
+                                    {
+                                        <div id="confirm-cart" class="invoice_info">
+                                            @Html.Action("ConfirmInner", "Cart")
+                                            <strong class="d-none" id="ww">@Resource.Lang.PleaseWait</strong>
+
+                                        </div>
+                                    }
+                                    using (Ajax.BeginForm("SetRebate", "Cart", new AjaxOptions()
+                                    {
+                                        OnComplete = "reLoadPage",
+                                        UpdateTargetId = "rebate-div",
+                                        HttpMethod = "get",
+                                    },
+htmlAttributes: new { @class = "rebate-form" }))
+                                    {
+                                        <div class="row" id="rebate-div">
+                                            @Html.Action("SetRebate", "Cart")
+
+                                        </div>
+                                    }
+                                    using (Ajax.BeginForm("SetMessage", "Cart", new AjaxOptions()
+                                    {
+                                        OnComplete = "reLoadPage",
+                                        UpdateTargetId = "message-div",
+                                        HttpMethod = "get",
+                                    },
+htmlAttributes: new { @class = "rebate-form" }))
+                                    {
+                                        <div class="row" id="message-div">
+                                            @Html.Action("SetMessage", "Cart")
+
+                                        </div>
+                                    }
+                                    <div class="row m-0">
+                                        <strong class="p-1">@Resource.Lang.SelectMerchant</strong>
+
+                                        <div class="p-1" id="merchant-div">
+                                            <hr />
+                                            @Html.Action("SetMerchant", "Cart")
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="basketbtns mt-3 px-3">
+                                        @if (Model.Model.HaveAddress == true)
+                                        {
+                                            <a href="@Url.Action("Address", "Cart")" class="btn secondary_btn prev_tab">
+                                                <i class="bi bi-arrow-right"></i>
+                                                <span>  @Resource.Lang.Previous</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("index", "Cart")" class="btn secondary_btn prev_tab">
+                                                <i class="bi bi-arrow-right"></i>
+                                                <span>  @Resource.Lang.Previous</span>
+                                            </a>
+                                        }
+                                        <a class="btn primary_btn next_tab" href="@Url.Action("GotoPayment","Cart")">
+                                            <span>@Resource.Lang.Payment</span>
+                                            <span class="bi bi-arrow-left"></span>
+                                        </a>
+
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function reLoadConfirmCart() {
+        $(".confirm-cart").submit();
+    }
+    function reLoadPage() {
+        location.reload();
+    }
+</script>

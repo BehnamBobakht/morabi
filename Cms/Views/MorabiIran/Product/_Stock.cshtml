@@ -1,0 +1,34 @@
+﻿@model DataLayer.ViewModels.ProductSearchVm
+
+
+
+<div class="filtering_item box">
+    <strong class="filtering_title align justify-content-between">
+        @Resource.Lang.Stock
+        <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.9425 7.11937L6.75826 7.82637L13.2856 2.16937L11.654 0.755371L6.75826 4.99737L1.8625 0.755371L0.230957 2.16937L5.9425 7.11937Z" fill="black" />
+        </svg>
+    </strong>
+    <div class="open-close-box">
+        <div class="filter_options">
+            <div class="form-check">
+                <input class="form-check-input" onclick="submit()" value="" type="radio" name="prstock" id="stock-all" @(Model.Prstock == null ? "checked" : "")>
+                <label class="form-check-label" for="stock-all">
+                    @Resource.Lang.All
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input"  value="true" onclick="submit()" type="radio" name="prstock" id="stock-on"  @(Model.Prstock == true ? "checked" : "")>
+                <label class="form-check-label" for="stock-on">
+                    @Resource.Lang.OnlyAvailables
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" onclick="submit()" value="false" type="radio" name="prstock" id="stock-off" @(Model.Prstock == false ? "checked" : "")>
+                <label class="form-check-label" for="stock-off">
+                    @Resource.Lang.OnlyNotAvailables
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

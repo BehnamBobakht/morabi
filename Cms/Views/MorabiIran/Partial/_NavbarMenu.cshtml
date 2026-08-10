@@ -1,0 +1,39 @@
+﻿
+@model string
+
+
+
+
+
+
+
+
+
+
+
+<ul class="nav nav-tabs" id="about-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link central active" id="about1-tab" data-bs-toggle="tab" href="@Url.Action("Index","StaticPage",new { id="aboutus"},Request.Url.Scheme)"
+           role="tab" aria-controls="about1" aria-selected="true">@Resource.Lang.Vision</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link central" id="about2-tab" data-bs-toggle="tab" href="@Url.Action("Index","StaticPage",new { id="certification"},Request.Url.Scheme)"
+           role="tab" aria-controls="about2" aria-selected="false">گواهی ها</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link central" id="about3-tab" data-bs-toggle="tab" href="@Url.Action("Index","StaticPage",new { id="introduction"},Request.Url.Scheme)"
+           role="tab" aria-controls="about3" aria-selected="false">@Resource.Lang.Introducion</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link central" id="about4-tab" data-bs-toggle="tab" href="@Url.Action("Index","StaticPage",new { id="companyprofile"},Request.Url.Scheme)"
+           role="tab" aria-controls="about4" aria-selected="true">مشخصات شرکت</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link central" id="about5-tab" data-bs-toggle="tab" href="@Url.Action("Index","StaticPage",new { id="messagefromheadmanger"},Request.Url.Scheme)"
+           role="tab" aria-controls="about5" aria-selected="false">پیام مدیر عامل</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link central" id="about6-tab" data-bs-toggle="tab" href="@Url.Action("Index","StaticPage",new { id="satisfaction"},Request.Url.Scheme)"
+           role="tab" aria-controls="about6" aria-selected="false">رضایت</a>
+    </li>
+</ul>

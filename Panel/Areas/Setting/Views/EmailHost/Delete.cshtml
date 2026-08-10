@@ -1,0 +1,99 @@
+﻿@using DataLayer.Base;
+
+@model DataLayer.Entities.EmailHost
+
+@{
+    ViewBag.Title = "حذف اطلاعات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="col-sm-12">
+    <div class="card-box">
+        <div class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                <i class="zmdi zmdi-more-vert"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink("بازگشت", "Index")</li>
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <h3>از حذف این مورد اطمینان دارید؟</h3>
+                <dl class="dl-horizontal">
+                    <dt>
+                        عنوان
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt>
+                        آدرس Pop3
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Pop3)
+                    </dd>
+                    <dt>
+                        آدرس Smtp
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Smtp)
+                    </dd>
+                    <dt>
+                        پورت Pop3
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Pop3Port)
+                    </dd>
+                    <dt>
+                        آدرس Smtp
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.SmtpPort)
+                    </dd>
+                    <dt>
+                        Ssl
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Ssl)
+                    </dd>
+                    <dt>
+                        همسان سازی
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AutoSync)
+                    </dd>
+                    <dt>
+                        فعال/غیرفعال
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Active)
+                    </dd>
+                    <dt>
+                        تاریخ و زمان ایجاد
+                    </dt>
+                    <dd>
+                        @Model.CreateDatetime.ToPersian()
+                    </dd>
+                    <dt>
+                        کاربر ایجاد کننده
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.SiteUser.FullName)
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <input type="submit" value="حذف" class="btn btn-danger" />
+                        <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index")</span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

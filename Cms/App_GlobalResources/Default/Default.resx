@@ -1,0 +1,607 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BehpardazanURL" xml:space="preserve">
+    <value>https://behpardazan.com/</value>
+  </data>
+  <data name="CompanyBehpardazan" xml:space="preserve">
+    <value>Website design of Behpardazan Software Company</value>
+  </data>
+  <data name="CSS_ANIMATECSS" xml:space="preserve">
+    <value>/assets/plugins/animate/css/animate.min.css</value>
+    <comment>Animate Css</comment>
+  </data>
+  <data name="CSS_BOOTSTRAP" xml:space="preserve">
+    <value>/assets/plugins/bootstrap-rtl/css/bootstrap.rtl.css</value>
+    <comment>Bootstrap Rtl Css</comment>
+  </data>
+  <data name="CSS_BOOTSTRAP_4" xml:space="preserve">
+    <value>/assets/plugins/bootstrap-4/css/bootstrap.min.css</value>
+    <comment>Bootstrap 4 Stylesheet</comment>
+  </data>
+  <data name="CSS_BOOTSTRAP_LTR" xml:space="preserve">
+    <value>/assets/plugins/bootstrap/css/bootstrap.min.css</value>
+    <comment>Bootstrap Ltr Css</comment>
+  </data>
+  <data name="CSS_BOOTSTRAP_RTL" xml:space="preserve">
+    <value>/assets/plugins/bootstrap-rtl/css/bootstrap.rtl.css</value>
+    <comment>Bootstrap RTL</comment>
+  </data>
+  <data name="CSS_CODEPROCESS" xml:space="preserve">
+    <value>/assets/default/css/codeprocess.css</value>
+    <comment>Codeprocess Css</comment>
+  </data>
+  <data name="CSS_CODEPROCESS_LANGUAGE" xml:space="preserve">
+    <value>/assets/default/css/codeprocess.rtl.css</value>
+    <comment>Codeprocess Rtr Version</comment>
+  </data>
+  <data name="CSS_FONTAWESOME" xml:space="preserve">
+    <value>/assets/plugins/font-awesome/css/font-awesome.min.css</value>
+    <comment>Font Awesome</comment>
+  </data>
+  <data name="CSS_FONTAWESOME_4" xml:space="preserve">
+    <value>/assets/plugins/font-awesome-4/css/font-awesome.min.css</value>
+    <comment>Fontawesome 4 Stylesheet</comment>
+  </data>
+  <data name="CSS_FRIKADELL" xml:space="preserve">
+    <value>/assets/plugins/frikadell/css/frikadell-font.css</value>
+    <comment>Frikadell Fonts</comment>
+  </data>
+  <data name="CSS_IONICONS" xml:space="preserve">
+    <value>/assets/plugins/ionicons/css/ionicons.min.css</value>
+    <comment>IonIcons Fonts</comment>
+  </data>
+  <data name="CSS_PLUGIN_ANIMATED_MODAL" xml:space="preserve">
+    <value>/assets/plugins/animated-modal/css/animated-modal.min.css</value>
+    <comment>Animated Modal Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_BOOTSTRAP_TOGGLE" xml:space="preserve">
+    <value>/assets/plugins/bootstrap-toggle/css/bootstrap-toggle.min.css</value>
+    <comment>Bootstrap Toggle Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_BTFONT" xml:space="preserve">
+    <value>/assets/plugins/bt-font/css/bt-font.css</value>
+    <comment>Bt-Font Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_CRELLY" xml:space="preserve">
+    <value>/assets/plugins/crellyslider/css/crellyslider.min.css</value>
+    <comment>Crelly Slider StyleSheet</comment>
+  </data>
+  <data name="CSS_PLUGIN_FANCYBOX" xml:space="preserve">
+    <value>/assets/plugins/fancybox/css/fancybox.min.css</value>
+    <comment>FancyBox Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_FLICKITY" xml:space="preserve">
+    <value>/assets/plugins/flickity/css/flickity.min.css</value>
+    <comment>Flickity Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_FLIPCLOCK" xml:space="preserve">
+    <value>/assets/plugins/flipclock-counter/css/flipclock.css</value>
+    <comment>FlipClock  Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_GALEREYA" xml:space="preserve">
+    <value>/assets/plugins/galereya/css/jquery.galereya.css</value>
+    <comment>Galereya Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_JQUERYUI" xml:space="preserve">
+    <value>/assets/plugins/jquery-ui/css/jquery-ui.css</value>
+    <comment>JQuery UI Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_JQUERYUI_RTL_SLIDER" xml:space="preserve">
+    <value>/assets/plugins/jquery-ui-rtl-slider/css/jquery.ui.slider-rtl.css</value>
+    <comment>JQuery UI Rtl Slider Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_LIGHTBOX" xml:space="preserve">
+    <value>/assets/plugins/lightbox/css/lightbox.css</value>
+    <comment>Lightbox Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_LIGHTSLIDER" xml:space="preserve">
+    <value>/assets/plugins/light-slider/css/lightslider.css</value>
+    <comment>LightSlider Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_MATERIAL" xml:space="preserve">
+    <value>/assets/plugins/material/css/material.min.css</value>
+    <comment>Material Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_NOUISLIDER" xml:space="preserve">
+    <value>/assets/plugins/nouislider/css/nouislider.min.css</value>
+    <comment>NoUiSlider Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_OWLCAROUSEL" xml:space="preserve">
+    <value>/assets/plugins/owl-carousel/css/owl.carousel.css</value>
+    <comment>Owl Carousel Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_OWLCAROUSEL_THEME" xml:space="preserve">
+    <value>/assets/plugins/owl-carousel/css/owl.theme.css</value>
+    <comment>Owl Carousel Theme Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_OWLCAROUSEL_THEME_V2" xml:space="preserve">
+    <value>/assets/plugins/owl-carousel-v2/css/owl.theme.default.css</value>
+    <comment>Owl Carousel V2 Theme Stylesheet</comment>
+  </data>
+  <data name="CSS_PLUGIN_OWLCAROUSEL_V2" xml:space="preserve">
+    <value>/assets/plugins/owl-carousel-v2/css/owl.carousel.min.css</value>
+    <comment>Owl Carousel V2 Stylesheet</comment>
+  </data>
+  <data name="CSS_PLUGIN_RESPONSIVE_SLIDES" xml:space="preserve">
+    <value>/assets/plugins/resposnsive-slides/css/responsiveslides.css</value>
+    <comment>Responsive Slides Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_REVOLUTION_SLIDER_SETTING" xml:space="preserve">
+    <value>/assets/plugins/revolution-slider/css/setting.css</value>
+    <comment>Revolution Css Setting</comment>
+  </data>
+  <data name="CSS_PLUGIN_SALVATTORE" xml:space="preserve">
+    <value>/assets/plugins/salvattore/css/salvattore.css</value>
+    <comment>Salvattore Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_SEQUENCE" xml:space="preserve">
+    <value>/assets/plugins/sequence/css/sequence-theme.modern-slide-in.css</value>
+    <comment>Sequence Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_SIMPLELENS" xml:space="preserve">
+    <value>/assets/plugins/jquery-simplelens/css/jquery.simpleLens.css</value>
+    <comment>SimpleLens Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_SLICK" xml:space="preserve">
+    <value>/assets/plugins/slick-slider/css/slick.css</value>
+    <comment>Slick Slider</comment>
+  </data>
+  <data name="CSS_PLUGIN_SLICKTHEME" xml:space="preserve">
+    <value>/assets/plugins/slick-slider/css/slick-theme.css</value>
+    <comment>Slick Slider Theme</comment>
+  </data>
+  <data name="CSS_PLUGIN_SMARTMENU" xml:space="preserve">
+    <value>/assets/plugins/jquery-smartmenus/css/jquery.smartmenus.bootstrap.css</value>
+    <comment>SmartMenus Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_TOASTR" xml:space="preserve">
+    <value>/assets/plugins/toastr/css/toastr.min.css</value>
+    <comment>Toastr Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_UNSLIDER" xml:space="preserve">
+    <value>/assets/plugins/unslider/js/unslider-min.css</value>
+    <comment>Unslider Css</comment>
+  </data>
+  <data name="CSS_PLUGIN_ZUCK" xml:space="preserve">
+    <value>/assets/Plugins/zuck/css/zuck.css</value>
+    <comment>Zuck StyleSheet</comment>
+  </data>
+  <data name="CSS_PLUGIN_ZUCK_SNAPGRAM" xml:space="preserve">
+    <value>/assets/Plugins/zuck/css/snapgram.css</value>
+    <comment>Zuck Snapgram StyleSheet</comment>
+  </data>
+  <data name="CSS_STAR_RATE" xml:space="preserve">
+    <value>/assets/default/css/StarRate.css</value>
+  </data>
+  <data name="DISCOUNT" xml:space="preserve">
+    <value />
+  </data>
+  <data name="IMAGE_ADDRESS_BANNER" xml:space="preserve">
+    <value>/assets/default/image/locations-banner.png</value>
+    <comment>Select From Map Image</comment>
+  </data>
+  <data name="IMAGE_EMPTY_AVATAR" xml:space="preserve">
+    <value>/assets/default/image/empty-avatar.png</value>
+    <comment>Empty Image Avatar</comment>
+  </data>
+  <data name="JS_BOOTSTRAP" xml:space="preserve">
+    <value>/assets/plugins/bootstrap/js/bootstrap.min.js</value>
+    <comment>Bootstrap Rtl Script</comment>
+  </data>
+  <data name="JS_BOOTSTRAP_4" xml:space="preserve">
+    <value>/assets/plugins/bootstrap-4/js/bootstrap.min.js</value>
+    <comment>Bootstrap 4 Script</comment>
+  </data>
+  <data name="JS_BOOTSTRAP_RTL" xml:space="preserve">
+    <value>/assets/plugins/bootstrap-rtl/js/bootstrap.rtl.js</value>
+    <comment>Bootstrap RTL Script</comment>
+  </data>
+  <data name="JS_CODEPROCESS_AJAX" xml:space="preserve">
+    <value>/assets/default/js/codeprocess.ajax.js</value>
+    <comment>Codeprocess Ajax Script</comment>
+  </data>
+  <data name="JS_CODEPROCESS_CORE" xml:space="preserve">
+    <value>/assets/default/js/codeprocess.js</value>
+    <comment>Codeprocess Core Script</comment>
+  </data>
+  <data name="JS_CODEPROCESS_DATETIME" xml:space="preserve">
+    <value>/assets/default/js/codeprocess.datetime.js</value>
+    <comment>Codeprocess Date Script</comment>
+  </data>
+  <data name="JS_CODEPROCESS_LANGUAGE" xml:space="preserve">
+    <value>/assets/default/js/codeprocess.language.js</value>
+    <comment>Codeprocess Language Script</comment>
+  </data>
+  <data name="JS_JQUERY" xml:space="preserve">
+    <value>/assets/plugins/jquery/js/jquery.min.js</value>
+    <comment>JQuery Script</comment>
+  </data>
+  <data name="JS_PLUGIN_ANIMATED_MODAL" xml:space="preserve">
+    <value>/assets/plugins/animated-modal/js/animated-modal.min.js</value>
+    <comment>JQuery Animated Modal</comment>
+  </data>
+  <data name="JS_PLUGIN_AUTOCOMPLETE" xml:space="preserve">
+    <value>/assets/plugins/jquery-autocomplete/js/jquery.autocomplete.min.js</value>
+    <comment>JQuery Autocomplete Script</comment>
+  </data>
+  <data name="JS_PLUGIN_BOOTSTRAP_TOGGLE" xml:space="preserve">
+    <value>/assets/plugins/bootstrap-toggle/js/bootstrap-toggle.min.js</value>
+    <comment>JQuery Bootstrap Toogle Script</comment>
+  </data>
+  <data name="JS_PLUGIN_BREAKINGNEWS" xml:space="preserve">
+    <value>/assets/plugins/breaking-news/js/breakingNews.js</value>
+    <comment>Breaking News Script</comment>
+  </data>
+  <data name="JS_PLUGIN_CLASSIE" xml:space="preserve">
+    <value>/assets/plugins/classie/js/classie.js</value>
+    <comment>Classie Script</comment>
+  </data>
+  <data name="JS_PLUGIN_COLORTHIEF" xml:space="preserve">
+    <value>/assets/plugins/color-thief/js/color-thief.min.js</value>
+    <comment>Color Thief Script</comment>
+  </data>
+  <data name="JS_PLUGIN_CRELLY" xml:space="preserve">
+    <value>/assets/plugins/crellyslider/js/jquery.crellyslider.min.js</value>
+    <comment>Crelly Slider Script</comment>
+  </data>
+  <data name="JS_PLUGIN_CUSTOM_SCROLLBAR" xml:space="preserve">
+    <value>/assets/plugins/custom-scrollbar/js/mCustomScrollbar.min.js</value>
+    <comment>Custom Scrollbar Script</comment>
+  </data>
+  <data name="JS_PLUGIN_FANCYBOX" xml:space="preserve">
+    <value>/assets/plugins/fancybox/js/fancybox.min.js</value>
+    <comment>FancyBox Script</comment>
+  </data>
+  <data name="JS_PLUGIN_FLEXSLIDER" xml:space="preserve">
+    <value>/assets/plugins/flexslider/js/jquery.flexslider.js</value>
+    <comment>Flexslider Script</comment>
+  </data>
+  <data name="JS_PLUGIN_FLICKITY" xml:space="preserve">
+    <value>/assets/plugins/flickity/js/flickity.pkgd.min.js</value>
+    <comment>Flickity Script</comment>
+  </data>
+  <data name="JS_PLUGIN_FLIPCLOCK" xml:space="preserve">
+    <value>/assets/plugins/flipclock-counter/js/flipclock.js</value>
+    <comment>FlipClock  Script</comment>
+  </data>
+  <data name="JS_PLUGIN_GALEREYA" xml:space="preserve">
+    <value>/assets/plugins/galereya/js/jquery.galereya.min.js</value>
+    <comment>JQuery Galereya Script</comment>
+  </data>
+  <data name="JS_PLUGIN_GOOGLE_RECAPTCHA" xml:space="preserve">
+    <value>https://www.google.com/recaptcha/api.js</value>
+    <comment>Google Recaptcha</comment>
+  </data>
+  <data name="JS_PLUGIN_HIGHLIGHT" xml:space="preserve">
+    <value>/assets/plugins/highlight/js/highlight.js</value>
+    <comment>Highlight Script</comment>
+  </data>
+  <data name="JS_PLUGIN_IMAGE_LOADED" xml:space="preserve">
+    <value>/assets/plugins/images-loaded/js/imagesloaded.min.js</value>
+    <comment>ImageLoaded Script</comment>
+  </data>
+  <data name="JS_PLUGIN_ION_RANGE_SLIDER" xml:space="preserve">
+    <value>/assets/plugins/ion-range-slider/js/ion-range-slider.js</value>
+    <comment>ION Range Slider</comment>
+  </data>
+  <data name="JS_PLUGIN_ISOTOPE" xml:space="preserve">
+    <value>/assets/plugins/isotope/js/jquery.isotope.js</value>
+    <comment>Isotope Script</comment>
+  </data>
+  <data name="JS_PLUGIN_JQUERYUI" xml:space="preserve">
+    <value>/assets/plugins/jquery-ui/js/jquery-ui.js</value>
+  </data>
+  <data name="JS_PLUGIN_JQUERYUI_RTL_SLIDER" xml:space="preserve">
+    <value>/assets/plugins/jquery-ui-rtl-slider/js/jquery.ui.slider-rtl.js</value>
+    <comment>JQuery UI Rtl Slider Script</comment>
+  </data>
+  <data name="JS_PLUGIN_JQUERY_EASING" xml:space="preserve">
+    <value>/assets/plugins/jquery-easing/js/jquery.easing.1.3.js</value>
+    <comment>JQuery Easing Script</comment>
+  </data>
+  <data name="JS_PLUGIN_JQUERY_MIGRATE" xml:space="preserve">
+    <value>/assets/plugins/jquery-migrate/js/jquery-migrate.min.js</value>
+    <comment>JQuery Migrate Script</comment>
+  </data>
+  <data name="JS_PLUGIN_JSCROLLPANE" xml:space="preserve">
+    <value>/assets/plugins/jscrollpane/js/jquery.jscrollpane.min.js</value>
+    <comment>JScrollPage Script</comment>
+  </data>
+  <data name="JS_PLUGIN_KNOCKOUT" xml:space="preserve">
+    <value>/assets/plugins/knockout/knockout-3.4.2.js</value>
+    <comment>Knockout Script</comment>
+  </data>
+  <data name="JS_PLUGIN_LIGHTBOX" xml:space="preserve">
+    <value>/assets/plugins/lightbox/js/lightbox.js</value>
+    <comment>JQuery Lightbox Script</comment>
+  </data>
+  <data name="JS_PLUGIN_LIGHTSLIDER" xml:space="preserve">
+    <value>/assets/plugins/light-slider/js/lightslider.js</value>
+    <comment>LightSlider Script</comment>
+  </data>
+  <data name="JS_PLUGIN_MASONRY" xml:space="preserve">
+    <value>/assets/plugins/masonry/js/masonry.min.js</value>
+    <comment>Masonry Script</comment>
+  </data>
+  <data name="JS_PLUGIN_MATERIAL" xml:space="preserve">
+    <value>/assets/plugins/material/js/material.min.js</value>
+    <comment>Material Script</comment>
+  </data>
+  <data name="JS_PLUGIN_MODAL_EFFECTS" xml:space="preserve">
+    <value>/assets/plugins/modal-effects/js/modalEffects.js</value>
+    <comment>Modal Effects Script</comment>
+  </data>
+  <data name="JS_PLUGIN_MOUSEWHEEL" xml:space="preserve">
+    <value>/assets/plugins/mousewheel/js/jquery.mousewheel.js</value>
+    <comment>MouseWheel Script</comment>
+  </data>
+  <data name="JS_PLUGIN_NOUISLIDER" xml:space="preserve">
+    <value>/assets/plugins/nouislider/js/nouislider.min.js</value>
+    <comment>NoUiSlider Script</comment>
+  </data>
+  <data name="JS_PLUGIN_ONESIGNAL" xml:space="preserve">
+    <value>https://cdn.onesignal.com/sdks/OneSignalSDK.js</value>
+    <comment>OneSignal SDK</comment>
+  </data>
+  <data name="JS_PLUGIN_OWLCAROUSEL" xml:space="preserve">
+    <value>/assets/plugins/owl-carousel/js/owl.carousel.js</value>
+    <comment>Owl Carousel Script</comment>
+  </data>
+  <data name="JS_PLUGIN_OWLCAROUSEL_V2" xml:space="preserve">
+    <value>/assets/plugins/owl-carousel-v2/js/owl.carousel.min.js</value>
+    <comment>Owl Carousel V2 Script</comment>
+  </data>
+  <data name="JS_PLUGIN_RESPONSIVE_SLIDES" xml:space="preserve">
+    <value>/assets/plugins/resposnsive-slides/js/responsiveslides.min.js</value>
+    <comment>Responsive Slides Script</comment>
+  </data>
+  <data name="JS_PLUGIN_REVOLUTION_ACTIONS" xml:space="preserve">
+    <value>/assets/plugins/revolution-slider/js/revolution.extension.actions.min.js</value>
+    <comment>Revolution Actions Script</comment>
+  </data>
+  <data name="JS_PLUGIN_REVOLUTION_LAYERANIMATION" xml:space="preserve">
+    <value>/assets/plugins/revolution-slider/js/revolution.extension.layeranimation.min.js</value>
+    <comment>Revolution Layeranimation Script</comment>
+  </data>
+  <data name="JS_PLUGIN_REVOLUTION_NAVIGATION" xml:space="preserve">
+    <value>/assets/plugins/revolution-slider/js/revolution.extension.navigation.min.js</value>
+    <comment>Revolution Navigation Script</comment>
+  </data>
+  <data name="JS_PLUGIN_REVOLUTION_SLIDEANIMS" xml:space="preserve">
+    <value>/assets/plugins/revolution-slider/js/revolution.extension.slideanims.min.js</value>
+    <comment>Revolution Slideanims Script</comment>
+  </data>
+  <data name="JS_PLUGIN_REVOLUTION_THEMEPUNCH" xml:space="preserve">
+    <value>/assets/plugins/revolution-slider/js/jquery.themepunch.revolution.min.js</value>
+    <comment>ThemePunch Revolution Script</comment>
+  </data>
+  <data name="JS_PLUGIN_REVOLUTION_THEMEPUNCH_TOOLS" xml:space="preserve">
+    <value>/assets/plugins/revolution-slider/js/jquery.themepunch.tools.min.js</value>
+    <comment>ThemePunch Tools Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SALVATTORE" xml:space="preserve">
+    <value>/assets/plugins/salvattore/js/salvattore.js</value>
+    <comment>Salvattore Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SCROLLBAR" xml:space="preserve">
+    <value>/assets/plugins/jquery-scrollbar/js/jquery.scrollbox.min.js</value>
+    <comment>JQuery ScrollBar Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SEQUENCE" xml:space="preserve">
+    <value>/assets/plugins/sequence/js/sequence.js</value>
+    <comment>Sequence Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SEQUENCE_THEME_MODERN" xml:space="preserve">
+    <value>/assets/plugins/sequence/js/sequence-theme.modern-slide-in.js</value>
+    <comment>Sequence Script Theme Modern</comment>
+  </data>
+  <data name="JS_PLUGIN_SIMPLELENS" xml:space="preserve">
+    <value>/assets/plugins/jquery-simplelens/js/jquery.simpleLens.js</value>
+    <comment>SimpleLens Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SIMPLELENS_GALLERY" xml:space="preserve">
+    <value>/assets/plugins/jquery-simplelens/js/jquery.simpleGallery.js</value>
+    <comment>SimpleLens Gallery Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SLICK" xml:space="preserve">
+    <value>/assets/plugins/slick-slider/js/slick.min.js</value>
+    <comment>Slick Slider Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SLICKNAV" xml:space="preserve">
+    <value>/assets/plugins/slick-nav/js/slicknav.min.js</value>
+    <comment>Slick Responsive Menu Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SMARTMENU" xml:space="preserve">
+    <value>/assets/plugins/jquery-smartmenus/js/jquery.smartmenus.js</value>
+    <comment>SmartMenus Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SMARTMENU_BOOTSTRAP" xml:space="preserve">
+    <value>/assets/plugins/jquery-smartmenus/js/jquery.smartmenus.bootstrap.js</value>
+    <comment>SmartMenus Script Bootstrap</comment>
+  </data>
+  <data name="JS_PLUGIN_SUPERSCROLLORAMA" xml:space="preserve">
+    <value>/assets/plugins/super-scroll-orama/js/jquery.superscrollorama.js</value>
+    <comment>SuperScrollorama Script</comment>
+  </data>
+  <data name="JS_PLUGIN_SUPERSCROLLORAMA_TWEENMAX" xml:space="preserve">
+    <value>/assets/plugins/super-scroll-orama/js/tweenmax.min.js</value>
+    <comment>SuperScrollorama Tweenmax Script</comment>
+  </data>
+  <data name="JS_PLUGIN_TOASTR" xml:space="preserve">
+    <value>/assets/plugins/toastr/js/toastr.min.js</value>
+    <comment>Toastr Js</comment>
+  </data>
+  <data name="JS_PLUGIN_TYPED" xml:space="preserve">
+    <value>/assets/plugins/typed/js/typed.js</value>
+    <comment>Typed Script</comment>
+  </data>
+  <data name="JS_PLUGIN_UNSLIDER" xml:space="preserve">
+    <value>/assets/plugins/unslider/js/unslider-min.js</value>
+    <comment>Unslider Script</comment>
+  </data>
+  <data name="JS_PLUGIN_WNUMB" xml:space="preserve">
+    <value>/assets/plugins/wnumb/js/wnumb.js</value>
+    <comment>wNumb Script</comment>
+  </data>
+  <data name="JS_PLUGIN_ZOOM" xml:space="preserve">
+    <value>/assets/plugins/zoom-sl/js/zoomsl-3.0.min.js</value>
+    <comment>Zoom Script</comment>
+  </data>
+  <data name="JS_PLUGIN_ZUCK" xml:space="preserve">
+    <value>/assets/Plugins/zuck/js/zuck.js</value>
+    <comment>Zuck Script</comment>
+  </data>
+  <data name="PARTIAL_MERCHANT" xml:space="preserve">
+    <value>~/Views/Default/Payment/Merchant.cshtml</value>
+    <comment>Merchant Page</comment>
+  </data>
+  <data name="PARTIAL_MESSAGE" xml:space="preserve">
+    <value>~/Views/Default/Partial/Message.cshtml</value>
+    <comment>Message Page</comment>
+  </data>
+  <data name="PARTIAL_SEOPACK" xml:space="preserve">
+    <value>~/Views/Default/Partial/SeoPack.cshtml</value>
+    <comment>Seo Pack</comment>
+  </data>
+  <data name="STORE_LAYOUT" xml:space="preserve">
+    <value>~/Areas/Store/Views/Shared/_Layout.cshtml</value>
+  </data>
+  <data name="STORE_LAYOUT_BLANK" xml:space="preserve">
+    <value>~/Areas/Store/Views/Shared/_Layout_Blank.cshtml</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>ltr</value>
+  </data>
+  <data name="CSS_TABLET" xml:space="preserve">
+    <value>/Assets/Behpardazan/css/tablet.css</value>
+  </data>
+  <data name="BehpardazanFooter" xml:space="preserve">
+    <value>Design and implementation of Behpardazan Company</value>
+  </data>
+  <data name="JQUERY_UNOBTRUSIVE" xml:space="preserve">
+    <value>/assets/Plugins/jquery/js/jquery.unobtrusive-ajax.js</value>
+  </data>
+  <data name="NoImageSrc" xml:space="preserve">
+    <value>/Assets/Default/Image/noimage.jpg</value>
+  </data>
+  <data name="SearchText" xml:space="preserve">
+    <value>Search on Categories , Products , Brands , Articles and...</value>
+  </data>
+</root>

@@ -1,0 +1,66 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model Clubs
+
+
+<div class="home-product-item linkitem m-0 couchItem">
+    <a href="/club/index/@Model.ID"></a>
+    <div class="home-product-img central p-0">
+        @if (Model.ShowImage2 == true && Model.Pictue2Id != null)
+        {
+            <img src="@Html.Action("thumburl", "picture", new { picurl = Model.Picture7.GetUrl(), width = 320 })" alt="@Model.FullName">
+        }
+
+    </div>
+    <div class="home-product-caption">
+        <!--<p>@Model.Bio.GetSubString(150, true)</p> -->
+        <div class="d-flex flex-column align-items-center">
+            @if (Model.ShowName == true)
+            {
+                <strong class="mb-2">@Model.FullName</strong>
+
+            }
+
+            @if (Model.Coaching1 != null && Model.Coaching1 != null && Model.ShowCertificate2 == true)
+            {
+                <sub>( درجه مدرک مربیگری : @Model.Field )</sub>
+            }
+        </div>
+        <br />
+        <div class="flex">
+            @if (Model.StateId != null && Model.ShowState == true)
+            {
+                <span class="d-flex">
+                    <svg class="ml-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z" />
+                    </svg>
+                    نام استان:
+                    @Model.State.Name
+                </span>
+            }
+
+            @if (Model.CityId != null && Model.ShowState == true)
+            {
+                <span class="d-flex">
+                    <svg class="ml-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z" />
+                    </svg>
+                    نام شهر:
+                    @Model.City.Name
+                </span>
+            }
+        </div>
+        <img src="/assets/MorabiIran/images/logo.png" alt="logo" style="position: absolute;z-index: 0;opacity: 0.1;left: -150px;bottom: 30px;width: 234px;">
+        <span class="d-block mt-2 position-relative bg-white rounded text-dark p-2 text-center">مشاهده بیشتر</span>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,338 @@
+﻿@using DataLayer.Enumarables;
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model  DataLayer.ViewModels.ViewReport2
+@{
+    TempData["Title"] = "کارنامه";
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+
+}
+<section class="section-padding">
+    <input type="hidden" id="AccountAnswerID" value="@Model.ExameAccountAnswer.ID" />
+    <div class="container">
+        <div class="section-title position-relative align">
+            <h1> کارنامه @Model.ExameAccountAnswer.Exame </h1>
+        </div>
+        <div class="ruls_content">
+		                <p class="alrt alert-warning text-center m-2 p-3">لطفا برای بروز رسانی نمره آزمون های مجدد تمامی آزمون ها را پاسخ دهید تا نمرات شما مجدد محاسبه شود</p>
+
+            <div class="tables_box">
+
+
+
+
+
+                <div class="d-flex">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ردیف</th>
+                                <th>نمره</th>
+                                <th>نمره به حروف</th>
+                                <th>نام درس</th>
+                                <th>وضعیت</th>
+
+                            </tr>
+                        </thead>
+                        @if (Model.ExameAccountAnswer.Exame == "گواهی دروس تئوری مربیگری درجه 2 ل")
+                        {
+                            <tbody>
+                                @{ int i = 1;
+                                    var corse24 = Model.ExameReportByCourseGeneral.FirstOrDefault(s => s.Course.CourseId == 24);
+                                    var corse25 = Model.ExameReportByCourseGeneral.FirstOrDefault(s => s.Course.CourseId == 25);
+                                    var corse28 = Model.ExameReportByCourseGeneral.FirstOrDefault(s => s.Course.CourseId == 28);
+                                }
+                                @foreach (var item in Model.ExameReportByCourseGeneral.Where(s => s.Course.CourseId != 24 && s.Course.CourseId != 25 && s.Course.CourseId != 28))
+                                {
+                                    if (item.Course.CourseId == 41)
+                                    {
+                                        if (corse24 != null)
+                                        {
+                                            //var total1 = item.CountTrue + item.CountFalse + item.CountNull;
+                                            //var total2 = corse24.CountTrue + corse24.CountFalse + corse24.CountNull;
+                                            //var sumTotal = total1 + total2;
+                                            //var countTrue = item.CountTrue + corse24.CountTrue;
+                                            //if (sumTotal != 20)
+                                            //{
+                                            //    double? avrageRateUsers = 0;
+                                            //    avrageRateUsers = (countTrue * 20);
+                                            //    avrageRateUsers = (double)avrageRateUsers / sumTotal;
+                                            //    item.TotalRate = avrageRateUsers;
+
+                                            //}
+                                            //else
+                                            //{
+                                            //    item.TotalRate = countTrue;
+                                            //}
+                                            item.Course.TotalRate = item.Course.TotalRate + corse24.Course.TotalRate;
+                                            item.Course.TotalRate = item.Course.TotalRate / 2;
+                                        }
+
+
+                                    }
+                                    if (item.Course.CourseId == 42)
+                                    {
+                                        if (corse25 != null)
+                                        {
+                                            //var total1 = item.CountTrue + item.CountFalse + item.CountNull;
+                                            //var total2 = corse25.CountTrue + corse25.CountFalse + corse25.CountNull;
+                                            //var sumTotal = total1 + total2;
+                                            //var countTrue = item.CountTrue + corse25.CountTrue;
+                                            //if (sumTotal != 20)
+                                            //{
+                                            //    double? avrageRateUsers = 0;
+                                            //    avrageRateUsers = (countTrue * 20);
+                                            //    avrageRateUsers = (double)avrageRateUsers / sumTotal;
+                                            //    item.TotalRate = avrageRateUsers;
+
+                                            //}
+                                            //else
+                                            //{
+                                            //    item.TotalRate = countTrue;
+                                            //}
+                                            item.Course.TotalRate = item.Course.TotalRate + corse25.Course.TotalRate;
+                                            item.Course.TotalRate = item.Course.TotalRate / 2;
+                                        }
+                                    }
+                                    if (item.Course.CourseId == 44)
+                                    {
+                                        if (corse28 != null)
+                                        {
+                                            //var total1 = item.CountTrue + item.CountFalse + item.CountNull;
+                                            //var total2 = corse28.CountTrue + corse28.CountFalse + corse28.CountNull;
+                                            //var sumTotal = total1 + total2;
+                                            //var countTrue = item.CountTrue + corse28.CountTrue;
+                                            //if (sumTotal != 20)
+                                            //{
+                                            //    double? avrageRateUsers = 0;
+                                            //    avrageRateUsers = (countTrue * 20);
+                                            //    avrageRateUsers = (double)avrageRateUsers / sumTotal;
+                                            //    item.TotalRate = avrageRateUsers;
+
+                                            //}
+                                            //else
+                                            //{
+                                            //    item.TotalRate = countTrue;
+                                            //}
+                                            item.Course.TotalRate = item.Course.TotalRate + corse28.Course.TotalRate;
+                                            item.Course.TotalRate = item.Course.TotalRate / 2;
+                                        }
+                                    }
+                                    <tr>
+                                        <td>@i</td>
+
+
+                                        <td>  @if (item.Number != null && item.Number != "")
+                                            {
+                                                <strong>- @item.Number</strong>
+                                            }
+										@Math.Round(item.Course.TotalRate.Value, 1).ToString().Replace("/", ".")</td>
+                                        <td>@Math.Round(item.Course.TotalRate.Value, 1).ToString().ToPersianNumber()</td>
+                                        <td>@item.Course.ExameCourse.Name </td>
+                                        <td>-</td>
+                                    </tr>
+
+                                    i++;
+                                }
+                                <tr>
+                                    <td>معدل</td>
+                                    <td>
+                                        @{
+                                            double? sum = (double)Model.ExameReportByCourseGeneral.Sum(s => s.Course.TotalRate) / Model.ExameReportByCourseGeneral.Count(); }
+                                        <strong>@Math.Round(sum.Value, 1).ToString().Replace("/", ".")</strong>
+                                    </td>
+                                    <td colspan="2">
+
+                                        @if (sum >= Model.PassValue)
+                                        {
+                                            <strong>قبول</strong>
+                                        }
+                                        else
+                                        {
+                                            <strong>مردود</strong>
+                                        }
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        }
+                        else
+                        {
+                            <tbody>
+                                @{ int i = 1;}
+                                @foreach (var item in Model.ExameReportByCourseGeneral.GroupBy(x => x.Course.ExameCourse.ID).Select(g => g.First()))
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @i
+                                            @if (!(item.Course.TotalRate.Value >= item.Course.ExameCourse.PassNumber))
+                                            {
+                                                <input type="checkbox" product-id="@item.ProductId" class=" reexame" value="@item.Course.ExameCourse.ID" name="@item.Course.ExameCourse.ID" />
+                                            }
+
+
+
+                                        <td>
+										 @if (item.Number != null && item.Number != "")
+                                            {
+                                                <span>تاریخچه نمرات :</span>
+                                                foreach (var sub in item.Number.Split('-'))
+                                                {
+                                                    <span style="color:red"> @sub.Replace("/", ".") -</span>
+                                                }
+                                                <span>نمره نهایی :</span>
+                                            }
+											<strong>
+										@Math.Round(item.Course.TotalRate.Value, 1).ToString().Replace("/", ".")
+										</strong>
+										</td>
+                                        <td>@Math.Round(item.Course.TotalRate.Value, 1).ToString().ToPersianNumber()</td>
+                                        <td>@item.Course.ExameCourse.Name</td>
+                                        <td>
+                                            @if (item.Course.TotalRate.Value >= item.Course.ExameCourse.PassNumber)
+                                            {
+                                                <strong>قبول</strong>
+                                            }
+                                            else
+                                            {
+                                                <strong>مردود</strong>
+                                                if (!(Model.ExameAccountAnswer.QuestionAnswer.Contains("-" + item.Course.ExameCourse.ID.ToString() + "-")))
+                                                {
+                                                    <a class="btn secondary-btn w-100 add-basket" href="@Url.Action("index","Exame",new { id=Model.ExameAccountAnswer.ExameId},Request.Url.Scheme)">شرکت در آزمون</a>
+
+                                                }
+                                                else
+                                                {
+                                                    <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" href="@(Url.Action("Start", "PaymentExame", new { AccountAnswerId = Model.ExameAccountAnswer.ID,productId=item.ProductId,CourseId=item.Course.ExameCourse.ID}) )">آزمون مجدد</a>
+
+                                                }
+
+
+                                            }
+                                        </td>
+
+                                    </tr>
+
+                                    i++;
+                                }
+                                <tr>
+                                    <td>معدل</td>
+                                    <td>
+                                        @{
+                                            double? sum = (double)Model.ExameReportByCourseGeneral.Sum(s => s.Course.TotalRate) / Model.ExameReportByCourseGeneral.Count(); }
+                                        <strong>@Math.Round(sum.Value, 1).ToString().Replace("/", ".")</strong>
+                                    </td>
+
+
+                                    <td colspan="2">
+
+                                        @if (sum >= Model.PassValue)
+                                        {
+                                            <strong>قبول</strong>
+                                        }
+                                        else
+                                        {
+                                            <strong>مردود</strong>
+                                        }
+                                    </td>
+                                    <td>
+                                        <input type="hidden" id="idexames" />
+                                        <button id="btnpay" onclick="gotopay()" disabled class="btn secondary-btn w-100 add-basket ">پرداخت آزمون های انتخابی</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        }
+
+                    </table>
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+<div class="modal fade modal-first-message bd-example-modal-lg" id="ModalPopUp" tabindex="-1" role="dialog" aria-labelledby="addaddress_modal_Title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body p-4">
+                <button type="button" class="close closeMsg" data-bs-dismiss="modal" aria-label="Close">
+                    x
+                </button>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <p id="answerDetails">
+
+                        </p>
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+@section endScripts {
+
+    <script src="~/Assets/Tizgaman/js/canvasjs.js"></script>
+
+    <script>
+      
+        function showModalAnswer(text) {
+
+            $("#ModalPopUp").modal("show");
+            $("#answerDetails").html("");
+            $("#answerDetails").html(text);
+
+        }
+    const ids = [];
+const prIds = [];
+function gotopay() {
+    var anId = $("#AccountAnswerID").val();
+    window.location = "/PaymentExame/Start2?AccountAnswerId=" + anId + "&productId=" + prIds + "&CourseId=" + ids;
+}
+$(".reexame").change(function () {
+
+    if (this.checked) {
+
+        ids.push($(this).val());
+        prIds.push($(this).attr("product-id"));
+
+    }
+    else {
+        const index = ids.indexOf($(this).val());
+        if (index > -1) {
+            ids.splice(index, 1);
+        }
+        const index2 = prIds.indexOf($(this).attr("product-id"));
+        if (index2 > -1) {
+            prIds.splice(index2, 1);
+        }
+    }
+    if (ids.length > 0) {
+        $("#btnpay").prop("disabled", false);
+    }
+    else {
+        $("#btnpay").prop("disabled", true);
+    }
+});
+    </script>
+}

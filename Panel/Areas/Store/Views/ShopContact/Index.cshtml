@@ -1,0 +1,51 @@
+﻿@using DataLayer.Entities;
+@model IEnumerable<DataLayer.ViewModels.ViewShopContact>
+@{
+    Shop shop = ViewBag.Shop;
+    ViewBag.Title = Resource.Lang.StoreContactList  + shop.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("index", "shop")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <a href="@Url.Action("create", new { @id = ViewBag.ShopId })" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.ShopName</th>
+                        <th>@Resource.Lang.CallType</th>
+                        <th>@Resource.Lang.Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.RowId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Shop.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Type.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Value)</td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.Id }) |
+                                @Html.ActionLink(Resource.Lang.Detail, "details", new { id = item.Id }) |
+                                @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

@@ -1,0 +1,9 @@
+﻿@using DataLayer.ViewModels;
+@model ResultVm<CartVm>
+
+<p class="alert-box alert alert-danger @(Model==null || (Model!=null && string.IsNullOrEmpty(Model.Message))?"d-none":"")">
+    @if (Model != null)
+    {
+        @Model.Message
+    }
+</p>

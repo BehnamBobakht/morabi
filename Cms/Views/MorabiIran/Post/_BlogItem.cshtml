@@ -1,0 +1,47 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostVm
+
+<div class="col-lg-6 p-0 px-lg-2">
+    <div class="top-blog-item linkitem">
+        <a href="@Model.Href"></a>
+        <div class="blog-img top-blog-img">
+            <img src="@Model.Picture.Url" alt="@Model.Name">
+        </div>
+        <div class="blog-caption top-blog-caption">
+            <div class="blog-text">
+                <span>@Model.Name</span>
+                <p>@Model.Summary</p>
+            </div>
+            <div class="blog-details align justify-content-between">
+                <div class="blog-info align">
+                    <div class="blog-info-item align">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_6_1395" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                <rect width="24" height="24" fill="white" />
+                            </mask>
+                            <g mask="url(#mask0_6_1395)">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9 12V14H7V12H9ZM9 16V18H7V16H9ZM11 12V14H13V12H11ZM13 16V18H11V16H13ZM15 12V14H17V12H15ZM17 16V18H15V16H17ZM19 22H5C3.897 22 3 21.103 3 20V6C3 4.897 3.897 4 5 4H7V2H9V4H15V2H17V4H19C20.103 4 21 4.897 21 6V20C21 21.103 20.103 22 19 22ZM19.0001 8L19 6H5V8H19.0001ZM19.0003 10L19.001 20H5V10H19.0003Z" fill="#868686" />
+                            </g>
+                        </svg>
+                        <span>@Model.CreateDateTime.ToPersianComplete()</span>
+                    </div>
+                    <div class="blog-info-item align">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_6_1389" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                <rect width="24" height="24" fill="white" />
+                            </mask>
+                            <g mask="url(#mask0_6_1389)">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9 12C9 13.642 10.358 15 12 15C13.641 15 15 13.642 15 12C15 10.359 13.641 9 12 9C10.358 9 9 10.359 9 12ZM2.10543 11.684L2 12L2.10444 12.316C2.12632 12.383 4.408 19 12 19C19.592 19 21.8737 12.383 21.8946 12.316L22 12L21.8956 11.684C21.8737 11.617 19.592 5 12 5C4.408 5 2.12632 11.617 2.10543 11.684ZM4.11657 12C4.61786 10.842 6.68072 7 12 7C17.3223 7 19.3841 10.846 19.8834 12C19.3821 13.158 17.3193 17 12 17C6.67774 17 4.61587 13.154 4.11657 12Z" fill="#868686" />
+                            </g>
+                        </svg>
+                        <span>@Model.VisitCount @Resource.Lang.Viewed</span>
+                    </div>
+                </div>
+            </div>
+            <div class="top-blog-btn">
+                <span>@Resource.Lang.More ...</span>
+            </div>
+        </div>
+    </div>
+</div>

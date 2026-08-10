@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DataLayer.Entities.OnlineOrder>
+@{
+    ViewBag.Title = "لیست سفارشات آنلاین";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <div class="devider-15"></div>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th>کد پیگیری</th>
+                        <th>موضوع </th>
+                        <th>@Resource.Lang.Status</th>
+                        <th>@Resource.Lang.Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr  row-selected="false">
+
+                            <td>@item.RefrenceCode</td>
+                            <td>@item.subject</td>
+                            <td>@item.Code.Name</td>
+                            <td>@item.DateTimeOrder</td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Check, "edit", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                <ul class="pagination">
+                    <li class="paginate_button previous" aria-controls="datatable-buttons">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

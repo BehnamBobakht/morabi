@@ -1,0 +1,119 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model DataLayer.ViewModels.DeliveryVm
+@{
+    ViewBag.Title = Resource.Lang.Shipping;
+    Layout = Resources.Default.STORE_LAYOUT;
+}
+@section script {
+    <script type="text/javascript">
+        initializeStateCityScript();
+    </script>
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/store/dashboard"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active"><a href="@Url.Action("index")">@Resource.Lang.Shipping</a></li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card ">
+                @using (Html.BeginForm())
+                {
+                    <div class="form-horizontal">
+
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div>
+                                    <div class="col-md-10 col-md-offset-2">
+                                        <div class="row">
+                                            @if (ViewBag.Message != null)
+                                            {
+                                                @Html.Partial("Message", (ViewMessage)ViewBag.Message)
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.DeliveryTypeId, @Resource.Lang.DeliveryType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="">
+                                        @Html.DropDownList("DeliveryTypeId", null, new { @class = "form-control", @autocomplete = "off" })
+                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.StateId, Resource.Lang.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="">
+                                        @Html.Action("GetStatesDD", "StateCity", new { area = "Store", stateId = Model.StateId })
+                                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.CityId, Resource.Lang.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class=" cities-div">
+                                        @Html.Action("GetCitiesDD", "StateCity", new { area = "Store", stateId = Model.StateId, cityId = Model.CityId })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BasePrice, Resource.Lang.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.BasePrice, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.BasePrice, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.MinPriceForFree, Resource.Lang.MinPriceForFree, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.MinPriceForFree, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.MinPriceForFree, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.MaxDays, Resource.Lang.DeliveryMaxDays, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.MaxDays, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.MaxDays, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.Active, Resource.Lang.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.Active)
+                                        @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <div class="">
+                                        <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                                        <span class="btn btn-default">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,139 @@
+﻿@using  DataLayer.Base
+@model DataLayer.ViewModels.ProductShowVm
+@{ 
+    if(!string.IsNullOrEmpty(Model.Description))
+    {
+        Model.Description = Model.Description.Replace("../../../", "/panel/");
+        Model.Description = Model.Description.Replace("../../", "/panel/");
+    }
+}
+
+<section class="product-info ">
+    <div class="container">
+        <ul class="nav nav-tabs" id="home-products" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link central active" id="product-description-tab" data-bs-toggle="tab" href="#product-description"
+                   role="tab" aria-controls="product-description" aria-selected="true">توضیحات</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link central" id="product-specification-tab" data-bs-toggle="tab" href="#product-specification"
+                   role="tab" aria-controls="product-specification" aria-selected="false">مشخصات تخصصی</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link central" id="product-comments-tab" data-bs-toggle="tab" href="#product-comments"
+                   role="tab" aria-controls="product-comments" aria-selected="false">دیدگاه ها</a>
+            </li>
+           
+        </ul>
+        <div class="tab-content" id="home-products-content">
+            <div class="tab-pane fade show active" id="product-description" role="tabpanel" aria-labelledby="product-description-tab">
+                <div class="product-description">
+                   @Html.Raw(Model.Description)
+                </div>
+            </div>
+            <div class="tab-pane fade" id="product-specification" role="tabpanel" aria-labelledby="product-specification-tab">
+                <div class="specifications">
+                    @foreach (var item in Model.ProductCustomValue.Where(s => s.ProductCustomField.Hide == false))
+                    {
+
+                        if ((string.IsNullOrEmpty(item.Value) == false || (item.ProductCustomItem != null && string.IsNullOrEmpty(item.ProductCustomItem.Value) == false)))
+                        {
+                            <div class="specification_one">
+                                <div class="specification_title"><span>@item.ProductCustomField.Name:</span></div>
+                                @if (item.ItemId == null)
+                                {
+                                    <div class="specification_text">@item.Value</div>
+                                }
+                                else
+                                {
+                                    <div class="specification_text">@item.ProductCustomItem.Value</div>
+                                }
+                            </div>
+
+                        }
+
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab">
+                <div class="product_comments">
+                    @foreach (var item in Model.ProductComment)
+                    {
+                        <div class="comment_item">
+                            <div class="comment_info">
+                                <div class="comment_userImg online_user"><img src="~/Assets/Default/Image/user.png" alt=""></div>
+                                <div class="comment_name_date">
+                                    <div>
+                                        <strong>@item.NameFamily</strong>
+                                        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/partial/ShowRate.cshtml", item.Rate)
+                                    </div>
+                                    <span>@item.Datetime.ToPersianWithTime()</span>
+                                </div>
+                            </div>
+                            <div class="comment_text">
+                                <p>@item.Body</p>
+                            </div>
+                            <div class="comment_reply">
+                                @if (!string.IsNullOrEmpty(item.AnswerString))
+                                {
+                                    <div class="reply_item">
+                                        <div class="comment_info">
+                                            <div class="comment_userImg offline_user"><img src="~/Assets/Default/Image/user.png" alt=""></div>
+                                            <div class="comment_name_date">
+                                                <a href="#">
+                                                    <strong>@Resource.Lang.Boss</strong>
+                                                </a><span>@item.AnswerDatetime.ToPersianWithTime()</span>
+                                            </div>
+                                        </div>
+                                        <div class="comment_text">
+                                            @item.AnswerString
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <div class="comment_item">
+                        <div class="add_comment">
+                            <strong>@Resource.Lang.AddComment</strong>
+                            <form class="addCm_form text-left">
+
+                                <div id="rate-box" class="rate-box star-rating user-rate">
+                                    <input value="5" type="radio" name="rate" id="rate-5">
+                                    <label for="rate-5" value="5" title="خیلی خوب ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="tiny" height="24px" id="Layer_1" version="1.2" viewBox="0 0 24 24" width="24px" xml:space="preserve"><g><g><path d="M9.362,9.158c0,0-3.16,0.35-5.268,0.584c-0.19,0.023-0.358,0.15-0.421,0.343s0,0.394,0.14,0.521    c1.566,1.429,3.919,3.569,3.919,3.569c-0.002,0-0.646,3.113-1.074,5.19c-0.036,0.188,0.032,0.387,0.196,0.506    c0.163,0.119,0.373,0.121,0.538,0.028c1.844-1.048,4.606-2.624,4.606-2.624s2.763,1.576,4.604,2.625    c0.168,0.092,0.378,0.09,0.541-0.029c0.164-0.119,0.232-0.318,0.195-0.505c-0.428-2.078-1.071-5.191-1.071-5.191    s2.353-2.14,3.919-3.566c0.14-0.131,0.202-0.332,0.14-0.524s-0.23-0.319-0.42-0.341c-2.108-0.236-5.269-0.586-5.269-0.586    s-1.31-2.898-2.183-4.83c-0.082-0.173-0.254-0.294-0.456-0.294s-0.375,0.122-0.453,0.294C10.671,6.26,9.362,9.158,9.362,9.158z"></path></g></g></svg>
+                                    </label>
+                                    <input value="4" type="radio" name="rate" id="rate-4">
+                                    <label for="rate-4" value="4" title="خوب ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="tiny" height="24px" id="Layer_1" version="1.2" viewBox="0 0 24 24" width="24px" xml:space="preserve"><g><g><path d="M9.362,9.158c0,0-3.16,0.35-5.268,0.584c-0.19,0.023-0.358,0.15-0.421,0.343s0,0.394,0.14,0.521    c1.566,1.429,3.919,3.569,3.919,3.569c-0.002,0-0.646,3.113-1.074,5.19c-0.036,0.188,0.032,0.387,0.196,0.506    c0.163,0.119,0.373,0.121,0.538,0.028c1.844-1.048,4.606-2.624,4.606-2.624s2.763,1.576,4.604,2.625    c0.168,0.092,0.378,0.09,0.541-0.029c0.164-0.119,0.232-0.318,0.195-0.505c-0.428-2.078-1.071-5.191-1.071-5.191    s2.353-2.14,3.919-3.566c0.14-0.131,0.202-0.332,0.14-0.524s-0.23-0.319-0.42-0.341c-2.108-0.236-5.269-0.586-5.269-0.586    s-1.31-2.898-2.183-4.83c-0.082-0.173-0.254-0.294-0.456-0.294s-0.375,0.122-0.453,0.294C10.671,6.26,9.362,9.158,9.362,9.158z"></path></g></g></svg>
+                                    </label>
+                                    <input value="3" type="radio" name="rate" id="rate-3">
+                                    <label for="rate-3" value="3" title="معمولی ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="tiny" height="24px" id="Layer_1" version="1.2" viewBox="0 0 24 24" width="24px" xml:space="preserve"><g><g><path d="M9.362,9.158c0,0-3.16,0.35-5.268,0.584c-0.19,0.023-0.358,0.15-0.421,0.343s0,0.394,0.14,0.521    c1.566,1.429,3.919,3.569,3.919,3.569c-0.002,0-0.646,3.113-1.074,5.19c-0.036,0.188,0.032,0.387,0.196,0.506    c0.163,0.119,0.373,0.121,0.538,0.028c1.844-1.048,4.606-2.624,4.606-2.624s2.763,1.576,4.604,2.625    c0.168,0.092,0.378,0.09,0.541-0.029c0.164-0.119,0.232-0.318,0.195-0.505c-0.428-2.078-1.071-5.191-1.071-5.191    s2.353-2.14,3.919-3.566c0.14-0.131,0.202-0.332,0.14-0.524s-0.23-0.319-0.42-0.341c-2.108-0.236-5.269-0.586-5.269-0.586    s-1.31-2.898-2.183-4.83c-0.082-0.173-0.254-0.294-0.456-0.294s-0.375,0.122-0.453,0.294C10.671,6.26,9.362,9.158,9.362,9.158z"></path></g></g></svg>
+                                    </label>
+
+
+
+                                    <input value="2" type="radio" name="rate" id="rate-2">
+                                    <label for="rate-2" value="2" title=" ضعیف">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="tiny" height="24px" id="Layer_1" version="1.2" viewBox="0 0 24 24" width="24px" xml:space="preserve"><g><g><path d="M9.362,9.158c0,0-3.16,0.35-5.268,0.584c-0.19,0.023-0.358,0.15-0.421,0.343s0,0.394,0.14,0.521    c1.566,1.429,3.919,3.569,3.919,3.569c-0.002,0-0.646,3.113-1.074,5.19c-0.036,0.188,0.032,0.387,0.196,0.506    c0.163,0.119,0.373,0.121,0.538,0.028c1.844-1.048,4.606-2.624,4.606-2.624s2.763,1.576,4.604,2.625    c0.168,0.092,0.378,0.09,0.541-0.029c0.164-0.119,0.232-0.318,0.195-0.505c-0.428-2.078-1.071-5.191-1.071-5.191    s2.353-2.14,3.919-3.566c0.14-0.131,0.202-0.332,0.14-0.524s-0.23-0.319-0.42-0.341c-2.108-0.236-5.269-0.586-5.269-0.586    s-1.31-2.898-2.183-4.83c-0.082-0.173-0.254-0.294-0.456-0.294s-0.375,0.122-0.453,0.294C10.671,6.26,9.362,9.158,9.362,9.158z"></path></g></g></svg>
+                                    </label>
+                                    <input value="1" type="radio" name="rate" id="rate-1">
+                                    <label for="rate-1" value="1" title="خیلی ضعیف">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="tiny" height="24px" id="Layer_1" version="1.2" viewBox="0 0 24 24" width="24px" xml:space="preserve"><g><g><path d="M9.362,9.158c0,0-3.16,0.35-5.268,0.584c-0.19,0.023-0.358,0.15-0.421,0.343s0,0.394,0.14,0.521    c1.566,1.429,3.919,3.569,3.919,3.569c-0.002,0-0.646,3.113-1.074,5.19c-0.036,0.188,0.032,0.387,0.196,0.506    c0.163,0.119,0.373,0.121,0.538,0.028c1.844-1.048,4.606-2.624,4.606-2.624s2.763,1.576,4.604,2.625    c0.168,0.092,0.378,0.09,0.541-0.029c0.164-0.119,0.232-0.318,0.195-0.505c-0.428-2.078-1.071-5.191-1.071-5.191    s2.353-2.14,3.919-3.566c0.14-0.131,0.202-0.332,0.14-0.524s-0.23-0.319-0.42-0.341c-2.108-0.236-5.269-0.586-5.269-0.586    s-1.31-2.898-2.183-4.83c-0.082-0.173-0.254-0.294-0.456-0.294s-0.375,0.122-0.453,0.294C10.671,6.26,9.362,9.158,9.362,9.158z"></path></g></g></svg>
+                                    </label>
+
+
+
+                                </div>
+                                <textarea codeprocess-field="body" name="comment" class="form-control" id="" placeholder="@Resource.Lang.YourComment"></textarea>
+                                <button type="button" codeprocess-action="comment-add" product-id="@Model.ID" class="addCm_btn btn primary_btn mr-auto  mt-4"><span>@Resource.Lang.Send</span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>

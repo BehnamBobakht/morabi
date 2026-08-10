@@ -1,0 +1,61 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model IEnumerable<DataLayer.ViewModels.ViewShopChat>
+
+<div class="col-lg-8">
+    <div class="card-box">
+        <h4 class="header-title m-t-0 m-b-30">@Resource.Lang.RecivedMessages </h4>
+        <div class="nicescroll" style="height: 305px;">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@Resource.Lang.UserName</th>
+                            <th>@Resource.Lang.Context</th>
+                            <th>@Resource.Lang.DateTime</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ViewShopChat chat in Model)
+                        {
+                            if (chat.IsRead == false)
+                            {
+                                <tr>
+                                    <th>
+                                        <span class="unread-count">
+                                            @chat.UnreadCount.ToPersian()
+                                        </span>
+                                        @chat.Account.FullName
+                                    </th>
+                                    <th>@chat.Body</th>
+                                    <th>@chat.Datetime.ToPersian().ToPersian()</th>
+                                    <th>
+                                        <a href="@Url.Action("chat", new { controller = "shop", area = "store", accountId = chat.Account.Id })">
+                                            <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                        </a>
+                                    </th>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@chat.Account.FullName</td>
+                                    <td>@chat.Body</td>
+                                    <td>@chat.Datetime.ToPersian().ToPersian()</td>
+                                    <td>
+                                        <a href="#">
+                                            <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

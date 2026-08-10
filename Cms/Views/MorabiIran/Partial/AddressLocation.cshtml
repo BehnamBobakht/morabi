@@ -1,0 +1,22 @@
+﻿@using DataLayer.Base;
+    <div class="tab-pane p-4 basketparent shoping_address">
+        <div class="basketAddressPage">
+            <div class="basketpro-titles-adres d-flex justify-content-between align-content-center">
+                <strong>
+                    @Resource.Lang.Addresses
+                </strong>
+                <button class="btn btn-dark add-new-address" id="btnAddNewAddress" onclick="showAddress()" > @Resource.Lang.AddAddress</button>
+            </div>
+
+            <div class="basket-addresses">
+                <!-- ko foreach: viewModel.Account.Addresses.List -->
+                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/AddressItemLocation.cshtml", true)
+                <!-- /ko -->
+            </div>
+        </div>
+        
+    </div>
+
+
+
+

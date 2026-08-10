@@ -1,0 +1,131 @@
+﻿@using DataLayer.Enumarables;
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model  DataLayer.Entities.ExameAccountAnswer
+@{
+    TempData["Title"] = "پاسخ نامه";
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+    var ListQuestion = Model.Exame.ExameQuestion.ToList();
+
+
+}
+<style>
+    .dot {
+        height: 25px;
+        width: 25px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .dotFill {
+        background-color: #00ff21;
+    }
+
+    .dotFillUser {
+        border: 3px solid #ff0000;
+    }
+
+    .dotFillUserTrue {
+        border: 3px solid #044a1d !important;
+    }
+</style>
+<section class="page-padding">
+    <div class="container">
+        @{ int i = 1;}
+       
+
+                    @foreach (var question in Model.Exame.ExameQuestion.Where(s => s.ExameId == Model.ExameId))
+                    {
+
+
+                        <div class="question col-md-12 m-2">
+                            <div class="row answer_ques_box">
+                                @if (question.PictureId == null)
+                                {
+                                    <div class="col-sm-12">
+                                        @if (question.ExameCourseCategory == null)
+                                        {
+                                           
+                                                <p><strong>@i- </strong>@question.Text</p>
+
+                                            
+
+                                        }
+                                        else
+                                        {
+                                           
+                                                <p><strong>@i- </strong>(@question.ExameCourseCategory.Name) @question.Text</p>
+
+                                            
+
+                                        }
+                                    </div>
+                                    
+                                }
+                                else
+                                {
+                            <div class="col-sm-8">
+
+
+
+                                <p><strong>@i- </strong>@question.Text</p>
+                            </div>
+                                    <div class="col-sm-4">
+                                        @if (question.PictureId != null)
+                                        {
+                                            <img src="@question.Picture.GetUrl()" />
+                                        }
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="d-flex questionbox">
+                                @{int k = 1;}
+                                @foreach (var answer in question.ExameAnswerItem)
+                                {
+                                    string classNameNotChecked = "";
+                                    var classNameUser = (Model.ExameAccountAnswerDetails.Any(s => s.AnswerId == answer.ID && s.QuestionId == question.ID) ? "dotFillUser" : "");
+                                    var classNameUserTrue = (Model.ExameAccountAnswerDetails.Any(s => s.AnswerId == answer.ID && s.QuestionId == question.ID && s.ExameQuestion.AnswerId == answer.ID) ? "dotFillUserTrue" : "");
+
+                                    if (Model.ExameAccountAnswerDetails.Any(s => s.AnswerId == null && s.QuestionId == question.ID))
+                                    {
+                                        classNameNotChecked = "Notchecked";
+                                    }
+                                <div class="Answer4qoustion">
+                                    <span class="dot  @classNameUser @classNameNotChecked @classNameUserTrue @(question.AnswerId == answer.ID ? "dotFill" : "")" name="answer@(answer.ID)" id="answer@(answer.ID)"></span>
+
+                                   
+                                        <label>
+                                            @k )  @answer.Text
+                                        </label>
+                                    
+
+                                    @if (answer.PictureId != null)
+                                    {
+                                        <img src="@answer.Picture.GetUrl()" />
+                                    }
+                                </div>
+                                    k++;
+                                }
+                            </div>
+
+                        </div>
+                        i++;
+                    }
+                
+					<div class="answer-number d-flex">
+            			<strong>تعداد پاسخ صحیح: @Model.CountTrue</strong>
+           			 	<strong>تعداد پاسخ غلط: @Model.CountFalse</strong>
+           		 		<strong>تعداد  نزده: @Model.CountNull</strong>
+
+
+        </div>
+            
+        </div>
+        
+    
+</section>
+

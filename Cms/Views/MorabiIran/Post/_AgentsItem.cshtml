@@ -1,0 +1,51 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostVm
+<div class="col-lg-6">
+    <div class="bottom-blog-item linkitem">
+        <a href="@Model.Href"></a>
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <div class="blog-img bottom-blog-img">
+                    <img src="@Model.Picture.Url" alt="@Model.Name">
+                </div>
+            </div>
+            <div class="col-md-8 p-0">
+                <div class="blog-caption bottom-blog-caption">
+                    <div class="representationCardInfo">
+                        <div class="repItem">
+                            <span>نام نمایندگی </span>
+                            <div>
+                                <span>@Model.Name</span>
+                            </div>
+                        </div>
+
+
+                        <div class="repItem">
+                            <span>تلفن تماس : </span>
+                            <div>
+                                <span>@Model.Phone</span>
+                            </div>
+                        </div>
+                        <div class="repItem">
+                            <span> ایمیل  : </span>
+                            <div>
+                                <span>@Model.Email</span>
+                            </div>
+                        </div>
+                        <div class="repItem">
+                            <span> آدرس  : </span>
+                            <div>
+                                <span>@Model.Keywords</span>
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

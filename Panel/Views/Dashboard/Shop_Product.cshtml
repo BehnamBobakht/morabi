@@ -1,0 +1,56 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+@model IEnumerable<Product>
+
+@{ 
+    List<Product> list = Model.ToList();
+}
+
+<div class="col-lg-4">
+    <div class="card-box">
+        <a href="@Url.Action("create", new { @controller="product", @area="store" })" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title= @Resource.Lang.AddNewCase></a>
+        <h4 class="header-title m-t-0 m-b-30">
+            <a href="@Url.Action("index", new { area = "store", controller = "product" })">
+         
+          @Resource.Lang.RegisteredProducts
+            </a>
+        </h4>
+        <div class="inbox-widget nicescroll" style="height: 305px;">
+            @for (int i = 0; i < list.Count; i++)
+                {
+                Product product = list[i];
+                <a href="@Url.Action("edit", new { @controller = "product", @area="store", @id = product.ID })">
+                    <div class="inbox-item">
+                        <span class="inbox-item-number">
+                            @((i + 1).ToPersian())
+                        </span>
+                        <div class="inbox-item-img">
+                            @if (product.PictureId != null)
+                            {
+                                <img src="@product.Picture.GetUrl()" class="img-circle" alt="">
+                            }
+                            else
+                            {
+                                <img src="/assets/images/no-image.png" class="img-circle" alt="">
+                            }
+                        </div>
+                        <p class="inbox-item-author">@product.Name</p>
+                        <p class="inbox-item-text">
+                            @if (product.ProductTypeId != null)
+                            {
+                                <span>@product.ProductType.Name</span>
+                            }
+                            @if (product.ProductCategoryId != null)
+                            {
+                                <span> - </span>
+                                @product.ProductCategory.Name
+                            }
+                        </p>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+

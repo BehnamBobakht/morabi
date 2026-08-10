@@ -1,0 +1,75 @@
+﻿@using DataLayer.Base
+@using DataLayer.Entities
+@using DataLayer.ViewModels
+@model List<DataLayer.Entities.Gallery>
+
+
+
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    string url = Url.Action("Index", "StaticPage", new { id = "Gallery" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    var title = Resource.Lang.Gallery;
+    TempData["Title"] = Resource.Lang.Gallery;
+    ViewBag.PageName = "gallery";
+
+
+    var breadcrumb = new List<BreadcrumbVm>();
+    breadcrumb.Add(new BreadcrumbVm() { Title = title, Url = url });
+}
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="gallery page-padding">
+        <div class="container">
+            <div class="section-title position-relative align">
+                <h1>@Resource.Lang.Galleries</h1>
+            </div>
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    Picture fPicture = null;
+                    if (item.GalleryPictures.Any())
+                    {
+                        fPicture = item.GalleryPictures.First().Picture;
+                        <div class="col-lg-3 col-md-4 col-sm-6 p-0 px-sm-2 py-2">
+                            <div class="gallery-item linkitem" data-aos="zoom-in" data-aos-duration="1000">
+                                <a href="@item.GetLink()"></a>
+                                <div class="gallery-img">
+                                    @if (fPicture.Url.Contains(".mp4"))
+                                    {
+                                        <video width="100%" height="100%" controls>
+                                            <source src="@fPicture.GetUrl()" type="video/mp4">
+                                        </video>
+                                    }
+                                    else
+                                    {
+                                        <img src="@fPicture.GetUrl()" alt="@item.GetName()">
+                                    }
+                                </div>
+                                <div class="gallery-caption">
+                                    <span>@item.GetName()</span>
+                                    <p>@Html.Raw(item.GetBody())</p>
+                                    <div class="btn gallery-btn">
+                                        <span>@Resource.Lang.More</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    }
+                }
+                
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+
+
+
+

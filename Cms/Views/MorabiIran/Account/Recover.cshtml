@@ -1,0 +1,58 @@
+﻿@using DataLayer.Base
+
+@model DataLayer.Entities.AccountPasswordForget
+
+
+@{
+    ViewBag.Title = Resource.Lang.RecoveryPassword;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="page_address">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">@Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    @Resource.Lang.RecoveryPassword
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="login">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 mx-auto">
+                <strong class="titlesite"> @Resource.Lang.RecoveryPassword </strong>
+                <div class="login_form">
+                    <form action="~/Account/Recover" method="post">
+                        <div class="from-group">
+                            <input name="password" class="form-control" type="password" placeholder="@Resource.Lang.NewPassword ">
+                        </div>
+                        <div class="from-group">
+                            <input name="confirm" class="form-control" type="password" placeholder="@Resource.Lang.RePassword ">
+                        </div>
+
+                        <div class="loginFooter">
+                            <button class="btn primary_btn"><span>@Resource.Lang.ChangePassword  </span></button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+

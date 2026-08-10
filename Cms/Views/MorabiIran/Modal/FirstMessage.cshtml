@@ -1,0 +1,36 @@
+﻿    <div  class="modal fade modal-first-message bd-example-modal-lg" id="ModalPopUp" tabindex="-1" role="dialog" aria-labelledby="addaddress_modal_Title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                        <div class="modal-body p-4">
+                            <button type="button" class="close closeMsg" data-bs-dismiss="modal" aria-label="Close">
+                                x
+                            </button>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="d-flex flex-column h-100 msgTxt">
+                                        <p data-bind="html:viewModel.FirstMessage.Body">
+                                           
+                                        </p>
+
+                                        <div class="newsletter_box mt-auto">
+                                            <div action="" class="newsletterForm">
+                                                <div class="form-group news_letter">
+                                                    <input type="text" class="form-control" data-bind="value:viewModel.NewsLetter.Email" name="newsletterEmail" placeholder="@Resource.Lang.EnterEmail">
+                                                    <button codeprocess-action="newsletter-add" class="btn searchBtn newsletterBtn">@Resource.Lang.Join</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <img class="msgImg" data-bind="attr: { src: viewModel.FirstMessage.Picture }"  />
+
+                                </div>
+                            </div>
+
+
+                        </div>
+            </div>
+        </div>
+    </div>

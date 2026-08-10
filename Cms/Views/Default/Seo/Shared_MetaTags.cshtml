@@ -1,0 +1,30 @@
+﻿<meta name="title" content="@TempData["Title"]" />
+<meta name="description" content="@TempData["MetaDescription"] ">
+<link rel="canonical" href="@(TempData["canonical"]!=null?TempData["canonical"]:TempData["url"])" />
+<meta property='og:title' content='@TempData["Title"]' />
+<meta property='og:url' content='@TempData["OgUrl"]' />
+<meta property='og:image' content='@TempData["OgImage"]' />
+<meta property='og:image:url' content='@TempData["OgImage"]' />
+<meta property='og:image:type' content='image/@(TempData["OgImageType"]!=null?TempData["OgImageType"]:"jpg")' />
+<meta name="twitter:card" content="@TempData["OgUrl"]">
+<meta name="twitter:image" content="@TempData["OgImage"]">
+<meta name="twitter:title" content="@TempData["Title"]">
+<meta name="twitter:description" content="@TempData["MetaDescription"]">
+@if (TempData["allNoIndexFollow"] != null && (bool)TempData["allNoIndexFollow"] == true)
+{
+    <meta name="robots" content='noindex,nofollow' />
+}
+else
+{
+    <meta name="robots" content='@((TempData["noIndex"]!=null && (bool)TempData["noIndex"]==true)?"noindex":"index"),@((TempData["noFollow"]!=null && (bool)TempData["noFollow"]==true)?"nofollow":"follow")' />
+}
+<link rel="alternate" type="text/html" href="@TempData["url"]" hreflang="fa-ir" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/images/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/images/favicon/favicon.ico">
+<link rel="manifest" href="/assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/images/favicon/site.webmanifest">
+

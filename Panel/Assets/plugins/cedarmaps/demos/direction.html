@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>CedarMaps - Direction request sample - مسیریابی با سیدار مپ</title>
+
+    <!-- Importing **local** version of cedarmaps -->
+    <!-- Check out how to build SDK: https://github.com/cedarstudios/cedarmaps-web-sdk-raster#building-sdk-locally -->
+    <!-- You may also use our CDN if you don't intent to build the SDK. -->
+    <!-- See: https://github.com/cedarstudios/cedarmaps-web-sdk-raster#basic-usage-via-cdn -->
+    <script src='../dist/v1.8.1/cedarmaps.js'></script>
+    <script src='../access-token.js'></script>
+    <link href='../dist/v1.8.1/cedarmaps.css' rel='stylesheet' />
+<script src='https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.js'></script>
+<link href='https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.css' rel='stylesheet' />
+    <link href='./css/custom-bootstrap.css' rel='stylesheet' />
+    <link href='./css/fonts.css' rel='stylesheet' />
+    <link href='./css/icons.css' rel='stylesheet' />
+    <link href='./css/styles.css' rel='stylesheet' />
+
+    <!-- Third party libraries used solely for this demo -->
+    <script src='./js/leaflet-omnivore.min.js'></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top" color-on-scroll="20">
+        <div class="container rtl">
+            <div class="navbar-brand">
+                <a href="https://www.cedarmaps.com" rel="tooltip" title="نقشه‌ای حرفه‌ای برای سرویس‌های مکان محور پارسی"><img src="img/logo.svg" height="25" alt="">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end">
+                <a href="https://github.com/cedarstudios/cedarmaps-web-sdk-raster/blob/master/demos/direction.html" target="_blank" rel="tooltip" title="نمونه کدهای ما را در Github ببینید"><i class="icon-github icon-24"></i> مشاهده Source Code این مثال در Github &gt; </a>
+            </div>
+        </div>
+    </nav>
+    <div id='map'> </div>
+    <script>
+        try {
+            L.cedarmaps.accessToken = "d2a68b8e5b64b0dcf303e023935edda196c55a18";
+        } catch (err) {
+            throw new Error('You need to get an access token to be able to use cedarmaps SDK. ' +
+                'Send us an email to <support@cedarmaps.com>');
+        }
+
+        /**
+         * Initilizing Map View
+         */
+
+        // Getting maps info from a tileJSON source
+        var tileJSONUrl = 'https://api.cedarmaps.com/v1/tiles/cedarmaps.streets.json?access_token=' + L.cedarmaps.accessToken;
+
+        // initilizing map into div#map
+        var map = L.cedarmaps.map('map', tileJSONUrl, {
+            scrollWheelZoom: true
+        }).setView([35.757448286487595, 51.40876293182373], 15);
+
+        /**
+         * Initilizing Direction
+         */
+        var direction = L.cedarmaps.direction();
+
+        // Points should be separated by a semicolon. e.g.: lat,lng;lat,lng;lat,lng....
+        // You can provide up to 100 stops (including start, middle and end points) for a direction request. Here we provided 3.
+        direction.route('cedarmaps.driving', '35.764335,51.365622;35.7604311,51.3939486;35.7474946,51.2429727', function(err, json) {
+                var RouteGeometry = json.result.routes[0].geometry;
+
+                var RouteLayer = L.geoJSON(RouteGeometry, {
+                    // for more styling options check out: https://leafletjs.com/reference-1.3.0.html#path-option
+                    style: function(feature) {
+                        return {
+                            color: '#f00',
+                            weight: 5
+                        }
+                    }
+                }).addTo(map);
+
+                map.fitBounds(RouteLayer.getBounds());
+        });
+
+        // Adding two markers for origin and destination
+        var originMarker = new L.marker([35.764335,51.365622]).addTo(map);
+        var destinationMarker = new L.marker([35.7474946,51.2429727]).addTo(map);
+        var popupOptions = {
+            offset: new L.Point(2, 14),
+            closeButton: false,
+            autoPan: false
+        };
+        originMarker.bindPopup('<h6>Start</h6>', popupOptions);
+        destinationMarker.bindPopup('<h6>End</h6>', popupOptions).openPopup();
+
+    </script>
+</body>
+
+</html>

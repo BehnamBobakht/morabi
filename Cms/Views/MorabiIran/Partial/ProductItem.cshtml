@@ -1,0 +1,66 @@
+﻿﻿﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model Product
+@{
+    string link = Url.Action("index", "product", new { prid = Model.ID, pridname = Model.Name.StandardUrl() });
+    Nullable<double> totalRate = 0;
+    if (Model.ProductComment.Any())
+    {
+        totalRate = Model.ProductComment.Where(s => s.Rate.HasValue).Average(s => s.Rate);
+    }
+    var pricediscount = Model.GetDiscountPrice();
+}
+<div class="item">
+
+    <div class="productBox">
+        <div class="product_card">
+            <a href="@Model.GetLinkWithUrl()">
+                <div class="product_img">
+                    <img src="@Model.Picture.GetUrl()" alt="@Model.GetName()" title="@Model.GetName()">
+                </div>
+                <div class="product_info">
+
+                    <ul class="product_info_list">
+                        <li><span>@Model.GetName()</span></li>
+                        <li>
+                            @if (Model.MinPrice > 0)
+                            {
+                                @*if (Model.Price > Model.MinPrice)
+                                    {
+                                        <li><del><strong>@Model.Price.GetCurrencyFormat()</strong>   @Resource.Lang.Toman</del></li>
+                                    }*@
+                                @* <span>
+                                        @Resource.Lang.FromPrice:
+                                    </span> *@
+                                @Resource.Lang.FromPrice <span>:</span> @Model.MinPrice.GetCurrencyFormat() @Resource.Lang.Toman
+                            }
+                        </li>
+
+                    </ul>
+                </div>
+            </a>
+            <div class="proBtnBox">
+                <a class="proBtn favorit" data-toggle="tooltip" href="javascript://" codeprocess-action="productlike-add" product-id="@Model.ID" data-placement="bottom" title="@Resource.Lang.AddToFavorites"><img src="/Assets/KhoshKala/Image/favorit.png" /></a>
+                @if (Model.Code.Label == Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString())
+                {
+                    <!--ko if:viewModel.Variety.ProductQuantity().length >0-->
+                    <button data-bind="attr:{'product-id': viewModel.Variety.ProductId(),'product-color-id': viewModel.Variety.ColorId(),'product-size-id': viewModel.Variety.SizeId(),'product-option-item-id': viewModel.Variety.OptionItemId() ,'store-id' : viewModel.Variety.ProductQuantity()[0].StoreProduct.StoreId  }" codeprocess-action="basket-add" product-id="" product-color-id="" product-size-id="" class="proBtn add" data-toggle="tooltip" data-placement="bottom" title="@Resource.Lang.AddToBasket"><img src="/Assets/KhoshKala/Image/add2baket.png" /></button>
+                    <!--/ko-->
+                }
+                <a href="/product/compare?productId=@Model.ID" class="proBtn compare" data-toggle="tooltip" data-placement="bottom" title="@Resource.Lang.Compare"><img src="/Assets/KhoshKala/Image/compare.png" /></a>
+            </div>
+        </div>
+        @* <a href="@Model.GetLinkWithUrl()" class="product_btn seemore">@Resource.Lang.SeeMore</a> *@
+        @if (Model.Code.Label == Enum_Code.PRODUCT_STATUS_NOT_AVAILABLE.ToString())
+        {
+            <div class="finish_span"><span>@Resource.Lang.NoAvailable</span></div>
+        }
+    </div>
+</div>
+
+
+
+
+
+

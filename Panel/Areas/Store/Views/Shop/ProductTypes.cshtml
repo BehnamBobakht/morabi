@@ -1,0 +1,46 @@
+﻿@using DataLayer.ViewModels;
+@model IEnumerable<DataLayer.ViewModels.ViewShopProductType>
+
+@{
+    ViewBag.Title = Resource.Lang.AllkindsOfProductsIntShop;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="ShopId" value="@ViewBag.ShopId" />
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6 no-padding">
+                        @foreach (var item in Model)
+                        {
+                            <div class="form-group">
+                                <label for="checkbox-@item.ProductTypeId" class="control-label col-md-2 no-padding">@item.ProductTypeName</label>
+                                <div class="col-md-10">
+                                    <input id="checkbox-@item.ProductTypeId" type="checkbox" value="@item.ProductTypeId" checked="@item.Selected" autocomplete="off" name="ProductTypes" />
+                                </div>
+                            </div>
+                        }
+                        <div>
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="row">
+                                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+

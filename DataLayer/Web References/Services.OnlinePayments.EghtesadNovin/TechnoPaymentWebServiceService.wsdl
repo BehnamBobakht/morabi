@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="TechnoPaymentWebServiceService" targetNamespace="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="https://pna.shaparak.ir:443/ref-payment2/jax/merchantService?xsd=1" namespace="http://webservice.tosan.connector.core.scm.tosantechno.com/" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import schemaLocation="https://pna.shaparak.ir:443/ref-payment2/jax/merchantService?xsd=2" namespace="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/" />
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import schemaLocation="https://pna.shaparak.ir:443/ref-payment2/jax/merchantService?xsd=3" namespace="http://paymentService.merchant.webservice.epayment.modern.tosan.com/" />
+    </xsd:schema>
+  </types>
+  <message name="updateMerchantLogo">
+    <part name="parameters" element="tns:updateMerchantLogo" />
+  </message>
+  <message name="updateMerchantLogoResponse">
+    <part name="parameters" element="tns:updateMerchantLogoResponse" />
+  </message>
+  <message name="getTransactionReport">
+    <part name="parameters" element="tns:getTransactionReport" />
+  </message>
+  <message name="getTransactionReportResponse">
+    <part name="parameters" element="tns:getTransactionReportResponse" />
+  </message>
+  <message name="saveCardInfo">
+    <part name="parameters" element="tns:saveCardInfo" />
+  </message>
+  <message name="saveCardInfoResponse">
+    <part name="parameters" element="tns:saveCardInfoResponse" />
+  </message>
+  <message name="deleteCardInfo">
+    <part name="parameters" element="tns:deleteCardInfo" />
+  </message>
+  <message name="deleteCardInfoResponse">
+    <part name="parameters" element="tns:deleteCardInfoResponse" />
+  </message>
+  <message name="GenerateTokenWithNoSign">
+    <part name="parameters" element="tns:GenerateTokenWithNoSign" />
+  </message>
+  <message name="GenerateTokenWithNoSignResponse">
+    <part name="parameters" element="tns:GenerateTokenWithNoSignResponse" />
+  </message>
+  <message name="MerchantLogin">
+    <part name="parameters" element="tns:MerchantLogin" />
+  </message>
+  <message name="MerchantLoginResponse">
+    <part name="parameters" element="tns:MerchantLoginResponse" />
+  </message>
+  <message name="MerchantLogout">
+    <part name="parameters" element="tns:MerchantLogout" />
+  </message>
+  <message name="MerchantLogoutResponse">
+    <part name="parameters" element="tns:MerchantLogoutResponse" />
+  </message>
+  <message name="InquiryBill">
+    <part name="parameters" element="tns:InquiryBill" />
+  </message>
+  <message name="InquiryBillResponse">
+    <part name="parameters" element="tns:InquiryBillResponse" />
+  </message>
+  <message name="InquiryThpService">
+    <part name="parameters" element="tns:InquiryThpService" />
+  </message>
+  <message name="InquiryThpServiceResponse">
+    <part name="parameters" element="tns:InquiryThpServiceResponse" />
+  </message>
+  <message name="GenerateTransactionDataToSign">
+    <part name="parameters" element="tns:GenerateTransactionDataToSign" />
+  </message>
+  <message name="GenerateTransactionDataToSignResponse">
+    <part name="parameters" element="tns:GenerateTransactionDataToSignResponse" />
+  </message>
+  <message name="GenerateSignedDataToken">
+    <part name="parameters" element="tns:GenerateSignedDataToken" />
+  </message>
+  <message name="GenerateSignedDataTokenResponse">
+    <part name="parameters" element="tns:GenerateSignedDataTokenResponse" />
+  </message>
+  <message name="VerifyMerchantTrans">
+    <part name="parameters" element="tns:VerifyMerchantTrans" />
+  </message>
+  <message name="VerifyMerchantTransResponse">
+    <part name="parameters" element="tns:VerifyMerchantTransResponse" />
+  </message>
+  <message name="SimpleVerifyMerchantTrans">
+    <part name="parameters" element="tns:SimpleVerifyMerchantTrans" />
+  </message>
+  <message name="SimpleVerifyMerchantTransResponse">
+    <part name="parameters" element="tns:SimpleVerifyMerchantTransResponse" />
+  </message>
+  <message name="SimpleReverseMerchantTrans">
+    <part name="parameters" element="tns:SimpleReverseMerchantTrans" />
+  </message>
+  <message name="SimpleReverseMerchantTransResponse">
+    <part name="parameters" element="tns:SimpleReverseMerchantTransResponse" />
+  </message>
+  <message name="verifySimpleTransaction">
+    <part name="parameters" element="tns:verifySimpleTransaction" />
+  </message>
+  <message name="verifySimpleTransactionResponse">
+    <part name="parameters" element="tns:verifySimpleTransactionResponse" />
+  </message>
+  <message name="WsClientAddressException_Exception">
+    <part xmlns:ns1="http://paymentService.merchant.webservice.epayment.modern.tosan.com/" name="fault" element="ns1:WsClientAddressException" />
+  </message>
+  <message name="WsInvalidSessionException_Exception">
+    <part xmlns:ns2="http://paymentService.merchant.webservice.epayment.modern.tosan.com/" name="fault" element="ns2:WsInvalidSessionException" />
+  </message>
+  <message name="InquiryMerchantToken">
+    <part name="parameters" element="tns:InquiryMerchantToken" />
+  </message>
+  <message name="InquiryMerchantTokenResponse">
+    <part name="parameters" element="tns:InquiryMerchantTokenResponse" />
+  </message>
+  <message name="GetCardInfo">
+    <part name="parameters" element="tns:GetCardInfo" />
+  </message>
+  <message name="GetCardInfoResponse">
+    <part name="parameters" element="tns:GetCardInfoResponse" />
+  </message>
+  <message name="ReverseMerchantTrans">
+    <part name="parameters" element="tns:ReverseMerchantTrans" />
+  </message>
+  <message name="ReverseMerchantTransResponse">
+    <part name="parameters" element="tns:ReverseMerchantTransResponse" />
+  </message>
+  <message name="changePassword">
+    <part name="parameters" element="tns:changePassword" />
+  </message>
+  <message name="changePasswordResponse">
+    <part name="parameters" element="tns:changePasswordResponse" />
+  </message>
+  <message name="test">
+    <part name="parameters" element="tns:test" />
+  </message>
+  <message name="testResponse">
+    <part name="parameters" element="tns:testResponse" />
+  </message>
+  <portType name="TechnoIPGWS">
+    <operation name="updateMerchantLogo">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/updateMerchantLogoRequest" message="tns:updateMerchantLogo" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/updateMerchantLogoResponse" message="tns:updateMerchantLogoResponse" />
+    </operation>
+    <operation name="getTransactionReport">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/getTransactionReportRequest" message="tns:getTransactionReport" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/getTransactionReportResponse" message="tns:getTransactionReportResponse" />
+    </operation>
+    <operation name="saveCardInfo">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/saveCardInfoRequest" message="tns:saveCardInfo" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/saveCardInfoResponse" message="tns:saveCardInfoResponse" />
+    </operation>
+    <operation name="deleteCardInfo">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/deleteCardInfoRequest" message="tns:deleteCardInfo" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/deleteCardInfoResponse" message="tns:deleteCardInfoResponse" />
+    </operation>
+    <operation name="GenerateTokenWithNoSign">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GenerateTokenWithNoSignRequest" message="tns:GenerateTokenWithNoSign" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GenerateTokenWithNoSignResponse" message="tns:GenerateTokenWithNoSignResponse" />
+    </operation>
+    <operation name="MerchantLogin">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/MerchantLoginRequest" message="tns:MerchantLogin" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/MerchantLoginResponse" message="tns:MerchantLoginResponse" />
+    </operation>
+    <operation name="MerchantLogout">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/MerchantLogoutRequest" message="tns:MerchantLogout" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/MerchantLogoutResponse" message="tns:MerchantLogoutResponse" />
+    </operation>
+    <operation name="InquiryBill">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/InquiryBillRequest" message="tns:InquiryBill" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/InquiryBillResponse" message="tns:InquiryBillResponse" />
+    </operation>
+    <operation name="InquiryThpService">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/InquiryThpServiceRequest" message="tns:InquiryThpService" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/InquiryThpServiceResponse" message="tns:InquiryThpServiceResponse" />
+    </operation>
+    <operation name="GenerateTransactionDataToSign">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GenerateTransactionDataToSignRequest" message="tns:GenerateTransactionDataToSign" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GenerateTransactionDataToSignResponse" message="tns:GenerateTransactionDataToSignResponse" />
+    </operation>
+    <operation name="GenerateSignedDataToken">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GenerateSignedDataTokenRequest" message="tns:GenerateSignedDataToken" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GenerateSignedDataTokenResponse" message="tns:GenerateSignedDataTokenResponse" />
+    </operation>
+    <operation name="VerifyMerchantTrans">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/VerifyMerchantTransRequest" message="tns:VerifyMerchantTrans" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/VerifyMerchantTransResponse" message="tns:VerifyMerchantTransResponse" />
+    </operation>
+    <operation name="SimpleVerifyMerchantTrans">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/SimpleVerifyMerchantTransRequest" message="tns:SimpleVerifyMerchantTrans" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/SimpleVerifyMerchantTransResponse" message="tns:SimpleVerifyMerchantTransResponse" />
+    </operation>
+    <operation name="SimpleReverseMerchantTrans">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/SimpleReverseMerchantTransRequest" message="tns:SimpleReverseMerchantTrans" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/SimpleReverseMerchantTransResponse" message="tns:SimpleReverseMerchantTransResponse" />
+    </operation>
+    <operation name="verifySimpleTransaction">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/verifySimpleTransactionRequest" message="tns:verifySimpleTransaction" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/verifySimpleTransactionResponse" message="tns:verifySimpleTransactionResponse" />
+      <fault wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/verifySimpleTransaction/Fault/WsClientAddressException_Exception" name="WsClientAddressException_Exception" message="tns:WsClientAddressException_Exception" />
+      <fault wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/verifySimpleTransaction/Fault/WsInvalidSessionException_Exception" name="WsInvalidSessionException_Exception" message="tns:WsInvalidSessionException_Exception" />
+    </operation>
+    <operation name="InquiryMerchantToken">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/InquiryMerchantTokenRequest" message="tns:InquiryMerchantToken" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/InquiryMerchantTokenResponse" message="tns:InquiryMerchantTokenResponse" />
+    </operation>
+    <operation name="GetCardInfo">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GetCardInfoRequest" message="tns:GetCardInfo" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/GetCardInfoResponse" message="tns:GetCardInfoResponse" />
+    </operation>
+    <operation name="ReverseMerchantTrans">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/ReverseMerchantTransRequest" message="tns:ReverseMerchantTrans" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/ReverseMerchantTransResponse" message="tns:ReverseMerchantTransResponse" />
+    </operation>
+    <operation name="changePassword">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/changePasswordRequest" message="tns:changePassword" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/changePasswordResponse" message="tns:changePasswordResponse" />
+    </operation>
+    <operation name="test">
+      <input wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/testRequest" message="tns:test" />
+      <output wsam:Action="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/TechnoIPGWS/testResponse" message="tns:testResponse" />
+    </operation>
+  </portType>
+  <binding name="TechnoIPGWSPortBinding" type="tns:TechnoIPGWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="updateMerchantLogo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="getTransactionReport">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="saveCardInfo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="deleteCardInfo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GenerateTokenWithNoSign">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="MerchantLogin">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="MerchantLogout">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="InquiryBill">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="InquiryThpService">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GenerateTransactionDataToSign">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GenerateSignedDataToken">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="VerifyMerchantTrans">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SimpleVerifyMerchantTrans">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SimpleReverseMerchantTrans">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="verifySimpleTransaction">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="WsClientAddressException_Exception">
+        <soap:fault use="literal" name="WsClientAddressException_Exception" namespace="" />
+      </fault>
+      <fault name="WsInvalidSessionException_Exception">
+        <soap:fault use="literal" name="WsInvalidSessionException_Exception" namespace="" />
+      </fault>
+    </operation>
+    <operation name="InquiryMerchantToken">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCardInfo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ReverseMerchantTrans">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="changePassword">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="test">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="TechnoPaymentWebServiceService">
+    <port name="TechnoIPGWSPort" binding="tns:TechnoIPGWSPortBinding">
+      <soap:address location="https://pna.shaparak.ir:443/ref-payment2/jax/merchantService" />
+    </port>
+  </service>
+</definitions>

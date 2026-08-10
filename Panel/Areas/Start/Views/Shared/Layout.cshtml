@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    @Html.Action("PublicHeader", "Layout", new { Area = "" })
+    @RenderSection("Header", false)
+    <script src="~/Assets/js/modernizr.min.js"></script>
+</head>
+<body class="fixed-left">
+    <div id="wrapper">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div style="height:50px;"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box">
+                                    <div class="codeprocess-back text-center">
+                                        <img class="codeprocess-logo" src="~/Assets/images/codeprocess.png" />
+                                        <h4 class="header-title m-t-0">سایت ساز کد پرداز، نسخه 1.1.1</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            @Html.Action("Tabs", "setup")
+                                            <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade in active">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-horizontal">
+                                                            @RenderBody()
+                                                        </div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                        </div><!-- end col -->
+
+                                    </div>
+                                    <!-- end row -->
+                                </div>
+                            </div><!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Action("Notification", "Layout", new { Area = "" })
+    </div>
+    <script>
+        var resizefunc = [];
+    </script>
+    @Html.Action("PublicFooter", "Layout", new { Area = "" })
+    @RenderSection("Footer", false)
+    <script src="~/Assets/js/jquery.core.js"></script>
+    <script src="~/Assets/js/jquery.app.js"></script>
+    @RenderSection("Script", false)
+</body>
+</html>

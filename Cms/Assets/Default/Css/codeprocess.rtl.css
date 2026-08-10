@@ -1,0 +1,29 @@
+﻿body {
+    font-size: 13px;
+    font-family: 'Iran-sans', Calibri;
+    direction: rtl;
+}
+
+.lang-align {
+    text-align: right;
+}
+
+.lang-align-inverse {
+    text-align: left;
+}
+
+.no-padding-lang {
+    padding-right: 0;
+}
+
+.no-padding-lang-inverse {
+    padding-left: 0;
+}
+
+.float-lang {
+    float:right;
+}
+
+.float-lang-inverse {
+    float: left;
+}

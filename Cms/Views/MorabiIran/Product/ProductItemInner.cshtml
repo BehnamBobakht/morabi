@@ -1,0 +1,54 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model ProductMinVm
+@{
+    var levelFilds = Model.ProductCustomValue.FirstOrDefault(s => s.ProductCustomField.SyncName == "Level" );
+
+}
+<div class="swiper-slide">
+    <div class="home-product-item linkitem">
+        <a href="@Model.ProductUrl"></a>
+        <div class="home-product-img central">
+            @if (Model.Picture.Url != "" && Model.Picture.Url != null)
+            {
+                <img src="@Html.Action("thumburl","picture",new {picurl=Model.Picture.Url,width=320 })" alt="@Model.Name">
+
+            }
+            else
+            { <img src="@("https://morabiiran.ir/"+Model.Image)" alt="@Model.Name">
+
+            }
+        </div>
+        <div class="home-product-caption">
+            <span>@Model.Name</span>
+            <p>@Model.Summary.GetSubString(70, true)</p>
+            <div class="home-product-btn align">
+                @if (levelFilds.ProductCustomItem!= null)
+                {
+                <div class="btn primary-btn px-3 py-2">@levelFilds.ProductCustomItem.Value</div>
+
+                }
+                <div class="btn addbasket-btn align px-3 py-2">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.80994 2.5L5.18994 6.13" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M15.1899 2.5L18.8099 6.13" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M2 8.3501C2 6.5001 2.99 6.3501 4.22 6.3501H19.78C21.01 6.3501 22 6.5001 22 8.3501C22 10.5001 21.01 10.3501 19.78 10.3501H4.22C2.99 10.3501 2 10.5001 2 8.3501Z" stroke="#292D32" stroke-width="1.5" />
+                        <path d="M9.76001 14.5V18.05" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" />
+                        <path d="M14.36 14.5V18.05" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" />
+                        <path d="M3.5 10.5L4.91 19.14C5.23 21.08 6 22.5 8.86 22.5H14.89C18 22.5 18.46 21.14 18.82 19.26L20.5 10.5" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                    <span>افزودن به سبد خرید</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

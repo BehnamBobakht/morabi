@@ -1,0 +1,9 @@
+﻿@model DataLayer.Entities.AccountOrder
+@{
+    ViewBag.Title = Resource.Lang.CheckOrderNumber + Model.ID;
+    Layout = "~/Views/Default/Shared/PrintLayout.cshtml";
+}
+<link href="~/Assets/Plugins/bootstrap-rtl/css/bootstrap.rtl.css" rel="stylesheet" />
+<div>
+    @Html.Partial("~/Views/Default/Partial/AccountOrderPartial.cshtml", Model)
+</div>

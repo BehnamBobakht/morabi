@@ -1,0 +1,83 @@
+﻿@model DataLayer.Entities.Merchant
+@{
+    ViewBag.Title = "نمایش اطلاعات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                        تامین کننده
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Bank.Name)
+                    </dd>
+                    <dt>
+                        نام کاربری
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Username)
+                    </dd>
+                    <dt>
+                        رمز عبور
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Password)
+                    </dd>
+                    <dt>
+                        کلید داخلی
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PrivateKey)
+                    </dd>
+                    <dt>
+                        کلید داخلی
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PrivateKey)
+                    </dd>
+                    <dt>
+                        کلید ترمینال
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TerminalKey)
+                    </dd>
+                    <dt>
+                        کد درگاه
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MerchantId)
+                    </dd>
+                    <dt>
+                        داده های اضافی 1
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ExternalInfo1)
+                    </dd>
+                    <dt>
+                        داده های اضافی 2
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ExternalInfo2)
+                    </dd>
+                    <dt>
+                        فعال/غیرفعال
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Active)
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink("ویرایش", "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿
+@using DataLayer.ViewModels
+
+@using DataLayer.Base
+@using DataLayer.Enumarables
+@model ResultVm<CartVm>
+@Html.Partial("~/Views/"+BaseWebsite.WebsiteLabel+"/Cart/_MessageBox.cshtml")
+<div class="tab_pane">
+    <div class="userAddress_card">
+        <div class="address_title">
+            <strong> @Resource.Lang.SelectAddress </strong>
+            <button class="btn primary_btn" id="btnAddNewAddress" onclick="showAddress()">
+                <span>@Resource.Lang.AddAddress</span>
+                <i class="bi bi-arrow-left"></i>
+            </button>
+
+
+        </div>
+
+        @if (Model.Model.HaveAddress == true || Model.Model.CartStoreList.Any(s => s.CartStoreItemList.Any(x => x.Product.ProductTypeId == 1)))
+        {
+            @Html.Action("Search", "Banner", new { bacategory = "AddressInfoBanner", baSize = 1, baviewName = "_AddressInfoBanner" })
+
+        }
+        <div class="user_address">
+
+            @Html.Action("CartAccountAddress", "AccountAddress", new { addressId = Model.Model.AddressId })
+
+        </div>
+    </div>
+
+    <div class="basketbtns mt-3">
+        <a href="@Url.Action("Index","Cart")" class="btn secondary_btn prev_tab">
+            <i class="bi bi-arrow-right"></i>
+            <span> @Resource.Lang.PreviousStep</span>
+        </a>
+        @Ajax.ActionLink(linkText: Resource.Lang.Invoice,
+actionName: "addressnextpage",
+controllerName: "cart",
+routeValues: null,
+ajaxOptions: new AjaxOptions
+{
+    OnBegin = "beginProssess",
+    OnComplete = "endProssess",
+    HttpMethod = "Post",
+    OnSuccess = "OnSuccess"
+},
+htmlAttributes: new { @class = "btn primary_btn next_tab addressNextBtn" }
+)
+       
+    </div>
+</div>
+
+
+
+
+
+
+
+

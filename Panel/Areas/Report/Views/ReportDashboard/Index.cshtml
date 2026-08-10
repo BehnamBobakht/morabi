@@ -1,0 +1,206 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@{
+    ViewBag.Title = Resource.Lang.SalesReportBasedOnDiscountCodes;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    SelectList listStore = ViewBag.Stores;
+
+    SelectList listCode = ViewBag.StatusId;
+    SelectList listState = ViewBag.Satets;
+
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/pretty-checkbox/pretty-checkbox.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link href="~/Assets/plugins/Highcharts-8.0.4/page-style.css" rel="stylesheet" />
+
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a class="btn btn-primary" href="@Html.Raw("/Panel/Report/SaleProduct?prorder="+Enum_ProductOrder.MORE_SELL)">گزارش محصولات پر فروش</a>
+                </div>
+                <div class="col-sm-6">
+                    <a class="btn btn-primary" href="@Html.Raw("/Panel/Report/SaleProduct?prorder="+Enum_ProductOrder.LESS_SELL)">گزارش محصولات کم فروش</a>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <form method="get" id="order-form" action="~/report/AccountOrder">
+                    <div class="form-horizontal">
+                        <div class="col-sm-3">
+
+                            <div class="form-group">
+                                <label for="date" class="control-label col-md-4">@Resource.Lang.FromDate</label>
+                                <div class="col-md-8 row">
+                                    <input id="from" class="form-control" autocomplete="off" codeprocess="date" name="from" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+
+                            <div class="form-group">
+                                <label for="date" class="control-label col-md-4">@Resource.Lang.ToDate</label>
+                                <div class="col-md-8 row">
+                                    <input id="to" class="form-control" autocomplete="off" codeprocess="date" name="to" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="product" class="control-label col-md-4">@Resource.Lang.Product</label>
+                                <div class="col-md-8 row">
+                                    <input id="product" name="product" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="statusId" class="control-label col-md-2">
+                                    @Resource.Lang.Status<br />
+                                    <span id="chkCheckAll" do-action="true" style="font-size: 10px; cursor: pointer;">(@Resource.Lang.SelectAll)</span>
+                                </label>
+                                <div class="col-md-10">
+                                    @foreach (var item in listCode)
+                                    {
+                                        int itemId = item.Value.GetInteger();
+
+                                        <label style="margin-left: 30px;">
+                                            <input type="checkbox" name="statusId" value="@item.Value" />
+                                            @item.Text
+                                        </label>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (DataLayer.Base.BaseWebsite.WebsiteSetting.HasStore)
+                        {
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="date" class="control-label col-md-4">@Resource.Lang.Store</label>
+                                    <div class="col-md-8 row">
+                                        <select id="storeId" class="form-control selectpicker" multiple data-live-search="true" autocomplete="off" name="stores">
+                                            @*<option value="">
+                                            @Resource.Lang.Select
+                                        </option>*@
+                                            @foreach (var item in listStore)
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="col-sm-3">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8 no-padding-right">
+                                <input type="submit" class="btn btn-success col-xs-12" value=@Resource.Lang.Search>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <hr />
+            <div class="row">
+                <form method="get" id="order-form" action="~/report/AccountOrder">
+                    <div class="form-horizontal">
+                        <div class="col-md-8 row d-none">
+                            <input id="IsLastOrder" class="form-control" type="checkbox" checked name="IsLastOrder" />
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8 no-padding-right">
+                                <input type="submit" class="btn btn-success col-xs-12" value="گزارش از کسانی که دو ماه است از ما خرید نکرده اند">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            <div class="row">
+                <form method="get" id="order-form" action="~/report/AccountOrder">
+                    <div class="form-horizontal">
+                        <div class="col-md-8 row d-none">
+                            <input id="statusId" class="form-control" type="text" value="2068" name="statusId" />
+
+                            <input id="IsLastOrder" class="form-control" type="checkbox" checked name="IsOne" />
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8 no-padding-right">
+                                <input type="submit" class="btn btn-success col-xs-12" value="گزارش از کسانی فقط یکبار از ما خرید کرده ا ند">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            
+            <hr />
+            <div class="row">
+                <h5>@Resource.Lang.Customer</h5>
+                <form method="get" id="order-form" action="~/report/AccountReport">
+                    <div class="form-horizontal">
+                        <div class="col-sm-3">
+
+                            <div class="form-group">
+                                <label for="date" class="control-label col-md-4">@Resource.Lang.FromDate</label>
+                                <div class="col-md-8 row">
+                                    <input id="from" class="form-control" autocomplete="off" codeprocess="date" @*codeprocess="date"*@ name="from" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+
+                            <div class="form-group">
+                                <label for="date" class="control-label col-md-4">@Resource.Lang.ToDate</label>
+                                <div class="col-md-8 row">
+                                    <input id="to" class="form-control" autocomplete="off" codeprocess="date" name="to" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8 no-padding-right">
+                                <input type="submit" class="btn btn-success col-xs-12" value=@Resource.Lang.Search>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+@section Script {
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/highcharts.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/data.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/drilldown.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/exporting.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/export-data.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/accessibility.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/chart-model.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+    <script type="text/javascript">
+
+        initializeOrderListScript();
+
+
+    </script>
+}
+

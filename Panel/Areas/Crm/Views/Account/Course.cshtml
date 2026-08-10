@@ -1,0 +1,40 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Base;
+
+@model IEnumerable<DataLayer.Entities.Product>
+
+@{
+    ViewBag.Title = "دوره ها";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+<div class="col-sm-12">
+    <div class="card-box">
+        <div class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                <i class="zmdi zmdi-more-vert"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink(Resource.Lang.Back, "Index")</li>
+            </ul>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-3">
+                    <a href="@item.GetLinkWithUrl()">
+                        <strong class="btn btn-primary">@item.Name</strong>
+                    </a>
+                  
+
+
+                </div>
+            }
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+

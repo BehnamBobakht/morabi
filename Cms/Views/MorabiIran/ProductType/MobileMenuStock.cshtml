@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DataLayer.Entities.ProductType>
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+@{ViewAccount currentUser = BaseWebsite.CurrentAccount;}
+
+@foreach (var pType in Model.Where(s => s.Active && s.Deleted != true))
+{
+    if (pType.ID == 1)
+    {
+        var product = pType.Product.FirstOrDefault();
+
+
+        if (product != null)
+        {
+            <li>
+                @if (currentUser == null)
+                {
+                    <a href="@Url.Action("Login","Account",new {back=product.GetLinkWithUrl() })">@pType.GetName()</a>
+                }
+                else
+                {
+
+                    <a href="@product.GetLinkWithUrl()">@pType.GetName()</a>
+
+                }
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@pType.GetUrlNew()"> @pType.GetName()</a>
+            </li>
+        }
+    }
+    else
+    {
+        <li>
+            <a href="@pType.GetUrlNew()"> @pType.GetName() </a>
+        </li>
+    }
+
+}
+

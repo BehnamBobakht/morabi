@@ -1,0 +1,27 @@
+﻿@model DataLayer.ViewModels.ProductSearchVm
+
+
+<div class="filtering_item box one-filterBox">
+    <div class="filtering-item-price">
+        <div>
+            <strong class="filtering_title">@Resource.Lang.PriceRange</strong>
+
+            <input type="text" class="js-range-slider range-slider" max-price="@Model.MaxPrice" name="my_range" value="" />
+
+
+            <div class="range-price-box align justify-content-between">
+                <input name="pricefrom" type="text" class="form-control" placeholder="@Resource.Lang.From" value="@Model.PriceFrom">
+
+                <input name="priceto" type="text" class="form-control" placeholder="@Resource.Lang.To" value="@Model.PriceTo">
+
+
+
+            </div>
+
+        </div>
+        <button type="submit" class="btn secondary-btn">@Resource.Lang.Submit</button>
+
+    </div>
+
+</div>
+

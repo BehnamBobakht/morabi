@@ -1,0 +1,23 @@
+﻿@model IEnumerable<DataLayer.Entities.ProductComment>
+@using DataLayer.Base
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="infoItem">
+       
+                <img alt="@item.Product.GetName()" title="@item.Product.GetName()" src="@item.Product.Picture.GetUrl()"/>
+
+        <div class="d-flex flex-column">
+            <a href="@item.Product.GetLinkWithUrl()">
+                <span>@item.Product.GetName()</span>
+                </a>
+</div>
+        <div class="mr-auto " >
+            <input type="button" onclick="ShowAnswerComment(@item.ID)" class="mr-auto  btn btn-link  " value="@Resource.Lang.Details" />
+            <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+        </div>
+
+        </div>
+    }
+}

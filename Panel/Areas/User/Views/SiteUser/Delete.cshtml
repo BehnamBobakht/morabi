@@ -1,0 +1,86 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.SiteUser
+@{
+    ViewBag.Title = Resource.Lang.RemoveInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="col-sm-12">
+    <div class="card-box">
+        <div class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                <i class="zmdi zmdi-more-vert"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink(Resource.Lang.Back    , "Index")</li>
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            @if (ViewBag.Alert != null)
+            {
+                <p class="alert alert-danger">@ViewBag.Alert</p>
+
+            }
+            <div class="col-md-6 no-padding">
+                <div class="form-horizontal">
+                    <h3>@Resource.Lang.SureDelete</h3>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Resource.Lang.Name_Family
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.FullName)
+                        </dd>
+                        <dt>
+                            @Resource.Lang.Email
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+                        <dt>
+                            @Resource.Lang.Address
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Address)
+                        </dd>
+                        <dt>
+                            @Resource.Lang.Date_TimeCreate
+                        </dt>
+                        <dd>
+                            @Model.CreateDatetime.ToPersian().ToPersian()
+                        </dd>
+                        <dt>
+                            @Resource.Lang.ProprietaryCode
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UniqueIdentifier)
+                        </dd>
+                        <dt>
+                            @Resource.Lang.ActiveDeactive
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Active)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="form-group">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-actions no-color">
+                            <input type="submit" value=@Resource.Lang.Delete class="btn btn-danger" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-1 no-padding">
+                @if (Model.PictureId != null)
+                {
+                    <img src="@Model.Picture.Url" class="img-responsive form-image" />
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

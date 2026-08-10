@@ -1,0 +1,53 @@
+﻿@using DataLayer.Base;
+@model List<DataLayer.ViewModels.ViewSurveyQuestionItem>
+@{
+    ViewBag.Title =Resource.Lang.Items;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    string  questionId = BaseRouteView.GetStringValue(Request, "questionId");
+    //int surveyid = Model[0].SurveyQuestion.Survey.Id;
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create", new {questionId = questionId})" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.Code</th>
+                        <th>@Resource.Lang.Questions</th>
+                        <th>@Resource.Lang.Items</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.RowId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Id) </td>
+                            <td>@Html.DisplayFor(modelItem => item.SurveyQuestion.Question)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>
+
+                                @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.Id }) |
+                                @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a href="@Url.Action("index","SurveyQuestion")" class="icon circle-icon glyphicon 	glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+
+        </div>
+    </div>
+    <!-- end col -->
+</div>

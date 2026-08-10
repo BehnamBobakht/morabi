@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://paymentService.merchant.webservice.epayment.modern.tosan.com/" targetNamespace="http://paymentService.merchant.webservice.epayment.modern.tosan.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="WsClientAddressException" nillable="true" type="tns:WsClientAddressException" />
+  <xs:element name="WsInvalidSessionException" nillable="true" type="tns:WsInvalidSessionException" />
+  <xs:complexType name="wsContext">
+    <xs:sequence>
+      <xs:element name="data">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry" nillable="true">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="xs:string" />
+                  <xs:element minOccurs="0" name="value" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="verifyRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="refNumList" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="verifyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="verifyResponseResults" nillable="true" type="tns:verifyResponseResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="verifyResponseResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="refNum" type="xs:string" />
+      <xs:element minOccurs="0" name="verificationError" type="tns:verificationError" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WsClientAddressException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="suppressed" nillable="true" type="tns:throwable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="throwable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="stackTrace" nillable="true" type="tns:stackTraceElement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="stackTraceElement">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="WsInvalidSessionException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="suppressed" nillable="true" type="tns:throwable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="verificationError">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CLIENT_ADDRESS_ERROR" />
+      <xs:enumeration value="TRANSACTION_NOT_FOUND_ERROR" />
+      <xs:enumeration value="TRANSACTION_IS_NOT_VERIFIABLE" />
+      <xs:enumeration value="VALIDATION_EXCEPTION" />
+      <xs:enumeration value="INVALID_SESSION_EXCEPTION" />
+      <xs:enumeration value="SYSTEM_ERROR" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

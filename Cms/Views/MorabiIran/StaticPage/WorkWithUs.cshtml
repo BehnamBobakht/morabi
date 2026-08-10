@@ -1,0 +1,73 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    TempData["Title"] = Resource.Lang.WorkWithUs;
+    string url = Url.Action("index", "staticpage", new { id = "WorkWithUs" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.WorkWithUs, Url = url });
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/StaticPage.cshtml")
+}
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+<section class="complaint page-padding">
+
+    <div class="container">
+        <div class="complaint_content">
+
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="complaint-content">
+                        @Html.Action("Search", "Banner", new { bacategory = "WorkWithUsBanner", baSize = 1, baviewName = "_ImageBanner" })
+
+                        <div class="complaint_form contactus-form">
+                            @Html.Action("Search", "Banner", new { bacategory = "WorkWithUsBanner", baSize = 1, baviewName = "_WorkWithUsBanner" })
+                            <input type="text" class="form-control contactus-field" name="@Resource.Lang.TypeWork" placeholder="@Resource.Lang.TypeWork">
+
+                            <input type="text" class="form-control" data-bind="value:viewModel.ContactUs.Name" required placeholder="@Resource.Lang.FullName *">
+                            <input type="text" data-bind="value:viewModel.ContactUs.Phone" required class="form-control" placeholder="@Resource.Lang.MobileNumber *">
+                            <input type="text" class="form-control" data-bind="value:viewModel.ContactUs.Email" placeholder="@Resource.Lang.Email">
+                           
+                            <textarea data-bind="value:viewModel.ContactUs.Body" required class="form-control" name="contactUs" placeholder="* @Resource.Lang.Description" cols="30" rows="6"></textarea>
+
+                            <button codeprocess-action="contactUs-add" class="btn primary_btn me-auto float-left ">@Resource.Lang.SubmitRequest</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="siteOption">
+    <div class="container">
+        <div class="optionContainer">
+            @Html.Action("Search", "Banner", new { bacategory = "WorkWithUsBannerOption", baSize = 10, baviewName = "_WorkWithUsBannerOption" })
+
+            
+
+        </div>
+    </div>
+</section>
+
+
+
+@section endScripts{
+    <script>
+    $(function() {
+    viewModel.ContactUs.Title("@Resource.Lang.WorkWithUs");
+    })
+    </script>
+
+}
+
+
+
+
+

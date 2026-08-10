@@ -1,0 +1,47 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model ProductCreateVm
+
+<div class="row">
+    <div class="col-sm-12">
+        <fieldset>
+            <legend>@Resource.Lang.Image</legend>
+            @if (Model.PictureId > 0)
+            {
+                <input data-default-file="@Model.PictureUrl" id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="220" target-id="PictureId" target-url="PictureUrl" />
+
+
+            }
+            else if (Model.Image != null && Model.Image != "")
+            {
+                <input data-default-file="@("https://morabiiran.ir/"+Model.Image)" id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="220" target-id="PictureId" target-url="PictureUrl" />
+
+            }
+            else
+            {
+                <input  id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="220" target-id="PictureId" target-url="PictureUrl" />
+
+            }
+            <div class="devider-10"></div>
+            <div class="devider-10"></div>
+            <div class="related-picture-container">
+                <div class="row other-pictures-box">
+                    @foreach (var pic in Model.ProductPictures)
+                    {
+                        <text>@Html.Partial("_OtherPicture", pic)</text>
+                    }
+                    <div class="col-pic-20 add-item">
+                        <label class="other-picture-item" for="uplOtherPicture">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="display-none">
+                    <input id="uplOtherPicture" type="file" />
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+

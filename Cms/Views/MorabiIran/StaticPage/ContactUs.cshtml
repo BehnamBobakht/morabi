@@ -1,0 +1,129 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    TempData["Title"] = Resource.Lang.ContactUs;
+    string url = Url.Action("index", "staticpage", new { id = "contactus" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.ContactUs, Url = url });
+    ViewBag.PageName = "contactUs";
+
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/StaticPage.cshtml")
+}
+@section Head{
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link href="/Assets/Plugins/Map/style.css" rel="stylesheet" />
+    <link href="/Assets/Plugins/Map/MarkerCluster.css" rel="stylesheet" />
+    <link href="/Assets/Plugins/Map/MarkerCluster.Default.css" rel="stylesheet" />
+}
+@section endScripts{
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src="/Assets/Plugins/Map/search.js"></script>
+    <script src="/Assets/Plugins/Map/show.js"></script>
+    <script src="/Assets/Plugins/Map/leaflet.markercluster-src.js"></script>
+}
+
+
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="contact page-padding">
+        <div class="container">
+            <div class="contact-inner">
+                <div class="row">
+                    <div class="col-lg-4 p-0 ps-lg-3">
+                        <div class="contact-details">
+                            <div class="section-title position-relative align">
+                                <h1>@Resource.Lang.ContactUs]</h1>
+                            </div>
+                            <div class="contact-details-text">
+                                <p>@Html.Raw(BaseContent.WebsiteDetail.ContactUs)</p>
+                            </div>
+                            <div class="contact-phonebox">
+                                <div class="contact-title align">
+                                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="25" cy="25" r="24.5" fill="white" stroke="black" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M25 37C18.3726 37 13 31.6274 13 25C13 18.3726 18.3726 13 25 13C31.6274 13 37 18.3726 37 25C37 31.6274 31.6274 37 25 37ZM27.4 34.2999C29.2593 33.8182 30.9314 32.7899 32.2 31.3479V23.7999C30.8745 23.7999 29.8 22.7254 29.8 21.3999V16.6839C28.6925 16.0469 27.4683 15.6388 26.2 15.4839V16.5999C26.2 17.9254 25.1255 18.9999 23.8 18.9999V20.1999C23.8 21.5254 22.7255 22.5999 21.4 22.5999V24.9999H25C26.3255 24.9999 27.4 26.0744 27.4 27.3999V34.2999ZM22.5999 31.0001V34.3001C17.4663 32.9711 14.3788 27.7357 15.6999 22.6001H17.7999V25.6001C17.7999 26.5942 18.6058 27.4001 19.5999 27.4001H20.1999V28.6001C20.1999 29.9256 21.2745 31.0001 22.5999 31.0001Z" fill="black" />
+                                    </svg>
+                                    <span>شماره های تماس</span>
+                                </div>
+                                <div class="contact-phone">
+                                    <div class="contact-phone-line central">
+                                        <a href="tel:@BaseContent.WebsiteDetail.Phone">@BaseContent.WebsiteDetail.Phone</a>
+                                        <a href="tel:@BaseContent.WebsiteDetail.Phone2">@BaseContent.WebsiteDetail.Phone2</a>
+                                    </div>
+                                    <div class="contact-phone-line central">
+                                        <a href="tel:@BaseContent.WebsiteDetail.Mobile">@BaseContent.WebsiteDetail.Mobile</a>
+                                        <a href="tel:@BaseContent.WebsiteDetail.Mobile2">@BaseContent.WebsiteDetail.Mobile2</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="contact-addressbox">
+                                <div class="contact-title align">
+                                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="25" cy="25" r="24.5" fill="white" stroke="black" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M25 37C18.3726 37 13 31.6274 13 25C13 18.3726 18.3726 13 25 13C31.6274 13 37 18.3726 37 25C37 31.6274 31.6274 37 25 37ZM27.4 34.2999C29.2593 33.8182 30.9314 32.7899 32.2 31.3479V23.7999C30.8745 23.7999 29.8 22.7254 29.8 21.3999V16.6839C28.6925 16.0469 27.4683 15.6388 26.2 15.4839V16.5999C26.2 17.9254 25.1255 18.9999 23.8 18.9999V20.1999C23.8 21.5254 22.7255 22.5999 21.4 22.5999V24.9999H25C26.3255 24.9999 27.4 26.0744 27.4 27.3999V34.2999ZM22.5999 31.0001V34.3001C17.4663 32.9711 14.3788 27.7357 15.6999 22.6001H17.7999V25.6001C17.7999 26.5942 18.6058 27.4001 19.5999 27.4001H20.1999V28.6001C20.1999 29.9256 21.2745 31.0001 22.5999 31.0001Z" fill="black" />
+                                    </svg>
+                                    <span>@Resource.Lang.Address</span>
+                                </div>
+                                <div class="contact-address">
+                                    <p>@BaseContent.WebsiteDetail.Address</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 p-0">
+                        <div class="contact-form ms-lg-3 ps-lg-3 h-100">
+                            <div class="form_page_content mt-3 contactus-form">
+                                <div class="form_box d-flex flex-column">
+                                    <input class="form-control mb-2" type="text"
+                                           data-bind="value:viewModel.ContactUs.Name" required name="@Resource.Lang.FullName" placeholder="* @Resource.Lang.EnterFullName">
+                                    <input class="form-control mb-2" type="text"
+                                           data-bind="value:viewModel.ContactUs.Phone" required name="@Resource.Lang.PhoneNumber" placeholder="* @Resource.Lang.EnterMobileNo">
+                                    <input class="form-control mb-2" type="text" data-bind="value:viewModel.ContactUs.Email" name="@Resource.Lang.Email" placeholder=" @Resource.Lang.EnterEmail">
+                                    <textarea data-bind="value:viewModel.ContactUs.Body" required class="form-control" name="contactUs" placeholder="* @Resource.Lang.Description" cols="30" rows="6"></textarea>
+                                    <div class="loginFooter">
+                                        <button class="btn" codeprocess-action="contactUs-add">
+                                            <span>@Resource.Lang.Submit</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 p-0">
+                        <div class="contact-map">
+                            <div class="contact-title align">
+                                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="25" cy="25" r="24.5" fill="white" stroke="black" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M25 37C18.3726 37 13 31.6274 13 25C13 18.3726 18.3726 13 25 13C31.6274 13 37 18.3726 37 25C37 31.6274 31.6274 37 25 37ZM27.4 34.2999C29.2593 33.8182 30.9314 32.7899 32.2 31.3479V23.7999C30.8745 23.7999 29.8 22.7254 29.8 21.3999V16.6839C28.6925 16.0469 27.4683 15.6388 26.2 15.4839V16.5999C26.2 17.9254 25.1255 18.9999 23.8 18.9999V20.1999C23.8 21.5254 22.7255 22.5999 21.4 22.5999V24.9999H25C26.3255 24.9999 27.4 26.0744 27.4 27.3999V34.2999ZM22.5999 31.0001V34.3001C17.4663 32.9711 14.3788 27.7357 15.6999 22.6001H17.7999V25.6001C17.7999 26.5942 18.6058 27.4001 19.5999 27.4001H20.1999V28.6001C20.1999 29.9256 21.2745 31.0001 22.5999 31.0001Z" fill="black" />
+                                </svg>
+                                <span>موقعیت بر روی نقشه</span>
+                            </div>
+                            <input type="hidden" name="Latitude" value=" @Html.Raw(BaseContent.WebsiteDetail.Latitude)" />
+                            <input type="hidden" name="Longitude" value=" @Html.Raw(BaseContent.WebsiteDetail.Longitude)" />
+                            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/LocationShow.cshtml")
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+
+
+
+
+
+
+

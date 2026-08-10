@@ -1,0 +1,18 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model ReviewVm
+
+<div class="col-md-12 box-item review-item">
+    <div class="col-md-6">
+        <textarea  name-pattern="Reviews[index].Contect" name="" class="has-pattern form-control" rows="8">@Model.Contect</textarea>
+    </div>
+    <div class="col-md-6">
+        <input class="has-pattern" type="hidden" name-pattern="Reviews[index].PictureId"  value="@Model.PictureId" />
+        <input class="has-pattern" type="hidden" name-pattern="Reviews[index].PictureUrl" name="" value="@Model.PictureUrl" />
+        <img class="has-pattern " height="150" width="150" name-pattern="Reviews[index].Img" name="" src="@Model.PictureUrl" />
+        <input class="has-pattern simple-upload-pic" type="file"  target-src-name-pattern="Reviews[index].PictureUrl" target-show-name-pattern="Reviews[index].Img" target-name-pattern="Reviews[index].PictureId" />
+    <a class="delete-review-item btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+    </div>
+</div>
+
+

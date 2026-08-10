@@ -1,0 +1,111 @@
+﻿@model IEnumerable<DataLayer.Entities.ProductType>
+@using DataLayer.Base;
+
+<li class="nav-item">
+    <div class="category_item dropdown">
+        <a class="category_link">
+            @Resource.Lang.Products
+            <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.99991 7.71222L13.0103 1.70181L11.5961 0.287598L6.99991 4.88379L2.40372 0.287598L0.989502 1.70181L6.99991 7.71222Z" fill="black" />
+            </svg>
+        </a>
+        <div class="dropdown-box">
+            <div class="dropdown-inner">
+                <ul>
+                    @foreach (var pType in Model.Where(s => s.Active && s.Deleted != true))
+                    {
+                        <li>
+                            <a href="@pType.GetUrlNew()" class="dropdown-item align justify-content-between">
+                                <span>@pType.GetName()</span>
+                                @{
+                                    var ListCat = pType.ProductCategory.Where(s => s.Active && s.Deleted != true);
+                                }
+                                @if (ListCat.Any())
+                                {
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <mask id="mask0_190_383" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="18">
+                                            <rect width="18" height="18" fill="white" />
+                                        </mask>
+                                        <g mask="url(#mask0_190_383)">
+                                            <path d="M11.6517 2.63599L5.28772 8.99995L11.6517 15.3639L12.7123 14.3032L7.40904 8.99995L12.7123 3.69665L11.6517 2.63599Z" fill="#451A2D" />
+                                        </g>
+                                    </svg>
+                                }
+
+                            </a>
+                            @if (ListCat.Any())
+                            {
+                                <div class="dropdown-box1">
+                                    <div class="dropdown-inner1">
+                                        <ul>
+                                            @foreach (var cat in ListCat)
+                                            {
+                                                <li>
+                                                    <a href="@cat.GetUrlNew()" class="dropdown-item align justify-content-between">
+                                                        <span>@cat.GetName()</span>
+                                                        @{
+                                                            var listSub = cat.ProductSubCategory.Where(s => s.Active && s.Deleted != true);
+
+
+                                                        }
+                                                        @if (listSub.Any())
+                                                        {
+                                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <mask id="mask0_190_383" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="18">
+                                                                    <rect width="18" height="18" fill="white" />
+                                                                </mask>
+                                                                <g mask="url(#mask0_190_383)">
+                                                                    <path d="M11.6517 2.63599L5.28772 8.99995L11.6517 15.3639L12.7123 14.3032L7.40904 8.99995L12.7123 3.69665L11.6517 2.63599Z" fill="#451A2D" />
+                                                                </g>
+                                                            </svg>
+                                                        }
+
+                                                    </a>
+                                                    @if (listSub.Any())
+                                                    {
+                                                        <div class="dropdown-box1 line3">
+                                                            <div class="dropdown-inner1">
+                                                                <ul>
+                                                                    @foreach (var sub in listSub)
+                                                                    {
+                                                                        <li>
+                                                                            <a href="@sub.GetUrl()" class="dropdown-item align justify-content-between">
+                                                                                <span>@sub.GetName()</span>
+                                                                                
+                                                                            </a>
+                                                                        </li>
+                                                                    }
+
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </li>
+                                            }
+
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            
+            
+        </div>
+    </div>
+</li>
+
+
+
+
+
+
+
+
+
+

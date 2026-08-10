@@ -1,0 +1,67 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Base;
+@{ViewAccount currentUser = BaseWebsite.CurrentAccount; }
+
+<div class="userSideBar">
+    <div class="userBox">
+        <div class="userImgBox">
+            <img src="/assets/@BaseWebsite.WebsiteLabel/images/user.png">
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <strong>@BaseWebsite.CurrentAccount.FullName @BaseWebsite.CurrentAccount.LatName</strong>
+            <span class="mt-2">@BaseWebsite.CurrentAccount.Mobile</span>
+            <button class="editeDashboard" data-bs-dismiss="modal" onclick="showEditProfile()()">
+                <img src="/assets/@BaseWebsite.WebsiteLabel/images/profile/edite.png">
+            </button>
+            <a class="back2Dashboard" href="/Account/Dashboard"> <img src="/assets/@BaseWebsite.WebsiteLabel/images/profile/backDashboard.png"></a>
+        </div>
+        <hr>
+        <span class="gmail d-none">کد معرف : <strong>@Html.Raw("10" + @currentUser.Id)</strong> </span>
+
+        <span class="gmail">@BaseWebsite.CurrentAccount.Email</span>
+    </div>
+    <ul class="panelOptions">
+        <li>
+            <a href="/profile" class="optionItem">
+                <img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/clipboard.png" /><span> @Resource.Lang.Profile</span>
+            </a>
+
+        </li>
+        <li>
+            <a href="@Url.Action("SearchAccountOrder", "Account", new { aoViewName = "Order", aoStatus =DataLayer.Enumarables.Enum_Code.ORDER_STATUS_SUCCESS.ToString()})" class="optionItem">
+                <img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/orders.png" /><span> @Resource.Lang.OrdersList</span>
+            </a>
+
+        </li>
+                <li>
+            <a href="@Url.Action("SearchAccountOrder2", "Account", new { aoViewName = "OrderCourse",statusId2="2068-2073",typeId=2})" class="optionItem">
+                <img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/orders.png" /><span>دوره ها</span>
+            </a>
+
+        </li>
+        <li>
+            <a href="@Url.Action("SearchAccountOrder2", "Account", new { aoViewName = "OrderExame",statusId2="2068-2073",typeId=5})" class="optionItem">
+                <img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/orders.png" /><span>آزمون ها</span>
+            </a>
+
+        </li>
+        <li>
+            <a href="/Account/Address" class="optionItem"><img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/home.png" /><span>@Resource.Lang.Addresses</span></a>
+        </li>
+
+
+        <li>
+            <a href="/Account/UserComment" class="optionItem"><img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/comment.png" /><span>@Resource.Lang.Comments</span></a>
+        </li>
+
+
+
+        <li class="d-none">
+            <a href="#" class="optionItem"><img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/email.png" /><span>پیغام ها</span></a>
+        </li>
+
+        <li>
+            <a href="@Url.Action("logout", "account", new { back = "/" })" class="optionItem"><img src="~/Assets/@DataLayer.Base.BaseWebsite.WebsiteLabel/Images/profile/logout.png" /><span>@Resource.Lang.SignOut</span></a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,33 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@model ResultVm<CartVm>
+
+<div class="row mx-0  ">
+    @*<div class="col-lg-6 p-1">
+            @Html.TextArea("Model.Model.GiftMessage", Model.Model.GiftMessage, htmlAttributes: new { @class = "form-control", @placeholder = "توضیحات هدیه" })
+
+        </div>*@
+    <div class="col-lg-4 p-1">
+        @Html.TextArea("Model.Model.GiftMessage", Model.Model.GiftMessage, htmlAttributes: new { @class = "form-control", @placeholder = "کد معرف" })
+    </div>
+    <div class="col-lg-5 p-1">
+        @Html.TextArea("Model.Model.CustomerMessage", Model.Model.CustomerMessage, htmlAttributes: new { @class = "form-control", @placeholder = Resource.Lang.Description })
+    </div>
+
+    @if (Model.Status == ResultStatus.Error)
+    {
+        <p class="alert alert-danger">
+            <span>@Model.Message</span>
+        </p>
+    }
+    else if (Model.Status == ResultStatus.Success && Model.Message != "" && Model.Message != null)
+    {
+
+        <p class="alert alert-success">
+            <span>@Model.Message</span>
+        </p>
+    }
+    <div class="col-md-3 col-3 p-1">
+        <button class="btn green_btn primary_btn w-100 m-0 rebatecode-btn"><span>ثبت توضیحات و کد معرف</span></button>
+    </div>
+</div>

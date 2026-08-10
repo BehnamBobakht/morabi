@@ -1,0 +1,28 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostSearchVm
+
+@if (Model.Posts.Any())
+{
+
+    foreach (var item in Model.Posts)
+    {
+        <div class="col-lg-6 p-0">
+            <div class="about-img align justify-content-end h-100">
+                <img src="@item.Picture.Url" alt="@item.Name">
+            </div>
+        </div>
+        <div class="col-lg-6 p-0">
+            <div class="about-text justify flex-column h-100">
+                <span>@item.Name</span>
+                <p>
+                    @Html.Raw(item.Body)
+                </p>
+            </div>
+        </div>
+       
+        
+    }
+}
+
+

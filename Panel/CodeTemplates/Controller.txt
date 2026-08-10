@@ -1,0 +1,138 @@
+﻿using DataLayer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Panel.Areas.Content.Controllers
+{
+    public class {ENTITY}Controller : Controller
+    {
+        private UnitOfWork _context = new UnitOfWork();
+        
+        public ActionResult Index()
+        {
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY});
+            return View(_context.{ENTITY}.GetAll());
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY}_Details);
+            {ENTITY} {entity} = _context.{ENTITY}.GetById(id);
+            if ({entity} == null)
+            {
+                return HttpNotFound();
+            }
+            return View({entity});
+        }
+
+        public ActionResult Create()
+        {
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY}_New);
+            FillDropDowns(null);
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create({ENTITY} {entity})
+        {
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY}_New);
+
+            if (IsModelValid({entity}))
+            {
+                _context.{ENTITY}.Insert({entity});
+                _context.Save();
+                return RedirectToAction("Index");
+            }
+
+            FillDropDowns({entity});
+            return View({entity});
+        }
+        
+        public ActionResult Edit(int? id)
+        {
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY}_Edit);
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            {ENTITY} {entity} = _context.{ENTITY}.GetById(id);
+            if ({entity} == null)
+                return HttpNotFound();
+            
+            FillDropDowns({entity});
+            ViewBag.Message = BaseMessage.GetMessage();
+            return View({entity});
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit({ENTITY} {entity})
+        {
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY}_Edit);
+            if (IsModelValid({entity}))
+            {
+                _context.{ENTITY}.Update({entity});
+                _context.Save();
+                return RedirectToAction("Index");
+            }
+            FillDropDowns({entity});
+            return View({entity});
+        }
+
+        private bool IsModelValid({ENTITY} {entity})
+        {
+            if ({entity}.Name != null)
+            {
+                return true;
+            }
+            else
+                ViewBag.Message = BaseMessage.GetMessage(Enum_MessageType.ERROR, Enum_Message.REQUIRED_{ENTITY}_NAME);
+            return false;
+        }
+        
+        private void FillDropDowns({ENTITY} {entity})
+        {
+            ViewBag.TypeId = new SelectList(_context.Code.GetAllByCodeGroup(Enum_CodeGroup.CATEGORY_TYPE), "ID", "Name", {entity} != null ? {entity}.TypeId : 0);
+        }
+        
+        public ActionResult Delete(int? id)
+        {
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY}_Delete);
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            {ENTITY} {entity} = _context.{ENTITY}.GetById(id);
+            if ({entity} == null)
+                return HttpNotFound();
+
+            return View({entity});
+        }
+        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.{ENTITY}_Delete);
+            {ENTITY} {entity} = _context.{ENTITY}.GetById(id);
+            _context.{ENTITY}.Delete({entity});
+            _context.Save();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

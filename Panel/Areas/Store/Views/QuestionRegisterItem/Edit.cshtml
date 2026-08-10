@@ -1,0 +1,62 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.QuestionRegisterItem
+@{
+    ViewBag.Title = "سوالات ثبت نام دوره" + " - " + Model.QuestionRegister.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    string backUrl = Url.Action("index", new { id = Model.FieldId });
+}
+
+<div codeprocess-ajax-form="/store/QuestionRegisterItem/edit" codeprocess-back-form="@backUrl">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.FieldId)
+    @Html.HiddenFor(model => model.SyncDatetime)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@backUrl" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FieldId, Resource.Lang.FieldName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="text" disabled="disabled" value="@Model.QuestionRegister.Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Value, Resource.Lang.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btnSubmit" type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <a class="btn btn-inverse" href="@backUrl">@Resource.Lang.Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeQuestionRegisterItem();
+        });
+    </script>
+}

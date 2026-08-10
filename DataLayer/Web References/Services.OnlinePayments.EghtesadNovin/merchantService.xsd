@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ns1="http://webservice.tosan.connector.core.scm.tosantechno.com/" xmlns:tns="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/" xmlns:ns2="http://paymentService.merchant.webservice.epayment.modern.tosan.com/" targetNamespace="http://paymentService.merchant.webservice.epayment.modern.tosantechno.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://pna.shaparak.ir:443/ref-payment2/jax/merchantService?xsd=1" namespace="http://webservice.tosan.connector.core.scm.tosantechno.com/" />
+  <xs:import schemaLocation="https://pna.shaparak.ir:443/ref-payment2/jax/merchantService?xsd=3" namespace="http://paymentService.merchant.webservice.epayment.modern.tosan.com/" />
+  <xs:element name="ChangePasswordParam" type="tns:ChangePasswordParam" />
+  <xs:element name="DeleteCardInfoParam" type="tns:DeleteCardsInfoParam" />
+  <xs:element name="DeleteCardInfoResult" type="tns:DeleteCardsInfoResult" />
+  <xs:element name="EApportionmentAccount" type="tns:EApportionmentAccount" />
+  <xs:element name="EBillInfo" type="tns:EBillInfo" />
+  <xs:element name="EThpPayData" type="tns:EThpPayData" />
+  <xs:element name="GenerateSignedDataToken" type="tns:GenerateSignedDataToken" />
+  <xs:element name="GenerateSignedDataTokenParam" type="tns:GenerateSignedDataTokenParam" />
+  <xs:element name="GenerateSignedDataTokenResponse" type="tns:GenerateSignedDataTokenResponse" />
+  <xs:element name="GenerateSignedDataTokenResult" type="tns:GenerateSignedDataTokenResult" />
+  <xs:element name="GenerateTokenWithNoSign" type="tns:GenerateTokenWithNoSign" />
+  <xs:element name="GenerateTokenWithNoSignResponse" type="tns:GenerateTokenWithNoSignResponse" />
+  <xs:element name="GenerateTransactionDataToSign" type="tns:GenerateTransactionDataToSign" />
+  <xs:element name="GenerateTransactionDataToSignResponse" type="tns:GenerateTransactionDataToSignResponse" />
+  <xs:element name="GenerateTransactionDataToSignResult" type="tns:GenerateTransactionDataToSignResult" />
+  <xs:element name="GetCardInfo" type="tns:GetCardInfo" />
+  <xs:element name="GetCardInfoParam" type="tns:GetCardInfoParam" />
+  <xs:element name="GetCardInfoResponse" type="tns:GetCardInfoResponse" />
+  <xs:element name="InquiryBill" type="tns:InquiryBill" />
+  <xs:element name="InquiryBillParam" type="tns:InquiryBillParam" />
+  <xs:element name="InquiryBillResponse" type="tns:InquiryBillResponse" />
+  <xs:element name="InquiryBillResult" type="tns:InquiryBillResult" />
+  <xs:element name="InquiryMerchantToken" type="tns:InquiryMerchantToken" />
+  <xs:element name="InquiryMerchantTokenParam" type="tns:InquiryMerchantTokenParam" />
+  <xs:element name="InquiryMerchantTokenResponse" type="tns:InquiryMerchantTokenResponse" />
+  <xs:element name="InquiryMerchantTokenResult" type="tns:InquiryMerchantTokenResult" />
+  <xs:element name="InquiryThpService" type="tns:InquiryThpService" />
+  <xs:element name="InquiryThpServiceParam" type="tns:InquiryThpServiceParam" />
+  <xs:element name="InquiryThpServiceResponse" type="tns:InquiryThpServiceResponse" />
+  <xs:element name="InquiryThpServiceResult" type="tns:InquiryThpServiceResult" />
+  <xs:element name="LoginParam" type="tns:LoginParam" />
+  <xs:element name="LoginResult" type="tns:LoginResult" />
+  <xs:element name="LogoutParam" type="tns:LogoutParam" />
+  <xs:element name="LogoutResult" type="tns:LogoutResult" />
+  <xs:element name="MerchantLogin" type="tns:MerchantLogin" />
+  <xs:element name="MerchantLoginResponse" type="tns:MerchantLoginResponse" />
+  <xs:element name="MerchantLogout" type="tns:MerchantLogout" />
+  <xs:element name="MerchantLogoutResponse" type="tns:MerchantLogoutResponse" />
+  <xs:element name="RequestParam" type="tns:RequestParam" />
+  <xs:element name="ReverseMerchantTrans" type="tns:ReverseMerchantTrans" />
+  <xs:element name="ReverseMerchantTransParam" type="tns:ReverseMerchantTransParam" />
+  <xs:element name="ReverseMerchantTransResponse" type="tns:ReverseMerchantTransResponse" />
+  <xs:element name="ReverseMerchantTransResult" type="tns:ReverseMerchantTransResult" />
+  <xs:element name="SaveCardInfoParam" type="tns:SaveCardsInfoParam" />
+  <xs:element name="SaveCardInfoResult" type="tns:SaveCardsInfoResult" />
+  <xs:element name="SimpleReverseMerchantTrans" type="tns:SimpleReverseMerchantTrans" />
+  <xs:element name="SimpleReverseMerchantTransParam" type="tns:SimpleReverseMerchantTransParam" />
+  <xs:element name="SimpleReverseMerchantTransResponse" type="tns:SimpleReverseMerchantTransResponse" />
+  <xs:element name="SimpleReverseMerchantTransResult" type="tns:SimpleReverseMerchantTransResult" />
+  <xs:element name="SimpleVerifyMerchantTrans" type="tns:SimpleVerifyMerchantTrans" />
+  <xs:element name="SimpleVerifyMerchantTransParam" type="tns:SimpleVerifyMerchantTransParam" />
+  <xs:element name="SimpleVerifyMerchantTransResponse" type="tns:SimpleVerifyMerchantTransResponse" />
+  <xs:element name="SimpleVerifyMerchantTransResult" type="tns:SimpleVerifyMerchantTransResult" />
+  <xs:element name="TransDetail" type="tns:TransDetail" />
+  <xs:element name="TransReportParam" type="tns:TransReportParam" />
+  <xs:element name="UpdateMerchantLogoParam" type="tns:UpdateMerchantLogoParam" />
+  <xs:element name="UpdateMerchantLogoResult" type="tns:UpdateMerchantLogoResult" />
+  <xs:element name="VerifyMerchantTrans" type="tns:VerifyMerchantTrans" />
+  <xs:element name="VerifyMerchantTransParam" type="tns:VerifyMerchantTransParam" />
+  <xs:element name="VerifyMerchantTransResponse" type="tns:VerifyMerchantTransResponse" />
+  <xs:element name="VerifyMerchantTransResult" type="tns:VerifyMerchantTransResult" />
+  <xs:element name="WSContext" type="tns:WSContext" />
+  <xs:element name="changePassword" type="tns:changePassword" />
+  <xs:element name="changePasswordResponse" type="tns:changePasswordResponse" />
+  <xs:element name="deleteCardInfo" type="tns:deleteCardInfo" />
+  <xs:element name="deleteCardInfoResponse" type="tns:deleteCardInfoResponse" />
+  <xs:element name="getTransactionReport" type="tns:getTransactionReport" />
+  <xs:element name="getTransactionReportResponse" type="tns:getTransactionReportResponse" />
+  <xs:element name="saveCardInfo" type="tns:saveCardInfo" />
+  <xs:element name="saveCardInfoResponse" type="tns:saveCardInfoResponse" />
+  <xs:element name="test" type="tns:test" />
+  <xs:element name="testResponse" type="tns:testResponse" />
+  <xs:element name="updateMerchantLogo" type="tns:updateMerchantLogo" />
+  <xs:element name="updateMerchantLogoResponse" type="tns:updateMerchantLogoResponse" />
+  <xs:element name="verifySimpleTransaction" type="tns:verifySimpleTransaction" />
+  <xs:element name="verifySimpleTransactionResponse" type="tns:verifySimpleTransactionResponse" />
+  <xs:complexType name="MerchantLogout">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:LogoutParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LogoutParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SessionId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MerchantLogoutResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:LogoutResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LogoutResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryMerchantToken">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:InquiryMerchantTokenParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryMerchantTokenParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="Token" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WSContext">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SessionId" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryMerchantTokenResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:InquiryMerchantTokenResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryMerchantTokenResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseCode" type="xs:string" />
+      <xs:element minOccurs="0" name="ReferenceNum" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Rrn" type="xs:string" />
+      <xs:element minOccurs="0" name="Trace" type="xs:int" />
+      <xs:element minOccurs="0" name="DiscountAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerName" type="xs:string" />
+      <xs:element minOccurs="0" name="CardHolderMessage" type="xs:string" />
+      <xs:element minOccurs="0" name="CardHolderErrorDesc" type="xs:string" />
+      <xs:element minOccurs="0" name="TransDate" type="xs:string" />
+      <xs:element minOccurs="0" name="MaskPan" type="xs:string" />
+      <xs:element minOccurs="0" name="Lang" type="xs:string" />
+      <xs:element minOccurs="0" name="Token" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateSignedDataToken">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:GenerateSignedDataTokenParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateSignedDataTokenParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="Signature" type="xs:string" />
+      <xs:element minOccurs="0" name="UniqueId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateSignedDataTokenResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:GenerateSignedDataTokenResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateSignedDataTokenResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpirationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Token" type="xs:string" />
+      <xs:element minOccurs="0" name="ChannelId" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleReverseMerchantTrans">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:SimpleReverseMerchantTransParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleReverseMerchantTransParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleReverseMerchantTransResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SimpleReverseMerchantTransResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleReverseMerchantTransResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MerchantLogin">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:LoginParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LoginParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserName" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MerchantLoginResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:LoginResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LoginResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="saveCardInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:SaveCardsInfoParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SaveCardsInfoParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="CardHolderId" type="xs:string" />
+      <xs:element minOccurs="0" name="CardPan" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpDate" type="xs:string" />
+      <xs:element minOccurs="0" name="CardHolderName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="saveCardInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SaveCardsInfoResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SaveCardsInfoResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerifyMerchantTrans">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:VerifyMerchantTransParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerifyMerchantTransParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+      <xs:element minOccurs="0" name="Token" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerifyMerchantTransResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:VerifyMerchantTransResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VerifyMerchantTransResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateTokenWithNoSign">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:RequestParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RequestParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="TransType" type="ns1:enTransType" />
+      <xs:element minOccurs="0" name="ReserveNum" type="xs:string" />
+      <xs:element minOccurs="0" name="MerchantId" type="xs:string" />
+      <xs:element minOccurs="0" name="TerminalId" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RedirectUrl" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductId" type="xs:string" />
+      <xs:element minOccurs="0" name="GoodsReferenceID" type="xs:string" />
+      <xs:element minOccurs="0" name="MerchatGoodReferenceID" type="xs:string" />
+      <xs:element minOccurs="0" name="MobileNo" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BillInfoList" type="tns:EBillInfo" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AdditionalInfoList" type="ns1:EKeyValue" />
+      <xs:element minOccurs="0" name="IsGovermentPay" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ApportionmentAccountList" type="tns:EApportionmentAccount" />
+      <xs:element minOccurs="0" name="ThpServiceId" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ThpPayDataList" type="tns:EThpPayData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EBillInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BillId" type="xs:string" />
+      <xs:element minOccurs="0" name="PayId" type="xs:string" />
+      <xs:element minOccurs="0" name="BillAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ServiceDesc" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EApportionmentAccount">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountIBAN" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ApportionmentAccountType" type="tns:enApportionmentAccountType" />
+      <xs:element minOccurs="0" name="SettelmentPayID" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EThpPayData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ItemId" type="xs:int" />
+      <xs:element minOccurs="0" name="ItemValue" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateTokenWithNoSignResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:GenerateSignedDataTokenResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReverseMerchantTrans">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:ReverseMerchantTransParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReverseMerchantTransParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="Token" type="xs:string" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReverseMerchantTransResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:ReverseMerchantTransResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReverseMerchantTransResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteCardInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:DeleteCardsInfoParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeleteCardsInfoParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="CardHolderId" type="xs:string" />
+      <xs:element minOccurs="0" name="CardPan" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteCardInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:DeleteCardsInfoResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeleteCardsInfoResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleVerifyMerchantTrans">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:SimpleVerifyMerchantTransParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleVerifyMerchantTransParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleVerifyMerchantTransResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:SimpleVerifyMerchantTransResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SimpleVerifyMerchantTransResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RefNum" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetCardInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:GetCardInfoParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetCardInfoParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="UserId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetCardInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GetCardInfoResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTransactionReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="transReportParam" type="tns:TransReportParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransReportParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="ChannelId" type="xs:string" />
+      <xs:element minOccurs="0" name="acceptorId" type="xs:string" />
+      <xs:element minOccurs="0" name="terminal" type="xs:string" />
+      <xs:element minOccurs="0" name="imeiSerial" type="xs:string" />
+      <xs:element minOccurs="0" name="mposSerial" type="xs:string" />
+      <xs:element minOccurs="0" name="minAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="maxAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="switchTraceNo" type="xs:int" />
+      <xs:element minOccurs="0" name="referenceId" type="xs:string" />
+      <xs:element minOccurs="0" name="reserveNumber" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeMin" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TimeMax" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="billId" type="xs:string" />
+      <xs:element minOccurs="0" name="payId" type="xs:string" />
+      <xs:element minOccurs="0" name="billAmount" type="xs:decimal" />
+      <xs:element name="offset" type="xs:short" />
+      <xs:element name="length" type="xs:short" />
+      <xs:element minOccurs="0" name="secureMerchantId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getTransactionReportResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:TransReportResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransReportResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="result" type="ns1:enScmTransResult" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="transactionList" type="tns:TransDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TransDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="transType" type="xs:int" />
+      <xs:element minOccurs="0" name="switchTraceNo" type="xs:int" />
+      <xs:element minOccurs="0" name="decideReqType" type="xs:string" />
+      <xs:element minOccurs="0" name="switchRefCode" type="xs:string" />
+      <xs:element minOccurs="0" name="switchAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="switchDiscountAmountt" type="xs:decimal" />
+      <xs:element minOccurs="0" name="decideStatus" type="xs:string" />
+      <xs:element minOccurs="0" name="decideResCode" type="xs:int" />
+      <xs:element minOccurs="0" name="acceptorId" type="xs:string" />
+      <xs:element minOccurs="0" name="terminalId" type="xs:string" />
+      <xs:element minOccurs="0" name="reserveNumber" type="xs:string" />
+      <xs:element minOccurs="0" name="goodsReferenceId" type="xs:string" />
+      <xs:element minOccurs="0" name="billId" type="xs:string" />
+      <xs:element minOccurs="0" name="payId" type="xs:string" />
+      <xs:element minOccurs="0" name="billAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="billInquiryResponseCode" type="xs:int" />
+      <xs:element minOccurs="0" name="billInquiryErrorCode" type="xs:int" />
+      <xs:element minOccurs="0" name="billTypeDesc" type="xs:string" />
+      <xs:element minOccurs="0" name="merchantGoodsReferenceId" type="xs:string" />
+      <xs:element minOccurs="0" name="maskPan" type="xs:string" />
+      <xs:element minOccurs="0" name="transactionDate" type="xs:anySimpleType" />
+      <xs:element minOccurs="0" name="Rrn" type="xs:string" />
+      <xs:element minOccurs="0" name="CardHolderError" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseCode" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateMerchantLogo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:UpdateMerchantLogoParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdateMerchantLogoParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="PaypalId" type="xs:int" />
+      <xs:element minOccurs="0" name="AcceptorExID" type="xs:string" />
+      <xs:element minOccurs="0" name="AcceptorLogo" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="ShowPaypalLogo" type="tns:enShowPaypal" />
+      <xs:element minOccurs="0" name="MerchantName" type="xs:string" />
+      <xs:element minOccurs="0" name="MerchantSite" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateMerchantLogoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:UpdateMerchantLogoResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdateMerchantLogoResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="changePassword">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:ChangePasswordParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ChangePasswordParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ChannelId" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" type="xs:string" />
+      <xs:element minOccurs="0" name="OldPassword" type="xs:string" />
+      <xs:element minOccurs="0" name="NewPassword" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="changePasswordResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryBill">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:InquiryBillParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryBillParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="BillId" type="xs:string" />
+      <xs:element minOccurs="0" name="PayId" type="xs:string" />
+      <xs:element minOccurs="0" name="Lang" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryBillResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:InquiryBillResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryBillResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="BillId" type="xs:string" />
+      <xs:element minOccurs="0" name="PayId" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ServiceDesc" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceLogo" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorDesc" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseCode" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryThpService">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:InquiryThpServiceParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryThpServiceParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WSContext" type="tns:WSContext" />
+      <xs:element minOccurs="0" name="ThpServiceId" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ThpPayDataList" type="ns1:EThpData" />
+      <xs:element minOccurs="0" name="Lang" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryThpServiceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:InquiryThpServiceResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InquiryThpServiceResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ServiceDesc" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceLogo" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorDesc" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseCode" type="xs:string" />
+      <xs:element minOccurs="0" name="ThpServiceId" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ThpPayDataList" type="ns1:EThpData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateTransactionDataToSign">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="param" type="tns:RequestParam" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateTransactionDataToSignResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:GenerateTransactionDataToSignResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenerateTransactionDataToSignResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:string" />
+      <xs:element minOccurs="0" name="DataToSign" type="xs:string" />
+      <xs:element minOccurs="0" name="UniqueId" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="verifySimpleTransaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="context" type="ns2:wsContext" />
+      <xs:element minOccurs="0" name="verifyRequest" type="ns2:verifyRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="verifySimpleTransactionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:verifyResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="test">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="testResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="enApportionmentAccountType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="enMain" />
+      <xs:enumeration value="enOther" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enShowPaypal">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="enShow" />
+      <xs:enumeration value="enNotShow" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

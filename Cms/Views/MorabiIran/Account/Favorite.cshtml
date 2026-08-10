@@ -1,0 +1,72 @@
+﻿﻿﻿@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels
+@model ViewProductLikeFavorit
+@{
+    TempData["Title"] = Resource.Lang.FavoriteList;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+    string prindex = BaseRouteView.GetStringValue(Request, "prindex");
+    string prpageSize = BaseRouteView.GetStringValue(Request, "prpageSize");
+    int CurrentIndex = prindex.IsInteger() ? prindex.GetInteger() : 1;
+}
+
+<input type="hidden" name="prindex" value="@CurrentIndex" />
+<input type="hidden" name="prpageSize" value="@prpageSize" />
+<div class="profileTitle">
+    <h6>@Resource.Lang.FavoriteList</h6>
+</div>
+
+<div class="lastSeenBox">
+
+    @{
+        foreach (var item in Model.Results)
+        {
+        <div class="lastItem">
+            <a href="@item.Product.GetLinkWithUrl()">
+                <img width="150" src="@item.Product.Picture.GetUrl()" title="Favorit" alt="@item.Product.GetName()" />
+            </a>
+            <div class="lastItemTxt">
+                <span>@Resource.Lang.ProductName:</span> @item.Product.GetName()
+                <div class="d-flex">
+                    @try
+                    {
+                        if (item.Product.MinPrice > 0)
+                        {
+
+                            @Resource.Lang.FromPrice <span>:</span> @item.Product.MinPrice.GetCurrencyFormat() @Resource.Lang.Toman
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                </div>
+
+            </div>
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <button type="button"  class="dropdown-item" codeprocess-action="productlike-remove" codeprocess-callback="reLoadPage" product-id="@item.ProductId">@Resource.Lang.Remove</button>
+
+                </div>
+            </div>
+            
+            <button class="btn" onclick="getSimilarProduct(@item.ProductId,@item.Product.ProductCategory.ID,@item.Product.MinPrice,'@item.Product.GetName()','@item.Product.Picture.GetUrl()')">@Resource.Lang.SimilarProducts</button>
+
+            @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/SimilarProduct.cshtml")
+
+
+            @if (item.Product.Code.Label == Enum_Code.PRODUCT_STATUS_NOT_AVAILABLE.ToString())
+            {
+                <div class="finish_span"><span>@Resource.Lang.NoAvailable</span></div>
+            }
+        </div>
+        }
+    }
+
+
+
+</div>
+@Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/FavoritPagination.cshtml")

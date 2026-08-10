@@ -1,0 +1,134 @@
+﻿@using DataLayer.Base;
+@model IEnumerable<DataLayer.ViewModels.DeliveryVm>
+@{
+    ViewBag.Title = Resource.Lang.Shipping;
+    Layout = Resources.Default.STORE_LAYOUT;
+
+    string index = BaseRouteView.GetStringValue(Request, "index");
+    string pageSize = BaseRouteView.GetStringValue(Request, "pageSize");
+
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active">@Resource.Lang.Discount</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <a class="btn btn-success btn-icon float-right" href="@Url.Action("Create")"><i class="zmdi zmdi-plus"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card project_list">
+
+                <div class="table-responsive">
+                    <table class="table table-hover c_table theme-color">
+                        <thead>
+                            <tr>
+                                <th>@Resource.Lang.Type</th>
+                                <th>@Resource.Lang.Price</th>
+                                <th>@Resource.Lang.PriceForFree</th>
+                                <th>@Resource.Lang.DeliveryMaxDays</th>
+                                <th>@Resource.Lang.City</th>
+                                <th>@Resource.Lang.State</th>
+                                <th>@Resource.Lang.Status</th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.DeliveryType.Name)</td>
+                                    <td>@item.BasePrice.ToString("n0")</td>
+                                    <td>@((item.MinPriceForFree==null || item.MinPriceForFree< 0)?Resource.Lang.Undefined: item.MinPriceForFree.Value.ToString("n0"))</td>
+                                    <td>@((item.MaxDays==0)?Resource.Lang.Immediate : item.MaxDays.ToString())</td>
+                                    <td>@Html.DisplayFor(modelItem => item.City.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.State.Name)</td>
+                                    <td>
+                                        @if (item.Active == true)
+                                        {
+                                            <span>@Resource.Lang.Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@Resource.Lang.Deactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.ID }) |
+                                        @Html.ActionLink(item.Active ? Resource.Lang.Deactive : Resource.Lang.Active, "active", new { id = item.ID })
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <ul class="pagination pagination-primary mt-4">
+                    @if (StartIndex > 1)
+                    {
+                        <li class="page-item ">
+                            <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        index = 1,
+
+                                    })">1</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item ">
+                            <a class="page-link" href="#"><i class="zmdi zmdi-arrow-left"></i></a>
+                        </li>
+                    }
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="page-item @active">
+                            <a class="page-link" href="@Url.Action("index", new {
+                                        pageSize=pageSize,
+                                        index = i,
+
+                                    })">@(i.ToPersian())</a>
+                        </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("index", new
+                                    {
+                                        pageSize=pageSize,
+                                        index = EndIndex,
+
+                                    })">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="#"><i class="zmdi zmdi-arrow-right"></i></a>
+                                </li>
+                            }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

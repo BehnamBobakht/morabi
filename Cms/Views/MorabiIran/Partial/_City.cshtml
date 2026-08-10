@@ -1,0 +1,10 @@
+﻿
+    <div class="form-group">
+        <select class="form-control" onchange="CityDropProfile()"  name="CityId" id="selectedCityProfile">
+
+            <option value="0">@Resource.Lang.Select</option>
+            <!--ko foreach: viewModel.City.CityList() -->
+            <option data-bind="value:Id , text:Name"></option>
+            <!--/ko-->
+        </select>
+    </div>

@@ -1,0 +1,60 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model IEnumerable<ShopResellerProduct>
+
+@{
+    List<ShopResellerProduct> list = Model.ToList();
+}
+
+<div class="col-lg-6">
+    <div class="card-box">
+        <h4 class="header-title m-t-0 m-b-30">@Resource.Lang.ProductsRequestedByResellers   (@list.Count)</h4>
+        <div class="inbox-widget nicescroll" style="height: 305px;">
+            @for (int i = 0; i < list.Count; i++)
+            {
+                ShopResellerProduct product = list[i];
+                <div>
+                    <div class="inbox-item row no-margin-left-right">
+                        <div class="col-sm-6">
+                            <a href="@Url.Action("details", new { @controller = "product", @area="store", @id = product.ProductId })">
+                                <span class="inbox-item-number">
+                                    @((i + 1).ToPersian())
+                                </span>
+                                <span class="inbox-item-img">
+                                    @if (product.Product.PictureId != null)
+                                    {
+                                        <img src="@product.Product.Picture.GetUrl()" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="/assets/images/no-image.png" alt="">
+                                    }
+                                </span>
+                                <p class="inbox-item-author">@product.Product.Name</p>
+                                <p class="inbox-item-text">
+                                    @if (product.Product.ProductTypeId != null)
+                                    {
+                                        <span>@product.Product.ProductType.Name</span>
+                                    }
+                                    @if (product.Product.ProductCategoryId != null)
+                                    {
+                                        <span> - </span>
+                                        @product.Product.ProductCategory.Name
+                                    }
+                                </p>
+                            </a>                            
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="@Url.Action("details", "shopreseller", new { area = "store", id = product.ResellerId })">@product.ShopReseller.Name</a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a class="btn btn-success" href="@Url.Action("approveproduct", "shopreseller", new { area = "store", resellerProductId = product.ID })">@Resource.Lang.Confirmation</a>
+                            <a class="btn btn-danger" href="@Url.Action("rejectproduct", "shopreseller", new { area = "store", resellerProductId = product.ID })">@Resource.Lang.Reject</a>
+                        </div>
+                    </div>
+                </div>                
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,51 @@
+﻿@model DataLayer.Entities.StoreProduct
+
+@{
+    Layout = Resources.Default.STORE_LAYOUT;
+}
+
+
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i>@Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item">@Resource.Lang.Products</li>
+                <li class="breadcrumb-item active">@Resource.Lang.Remove</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <a class="btn btn-primary btn-icon float-right right_icon_toggle_btn" href="/store/products"><i class="zmdi zmdi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card project_list">
+                <h4>@Resource.Lang.AreYouSure</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Resource.Lang.Product
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Product.Name)
+                    </dd>
+                </dl>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="@Resource.Lang.Remove" class="btn btn-default" /> 
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

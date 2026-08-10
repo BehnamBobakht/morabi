@@ -1,0 +1,111 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model DataLayer.Entities.Account
+
+@{ TempData["Title"] = Resource.Lang.SignUp;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    if (ViewBag.back == null)
+    {
+        ViewBag.back = "/";
+    }
+    if (ViewBag.Message == null)
+    {
+        ViewBag.Message = new ViewMessage();
+    }
+    var message = (ViewMessage)ViewBag.Message;
+    var breadcrumb = new List<BreadcrumbVm>();
+    TempData["noIndex"] = true;
+    TempData["noFollow"] = true;
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.SignUp, Url = "" });
+}
+@section Head{
+
+    <link href="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.css" rel="stylesheet" />
+}
+@section endScripts{
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.min.js"></script>
+    <script src="~/Areas/Store/assets/plugins/bootstrap-jalali-datepicker-master/bootstrap-datepicker.fa.min.js"></script>
+    <script>
+        $(".datepicker").datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'yy/mm/dd',
+            changeMonth: true,
+            changeYear: true,
+        });
+    </script>
+}
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+<section class="form_page loginRegister page-padding" id="login_register">
+    <div class="container">
+        <div class="row section-padding">
+            <div class="col-lg-8">
+                <div class="loginRegister-textbox central h-100">
+                    @Html.Action("Search", "Banner", new { bacategory = "RegisterBanner1", baviewName = "_LoginText", baSize = 1 })
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 p-0 login_col">
+                <div class="loginBox">
+                    <div class="section-title central flex-column">
+                        <h1>@Resource.Lang.SignUp</h1>
+                    </div>
+                    <div class="login-register-text">
+                        @Html.Action("Search", "Banner", new { bacategory = "RegisterBanner2", baviewName = "_LoginText", baSize = 1 })
+                    </div>
+                    <div class="form_page_content mt-3">
+                        <div class="form_box">
+                            @using (Html.BeginForm())
+                            {
+                                if (!string.IsNullOrEmpty(message.Body))
+                                {
+                                    <p class="alert alert-danger">@message.Body</p>
+                                }
+                                <input type="hidden" name="back" value="@ViewBag.back" />
+
+                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "نام" } })
+                                @Html.EditorFor(model => model.LatName, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "نام خانوادگی" } })
+
+                                @Html.EditorFor(model => model.FullNameEn, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "نام به صورت انگلیسی " } })
+                                @Html.EditorFor(model => model.LatNameEn, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = " نام خانوادگی به صورت انگلیسی " } })
+
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = @Resource.Lang.EnterMobileNo } })
+
+                                @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = "لطفا کدملی خود را وارد نمایید" } })
+                                @Html.Action("GetAll", "State", new { civiewName = "Search" })
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control mb-2", @placeholder = @Resource.Lang.EnterPassword, @type = "password" } })
+
+
+                                <input type="password" name="ConfirmPassword" class="form-control mb-2" placeholder="@Resource.Lang.RePassword" />
+
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" value="" id="brand1" name="remember">
+                                    <label class="form-check-label" for="brand1">
+                                        @Resource.Lang.RememberMe
+                                    </label>
+                                </div>
+
+                                <div class="loginFooter">
+                                    <button class="btn" type="submit" id="btnRegister">
+                                        @Resource.Lang.SignUp
+                                    </button>
+                                    <a href="@Url.Action("Login","Account",new {back= ViewBag.back})" class="btn ">@Resource.Lang.SignIn</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+

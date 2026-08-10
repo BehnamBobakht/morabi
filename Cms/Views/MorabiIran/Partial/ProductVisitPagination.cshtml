@@ -1,0 +1,54 @@
+﻿@using DataLayer.Base;
+@model DataLayer.ViewModels.ViewProductVisit
+@{
+    string prindex = BaseRouteView.GetStringValue(Request, "prindex");
+
+    string prpageSize = BaseRouteView.GetStringValue(Request, "prpageSize");
+
+    int StartIndex = Model.PageIndex > 4 ? Model.PageIndex - 4 : 1;
+    int EndIndex = (Model.TotalCount / Model.PageSize);
+    int Mod = (Model.TotalCount % Model.PageSize);
+    int CurrentIndex = prindex.IsInteger() ? prindex.GetInteger() : 1;
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+
+@if (EndIndex > 1)
+{
+
+    <div class="pagination mt-auto">
+        @if (Model.PageIndex > 1)
+        {
+            <a class="btn pagination_btn page_next" title="@Resource.Lang.FirstPage" href="
+            @Url.Action("History", "account",new {
+           @prindex = 1,
+           @prpagesize = prpageSize,
+
+       })">
+
+            </a>
+        }
+        @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+        {
+            var index = Model.PageIndex;
+            var active = index == i ? "active" : "";
+            <a class='btn pagination_btn page_number @active' href="
+            @Url.Action("History", "account", new {
+                 @prindex = i,
+           @prpagesize = prpageSize,
+        })">@i</a>
+    }
+        @*<a class='more no-display'>...</a>*@
+        @if (Model.PageIndex < EndIndex)
+        {
+            <a class='btn pagination_btn page_prev' title="@Resource.Lang.LastPage" href="
+                @Url.Action("History", "account", new {
+                    @prindex = EndIndex,
+           @prpagesize = prpageSize,
+                })">
+
+            </a>
+        }
+    </div>
+
+
+}

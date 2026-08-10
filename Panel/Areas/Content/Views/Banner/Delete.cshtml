@@ -1,0 +1,69 @@
+﻿@model DataLayer.Entities.Banner
+@{
+    ViewBag.Title =Resource.Lang.RemoveInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            @if (ViewBag.Alert != null)
+            {
+                <p class="alert alert-danger">@ViewBag.Alert</p>
+
+            }
+            <div class="form-horizontal">
+                <h3>@Resource.Lang.SureDelete</h3>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Resource.Lang.Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.SummerytText
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Summary)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Category
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Category.Name)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.InetrnetAddress
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Url)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.CountClick
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ClickCount)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Image
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Picture.Url)
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <input type="submit" value=@Resource.Lang.Delete class="btn btn-danger" />
+                        <span class="btn btn-inverse">@Html.ActionLink(@Resource.Lang.Back, "Index")</span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

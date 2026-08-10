@@ -1,0 +1,80 @@
+﻿@using DataLayer.ViewModels;
+@model DataLayer.Entities.StaticPage
+
+@{
+    ViewBag.Title = Resource.Lang.StaticPages;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+
+}
+
+@using (Html.BeginForm("create", "StaticPage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-sm-12 banner_page">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="@Resource.Lang.Back"></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 no-padding">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Title, @Resource.Lang.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CategoryId, Resource.Lang.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("CategoryId", null, Resource.Lang.Choice, htmlAttributes: new { @class = "form-control category_id" })
+                                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Html, Resource.Lang.Summery, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Html, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Html, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="ثبت" class="btn btn-success" />
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 no-padding-left">
+                        <div class="form-group">
+                            @Html.Label(Resource.Lang.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-offset-2 col-md-10">
+                                <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload-n" data-height="290" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

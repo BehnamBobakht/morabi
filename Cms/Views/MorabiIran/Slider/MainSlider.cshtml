@@ -1,0 +1,42 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model List<SliderVm>
+<section class="main_slider section-padding">
+    <div class="container">
+        <div dir="rtl" class="swiper main-swiper">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model)
+                {
+                    <div class="swiper-slide">
+                        <div class="main-slider-item linkitem">
+                            <a href="#"></a>
+                            <div class="main-slider-background justify align-items-end">
+                                <img src="/assets/@BaseWebsite.WebsiteLabel/images/banner.png" alt="">
+                            </div>
+                            <picture>
+                                <source media="(min-width:576px)" srcset="@item.Picture.Url">
+                                <img src="@item.Picture.Url" alt="@item.Name">
+                            </picture>
+                            <div class="main-slider-caption align">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-5 align">
+                                            <div class="main-slider-text">
+                                                <h1>@item.Name</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                }
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+

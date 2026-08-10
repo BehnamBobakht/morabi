@@ -1,0 +1,117 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model DataLayer.Entities.DiscountGroup
+@{
+    ViewBag.Title =Resource.Lang.RegisterNewSpecialPerposal;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+}
+
+
+@using (Html.BeginForm("create", "DiscountGroup", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6 no-padding-right">
+
+                        <div>
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="row">
+                                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.TypeId, Resource.Lang.DiscountType, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control", @codeprocess = "show-part" })
+                                @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, Resource.Lang.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Label, Resource.Lang.Lable, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Label, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Label, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div show-part="52" class="form-group">
+                            @Html.LabelFor(model => model.PriceValue, Resource.Lang.DiscountPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.PriceValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.PriceValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div show-part="53" class="form-group">
+                            @Html.LabelFor(model => model.PercentValue, Resource.Lang.DiscountPercent, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.PercentValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.PercentValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StartDatetime, Resource.Lang.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" id="StartDatetime" name="DateStart" autocomplete="off" class="form-control" codeprocess="date" value="@Model.StartDatetime.ToPersian()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EndDatetime, Resource.Lang.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" id="EndDatetime" name="DateEnd" autocomplete="off" class="form-control" codeprocess="date" value="@Model.EndDatetime.ToPersian()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Active, Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.Active)
+                                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padding">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">@Resource.Lang.Description</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 no-padding">
+                        <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload-n" data-height="200" />
+                    </div>
+                    <div class="clearfix"></div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+

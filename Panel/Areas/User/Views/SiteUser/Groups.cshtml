@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DataLayer.ViewModels.ViewSiteUserUserGroup>
+
+@{
+    ViewBag.Title = Resource.Lang.AddUserToUserGroups;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="id" value="@ViewBag.SiteUserId" />
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="dropdown pull-right">
+                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink(Resource.Lang.Back, "Index")</li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @foreach (var item in Model)
+                        {
+                            <div class="permission-group-item">
+                                <input id="checkbox-@item.GroupId" type="checkbox" class="parent-box" checked="@item.IsSelected" name="UserGroupList" value="@item.GroupId" />
+                                <label for="checkbox-@item.GroupId">@item.UserGroupName</label> <br />
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DataLayer.Entities.ExameQuestion>
+@using DataLayer.Base;
+@using DataLayer.Entities;
+
+@{
+    Exame exame = ViewBag.Exame;
+    ViewBag.Title = "سوالات " + exame.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create",new { id=exame.ID})" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <a href="@Url.Action("Answer",new { id=exame.ID})" class="btn btn-primary">انتخاب پاسخ ها</a>
+            <a href="@Url.Action("Print",new { id=exame.ID})" class="btn btn-primary">دریافت پاسخ ها pdf</a>
+            <a href="@Url.Action("Export",new { id=exame.ID})" class="btn btn-primary">دریافت پاسخ ها word</a>
+
+
+
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.Question</th>
+                        <th>نام آزمون</th>
+                        <th>نام درس</th>
+                        <th>@Resource.Lang.Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int h = 1;}
+                    @foreach (var item in Model.ToList())
+                    {
+                        <tr>
+                            <td>@h</td>
+                            <td>@item.Text.GetSubString(100)</td>
+
+                            <td>@Html.DisplayFor(modelItem => item.Exame.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ExameCourse.Name)</td>
+
+                            <td>
+                                @if (item.Active == true || item.Active == null)
+                                {
+                                    <span>فعال</span>
+                                }
+                                else
+                                {<span>غیر فعال</span>}
+                            </td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.ID }) |
+
+                                @Html.ActionLink(Resource.Lang.Delete, "Delete", new { id = item.ID }) |
+                                @Html.ActionLink(Resource.Lang.Items, "index", new { @controller = "ExameAnswerItem", id = item.ID })
+                            </td>
+                            @{ h++;}
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

@@ -1,0 +1,130 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.WebsiteContactForm
+
+@{
+    ViewBag.Title = Resource.Lang.ContactUs;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                @Html.HiddenFor(model => model.ID)
+                <div class="port m-b-20">
+                    <div class="portfolioContainer">
+                        <input type="hidden" name="GalleryId" value="@Model.ID" />
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="col-lg-2">   @Resource.Lang.DateTime : </div>
+                                <div class="col-lg-5"> <span>@Model.Datetime</span> </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">
+                                    @Resource.Lang.Name :
+                                </div>
+                                <div class="col-lg-5">
+                                    <span>@Model.FullName</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">
+                                    @Resource.Lang.Email :
+                                </div>
+                                <div class="col-lg-5">
+                                    <span>@Model.Email</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">
+                                    @Resource.Lang.Subject :
+                                </div>
+                                <div class="col-lg-5">
+                                    <span>@Model.Subject</span>
+                                </div>
+                            </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-2">
+                                @Resource.Lang.Mobile :
+                            </div>
+                            <div class="col-lg-5">
+                                <span>@Model.Mobile</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-2">
+                                @Resource.Lang.Text :
+                            </div>
+                            <div class="col-lg-5">
+                                <span>@Model.Body</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div><!-- end portfoliocontainer-->
+            </div> <!-- End row -->
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+    </div>
+
+
+@section Header {
+    <link rel="stylesheet" href="/assets/plugins/magnific-popup/dist/magnific-popup.css" />
+    <link rel="stylesheet" type="text/css" href="/Assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Footer {
+    <script type="text/javascript" src="/assets/plugins/isotope/dist/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+}
+@section Script {
+    <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            var $container = $('.portfolioContainer');
+            $container.isotope({
+                filter: '*',
+                animationOptions: {
+                    duration: 750,
+                    easing: 'linear',
+                    queue: false
+                }
+            });
+
+            $('.portfolioFilter a').click(function () {
+                $('.portfolioFilter .current').removeClass('current');
+                $(this).addClass('current');
+
+                var selector = $(this).attr('data-filter');
+                $container.isotope({
+                    filter: selector,
+                    animationOptions: {
+                        duration: 750,
+                        easing: 'linear',
+                        queue: false
+                    }
+                });
+                return false;
+            });
+        });
+        $(document).ready(function () {
+            $('.image-popup').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                mainClass: 'mfp-fade',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,14 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model PostSearchVm
+
+
+@foreach (var item in Model.Posts)
+{
+
+    <a href="@item.Href">
+        @item.Name
+    </a>
+
+}
+

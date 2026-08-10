@@ -1,0 +1,78 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model  ProductShowVm
+@{
+    bool isAvailable = Model.Code.Label == Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString();
+    StoreProductQuantityVm firstStoreProductQuantity = null;
+    if (isAvailable && Model.Variety.storeProductQuantities.Any())
+    {
+        firstStoreProductQuantity = Model.Variety.storeProductQuantities[0];
+    }
+
+    var indexFilds = Model.ProductCustomValue.FirstOrDefault(s => s.ProductCustomField.SyncName == "Level");
+
+}
+<div class="home-course-item linkitem in-progress">
+
+
+    @if (Model.DiscountValue > 0)
+    {
+        <div class="home-course-discount central">@Model.DiscountPercent%</div>
+    }
+
+    <div class="home-course-caption">
+        <span>@Model.Name </span>
+        @if (indexFilds != null)
+        {
+            <span>(@indexFilds.ProductCustomItem.Value)</span>
+        }
+        <div class="home-course-price">
+            @if (Model.DiscountValue > 0)
+            {
+                <div class="home-course-price-old central">
+                    <span>@Resource.Lang.Price</span>
+                    <span>@Model.InexpensiveItemBasePrice.GetCurrencyFormat()</span>
+                    <span>@Resource.Lang.Toman</span>
+                </div>
+                <div class="home-course-price-new central">
+                    <span>با تخفیف</span>
+                    <span>@Model.InexpensiveItemPrice.GetCurrencyFormat()</span>
+                    <span>@Resource.Lang.Toman</span>
+                </div>
+
+            }
+            else
+            {
+                <div class="home-course-price-new central">
+                    <span>@Resource.Lang.Price</span>
+                    <span>@Model.InexpensiveItemPrice.GetCurrencyFormat()</span>
+                    <span>@Resource.Lang.Toman</span>
+                </div>
+            }
+
+
+
+        </div>
+        @if (isAvailable)
+        {
+            <div class="home-course-link central">
+                <a id="addtocart-btn" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1 })">
+                    <span>افزودن به سبد خرید</span>
+                </a>
+            </div>
+        }
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = Resource.Lang.RemoveInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            @if (ViewBag.Alert != null)
+            {
+                <p class="alert alert-danger">@ViewBag.Alert</p>
+
+            }
+            <div class="form-horizontal">
+                <h3>@Resource.Lang.SureDelete</h3>
+
+            </div>
+            <div class="form-group">
+
+                <div class="form-actions no-color">
+                    <div class="btn btn-danger">
+
+                        @Html.ActionLink("حذف کل پاسخ های این آزمون", "DeleteExameAnswerAll", new { Id = ViewBag.ExameId })
+                    </div>
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

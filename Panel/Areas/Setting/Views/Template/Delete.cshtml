@@ -1,0 +1,73 @@
+﻿@model DataLayer.Entities.Template
+@{
+    ViewBag.Title = "حذف اطلاعات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+        <div class="col-sm-12">
+            @if (ViewBag.Alert != null)
+            {
+                <p class="alert alert-danger">@ViewBag.Alert</p>
+
+            }
+            <div class="form-horizontal">
+                <h3>از حذف این مورد اطمینان دارید؟</h3>
+                <div class="col-sm-6 no-padding">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            نوع قالب
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Code.Name)
+                        </dd>
+                        <dt>
+                            عنوان قالب
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt>
+                            برچسب
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Label)
+                        </dd>
+                        <dt>
+                            نسخه
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Version)
+                        </dd>
+                        <dt>
+                            نویسنده
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Author)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-3 text-center">
+                    @if (Model.Picture != null)
+                    {
+                        <img src="@Model.Picture.Url" class="img-responsive form-image" />
+                    }
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="form-group">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <input type="submit" value="حذف" class="btn btn-danger" />
+                        <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index")</span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

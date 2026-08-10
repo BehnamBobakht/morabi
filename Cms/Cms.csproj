@@ -1,0 +1,1219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--<Import Project="..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props')" />-->
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{31E1E63D-ED4F-4E5B-B676-8861BB195609}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cms</RootNamespace>
+    <AssemblyName>Cms</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Binbin.Linq.PredicateBuilder">
+      <HintPath>..\packages\Binbin.Linq.PredicateBuilder.1.0.3.26645\lib\net45\Binbin.Linq.PredicateBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreHtmlToImage, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreHtmlToImage.1.0.6\lib\netstandard2.0\CoreHtmlToImage.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=5.7.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Behnam\Desktop\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.21.9.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.21.9\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.3.5.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.1.3.5\lib\net462\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.3.5.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.Streams.1.3.5\lib\net462\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.8.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Hash.xxHash.1.0.8\lib\net462\K4os.Hash.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="Lib.Web.Mvc, Version=6.10.0.0, Culture=neutral, PublicKeyToken=92212eec0425916e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Web.Mvc.6.10.0\lib\net46\Lib.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Behnam\Desktop\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.1.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.1.0\lib\net48\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder">
+      <HintPath>..\packages\QRCoder.1.3.9\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=23.2.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.23.2.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.7.0.2\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipelines, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.5.0.2\lib\net461\System.IO.Pipelines.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Cors">
+      <HintPath>C:\Users\Behnam\Desktop\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.9\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="ZstdSharp, Version=0.7.1.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZstdSharp.Port.0.7.1\lib\net461\ZstdSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\update.sql" />
+    <Content Include="App_GlobalResources\Default\Default.Ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Default.Ar.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Default\Default.fa.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Default.fa1.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Default\Default.resx">
+      <SubType>Designer</SubType>
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Default1.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Default\Default.tr.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Default.tr1.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="Assets\MorabiIran\css\all.css" />
+    <Content Include="Assets\MorabiIran\css\animate.css" />
+    <Content Include="Assets\MorabiIran\css\bootstrap-icons.css" />
+    <Content Include="Assets\MorabiIran\css\bootstrap.min.css" />
+    <Content Include="Assets\MorabiIran\css\hover.css" />
+    <Content Include="Assets\MorabiIran\css\ion.rangeSlider.min.css" />
+    <Content Include="Assets\MorabiIran\css\magiczoomplus.css" />
+    <Content Include="Assets\MorabiIran\css\owl.carousel.min.css" />
+    <Content Include="Assets\MorabiIran\css\owl.theme.default.min.css" />
+    <Content Include="Assets\MorabiIran\css\style.css" />
+    <Content Include="Assets\MorabiIran\css\style2.css" />
+    <Content Include="Assets\MorabiIran\css\swiper-bundle.min.css" />
+    <Content Include="Assets\MorabiIran\css\swiper.min.css" />
+    <Content Include="Assets\MorabiIran\css\ui-kit.css" />
+    <Content Include="Assets\MorabiIran\css\waves-Effect.css" />
+    <Content Include="Assets\MorabiIran\images\about1.png" />
+    <Content Include="Assets\MorabiIran\images\about2.png" />
+    <Content Include="Assets\MorabiIran\images\back2.png" />
+    <Content Include="Assets\MorabiIran\images\banner.png" />
+    <Content Include="Assets\MorabiIran\images\banner2.png" />
+    <Content Include="Assets\MorabiIran\images\banner3.png" />
+    <Content Include="Assets\MorabiIran\images\basketIcons.png" />
+    <Content Include="Assets\MorabiIran\images\blog1.png" />
+    <Content Include="Assets\MorabiIran\images\blog10.png" />
+    <Content Include="Assets\MorabiIran\images\blog11.png" />
+    <Content Include="Assets\MorabiIran\images\blog12.png" />
+    <Content Include="Assets\MorabiIran\images\blog13.png" />
+    <Content Include="Assets\MorabiIran\images\blog14.png" />
+    <Content Include="Assets\MorabiIran\images\blog2.png" />
+    <Content Include="Assets\MorabiIran\images\blog3.png" />
+    <Content Include="Assets\MorabiIran\images\blog4.png" />
+    <Content Include="Assets\MorabiIran\images\blog5.png" />
+    <Content Include="Assets\MorabiIran\images\blog6.png" />
+    <Content Include="Assets\MorabiIran\images\blog7.png" />
+    <Content Include="Assets\MorabiIran\images\blog8.png" />
+    <Content Include="Assets\MorabiIran\images\blog9.png" />
+    <Content Include="Assets\MorabiIran\images\BMI.png" />
+    <Content Include="Assets\MorabiIran\images\book1.png" />
+    <Content Include="Assets\MorabiIran\images\cer2.jpg" />
+    <Content Include="Assets\MorabiIran\images\cosultation.png" />
+    <Content Include="Assets\MorabiIran\images\enamad.png" />
+    <Content Include="Assets\MorabiIran\images\error404.png" />
+    <Content Include="Assets\MorabiIran\images\favicon\android-chrome-192x192.png" />
+    <Content Include="Assets\MorabiIran\images\favicon\android-chrome-512x512.png" />
+    <Content Include="Assets\MorabiIran\images\favicon\apple-touch-icon.png" />
+    <Content Include="Assets\MorabiIran\images\favicon\favicon-16x16.png" />
+    <Content Include="Assets\MorabiIran\images\favicon\favicon-32x32.png" />
+    <Content Include="Assets\MorabiIran\images\favicon\favicon.ico" />
+    <Content Include="Assets\MorabiIran\images\favpic.png" />
+    <Content Include="Assets\MorabiIran\images\footer.png" />
+    <Content Include="Assets\MorabiIran\images\img1.png" />
+    <Content Include="Assets\MorabiIran\images\img2.png" />
+    <Content Include="Assets\MorabiIran\images\img3.png" />
+    <Content Include="Assets\MorabiIran\images\img4.png" />
+    <Content Include="Assets\MorabiIran\images\login.png" />
+    <Content Include="Assets\MorabiIran\images\logo.png" />
+    <Content Include="Assets\MorabiIran\images\man.png" />
+    <Content Include="Assets\MorabiIran\images\media1.png" />
+    <Content Include="Assets\MorabiIran\images\media2.png" />
+    <Content Include="Assets\MorabiIran\images\media3.png" />
+    <Content Include="Assets\MorabiIran\images\media4.png" />
+    <Content Include="Assets\MorabiIran\images\media5.png" />
+    <Content Include="Assets\MorabiIran\images\media6.png" />
+    <Content Include="Assets\MorabiIran\images\menu-icon.png" />
+    <Content Include="Assets\MorabiIran\images\pro1.png" />
+    <Content Include="Assets\MorabiIran\images\pro2.png" />
+    <Content Include="Assets\MorabiIran\images\pro3.png" />
+    <Content Include="Assets\MorabiIran\images\profile\account.png" />
+    <Content Include="Assets\MorabiIran\images\profile\backDashboard.png" />
+    <Content Include="Assets\MorabiIran\images\profile\clipboard.png" />
+    <Content Include="Assets\MorabiIran\images\profile\comment.png" />
+    <Content Include="Assets\MorabiIran\images\profile\edite.png" />
+    <Content Include="Assets\MorabiIran\images\profile\email.png" />
+    <Content Include="Assets\MorabiIran\images\profile\gift-card.png" />
+    <Content Include="Assets\MorabiIran\images\profile\home.png" />
+    <Content Include="Assets\MorabiIran\images\profile\logout.png" />
+    <Content Include="Assets\MorabiIran\images\profile\orders.png" />
+    <Content Include="Assets\MorabiIran\images\profile\view.png" />
+    <Content Include="Assets\MorabiIran\images\sazmandehi.png" />
+    <Content Include="Assets\MorabiIran\images\slider-back.png" />
+    <Content Include="Assets\MorabiIran\images\slider.png" />
+    <Content Include="Assets\MorabiIran\images\user.png" />
+    <Content Include="Assets\MorabiIran\images\user1.png" />
+    <Content Include="Assets\MorabiIran\images\user2.png" />
+    <Content Include="Assets\MorabiIran\images\user3.png" />
+    <Content Include="Assets\MorabiIran\images\user4.png" />
+    <Content Include="Assets\MorabiIran\images\workwithus.png" />
+    <Content Include="Assets\MorabiIran\js\app.js" />
+    <Content Include="Assets\MorabiIran\js\app.modules.js" />
+    <Content Include="Assets\MorabiIran\js\app.modules.search.js" />
+    <Content Include="Assets\MorabiIran\js\bootstrap.bundle.min.js" />
+    <Content Include="Assets\MorabiIran\js\bootstrap.min.js" />
+    <Content Include="Assets\MorabiIran\js\bundle-min.js" />
+    <Content Include="Assets\MorabiIran\js\bundle.js" />
+    <Content Include="Assets\MorabiIran\js\ion.rangeSlider.min.js" />
+    <Content Include="Assets\MorabiIran\js\jquery.js" />
+    <Content Include="Assets\MorabiIran\js\jquery2.js" />
+    <Content Include="Assets\MorabiIran\js\magiczoomplus.js" />
+    <Content Include="Assets\MorabiIran\js\MorabiIran.js" />
+    <Content Include="Assets\Default\Image\noimage.jpg" />
+    <Content Include="Areas\Store\assets\bundles\c3.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\countTo.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\datatablescripts.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\flotscripts.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\footable.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\fullcalendarscripts.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\jvectormap.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\knob.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\libscripts.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\mainscripts.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\morrisscripts.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\sparkline.bundle.js" />
+    <Content Include="Areas\Store\assets\bundles\vendorscripts.bundle.js" />
+    <Content Include="Areas\Store\assets\css\style.min.css" />
+    <Content Include="Areas\Store\assets\css\weather-icons.min.css" />
+    <Content Include="Areas\Store\assets\fonts\iransansdn.ttf" />
+    <Content Include="Areas\Store\assets\fonts\Material-Design-Iconic-Fontd1f1.ttf" />
+    <Content Include="Areas\Store\assets\fonts\Material-Design-Iconic-Fontd1f1.woff" />
+    <Content Include="Areas\Store\assets\fonts\Material-Design-Iconic-Fontd1f1.woff2" />
+    <Content Include="Areas\Store\assets\fonts\themify9f24.eot" />
+    <Content Include="Areas\Store\assets\fonts\themify9f24.svg" />
+    <Content Include="Areas\Store\assets\fonts\themify9f24.ttf" />
+    <Content Include="Areas\Store\assets\fonts\themify9f24.woff" />
+    <Content Include="Areas\Store\assets\fonts\themifyd41d.eot" />
+    <Content Include="Areas\Store\assets\fonts\weathericons-regular-webfont.eot" />
+    <Content Include="Areas\Store\assets\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Areas\Store\assets\fonts\weathericons-regular-webfont.ttf" />
+    <Content Include="Areas\Store\assets\fonts\weathericons-regular-webfont.woff" />
+    <Content Include="Areas\Store\assets\fonts\weathericons-regular-webfont.woff2" />
+    <Content Include="Areas\Store\assets\fonts\weathericons-regular-webfontd41d.eot" />
+    <Content Include="Areas\Store\assets\images\404.svg" />
+    <Content Include="Areas\Store\assets\images\ajax-loader.gif" />
+    <Content Include="Areas\Store\assets\images\blog\05-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\06-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\07-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\08-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\09-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\10-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\11-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\12-img.jpg" />
+    <Content Include="Areas\Store\assets\images\blog\13-img.jpg" />
+    <Content Include="Areas\Store\assets\images\ecommerce\1.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\10.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\11.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\2.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\3.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\4.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\5.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\6.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\7.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\8.png" />
+    <Content Include="Areas\Store\assets\images\ecommerce\9.png" />
+    <Content Include="Areas\Store\assets\images\image-gallery\1.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\10.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\11.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\12.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\13.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\14.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\15.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\2.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\3.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\4.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\5.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\6.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\7.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\8.jpg" />
+    <Content Include="Areas\Store\assets\images\image-gallery\9.jpg" />
+    <Content Include="Areas\Store\assets\images\lg\avatar1.jpg" />
+    <Content Include="Areas\Store\assets\images\lg\avatar2.jpg" />
+    <Content Include="Areas\Store\assets\images\lg\avatar3.jpg" />
+    <Content Include="Areas\Store\assets\images\lg\avatar4.jpg" />
+    <Content Include="Areas\Store\assets\images\loader.svg" />
+    <Content Include="Areas\Store\assets\images\logo.svg" />
+    <Content Include="Areas\Store\assets\images\maintanance.svg" />
+    <Content Include="Areas\Store\assets\images\profile_av.jpg" />
+    <Content Include="Areas\Store\assets\images\profile_av1.jpg" />
+    <Content Include="Areas\Store\assets\images\signin.svg" />
+    <Content Include="Areas\Store\assets\images\signup.svg" />
+    <Content Include="Areas\Store\assets\images\sm\avatar1.jpg" />
+    <Content Include="Areas\Store\assets\images\sm\avatar2.jpg" />
+    <Content Include="Areas\Store\assets\images\sm\avatar3.jpg" />
+    <Content Include="Areas\Store\assets\images\sm\avatar4.jpg" />
+    <Content Include="Areas\Store\assets\images\sm\avatar5.jpg" />
+    <Content Include="Areas\Store\assets\images\sm\avatar6.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar1.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar10.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar2.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar3.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar4.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar5.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar6.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar7.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar8.jpg" />
+    <Content Include="Areas\Store\assets\images\xs\avatar9.jpg" />
+    <Content Include="Areas\Store\assets\js\pages\blog\blog.js" />
+    <Content Include="Areas\Store\assets\js\pages\calendar\calendar.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\c3.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\chartjs.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\flot.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\jquery-knob.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\jquery-knob.min.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\morris.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\polar_area_chart.js" />
+    <Content Include="Areas\Store\assets\js\pages\charts\sparkline.js" />
+    <Content Include="Areas\Store\assets\js\pages\ecommerce.js" />
+    <Content Include="Areas\Store\assets\js\pages\forms\advanced-form-elements.js" />
+    <Content Include="Areas\Store\assets\js\pages\forms\basic-form-elements.js" />
+    <Content Include="Areas\Store\assets\js\pages\forms\dropify.js" />
+    <Content Include="Areas\Store\assets\js\pages\forms\editors.js" />
+    <Content Include="Areas\Store\assets\js\pages\forms\form-validation.js" />
+    <Content Include="Areas\Store\assets\js\pages\forms\form-wizard.js" />
+    <Content Include="Areas\Store\assets\js\pages\index.js" />
+    <Content Include="Areas\Store\assets\js\pages\maps\google.js" />
+    <Content Include="Areas\Store\assets\js\pages\maps\jvectormap.js" />
+    <Content Include="Areas\Store\assets\js\pages\medias\image-gallery.js" />
+    <Content Include="Areas\Store\assets\js\pages\tables\editable-table.js" />
+    <Content Include="Areas\Store\assets\js\pages\tables\footable.js" />
+    <Content Include="Areas\Store\assets\js\pages\tables\jquery-datatable.js" />
+    <Content Include="Areas\Store\assets\js\pages\ticket-page.js" />
+    <Content Include="Areas\Store\assets\js\pages\todo-js.js" />
+    <Content Include="Areas\Store\assets\js\pages\ui\notifications.js" />
+    <Content Include="Areas\Store\assets\js\pages\ui\range-sliders.js" />
+    <Content Include="Areas\Store\assets\js\pages\ui\sortable-nestable.js" />
+    <Content Include="Areas\Store\assets\js\pages\ui\sweetalert.js" />
+    <Content Include="Areas\Store\assets\js\pages\widgets\infobox\infobox-1.js" />
+    <Content Include="Areas\Store\assets\js\store.js" />
+    <Content Include="Areas\Store\assets\js\Store_JavaScript.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue.png" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\bootstrap-datepicker.css" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\bootstrap-datepicker.fa.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\bootstrap-datepicker.fa.min.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\bootstrap-datepicker.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\bootstrap-datepicker.min.css" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\bootstrap-datepicker.min.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\demo\css\bootstrap.min.css" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\demo\demo.html" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\demo\img\glyphicons-halflings.png" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-material-datetimepicker\css\bootstrap-material-datetimepicker.css" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-material-datetimepicker\js\bootstrap-material-datetimepicker.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-notify\bootstrap-notify.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-select\css\bootstrap-select.css" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-tagsinput\bootstrap-tagsinput.css" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-tagsinput\bootstrap-tagsinput.js" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Areas\Store\assets\plugins\chartjs\Chart.bundle.js" />
+    <Content Include="Areas\Store\assets\plugins\chartjs\polar_area_chart.js" />
+    <Content Include="Areas\Store\assets\plugins\charts-c3\fonts\iransansdn.ttf" />
+    <Content Include="Areas\Store\assets\plugins\charts-c3\plugin.css" />
+    <Content Include="Areas\Store\assets\plugins\ckeditor\ckeditor.js" />
+    <Content Include="Areas\Store\assets\plugins\ckeditor\config.js" />
+    <Content Include="Areas\Store\assets\plugins\ckeditor\lang\en.js" />
+    <Content Include="Areas\Store\assets\plugins\ckeditor\skins\moono\editor.css" />
+    <Content Include="Areas\Store\assets\plugins\ckeditor\skins\moono\icons.png" />
+    <Content Include="Areas\Store\assets\plugins\ckeditor\styles.js" />
+    <Content Include="Areas\Store\assets\plugins\dropify\css\dropify.min.css" />
+    <Content Include="Areas\Store\assets\plugins\dropify\fonts\dropify.eot" />
+    <Content Include="Areas\Store\assets\plugins\dropify\fonts\dropify.svg" />
+    <Content Include="Areas\Store\assets\plugins\dropify\fonts\dropify.ttf" />
+    <Content Include="Areas\Store\assets\plugins\dropify\fonts\dropify.woff" />
+    <Content Include="Areas\Store\assets\plugins\dropify\fonts\iransansdn.ttf" />
+    <Content Include="Areas\Store\assets\plugins\dropify\js\dropify.min.js" />
+    <Content Include="Areas\Store\assets\plugins\dropzone\dropzone.js" />
+    <Content Include="Areas\Store\assets\plugins\editable-table\mindmup-editabletable.js" />
+    <Content Include="Areas\Store\assets\plugins\footable-bootstrap\css\footable.bootstrap.min.css" />
+    <Content Include="Areas\Store\assets\plugins\footable-bootstrap\css\footable.standalone.min.css" />
+    <Content Include="Areas\Store\assets\plugins\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Areas\Store\assets\plugins\gmaps\gmaps.js" />
+    <Content Include="Areas\Store\assets\plugins\ion-rangeslider\css\ion.rangeSlider.css" />
+    <Content Include="Areas\Store\assets\plugins\ion-rangeslider\js\ion.rangeSlider.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-datatable\buttons\buttons.bootstrap4.min.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-datatable\buttons\buttons.colVis.min.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-datatable\buttons\buttons.flash.min.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-datatable\buttons\buttons.html5.min.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-datatable\buttons\buttons.print.min.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-datatable\buttons\dataTables.buttons.min.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-datatable\dataTables.bootstrap4.min.css" />
+    <Content Include="Areas\Store\assets\plugins\jquery-inputmask\jquery.inputmask.bundle.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-knob\jquery.knob.min.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-sparkline\jquery.sparkline.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-spinner\css\bootstrap-spinner.css" />
+    <Content Include="Areas\Store\assets\plugins\jquery-spinner\js\jquery.spinner.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-steps\jquery.steps.css" />
+    <Content Include="Areas\Store\assets\plugins\jquery-steps\jquery.steps.js" />
+    <Content Include="Areas\Store\assets\plugins\jquery-validation\jquery.validate.js" />
+    <Content Include="Areas\Store\assets\plugins\jvectormap\jquery-jvectormap-2.0.3.css" />
+    <Content Include="Areas\Store\assets\plugins\jvectormap\jquery-jvectormap-2.0.3.min.css" />
+    <Content Include="Areas\Store\assets\plugins\jvectormap\jquery-jvectormap-au-mill.js" />
+    <Content Include="Areas\Store\assets\plugins\jvectormap\jquery-jvectormap-in-mill.js" />
+    <Content Include="Areas\Store\assets\plugins\jvectormap\jquery-jvectormap-uk-mill-en.js" />
+    <Content Include="Areas\Store\assets\plugins\jvectormap\jquery-jvectormap-us-aea-en.js" />
+    <Content Include="Areas\Store\assets\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\css\lightgallery.css" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\fonts\lgd41d.eot" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\fonts\lgd641.eot" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\fonts\lgd641.svg" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\fonts\lgd641.ttf" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\fonts\lgd641.woff" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\img\loading.gif" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\img\video-play.png" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\img\vimeo-play.png" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\img\youtube-play.png" />
+    <Content Include="Areas\Store\assets\plugins\light-gallery\js\lightgallery-all.min.js" />
+    <Content Include="Areas\Store\assets\plugins\momentjs\moment.js" />
+    <Content Include="Areas\Store\assets\plugins\morrisjs\morris.css" />
+    <Content Include="Areas\Store\assets\plugins\morrisjs\morris.min.css" />
+    <Content Include="Areas\Store\assets\plugins\multi-select\css\multi-select.css" />
+    <Content Include="Areas\Store\assets\plugins\multi-select\img\switch.png" />
+    <Content Include="Areas\Store\assets\plugins\multi-select\js\jquery.multi-select.js" />
+    <Content Include="Areas\Store\assets\plugins\nestable\jquery.nestable.js" />
+    <Content Include="Areas\Store\assets\plugins\nouislider\nouislider.js" />
+    <Content Include="Areas\Store\assets\plugins\nouislider\nouislider.min.css" />
+    <Content Include="Areas\Store\assets\plugins\select2\select2-spinner.gif" />
+    <Content Include="Areas\Store\assets\plugins\select2\select2.css" />
+    <Content Include="Areas\Store\assets\plugins\select2\select2.min.js" />
+    <Content Include="Areas\Store\assets\plugins\select2\select2.png" />
+    <Content Include="Areas\Store\assets\plugins\select2\select2x2.png" />
+    <Content Include="Areas\Store\assets\plugins\summernote\dist\font\summernoted41d.eot" />
+    <Content Include="Areas\Store\assets\plugins\summernote\dist\font\summernotef534.eot" />
+    <Content Include="Areas\Store\assets\plugins\summernote\dist\font\summernotef534.ttf" />
+    <Content Include="Areas\Store\assets\plugins\summernote\dist\font\summernotef534.woff" />
+    <Content Include="Areas\Store\assets\plugins\summernote\dist\summernote.css" />
+    <Content Include="Areas\Store\assets\plugins\summernote\dist\summernote.js" />
+    <Content Include="Areas\Store\assets\plugins\sweetalert\sweetalert.css" />
+    <Content Include="Areas\Store\assets\plugins\sweetalert\sweetalert.min.js" />
+    <Content Include="Areas\Store\Views\Accounts\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Accounts\Register.cshtml" />
+    <Content Include="Areas\Store\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Order\OrderProducts.cshtml" />
+    <Content Include="Areas\Store\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Store\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Store\Views\Products\Details.cshtml" />
+    <Content Include="Areas\Store\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Store\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Store\Views\Shared\_Layout_Blank.cshtml" />
+    <Content Include="Areas\Store\Views\Shared\_MenuSide.cshtml" />
+    <Content Include="Areas\Store\Views\Shared\_NavSide.cshtml" />
+    <Content Include="Areas\Store\Views\StoreProduct\Index.cshtml" />
+    <Content Include="Areas\Store\Views\web.config" />
+    <Content Include="Areas\Store\Views\_ViewStart.cshtml" />
+    <Content Include="Assets\Default\Css\print.css" />
+    <Content Include="Assets\Default\Css\codeprocess.css" />
+    <Content Include="Assets\Default\Css\codeprocess.ltr.css" />
+    <Content Include="Assets\Default\Css\codeprocess.rtl.css" />
+    <Content Include="Assets\Default\Css\StarRate.css" />
+    <Content Include="Assets\Default\Image\pageNoteFind.png" />
+    <Content Include="Assets\Default\Image\user.png" />
+    <Content Include="Assets\Default\Image\empty-avatar.png" />
+    <Content Include="Assets\Default\Image\locations-banner.png" />
+    <Content Include="Assets\Default\Image\logo-enamad.png" />
+    <Content Include="Assets\Default\Image\logo-samandehi.png" />
+    <Content Include="Assets\Default\Image\payment\1-9a109dbf64-847c906d93ff4c7f7d610d3dce878a89.jpg" />
+    <Content Include="Assets\Default\Image\payment\CashBill-2.png" />
+    <Content Include="Assets\Default\Image\payment\eghtesad_novin.png" />
+    <Content Include="Assets\Default\Image\payment\Fondy.png" />
+    <Content Include="Assets\Default\Image\payment\icon-256x256.png" />
+    <Content Include="Assets\Default\Image\payment\idpay.png" />
+    <Content Include="Assets\Default\Image\payment\internet-banking.jpg" />
+    <Content Include="Assets\Default\Image\payment\irankish.png" />
+    <Content Include="Assets\Default\Image\payment\Mellat_Bank11 copy.png" />
+    <Content Include="Assets\Default\Image\payment\Mellat_Bank11.jpg" />
+    <Content Include="Assets\Default\Image\payment\Merchant\CASHBILL.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\EGHTESAD_NOVIN.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\FONDY.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\IDPAY.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\IRANKISH.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\MELI.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\MELLAT.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\NEXTPAY.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\PARSIAN.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\PASARGAD.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\SAMAN.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\UP.png" />
+    <Content Include="Assets\Default\Image\payment\Merchant\ZARINPAL.png" />
+    <Content Include="Assets\Default\Image\payment\NextPay.png" />
+    <Content Include="Assets\Default\Image\payment\payment-cashbill.jpg" />
+    <Content Include="Assets\Default\Image\payment\payment-Eghtesadnovin.jpeg" />
+    <Content Include="Assets\Default\Image\payment\payment-fondy.jpg" />
+    <Content Include="Assets\Default\Image\payment\payment-irankish.png" />
+    <Content Include="Assets\Default\Image\payment\payment-mellat.jpg" />
+    <Content Include="Assets\Default\Image\payment\payment-nextpay.png" />
+    <Content Include="Assets\Default\Image\payment\payment-parsian.jpg" />
+    <Content Include="Assets\Default\Image\payment\payment-pasargad.jpg" />
+    <Content Include="Assets\Default\Image\payment\payment-sadad.png" />
+    <Content Include="Assets\Default\Image\payment\payment-saman.jpg" />
+    <Content Include="Assets\Default\Image\payment\payment-up.jpg" />
+    <Content Include="Assets\Default\Image\payment\payment-zarinpal.png" />
+    <Content Include="Assets\Default\Image\payment\paypal.png" />
+    <Content Include="Assets\Default\Image\payment\unnamed %281%29.jpg" />
+    <Content Include="Assets\Default\Image\payment\unnamed.jpg" />
+    <Content Include="Assets\Default\Image\payment\up.png" />
+    <Content Include="Assets\Default\Image\payment\zarinpal.png" />
+    <Content Include="Assets\Default\Image\qrcode.png" />
+    <Content Include="Assets\Default\Js\codeprocess.ajax.js" />
+    <Content Include="Assets\Default\Js\codeprocess.ajax.min.js" />
+    <Content Include="Assets\Default\Js\codeprocess.datetime.js" />
+    <Content Include="Assets\Default\Js\codeprocess.js" />
+    <Content Include="Assets\Default\Js\codeprocess.Language.js" />
+    <Content Include="Assets\Default\Js\codeprocess.min.ajax.js" />
+    <Content Include="Assets\Default\Js\codeprocess.min.js" />
+    <Content Include="Assets\Default\Payment\css\bootstrap.min.css" />
+    <Content Include="Assets\Default\Payment\css\style.css" />
+    <Content Include="Assets\Default\Payment\images\payment-faild.jpg" />
+    <Content Include="Assets\Default\Payment\images\Purchase_Success.png" />
+    <Content Include="Assets\Default\Payment\js\bootstrap.bundle.min.js" />
+    <Content Include="Assets\Default\Payment\js\jquery.js" />
+    <Content Include="Assets\MorabiIran\js\owl.carousel.min.js" />
+    <Content Include="Assets\MorabiIran\js\scripts.js" />
+    <Content Include="Assets\MorabiIran\js\swiper-bundle.min.js" />
+    <Content Include="Assets\MorabiIran\js\waves-Effect.js" />
+    <Content Include="Assets\MorabiIran\js\wow.min.js" />
+    <Content Include="Assets\MorabiIran\Map\Images\loader.gif" />
+    <Content Include="Assets\MorabiIran\Map\Images\place-holder.png" />
+    <Content Include="Assets\MorabiIran\Map\Images\search-icon.png" />
+    <Content Include="Assets\MorabiIran\Map\jquery.js" />
+    <Content Include="Assets\MorabiIran\Map\leaflet.markercluster-src.js" />
+    <Content Include="Assets\MorabiIran\Map\MarkerCluster.css" />
+    <Content Include="Assets\MorabiIran\Map\MarkerCluster.Default.css" />
+    <Content Include="Assets\MorabiIran\Map\Picker.html" />
+    <Content Include="Assets\MorabiIran\Map\picker.js" />
+    <Content Include="Assets\MorabiIran\Map\search.js" />
+    <Content Include="Assets\MorabiIran\Map\Show.html" />
+    <Content Include="Assets\MorabiIran\Map\show.js" />
+    <Content Include="Assets\MorabiIran\Map\style.css" />
+    <Content Include="Assets\Plugins\bootstrap-rtl\css\bootstrap.rtl.css" />
+    <Content Include="Assets\Plugins\bootstrap-rtl\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Assets\Plugins\cropit-master\.gitignore" />
+    <Content Include="Assets\Plugins\cropit-master\demo\1.jpg" />
+    <Content Include="Assets\Plugins\cropit-master\demo\basic.html" />
+    <Content Include="Assets\Plugins\cropit-master\demo\form.html" />
+    <Content Include="Assets\Plugins\cropit-master\demo\image-background.html" />
+    <Content Include="Assets\Plugins\cropit-master\demo\pica.html" />
+    <Content Include="Assets\Plugins\cropit-master\dist\jquery.cropit.js" />
+    <Content Include="Assets\Plugins\cropit-master\src\constants.js" />
+    <Content Include="Assets\Plugins\cropit-master\src\cropit.js" />
+    <Content Include="Assets\Plugins\cropit-master\src\options.js" />
+    <Content Include="Assets\Plugins\cropit-master\src\plugin.js" />
+    <Content Include="Assets\Plugins\cropit-master\src\utils.js" />
+    <Content Include="Assets\Plugins\cropit-master\src\zoomer.js" />
+    <Content Include="Assets\Plugins\cropit-master\test\cropit.spec.js" />
+    <Content Include="Assets\Plugins\cropit-master\test\cropit_view.spec.js" />
+    <Content Include="Assets\Plugins\cropit-master\test\fixtures\basic.html" />
+    <Content Include="Assets\Plugins\cropit-master\test\fixtures\image-background.html" />
+    <Content Include="Assets\Plugins\cropit-master\test\zoomer.spec.js" />
+    <Content Include="Assets\Plugins\cropit-master\update_version.js" />
+    <Content Include="Assets\Plugins\cropit-master\webpack.config.js" />
+    <Content Include="Assets\Plugins\jquery\js\jquery.js" />
+    <Content Include="Assets\Plugins\jquery\js\jquery.min.js" />
+    <Content Include="Assets\Plugins\jquery\js\jquery.unobtrusive-ajax.js" />
+    <Content Include="Assets\Plugins\knockout\knockout-3.4.2.js" />
+    <Content Include="Assets\Plugins\knockout\knockout-3.4.2.min.js" />
+    <Content Include="Assets\Plugins\Map\Images\loader.gif" />
+    <Content Include="Assets\Plugins\Map\Images\place-holder.png" />
+    <Content Include="Assets\Plugins\Map\Images\search-icon.png" />
+    <Content Include="Assets\Plugins\Map\jquery.js" />
+    <Content Include="Assets\Plugins\Map\MarkerCluster.Default.css" />
+    <Content Include="Assets\Plugins\Map\Picker.html" />
+    <Content Include="Assets\Plugins\Map\picker.js" />
+    <Content Include="Assets\Plugins\Map\search.js" />
+    <Content Include="Assets\Plugins\Map\leaflet.markercluster-src.js" />
+    <Content Include="Assets\Plugins\Map\Show.html" />
+    <Content Include="Assets\Plugins\Map\show.js" />
+    <Content Include="Assets\Plugins\Map\MarkerCluster.css" />
+    <Content Include="Assets\Plugins\Map\style.css" />
+    <Content Include="Assets\Plugins\print-element-css-divjs\divjs\divjs.js" />
+    <Content Include="Assets\Plugins\print-element-css-divjs\examples\index.html" />
+    <Content Include="Assets\Plugins\print-element-css-divjs\examples\style.css" />
+    <Content Include="Assets\Plugins\toastr\css\toastr.css" />
+    <Content Include="Assets\Plugins\toastr\css\toastr.min.css" />
+    <Content Include="Assets\Plugins\toastr\js\toastr.min.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Global.asax" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Code\BaseController.cs" />
+    <Content Include="App_Code\BaseRouteView.cs" />
+    <Compile Include="App_Code\BaseException.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Store\Controllers\AccountsController.cs" />
+    <Compile Include="Areas\Store\Controllers\ClearingController.cs" />
+    <Compile Include="Areas\Store\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Store\Controllers\DeliveryController.cs" />
+    <Compile Include="Areas\Store\Controllers\DiscountController.cs" />
+    <Compile Include="Areas\Store\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Store\Controllers\OrderController.cs" />
+    <Compile Include="Areas\Store\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Store\Controllers\ShippingStateController.cs" />
+    <Compile Include="Areas\Store\Controllers\ShippingController.cs" />
+    <Compile Include="Areas\Store\Controllers\StateCityController.cs" />
+    <Compile Include="Areas\Store\Controllers\StoreCommentsController.cs" />
+    <Compile Include="Areas\Store\Security\StoreAuthorize.cs" />
+    <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
+    <Compile Include="Controllers\Api\AccountAddressController.cs" />
+    <Compile Include="Controllers\Api\AccountController.cs" />
+    <Compile Include="Controllers\Api\AccountLogVisit.cs" />
+    <Compile Include="Controllers\Api\AccountReagentController.cs" />
+    <Compile Include="Controllers\Api\CategoryController.cs" />
+    <Compile Include="Controllers\Api\CityController.cs" />
+    <Compile Include="Controllers\Api\CompetitiveFeature.cs" />
+    <Compile Include="Controllers\Api\ContactFormController.cs" />
+    <Compile Include="Controllers\Api\ContactUsController.cs" />
+    <Compile Include="Controllers\Api\ConvertDateController.cs" />
+    <Compile Include="Controllers\Api\CountryController.cs" />
+    <Compile Include="Controllers\Api\CurrencyController.cs" />
+    <Compile Include="Controllers\Api\ExameAccountAnswerDetailsController.cs" />
+    <Compile Include="Controllers\Api\ExameController.cs" />
+    <Compile Include="Controllers\Api\InvaitController.cs" />
+    <Compile Include="Controllers\Api\LanguageController.cs" />
+    <Compile Include="Controllers\Api\LocationController.cs" />
+    <Compile Include="Controllers\Api\LoginController.cs" />
+    <Compile Include="Controllers\Api\NewsletterController.cs" />
+    <Compile Include="Controllers\Api\PaymentController.cs" />
+    <Compile Include="Controllers\Api\PostSearchController.cs" />
+    <Compile Include="Controllers\Api\PostController.cs" />
+    <Compile Include="Controllers\Api\ProductCommentController.cs" />
+    <Compile Include="Controllers\Api\ProductEmallsController.cs" />
+    <Compile Include="Controllers\Api\SearchController.cs" />
+    <Compile Include="Controllers\Api\ProductSearchController.cs" />
+    <Compile Include="Controllers\Api\ProductController.cs" />
+    <Compile Include="Controllers\Api\ProductLikeController.cs" />
+    <Compile Include="Controllers\Api\ProductNotifyController.cs" />
+    <Compile Include="Controllers\Api\ProductQuantityController.cs" />
+    <Compile Include="Controllers\Api\RebateController.cs" />
+    <Compile Include="Controllers\Api\RegisterController.cs" />
+    <Compile Include="Controllers\Api\SendTypeController.cs" />
+    <Compile Include="Controllers\Api\SendTypeStore2Controller.cs" />
+    <Compile Include="Controllers\Api\SendTypeStoreController.cs" />
+    <Compile Include="Controllers\Api\ShippingCityController.cs" />
+    <Compile Include="Controllers\Api\ShopFollowController.cs" />
+    <Compile Include="Controllers\Api\ShopResellerCollectionController.cs" />
+    <Compile Include="Controllers\Api\ShopResellerController.cs" />
+    <Compile Include="Controllers\Api\ShopResellerGalleryController.cs" />
+    <Compile Include="Controllers\Api\ShopResellerProductController.cs" />
+    <Compile Include="Controllers\Api\ShopResellerStoryController.cs" />
+    <Compile Include="Controllers\Api\StateController.cs" />
+    <Compile Include="Controllers\Api\StoreCommentController.cs" />
+    <Compile Include="Controllers\Api\StoreController.cs" />
+    <Compile Include="Controllers\Api\StoreProductQuantityController.cs" />
+    <Compile Include="Controllers\Api\SurveyAnswerController.cs" />
+    <Compile Include="Controllers\Api\SurveyController.cs" />
+    <Compile Include="Controllers\Api\TrackingController.cs" />
+    <Compile Include="Controllers\Api\UploadDocumentController.cs" />
+    <Compile Include="Controllers\Api\UploadPictureController.cs" />
+    <Compile Include="Controllers\Api\WebsiteFormController.cs" />
+    <Compile Include="Controllers\Website\ClubController.cs" />
+    <Compile Include="Controllers\Website\CustomCache.cs" />
+    <Compile Include="Controllers\Website\DeliveryController.cs" />
+    <Compile Include="Controllers\Website\AccountController.cs" />
+    <Compile Include="Controllers\Website\AccountAddressController.cs" />
+    <Compile Include="Controllers\Website\CartController.cs" />
+    <Compile Include="Controllers\Website\BannerController.cs" />
+    <Compile Include="Controllers\Website\BrandController.cs" />
+    <Compile Include="Controllers\Website\CategoryController.cs" />
+    <Compile Include="Controllers\Website\CityController.cs" />
+    <Compile Include="Controllers\Website\ColorController.cs" />
+    <Compile Include="Controllers\Website\CurrencyController.cs" />
+    <Compile Include="Controllers\Website\DiscountController.cs" />
+    <Compile Include="Controllers\Website\DiscountGroupController.cs" />
+    <Compile Include="Controllers\Website\ErrorPageController.cs" />
+    <Compile Include="Controllers\Website\ExameController.cs" />
+    <Compile Include="Controllers\Website\GalleryController.cs" />
+    <Compile Include="Controllers\Website\HomeController.cs" />
+    <Compile Include="Controllers\Website\LanguageController.cs" />
+    <Compile Include="Controllers\Website\MallController.cs" />
+    <Compile Include="Controllers\Website\MenuController.cs" />
+    <Compile Include="Controllers\Website\MerchantController.cs" />
+    <Compile Include="Controllers\Website\NewsLetterController.cs" />
+    <Compile Include="Controllers\Website\OnlineOrderController.cs" />
+    <Compile Include="Controllers\Website\PackageController.cs" />
+    <Compile Include="Controllers\Website\PaymentExameController.cs" />
+    <Compile Include="Controllers\Website\PaymentCertificateController.cs" />
+    <Compile Include="Controllers\Website\PaymentController.cs" />
+    <Compile Include="Controllers\Website\PictureController.cs" />
+    <Compile Include="Controllers\Website\PostController.cs" />
+    <Compile Include="Controllers\Website\ProductBrandController.cs" />
+    <Compile Include="Controllers\Website\ProductCategoryController.cs" />
+    <Compile Include="Controllers\Website\ProductCommentController.cs" />
+    <Compile Include="Controllers\Website\SmartOfferQuestionController.cs" />
+    <Compile Include="Controllers\Website\ProductController.cs" />
+    <Compile Include="Controllers\Website\ProductCustomFieldController.cs" />
+    <Compile Include="Controllers\Website\ProductCustomItemController.cs" />
+    <Compile Include="Controllers\Website\ProductLikeController.cs" />
+    <Compile Include="Controllers\Website\ProductShopController.cs" />
+    <Compile Include="Controllers\Website\ProductSubCategoryController.cs" />
+    <Compile Include="Controllers\Website\ProductTypeController.cs" />
+    <Compile Include="Controllers\Website\SendTypeController.cs" />
+    <Compile Include="Controllers\Website\SeoController.cs" />
+    <Compile Include="Controllers\Website\ShopController.cs" />
+    <Compile Include="Controllers\Website\ShopResellerCollectionController.cs" />
+    <Compile Include="Controllers\Website\ShopResellerController.cs" />
+    <Compile Include="Controllers\Website\SiteUserController.cs" />
+    <Compile Include="Controllers\Website\SizeController.cs" />
+    <Compile Include="Controllers\Website\SliderController.cs" />
+    <Compile Include="Controllers\Website\StateController.cs" />
+    <Compile Include="Controllers\Website\StaticPageController.cs" />
+    <Compile Include="Controllers\Website\StoreCommentController.cs" />
+    <Compile Include="Controllers\Website\StoreController.cs" />
+    <Compile Include="Controllers\Website\SurveyQuestionController.cs" />
+    <Compile Include="Controllers\Website\Utility.cs" />
+    <Compile Include="Controllers\Website\VCard.cs" />
+    <Compile Include="Controllers\Website\WebsiteFormController.cs" />
+    <Compile Include="Controllers\Website\WebsiteViewController.cs" />
+    <Compile Include="Filters\AllowCrossSiteJsonAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="Areas\Store\assets\plugins\bootstrap-jalali-datepicker-master\README.md" />
+    <Content Include="Areas\Store\Views\Products\ProductQuantity.cshtml" />
+    <Content Include="Areas\Store\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Store\Views\Dashboard\StatusCount.cshtml" />
+    <Content Include="Areas\Store\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Shipping\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Accounts\Edit.cshtml" />
+    <Content Include="Areas\Store\Views\Discount\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Discount\Create.cshtml" />
+    <Content Include="Areas\Store\Views\Shared\Message.cshtml" />
+    <Content Include="Areas\Store\Views\Discount\Edit.cshtml" />
+    <Content Include="Areas\Store\Views\Clearing\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Shared\Invalid.cshtml" />
+    <Content Include="Areas\Store\Views\ShippingState\Index.cshtml" />
+    <Content Include="Areas\Store\Views\Partial\_AjaxLoader.cshtml" />
+    <Content Include="Areas\Store\Views\Products\PriceRange.cshtml" />
+    <Content Include="Views\Default\Seo\Home_Index.cshtml" />
+    <Content Include="Views\Default\Seo\Post_Index.cshtml" />
+    <Content Include="Views\Default\Seo\Product_Index.cshtml" />
+    <Content Include="Views\Default\Seo\Product_Search.cshtml" />
+    <Content Include="Views\Default\Seo\Shared_MetaTags.cshtml" />
+    <Content Include="Views\Default\Seo\StaticPage.cshtml" />
+    <Content Include="Views\Default\Shared\PrintLayout.cshtml" />
+    <Content Include="Views\Default\Shared\PaymentLayout.cshtml" />
+    <Content Include="Assets\Default\Payment\fonts\IRANSansWeb.ttf" />
+    <Content Include="Views\Default\Seo\Brand.cshtml" />
+    <Content Include="Views\Default\Partial\SimpleString.cshtml" />
+    <Content Include="Views\Default\Seo\Post_Pages.cshtml" />
+    <Content Include="Views\Default\Shared\_Search.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Assets\Default\Font\IRANSansWeb.eot" />
+    <Content Include="Assets\Default\Font\IRANSansWeb.ttf" />
+    <Content Include="Assets\Default\Font\IRANSansWeb.woff" />
+    <Content Include="Assets\Default\Font\IRANSansWeb.woff2" />
+    <Content Include="Assets\Default\Font\Yekan.eot" />
+    <Content Include="Assets\Default\Font\Yekan.ttf" />
+    <Content Include="Assets\Default\Font\Yekan.woff" />
+    <Content Include="Assets\Plugins\cropit-master\.jshintrc" />
+    <Content Include="Assets\Plugins\cropit-master\bower.json" />
+    <Content Include="Assets\Plugins\cropit-master\CHANGELOG.md" />
+    <Content Include="Assets\Plugins\cropit-master\cropit.jquery.json" />
+    <Content Include="Assets\Plugins\cropit-master\LICENSE" />
+    <Content Include="Assets\Plugins\cropit-master\package.json" />
+    <Content Include="Assets\Plugins\cropit-master\README.md" />
+    <Content Include="Assets\Plugins\toastr\js\toastr.js.map" />
+    <Content Include="Areas\Store\Views\Delivery\Active.cshtml" />
+    <Content Include="Areas\Store\Views\Delivery\Create.cshtml" />
+    <Content Include="Areas\Store\Views\Delivery\Delete.cshtml" />
+    <Content Include="Areas\Store\Views\Delivery\Index.cshtml" />
+    <Content Include="Areas\Store\Views\StateCity\GetCitiesDD.cshtml" />
+    <Content Include="Areas\Store\Views\StateCity\GetStatesDD.cshtml" />
+    <Content Include="Assets\Plugins\bootstrap-rtl\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Assets\Plugins\bootstrap-rtl\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\Plugins\bootstrap-rtl\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\MorabiIran\fonts\bootstrap-icons-fonts\bootstrap-icons.woff" />
+    <Content Include="Assets\MorabiIran\fonts\bootstrap-icons-fonts\bootstrap-icons.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-Black.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-Bold.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-ExtraBold.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-Heavy.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-Light.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-Medium.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-Regular.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-SemiBold.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\Morabba-UltraLight.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-Black.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-Bold.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-ExtraBlack.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-ExtraBold.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-Light.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-Regular.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-SemiBold.ttf" />
+    <Content Include="Assets\MorabiIran\fonts\YekanBakhFaNum-Thin.ttf" />
+    <Content Include="Assets\MorabiIran\images\favicon\site.webmanifest" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\Default\Home\Index.cshtml" />
+    <Content Include="Views\Default\Merchant\Merchants.cshtml" />
+    <Content Include="Views\Default\Partial\Address_Item.cshtml" />
+    <Content Include="Views\Default\Partial\Message.cshtml" />
+    <Content Include="Views\Default\Partial\PaginationPost.cshtml" />
+    <Content Include="Views\Default\Partial\SearchPagination.cshtml" />
+    <Content Include="Views\Default\Partial\SeoPack.cshtml" />
+    <Content Include="Views\Default\Partial\ShowRate.cshtml" />
+    <Content Include="Views\Default\Payment\CallBack.cshtml" />
+    <Content Include="Views\Default\Payment\Merchant.cshtml" />
+    <Content Include="Views\Default\Payment\Start.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Default\Account\PrintAccountOrder.cshtml" />
+    <Content Include="Views\Default\Partial\AccountOrderPartial.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Address.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Dashboard.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Favorite.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Forget.cshtml" />
+    <Content Include="Views\MorabiIran\Account\GiftCard.cshtml" />
+    <Content Include="Views\MorabiIran\Account\History.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Login.cshtml" />
+    <Content Include="Views\MorabiIran\Account\LoginPartial.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Order.cshtml" />
+    <Content Include="Views\MorabiIran\Account\PrintAccountOrder.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Profile.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Recover.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Register.cshtml" />
+    <Content Include="Views\MorabiIran\Account\SignIn.cshtml" />
+    <Content Include="Views\MorabiIran\Account\SignUp.cshtml" />
+    <Content Include="Views\MorabiIran\Account\UserComment.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Verify.cshtml" />
+    <Content Include="Views\MorabiIran\AccountAddress\CartAccountAddress.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_HomeAboutUs.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_AboutUsBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_BMIBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_ConsultationBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_CountBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_FooterLink.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_HomeBannerIcon.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_ImageBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_LoginText.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_MoreSaleProduct.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_OrderFormBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_SliderBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_WorkWithUsBannerOption.cshtml" />
+    <Content Include="Views\MorabiIran\Brand\_Pagination.cshtml" />
+    <Content Include="Views\MorabiIran\Brand\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\_CartHeader.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\_MessageBox.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\Address.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\AddressInner.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\CartBadge.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\Confirm.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\ConfirmInner.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\IndexInner.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\SetMerchant.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\SetRebate.cshtml" />
+    <Content Include="Views\MorabiIran\ErrorPage\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Gallery\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Gallery\Search.cshtml" />
+    <Content Include="Views\MorabiIran\Home\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\AddAddress.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\AddAddressBasket.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\ChangePassword.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\EditProfile.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\FirstMessage.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\ImageCropper.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\Invitation.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\LoginRegister.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\ModalLoading.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\RemoveAddress.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\ShippingCity.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\SimilarProduct.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\UserAnswer.cshtml" />
+    <Content Include="Views\MorabiIran\Modal\UserAnswerStore.cshtml" />
+    <Content Include="Views\MorabiIran\NewsLetter\ExistNewsLetter.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_AddAddressContent.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_AjaxLoader.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_Breadcrumb.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_City.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_Country.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_DiscountCounter.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_Login.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_NavbarMenu.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_NewsLetter.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_Register.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\_State.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\AccountOrderPartial.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\AddressItem.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\AddressItemLocation.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\AddressLocation.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\BasketAddressItem.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\Compare.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\FavoritPagination.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\FavoritProductItem.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\LastFavorite.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\LocationShow.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\PostPagination.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\ProductItem.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\ProductVisitPagination.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\SearchPagination.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\ShipingAddressLocation.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\ShowRate.cshtml" />
+    <Content Include="Views\MorabiIran\Payment\CallBack.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_AboutUs.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_AgentsItem.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_BlogFooter.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_BlogItem.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_BlogItemInner.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_BlogMostVist.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_LatestBlogList.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_OrderFormFile.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_Pagination.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_Questions.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_SatisfactionItem.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_Search.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_ServicesItem.cshtml" />
+    <Content Include="Views\MorabiIran\Post\Agents.cshtml" />
+    <Content Include="Views\MorabiIran\Post\Blog.cshtml" />
+    <Content Include="Views\MorabiIran\Post\HomeNewBlogList.cshtml" />
+    <Content Include="Views\MorabiIran\Post\HomeNewNewsList.cshtml" />
+    <Content Include="Views\MorabiIran\Post\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Post\Questions.cshtml" />
+    <Content Include="Views\MorabiIran\Post\Services.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_Discount.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_ExistFilterItem.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_ExistFilters.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_Pagination.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_PriceRange.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_SearchBox.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_SearchDetail.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_SortSearch.cshtml" />
+    <Content Include="Views\MorabiIran\Product\_Stock.cshtml" />
+    <Content Include="Views\MorabiIran\Product\Compare.cshtml" />
+    <Content Include="Views\MorabiIran\Product\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Product\IndexDetails.cshtml" />
+    <Content Include="Views\MorabiIran\Product\IndexInner.cshtml" />
+    <Content Include="Views\MorabiIran\Product\IndexPictures.cshtml" />
+    <Content Include="Views\MorabiIran\Product\IndexProductLike.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductCompareItem.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItem.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItemList.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItemListSimilar.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItemMoreSaleList.cshtml" />
+    <Content Include="Views\MorabiIran\Product\Search.cshtml" />
+    <Content Include="Views\MorabiIran\ProductBrand\_HomeItem.cshtml" />
+    <Content Include="Views\MorabiIran\ProductBrand\SearchPage.cshtml" />
+    <Content Include="Views\MorabiIran\ProductComment\UserAnswer.cshtml" />
+    <Content Include="Views\MorabiIran\ProductComment\UserComment.cshtml" />
+    <Content Include="Views\MorabiIran\ProductComment\UserCommentList.cshtml" />
+    <Content Include="Views\MorabiIran\ProductType\_NavbarProductType.cshtml" />
+    <Content Include="Views\MorabiIran\ProductType\_ProductType.cshtml" />
+    <Content Include="Views\MorabiIran\ProductType\DesktopMenu.cshtml" />
+    <Content Include="Views\MorabiIran\ProductType\DesktopMenuStock.cshtml" />
+    <Content Include="Views\MorabiIran\ProductType\MobileMenu.cshtml" />
+    <Content Include="Views\MorabiIran\ProductType\MobileMenuStock.cshtml" />
+    <Content Include="Views\MorabiIran\ProductType\SearchPage.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Cart.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Css.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_FloatIcons.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Footer.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Header.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Layout.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_LoginRegister.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_LoginRegisterMobile.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_MetaTags.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_PrintLayout.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Script.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Search.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_UserMenu.cshtml" />
+    <Content Include="Views\MorabiIran\Slider\MainSlider.cshtml" />
+    <Content Include="Views\MorabiIran\StaticPage\AboutUs.cshtml" />
+    <Content Include="Views\MorabiIran\StaticPage\Consultation.cshtml" />
+    <Content Include="Views\MorabiIran\StaticPage\ContactUs.cshtml" />
+    <Content Include="Views\MorabiIran\StaticPage\OrderForm.cshtml" />
+    <Content Include="Views\MorabiIran\StaticPage\Questions.cshtml" />
+    <Content Include="Views\MorabiIran\StaticPage\Rules.cshtml" />
+    <Content Include="Views\MorabiIran\StaticPage\WorkWithUs.cshtml" />
+    <Content Include="Views\MorabiIran\StoreComment\UserCommentList.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ServicesItem.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ServicesList.cshtml" />
+    <Content Include="Views\MorabiIran\Product\CourseItemList.cshtml" />
+    <Content Include="Views\MorabiIran\Product\CourseItem.cshtml" />
+    <Content Include="Views\MorabiIran\Gallery\HomeVideo.cshtml" />
+    <Content Include="Views\MorabiIran\Post\HomeVideo.cshtml" />
+    <Content Include="Views\MorabiIran\ProductCustomField\SearchPage.cshtml" />
+    <Content Include="Views\MorabiIran\Product\CourseItemInner.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_LayoutIndex.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_HeaderIndex.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItemInner.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ShopItem.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ExamItem.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItemListSimilarShop.cshtml" />
+    <Content Include="Views\MorabiIran\Post\_Goals.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_MapBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Post\News.cshtml" />
+    <Content Include="Views\MorabiIran\Post\video.cshtml" />
+    <Content Include="Views\MorabiIran\Account\OrderCourse.cshtml" />
+    <Content Include="Views\MorabiIran\Account\OrderExame.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_CommentBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Account\AnswerSheet.cshtml" />
+    <Content Include="Views\MorabiIran\Account\Report.cshtml" />
+    <Content Include="Views\MorabiIran\Exame\Expire.cshtml" />
+    <Content Include="Views\MorabiIran\Exame\Finish.cshtml" />
+    <Content Include="Views\MorabiIran\Exame\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Exame\Success.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_AddressInfoBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Product\Error.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ShowModal.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\ShowError.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ListCourse.cshtml" />
+    <Content Include="Views\MorabiIran\Cart\SetMessage.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ListCourseOld.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ListCourseOldAccount.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ListCourseForExameOldAccount.cshtml" />
+    <Content Include="Views\MorabiIran\Club\_Pagination.cshtml" />
+    <Content Include="Views\MorabiIran\Club\Create.cshtml" />
+    <Content Include="Views\MorabiIran\Partial\LocationPicker.cshtml" />
+    <Content Include="Views\MorabiIran\Exame\Error.cshtml" />
+    <Content Include="Views\MorabiIran\Product\PackageOneItemList.cshtml" />
+    <Content Include="Views\MorabiIran\Product\PackageTwoItemList.cshtml" />
+    <Content Include="Views\MorabiIran\State\Search.cshtml" />
+    <Content Include="Views\MorabiIran\Club\Search.cshtml" />
+    <Content Include="Views\MorabiIran\Club\ClubItem.cshtml" />
+    <Content Include="Views\MorabiIran\Club\Map.cshtml" />
+    <Content Include="Views\MorabiIran\State\Search2.cshtml" />
+    <Content Include="Views\MorabiIran\Club\Search2.cshtml" />
+    <Content Include="Views\MorabiIran\Club\Index.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Default\Payment\CallBack2.cshtml" />
+    <Content Include="Views\MorabiIran\Account\PrintCertificate.cshtml" />
+    <Content Include="Views\MorabiIran\Payment\CallBackBook.cshtml" />
+    <Content Include="Views\MorabiIran\Payment\CallBackExame.cshtml" />
+    <Content Include="Views\MorabiIran\Payment\CallBackCertificate.cshtml" />
+    <Content Include="Views\MorabiIran\Product\GetPrice.cshtml" />
+    <Content Include="Views\MorabiIran\Product\SearchProductIds.cshtml" />
+    <Content Include="Views\Default\Payment\CallBack3.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItemSell.cshtml" />
+    <Content Include="Views\MorabiIran\Product\ProductItemSellList.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Store\Models\" />
+    <Folder Include="Areas\Store\Views\StaticPage\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
+      <Project>{37746aed-174a-44f4-b2c5-606fc4e76f8a}</Project>
+      <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resource\Resource.csproj">
+      <Project>{e69842f3-a970-4607-815e-5c70fe6f3ee5}</Project>
+      <Name>Resource</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>57667</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:6027</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

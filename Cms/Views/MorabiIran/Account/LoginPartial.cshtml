@@ -1,0 +1,76 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model DataLayer.Entities.Account
+
+@{
+
+    if (ViewBag.Message == null)
+    {
+        ViewBag.Message = new ViewMessage();
+    }
+    var message = (ViewMessage)ViewBag.Message;
+    }
+
+
+<section class="loginRegister">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 central">
+                <div class="loginBox registerBox">
+                    <div class="page_title">
+                        <strong class="titleText">ایجاد یک حساب کاربری</strong>
+                    </div>
+                    @*<p class="my-5">
+                            با یک حساب تانیا گلد می توانید در زمان پرداخت صرفه جویی کنید ، از هر دستگاهی به کیف خرید خود دسترسی پیدا کنید و سابقه سفارش خود را مشاهده کنید.
+                        </p>*@
+
+                    <a href="@Url.Action("Register","Account",new {back= ViewBag.back})" class="btn primary_btn w-100">@Resource.Lang.SignUp</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="loginBox loginForm">
+                    <div class="page_title">
+                        <strong class="titleText">@Resource.Lang.SignIn</strong>
+                    </div>
+                    <p>با حساب کاربری خود وارد شوید</p>
+                    <div class="mt-3">
+                        @using (Html.BeginForm())
+                        {
+                            if (!string.IsNullOrEmpty(message.Body))
+                            {
+                                <p class="alert alert-danger">@message.Body</p>
+                            }
+                            <input type="hidden" name="back" value="@ViewBag.back" />
+                            <input type="hidden" name="remember" value="true" />
+
+                            <div class="from-group floatingForm">
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @placeholder = " " } })
+
+                                <label for="userName">@Resource.Lang.MobileNumber </label>
+                            </div>
+                            <div class="from-group floatingForm">
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = " " })
+
+                                <label for="userName"> @Resource.Lang.Password </label>
+                            </div>
+
+                            <a href="@Url.Action("Forget","Account",new {back= ViewBag.back})" class="recoverPass_btn">@Resource.Lang.RecoveryPassword</a>
+
+                            <div class="loginFooter">
+                                <button class="btn primary_btn w-100"><span>@Resource.Lang.SignIn</span></button>
+                            </div>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+

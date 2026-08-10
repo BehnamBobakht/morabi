@@ -1,0 +1,12 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    
+    <div class="section-title central flex-column align-items-start">
+        <h1>@Model.FirstOrDefault().GetName()</h1>
+    </div>
+    <div class="login-register-text">
+        <p>@Model.FirstOrDefault().GetSummery()</p>
+    </div>
+}

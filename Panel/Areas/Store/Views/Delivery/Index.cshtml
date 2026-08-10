@@ -1,0 +1,157 @@
+﻿@using DataLayer.Base;
+@model IEnumerable<DataLayer.ViewModels.DeliveryVm>
+@{
+    ViewBag.Title = Resource.Lang.Shipping;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    string index = BaseRouteView.GetStringValue(Request, "index");
+    string pageSize = BaseRouteView.GetStringValue(Request, "pageSize");
+    string storeId = BaseRouteView.GetStringValue(Request, "storeId");
+
+    int TotalCount = ViewBag.TotalCount;
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+                    //TableManageButtons.init();
+    </script>
+}
+<form method="get" action="@Url.Action("Index")">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <span class="control-label font-bold">@Resource.Lang.Store</span>
+                    <div>
+                        @Html.DropDownList("StoreId", null, new { @class = "form-control", @autocomplete = "off" })
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <span class="control-label font-bold">&nbsp;</span>
+                    <div>
+                        <input type="submit" class="btn btn-success col-xs-12" value=@Resource.Lang.Search>
+                    </div>
+                </div>
+                <div class="devider-15"></div>
+            </div>
+
+            <table class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">@Resource.Lang.Store</th>
+                        <th>@Resource.Lang.Type</th>
+                        <th>@Resource.Lang.Amount</th>
+                        <th>@Resource.Lang.PriceForFree</th>
+                        <th>@Resource.Lang.CashOnDeliveryMaxPrice</th>
+                        <th>@Resource.Lang.DeliveryMaxDays</th>
+                        <th>@Resource.Lang.City</th>
+                        <th>@Resource.Lang.State</th>
+                        <th>@Resource.Lang.Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(item.StoreId!=null?item.Store.Name:Resource.Lang.All)</td>
+                            <td>@item.DeliveryType.Name </td>
+                            <td>
+                                @if (item.IsUnknownPrice)
+                                {
+                                    @Resource.Lang.UnknownAmount
+                                }
+                                else
+                                {
+                                    @item.BasePrice.GetCurrencyFormat()
+                                }
+
+                            </td>
+                            <td>@((item.MinPriceForFree==null || item.MinPriceForFree< 0)?Resource.Lang.Undefined: item.MinPriceForFree.Value.ToString("n0"))</td>
+                            <td>@((item.CashOnDeliveryMaxPrice!=null || item.CashOnDeliveryMaxPrice > 0)?(string.Format("{0}({1})",Resource.Lang.CashOnDelivery,item.CashOnDeliveryMaxPrice.Value.ToString("n0"))) : Resource.Lang.Online)</td>
+                            
+                            <td>@((item.MaxDays==0)?Resource.Lang.Immediate : item.MaxDays.ToString())</td>
+                            <td>@Html.DisplayFor(modelItem => item.City.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.State.Name)</td>
+                            <td>
+                                @if (item.Active == true)
+                                {
+                                    <span>@Resource.Lang.Active</span>
+                                }
+                                else
+                                {
+                                    <span>@Resource.Lang.Deactive</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Edit, "Edit", new { id = item.ID }) | 
+                                @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.ID }) | 
+                                @Html.ActionLink(item.Active? Resource.Lang.Deactive : Resource.Lang.Active, "active", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                <ul class="pagination">
+                    @if (StartIndex > 1)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                                        storeId = storeId,
+                                        index = 1
+                                    })">@Resource.Lang.FirstPage</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                    <a href="#">@Resource.Lang.FirstPage</a>
+                                </li>
+                            }
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="paginate_button @active" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                                                                               storeId = storeId,
+
+                                        index = i
+                                    })">@(i.ToPersian())</a>
+                        </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new
+                                    {
+                                    storeId = storeId,
+                                        index = EndIndex
+                                    })">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                                    <a href="#">@Resource.Lang.LastPage</a>
+                                </li>
+                            }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- end col -->
+</form>

@@ -1,0 +1,10 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Base
+@model ProductSearchVm
+
+@foreach (var item in Model.Products)
+{
+
+        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/ServicesItem.cshtml", item)
+}
+

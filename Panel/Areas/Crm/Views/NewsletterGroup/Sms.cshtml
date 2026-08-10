@@ -1,0 +1,44 @@
+﻿@using DataLayer.ViewModels;
+@model DataLayer.Entities.NewsletterGroup
+@{
+    ViewBag.Title = Resource.Lang.SendSMS;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="form-group">
+                        <h4>@Resource.Lang.SendEmailToNewsLetterUsers - @Model.Name (@Model.NewsletterItem.Count @Resource.Lang.Person)</h4>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">@Resource.Lang.Context</label>
+                        <div class="col-md-10">
+                            <textarea name="Body" class="form-control" autofocus></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

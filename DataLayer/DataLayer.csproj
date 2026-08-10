@@ -1,0 +1,1987 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{37746AED-174A-44F4-B2C5-606FC4E76F8A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLayer</RootNamespace>
+    <AssemblyName>DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\HP\AppData\Local\Temp\vsF4C1.tmp\Debug\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\HP\AppData\Local\Temp\vsF4C1.tmp\Release\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Binbin.Linq.PredicateBuilder">
+      <HintPath>..\packages\Binbin.Linq.PredicateBuilder.1.0.3.26645\lib\net45\Binbin.Linq.PredicateBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExpressMapper, Version=1.9.1.0, Culture=neutral, PublicKeyToken=ac363faa09311ba0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expressmapper.1.9.1\lib\net45\ExpressMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.Net45.2.0.20\lib\net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=4.78.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+      <HintPath>..\packages\CompareNETObjects.4.78.0\lib\net48\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenPop">
+      <HintPath>..\packages\OpenPop.NET.2.0.6.1120\lib\net20\OpenPop.dll</HintPath>
+    </Reference>
+    <Reference Include="Persia">
+      <HintPath>..\packages\Persia.1.0.1\lib\Persia.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\packages\Quartz.2.5.0\lib\net40\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Device" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.1\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telegram.Bot, Version=10.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telegram.Bot.10.4.0\lib\net46\Telegram.Bot.dll</HintPath>
+    </Reference>
+    <Reference Include="ZarinPal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZarinPal-SDK.0.0.5\lib\ZarinPal.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\Core\ApiCast.cs" />
+    <Compile Include="Api\Core\ApiConfig.cs" />
+    <Compile Include="Api\Core\ApiHeaderParameter.cs" />
+    <Compile Include="Api\Core\ApiRequest.cs" />
+    <Compile Include="Api\Core\ApiResponse.cs" />
+    <Compile Include="Api\Core\ApiResult.cs" />
+    <Compile Include="Api\Core\ApiUrlParameter.cs" />
+    <Compile Include="Api\Core\ApiValidation.cs" />
+    <Compile Include="Api\Model\ApiAccountAddress.cs" />
+    <Compile Include="Api\Model\ApiSurveyAnswer.cs" />
+    <Compile Include="Api\Model\ApiContactUs.cs" />
+    <Compile Include="Api\Model\ApiStoreComment.cs" />
+    <Compile Include="Api\Model\ApiShippingCity.cs" />
+    <Compile Include="Api\Model\ApiPost.cs" />
+    <Compile Include="Api\Model\ApiProductCompare.cs" />
+    <Compile Include="Api\Model\ApiStoreProductQuantity.cs" />
+    <Compile Include="Api\Model\ApiStore.cs" />
+    <Compile Include="Api\Model\ApiAccount.cs" />
+    <Compile Include="Api\Model\ApiAccountCredit.cs" />
+    <Compile Include="Api\Model\ApiAccountOrder.cs" />
+    <Compile Include="Api\Model\ApiAccountPasswordForget.cs" />
+    <Compile Include="Api\Model\ApiAccountReagent.cs" />
+    <Compile Include="Api\Model\ApiCity.cs" />
+    <Compile Include="Api\Model\ApiContactForm.cs" />
+    <Compile Include="Api\Model\ApiCountry.cs" />
+    <Compile Include="Api\Model\ApiNewsletter.cs" />
+    <Compile Include="Api\Model\ApiPayment.cs" />
+    <Compile Include="Api\Model\ApiProduct.cs" />
+    <Compile Include="Api\Model\ApiProductComment.cs" />
+    <Compile Include="Api\Model\ApiProductLike.cs" />
+    <Compile Include="Api\Model\ApiProductNotify.cs" />
+    <Compile Include="Api\Model\ApiProductType.cs" />
+    <Compile Include="Api\Model\ApiRebate.cs" />
+    <Compile Include="Api\Model\ApiSendType.cs" />
+    <Compile Include="Api\Model\ApiShop.cs" />
+    <Compile Include="Api\Model\ApiShopFollow.cs" />
+    <Compile Include="Api\Model\ApiShopReseller.cs" />
+    <Compile Include="Api\Model\ApiShopResellerCollection.cs" />
+    <Compile Include="Api\Model\ApiShopResellerGallery.cs" />
+    <Compile Include="Api\Model\ApiShopResellerProduct.cs" />
+    <Compile Include="Api\Model\ApiShopResellerStory.cs" />
+    <Compile Include="Api\Model\ApiState.cs" />
+    <Compile Include="Api\Model\ApiOrderTracking.cs" />
+    <Compile Include="Api\Model\ApiUploadDocument.cs" />
+    <Compile Include="Api\Model\ApiUploadPicture.cs" />
+    <Compile Include="Api\Model\ApiWebsiteForm.cs" />
+    <Compile Include="Context\UnitOfWork.cs" />
+    <Compile Include="Entities\Account.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountAddress.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountBasket.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountCredit.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountDocument.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountLog.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountLogVisit.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountOrder.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountOrderComment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountOrderProduct.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountPasswordForget.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountReagent.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Agreement.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AgreementModule.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AgreementPlatform.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AlexaRank.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Bank.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Banner.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BannerLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BookPayment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CacheSetting.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Cart.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CartStore.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CartStoreItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Category.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CategoryLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Chat.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\City.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CityLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Clearing.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Clubs.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Code.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CodeGroup.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Color.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ColorLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Comment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CompetitiveFeature.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Contact.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ContactUs.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ContactUsField.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Country.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CoursePayment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Currency.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Dashboard.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DatabaseEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DatabaseEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DatabaseEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Delivery.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DeliveryType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Discount.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DiscountGroup.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Email.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EmailAddress.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EmailAttachment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EmailHost.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EmailInbox.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EmailSetting.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EmailType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Event.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Exame.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExameAccountAnswer.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExameAccountAnswerDetails.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExameAnswerItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExameCourse.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExameCourseCategory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExameQuestion.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExameReportByCourse.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\File.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Gallery.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\GalleryLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\GalleryPictures.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Guarantee.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\GuaranteeCompany.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Language.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Mall.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MallContact.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MallPicture.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Menu.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MenuLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Merchant.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Module.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ModuleItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Newsletter.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NewsletterGroup.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NewsletterItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Notification.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationApp.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationProject.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\OnlineOrder.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Package.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Payment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentCertificate.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentExame.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentExameCourseId.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentPackage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentProductOrder.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentSubject.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PaymentWebsite.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Permission.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Picture.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Post.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PostLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PostLike.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PostQuestion.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PriceRange.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Product.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductBarcode.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductBrand.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductBrandLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductBrandUser.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCategory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCategoryCompany.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCategoryLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductColor.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductComment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCompany.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCustomField.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCustomFieldLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCustomItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCustomItemLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCustomValue.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductCustomValueLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductExteraCategory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductExteraSubCategory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductExteraType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductLike.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductNotify.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductOption.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductOptionItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductOptionItemLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductOptionLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductPiceHistory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductPicture.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductProductOptionItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductQuantity.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductSize.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductSubCategory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductSubCategoryLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductTypeBrand.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductTypeLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ProductVisit.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\QuestionRegister.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\QuestionRegisterItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\QuestionRegisterProduct.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\QuestionRegisterValue.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\QuizPayment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Rebate.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RecoverPassword.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Review.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SendType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ServerException.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Setting.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SettingGroup.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SetupLevel.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Shipping.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShippingCity.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Shop.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopAddress.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopChat.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopContact.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopCustomField.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopCustomItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopCustomValue.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopDocument.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopFollow.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopPackage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopPaymentType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopPicture.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopProductType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopReportBlock.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopReseller.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopResellerCollection.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopResellerCollectionProduct.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopResellerGallery.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopResellerLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopResellerProduct.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopResellerStory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopUser.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ShopWebsiteSetting.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SiteUser.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SiteUserUserGroup.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Size.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SizeLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Slider.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SliderLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SmartOfferAnswer.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SmartOfferQuestion.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Sms.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SmsNumber.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SmsProvider.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SmsSetting.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SmsType.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\State.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StateLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StaticPage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Store.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StoreComment.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StoreCompetitiveFeature.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StoreProduct.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StoreProductQuantity.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Students.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Survey.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyAnswer.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyAnswerDetail.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyAnswerDetailItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyQuestion.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyQuestionItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyQuestionItemLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SurveyQuestionLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SyncLog.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Tag.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TagPost.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TagSubcategory.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TelegramAccount.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TelegramBot.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TelegramCommand.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TelegramKeyBoard.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TelegramKeyBoardItem.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Template.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Unit.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UserGroup.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UserGroupDashboard.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UserGroupPermission.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UserRole.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\VersionUpdate.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Website.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteContactForm.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteDetail.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteDocument.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteDomain.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteForm.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteFormAccount.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteFormField.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteFormValue.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteLanguage.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteShortUrl.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteUser.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WebsiteView.cs">
+      <DependentUpon>DatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enumarables\Enum_OutputCache.cs" />
+    <Compile Include="Enumarables\Enum_StateCity.cs" />
+    <Compile Include="Enumarables\Enum_ResultStatus.cs" />
+    <Compile Include="Enumarables\Enum_Cookie.cs" />
+    <Compile Include="Enumarables\Enum_Cart.cs" />
+    <Compile Include="Enumarables\Enum_PageName.cs" />
+    <Compile Include="Enumarables\Enum_SurveyQuestion.cs" />
+    <Compile Include="Enumarables\Enum_ProductCategoryOrder.cs" />
+    <Compile Include="Enumarables\Enum_ProductCompanyOrder.cs" />
+    <Compile Include="Enumarables\Enum_ShippingCityType.cs" />
+    <Compile Include="Enumarables\Enum_TagType.cs" />
+    <Compile Include="Enumarables\Enum_StorePanel.cs" />
+    <Compile Include="Enumarables\Enum_BannerOrder.cs" />
+    <Compile Include="Enumarables\Enum_EmailType.cs" />
+    <Compile Include="Enumarables\Enum_PaymentType.cs" />
+    <Compile Include="Enumarables\Enum_PostOrder.cs" />
+    <Compile Include="Enumarables\Enum_PostOutput.cs" />
+    <Compile Include="Enumarables\Enum_ProductBrandOrder.cs" />
+    <Compile Include="Enumarables\Enum_Report.cs" />
+    <Compile Include="Enumarables\Enum_RequestMethod.cs" />
+    <Compile Include="Enumarables\Enum_ShopResellerOrder.cs" />
+    <Compile Include="Enumarables\Enum_Sitemap.cs" />
+    <Compile Include="Enumarables\Enum_SmsProvider.cs" />
+    <Compile Include="Enumarables\Enum_SmsType.cs" />
+    <Compile Include="Enumarables\Enum_Api.cs" />
+    <Compile Include="Enumarables\Enum_Bank.cs" />
+    <Compile Include="Enumarables\Enum_Code.cs" />
+    <Compile Include="Enumarables\Enum_CodeGroup.cs" />
+    <Compile Include="Enumarables\Enum_Lang.cs" />
+    <Compile Include="Enumarables\Enum_Message.cs" />
+    <Compile Include="Enumarables\Enum_MessageType.cs" />
+    <Compile Include="Enumarables\Enum_PageError.cs" />
+    <Compile Include="Enumarables\Enum_PaymentSubject.cs" />
+    <Compile Include="Enumarables\Enum_Permission.cs" />
+    <Compile Include="Enumarables\Enum_ProductOrder.cs" />
+    <Compile Include="Enumarables\Enum_ProductOutput.cs" />
+    <Compile Include="Enumarables\Enum_ResultType.cs" />
+    <Compile Include="Enumarables\Enum_SearchType.cs" />
+    <Compile Include="Enumarables\Enum_SetupLevel.cs" />
+    <Compile Include="Enumarables\Enum_Social.cs" />
+    <Compile Include="Enumarables\Enum_StoryType.cs" />
+    <Compile Include="Enumarables\Enum_UserRole.cs" />
+    <Compile Include="Enumarables\Enum_Validation.cs" />
+    <Compile Include="Generics\BaseRepository.cs" />
+    <Compile Include="Helpers\Common\BaseSearch.cs" />
+    <Compile Include="Helpers\Common\BaseCache.cs" />
+    <Compile Include="Helpers\Common\BaseString.cs" />
+    <Compile Include="Helpers\Common\BaseDelivery.cs" />
+    <Compile Include="Helpers\Common\BaseCookie.cs" />
+    <Compile Include="Helpers\Common\BaseCart.cs" />
+    <Compile Include="Helpers\Common\BaseContent.cs" />
+    <Compile Include="Helpers\Common\BaseMerchant.cs" />
+    <Compile Include="Helpers\Common\BaseSms.cs" />
+    <Compile Include="Helpers\Common\BaseRebate.cs" />
+    <Compile Include="Helpers\Common\BaseDiscount.cs" />
+    <Compile Include="Helpers\Common\BaseRandom.cs" />
+    <Compile Include="Helpers\Common\BaseConvert.cs" />
+    <Compile Include="Helpers\Common\BaseDate.cs" />
+    <Compile Include="Helpers\Common\BaseEmail.cs" />
+    <Compile Include="Helpers\Common\BaseExcel.cs" />
+    <Compile Include="Helpers\Common\BaseExtension.cs" />
+    <Compile Include="Helpers\Common\BaseHtml.cs" />
+    <Compile Include="Helpers\Common\BaseLanguage.cs" />
+    <Compile Include="Helpers\Common\BaseMessage.cs" />
+    <Compile Include="Helpers\Common\BasePath.cs" />
+    <Compile Include="Helpers\Common\BasePayment.cs" />
+    <Compile Include="Helpers\Common\BasePersian.cs" />
+    <Compile Include="Helpers\Common\BaseReport.cs" />
+    <Compile Include="Helpers\Common\BaseSecurity.cs" />
+    <Compile Include="Helpers\Common\BaseStore.cs" />
+    <Compile Include="Helpers\Common\BaseUrl.cs" />
+    <Compile Include="Helpers\Common\BaseView.cs" />
+    <Compile Include="Helpers\Common\BaseWebsite.cs" />
+    <Compile Include="Helpers\Google\Recaptcha.cs" />
+    <Compile Include="Helpers\Mapping\MapAll.cs" />
+    <Compile Include="Helpers\Merchant\BaseAsanPardakht.cs" />
+    <Compile Include="Helpers\Merchant\BaseBehPardakht.cs" />
+    <Compile Include="Helpers\Merchant\BaseCashbill.cs" />
+    <Compile Include="Helpers\Merchant\BaseEghtesadNovin.cs" />
+    <Compile Include="Helpers\Merchant\BaseFondy.cs" />
+    <Compile Include="Helpers\Merchant\BaseMelli.cs" />
+    <Compile Include="Helpers\Merchant\BaseNextPay.cs" />
+    <Compile Include="Helpers\Merchant\BaseParsian.cs" />
+    <Compile Include="Helpers\Merchant\BaseCashOnDelivery.cs" />
+    <Compile Include="Helpers\Merchant\BasePasargad.cs" />
+    <Compile Include="Helpers\Merchant\BasePayPal.cs" />
+    <Compile Include="Helpers\Merchant\BaseSaderatMabna.cs" />
+    <Compile Include="Helpers\Merchant\BaseSaman.cs" />
+    <Compile Include="Helpers\Merchant\BaseTejart.cs" />
+    <Compile Include="Helpers\Merchant\BaseZarinPal.cs" />
+    <Compile Include="Helpers\Notification\OneSignalApp.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\Entity_Account.cs" />
+    <Compile Include="Repositories\Entity_AccountLogVisit.cs" />
+    <Compile Include="Repositories\Entity_PaymentExameCourseId.cs" />
+    <Compile Include="Repositories\Entity_Clubs.cs" />
+    <Compile Include="Repositories\Entity_BookPayment.cs" />
+    <Compile Include="Repositories\Entity_PaymentExame.cs" />
+    <Compile Include="Repositories\Entity_PaymentCertificate.cs" />
+    <Compile Include="Repositories\Entity_QuestionRegisterProduct.cs" />
+    <Compile Include="Repositories\Entity_QuestionRegisterValue.cs" />
+    <Compile Include="Repositories\Entity_QuestionRegisterItem.cs" />
+    <Compile Include="Repositories\Entity_QuestionRegister.cs" />
+    <Compile Include="Repositories\Entity_Students.cs" />
+    <Compile Include="Repositories\Entity_QuizPayment.cs" />
+    <Compile Include="Repositories\Entity_CoursePayment.cs" />
+    <Compile Include="Repositories\Entity_Exame.cs" />
+    <Compile Include="Repositories\Entity_ExameAccountAnswer.cs" />
+    <Compile Include="Repositories\Entity_ExameAccountAnswerDetails.cs" />
+    <Compile Include="Repositories\Entity_ExameAnswerItem.cs" />
+    <Compile Include="Repositories\Entity_ExameCourse.cs" />
+    <Compile Include="Repositories\Entity_ExameCourseCategory.cs" />
+    <Compile Include="Repositories\Entity_ExameQuestion.cs" />
+    <Compile Include="Repositories\Entity_ExameReportByCourse.cs" />
+    <Compile Include="Repositories\Entity_SmartOfferAnswer.cs" />
+    <Compile Include="Repositories\Entity_SmartOfferQuestion.cs" />
+    <Compile Include="Repositories\Entity_PostQuestion.cs" />
+    <Compile Include="Repositories\Entity_ProductCustomValueLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductOptionItemLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductOptionLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductBrandLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductExteraSubCategory.cs" />
+    <Compile Include="Repositories\Entity_ProductExteraCategory.cs" />
+    <Compile Include="Repositories\Entity_ProductExteraType.cs" />
+    <Compile Include="Repositories\Entity_CacheSetting.cs" />
+    <Compile Include="Repositories\Entity_BannerLanguage.cs" />
+    <Compile Include="Repositories\Entity_DeliveryType.cs" />
+    <Compile Include="Repositories\Entity_Delivery.cs" />
+    <Compile Include="Repositories\Entity_CartStoreItem.cs" />
+    <Compile Include="Repositories\Entity_CartStore.cs" />
+    <Compile Include="Repositories\Entity_File.cs" />
+    <Compile Include="Repositories\Entity_ProductCategoryCompany.cs" />
+    <Compile Include="Repositories\Entity_ProductProductOptionItem.cs" />
+    <Compile Include="Repositories\Entity_ProductPiceHistory.cs" />
+    <Compile Include="Repositories\Entity_Cart.cs" />
+    <Compile Include="Repositories\Entity_StateLanguage.cs" />
+    <Compile Include="Repositories\Entity_SurveyAnswerDetail.cs" />
+    <Compile Include="Repositories\Entity_SurveyAnswerDetailItem.cs" />
+    <Compile Include="Repositories\Entity_SurveyAnswer.cs" />
+    <Compile Include="Repositories\Entity_SurveyQuestionItem.cs" />
+    <Compile Include="Repositories\Entity_SurveyQuestion.cs" />
+    <Compile Include="Repositories\Entity_SurveyQuestionItemLanguage.cs" />
+    <Compile Include="Repositories\Entity_SurveyQuestionLanguage.cs" />
+    <Compile Include="Repositories\Entity_SurveyLanguage.cs" />
+    <Compile Include="Repositories\Entity_Survey.cs" />
+    <Compile Include="Repositories\Entity_ContactUsField.cs" />
+    <Compile Include="Repositories\Entity_GalleryLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductCompany.cs" />
+    <Compile Include="Repositories\Entity_StoreCompetitiveFeature.cs" />
+    <Compile Include="Repositories\Entity_CompetitiveFeature.cs" />
+    <Compile Include="Repositories\Entity_PriceRange.cs" />
+    <Compile Include="Repositories\Entity_ContactUs.cs" />
+    <Compile Include="Repositories\Entity_StoreComment.cs" />
+    <Compile Include="Repositories\Entity_TagSubCategory.cs" />
+    <Compile Include="Repositories\Entity_TagPost.cs" />
+    <Compile Include="Repositories\Entity_Tag.cs" />
+    <Compile Include="Repositories\Entity_ProductLike.cs" />
+    <Compile Include="Repositories\Entity_ShippingCity.cs" />
+    <Compile Include="Repositories\Entity_Review.cs" />
+    <Compile Include="Repositories\Entity_AccountAddress.cs" />
+    <Compile Include="Repositories\Entity_AccountBasket.cs" />
+    <Compile Include="Repositories\Entity_AccountLog.cs" />
+    <Compile Include="Repositories\Entity_AccountOrderComment.cs" />
+    <Compile Include="Repositories\Entity_AccountOrderProduct.cs" />
+    <Compile Include="Repositories\Entity_AccountCredit.cs" />
+    <Compile Include="Repositories\Entity_AccountPasswordForget.cs" />
+    <Compile Include="Repositories\Entity_AccountReagent.cs" />
+    <Compile Include="Repositories\Entity_Agreement.cs" />
+    <Compile Include="Repositories\Entity_AgreementPlatform.cs" />
+    <Compile Include="Repositories\Entity_Alexa.cs" />
+    <Compile Include="Repositories\Entity_SliderLanguage.cs" />
+    <Compile Include="Repositories\Entity_CategoryLanguage.cs" />
+    <Compile Include="Repositories\Entity_OnlineOrder.cs" />
+    <Compile Include="Repositories\Entity_PostLanguage.cs" />
+    <Compile Include="Repositories\Entity_WebsiteDetail.cs" />
+    <Compile Include="Repositories\Entity_StaticPage.cs" />
+    <Compile Include="Repositories\Entity_Bank.cs" />
+    <Compile Include="Repositories\Entity_Banner.cs" />
+    <Compile Include="Repositories\Entity_Category.cs" />
+    <Compile Include="Repositories\Entity_City.cs" />
+    <Compile Include="Repositories\Entity_Clearing.cs" />
+    <Compile Include="Repositories\Entity_Code.cs" />
+    <Compile Include="Repositories\Entity_CodeGroup.cs" />
+    <Compile Include="Repositories\Entity_Color.cs" />
+    <Compile Include="Repositories\Entity_ColorLanguage.cs" />
+    <Compile Include="Repositories\Entity_Comment.cs" />
+    <Compile Include="Repositories\Entity_Country.cs" />
+    <Compile Include="Repositories\Entity_Currency.cs" />
+    <Compile Include="Repositories\Entity_Dashboard.cs" />
+    <Compile Include="Repositories\Entity_DiscountGroup.cs" />
+    <Compile Include="Repositories\Entity_Discount.cs" />
+    <Compile Include="Repositories\Entity_Email.cs" />
+    <Compile Include="Repositories\Entity_EmailAddress.cs" />
+    <Compile Include="Repositories\Entity_EmailAttachment.cs" />
+    <Compile Include="Repositories\Entity_EmailHost.cs" />
+    <Compile Include="Repositories\Entity_EmailInbox.cs" />
+    <Compile Include="Repositories\Entity_AccountOrder.cs" />
+    <Compile Include="Repositories\Entity_Mall.cs" />
+    <Compile Include="Repositories\Entity_MenuLanguage.cs" />
+    <Compile Include="Repositories\Entity_Merchant.cs" />
+    <Compile Include="Repositories\Entity_NewsletterGroup.cs" />
+    <Compile Include="Repositories\Entity_NewsletterItem.cs" />
+    <Compile Include="Repositories\Entity_NotificationApp.cs" />
+    <Compile Include="Repositories\Entity_NotificationProject.cs" />
+    <Compile Include="Repositories\Entity_Package.cs" />
+    <Compile Include="Repositories\Entity_Payment.cs" />
+    <Compile Include="Repositories\Entity_PaymentProductOrder.cs" />
+    <Compile Include="Repositories\Entity_PaymentSubject.cs" />
+    <Compile Include="Repositories\Entity_PaymentType.cs" />
+    <Compile Include="Repositories\Entity_PaymentWebsite.cs" />
+    <Compile Include="Repositories\Entity_ProductBarcode.cs" />
+    <Compile Include="Repositories\Entity_ProductBrandUser.cs" />
+    <Compile Include="Repositories\Entity_ProductCategoryLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductColor.cs" />
+    <Compile Include="Repositories\Entity_ProductComment.cs" />
+    <Compile Include="Repositories\Entity_ProductCustomFieldLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductCustomItemLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductNotify.cs" />
+    <Compile Include="Repositories\Entity_ProductOption.cs" />
+    <Compile Include="Repositories\Entity_ProductOptionItem.cs" />
+    <Compile Include="Repositories\Entity_ProductQuantity.cs" />
+    <Compile Include="Repositories\Entity_ProductSize.cs" />
+    <Compile Include="Repositories\Entity_ProductSubCategoryLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductTypeBrand.cs" />
+    <Compile Include="Repositories\Entity_ProductTypeLanguage.cs" />
+    <Compile Include="Repositories\Entity_ProductVisit.cs" />
+    <Compile Include="Repositories\Entity_Rebate.cs" />
+    <Compile Include="Repositories\Entity_SendType.cs" />
+    <Compile Include="Repositories\Entity_ShopAddress.cs" />
+    <Compile Include="Repositories\Entity_ShopChat.cs" />
+    <Compile Include="Repositories\Entity_Shipping.cs" />
+    <Compile Include="Repositories\Entity_ShopContact.cs" />
+    <Compile Include="Repositories\Entity_Event.cs" />
+    <Compile Include="Repositories\Entity_Gallery.cs" />
+    <Compile Include="Repositories\Entity_Language.cs" />
+    <Compile Include="Repositories\Entity_Menu.cs" />
+    <Compile Include="Repositories\Entity_Module.cs" />
+    <Compile Include="Repositories\Entity_NewsLetter.cs" />
+    <Compile Include="Repositories\Entity_Notification.cs" />
+    <Compile Include="Repositories\Entity_Permission.cs" />
+    <Compile Include="Repositories\Entity_Picture.cs" />
+    <Compile Include="Repositories\Entity_Post.cs" />
+    <Compile Include="Repositories\Entity_PostLike.cs" />
+    <Compile Include="Repositories\Entity_Product.cs" />
+    <Compile Include="Repositories\Entity_ProductCategory.cs" />
+    <Compile Include="Repositories\Entity_ProductCustomField.cs" />
+    <Compile Include="Repositories\Entity_ProductCustomItem.cs" />
+    <Compile Include="Repositories\Entity_ProductCustomValue.cs" />
+    <Compile Include="Repositories\Entity_ProductPicture.cs" />
+    <Compile Include="Repositories\Entity_ProductSubCategory.cs" />
+    <Compile Include="Repositories\Entity_ProductType.cs" />
+    <Compile Include="Repositories\Entity_RecoverPassword.cs" />
+    <Compile Include="Repositories\Entity_Setting.cs" />
+    <Compile Include="Repositories\Entity_SetupLevel.cs" />
+    <Compile Include="Repositories\Entity_Shop.cs" />
+    <Compile Include="Repositories\Entity_ShopDocument.cs" />
+    <Compile Include="Repositories\Entity_ShopFollow.cs" />
+    <Compile Include="Repositories\Entity_ShopPaymentType.cs" />
+    <Compile Include="Repositories\Entity_ShopPicture.cs" />
+    <Compile Include="Repositories\Entity_ShopProductType.cs" />
+    <Compile Include="Repositories\Entity_ShopReportBlock.cs" />
+    <Compile Include="Repositories\Entity_ShopReseller.cs" />
+    <Compile Include="Repositories\Entity_ShopResellerCollection.cs" />
+    <Compile Include="Repositories\Entity_ShopResellerCollectionProduct.cs" />
+    <Compile Include="Repositories\Entity_ShopResellerGallery.cs" />
+    <Compile Include="Repositories\Entity_ShopResellerProduct.cs" />
+    <Compile Include="Repositories\Entity_ShopResellerStory.cs" />
+    <Compile Include="Repositories\Entity_ShopUser.cs" />
+    <Compile Include="Repositories\Entity_ShopWebsiteSetting.cs" />
+    <Compile Include="Repositories\Entity_SiteUser.cs" />
+    <Compile Include="Repositories\Entity_GalleryPicture.cs" />
+    <Compile Include="Repositories\Entity_SiteUserUserGroup.cs" />
+    <Compile Include="Repositories\Entity_Size.cs" />
+    <Compile Include="Repositories\Entity_SizeLanguage.cs" />
+    <Compile Include="Repositories\Entity_Slider.cs" />
+    <Compile Include="Repositories\Entity_Sms.cs" />
+    <Compile Include="Repositories\Entity_SmsNumber.cs" />
+    <Compile Include="Repositories\Entity_SmsProvider.cs" />
+    <Compile Include="Repositories\Entity_SmsSetting.cs" />
+    <Compile Include="Repositories\Entity_SmsType.cs" />
+    <Compile Include="Repositories\Entity_State.cs" />
+    <Compile Include="Repositories\Entity_Store.cs" />
+    <Compile Include="Repositories\Entity_StoreProduct.cs" />
+    <Compile Include="Repositories\Entity_StoreProductQuantity.cs" />
+    <Compile Include="Repositories\Entity_SyncLog.cs" />
+    <Compile Include="Repositories\Entity_TelegramAccount.cs" />
+    <Compile Include="Repositories\Entity_TelegramBot.cs" />
+    <Compile Include="Repositories\Entity_TelegramCommand.cs" />
+    <Compile Include="Repositories\Entity_TelegramKeyBoard.cs" />
+    <Compile Include="Repositories\Entity_TelegramKeyBoardItem.cs" />
+    <Compile Include="Repositories\Entity_Template.cs" />
+    <Compile Include="Repositories\Entity_Unit.cs" />
+    <Compile Include="Repositories\Entity_UserGroup.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Entity_UserGroupDashboard.cs" />
+    <Compile Include="Repositories\Entity_UserGroupPermission.cs" />
+    <Compile Include="Repositories\Entity_UserRole.cs" />
+    <Compile Include="Repositories\Entity_Website.cs" />
+    <Compile Include="Repositories\Entity_WebsiteContactForm.cs" />
+    <Compile Include="Repositories\Entity_WebsiteDocument.cs" />
+    <Compile Include="Repositories\Entity_WebsiteDomain.cs" />
+    <Compile Include="Repositories\Entity_ProductBrand.cs" />
+    <Compile Include="Repositories\Entity_WebsiteForm.cs" />
+    <Compile Include="Repositories\Entity_WebsiteFormAccount.cs" />
+    <Compile Include="Repositories\Entity_WebsiteFormField.cs" />
+    <Compile Include="Repositories\Entity_WebsiteFormValue.cs" />
+    <Compile Include="Repositories\Entity_WebsiteLanguage.cs" />
+    <Compile Include="Repositories\Entity_WebsiteView.cs" />
+    <Compile Include="Schedules\Sync_AccountBasket.cs" />
+    <Compile Include="Schedules\Sync_Alexa.cs" />
+    <Compile Include="Schedules\Sync_Base.cs" />
+    <Compile Include="Schedules\Sync_Exame.cs" />
+    <Compile Include="Schedules\Sync_OrderToArchive.cs" />
+    <Compile Include="Schedules\Sync_Discount.cs" />
+    <Compile Include="Schedules\Sync_Cart.cs" />
+    <Compile Include="Schedules\Sync_Email.cs" />
+    <Compile Include="Schedules\Sync_GoldPrice.cs" />
+    <Compile Include="Schedules\Sync_ProductBrand.cs" />
+    <Compile Include="Schedules\Sync_ProductCategory.cs" />
+    <Compile Include="Schedules\Sync_ProductCustomField.cs" />
+    <Compile Include="Schedules\Sync_EmailInbox.cs" />
+    <Compile Include="Schedules\Sync_Product.cs" />
+    <Compile Include="Schedules\Sync_ProductSubCategory.cs" />
+    <Compile Include="Schedules\Sync_ProductType.cs" />
+    <Compile Include="Schedules\Sync_ShrinkDatabase.cs" />
+    <Compile Include="Schedules\Sync_Sms.cs" />
+    <Compile Include="Service References\Services.OnlinePayments.AsanPardakht\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.OnlinePayments.BehPardakht\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.OnlinePayments.NextPay\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.OnlinePayments.Parsian.SaleService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.OnlinePayments.Saman.InitPayment\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.OnlinePayments.Saman.ReferecePayment\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.OnlinePayments.ZarinPal\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Services.Sms.Rahavard\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Account\ForgetVm.cs" />
+    <Compile Include="ViewModels\Extera\Api\ApiResult.cs" />
+    <Compile Include="ViewModels\Breadcrumb\BreadcrumbVm.cs" />
+    <Compile Include="ViewModels\CacheSetting\CacheSettingVm.cs" />
+    <Compile Include="ViewModels\DiscountGroup\DiscountGroupVm.cs" />
+    <Compile Include="ViewModels\Discount\CreateDiscountVm.cs" />
+    <Compile Include="ViewModels\Discount\DiscountSearchVm.cs" />
+    <Compile Include="ViewModels\Discount\DiscountVm.cs" />
+    <Compile Include="ViewModels\Extera\Search\SearchVm.cs" />
+    <Compile Include="ViewModels\Extera\StatusVm.cs" />
+    <Compile Include="ViewModels\Payment\PayingVm.cs" />
+    <Compile Include="ViewModels\Payment\PayingVm3.cs" />
+    <Compile Include="ViewModels\Payment\PayingVm2.cs" />
+    <Compile Include="ViewModels\Payment\PaymentVm3.cs" />
+    <Compile Include="ViewModels\Payment\PaymentVm2.cs" />
+    <Compile Include="ViewModels\Post\PostSearchVm.cs" />
+    <Compile Include="ViewModels\Banner\BannerVm.cs" />
+    <Compile Include="ViewModels\PostQuestion\PostQuestionVm.cs" />
+    <Compile Include="ViewModels\Post\ResultPostIndex.cs" />
+    <Compile Include="ViewModels\Post\ResultPostItem.cs" />
+    <Compile Include="ViewModels\Post\ResultPost.cs" />
+    <Compile Include="ViewModels\ProductBrand\ProductBrandSerachVm.cs" />
+    <Compile Include="ViewModels\PriceRange\PriceRangeVm.cs" />
+    <Compile Include="ViewModels\QuestionRegisterProduct\QuestionRegisterProductVm.cs" />
+    <Compile Include="ViewModels\QuestionRegisterItem\QuestionRegisterItemVm.cs" />
+    <Compile Include="ViewModels\QuestionRegister\QuestionRegisterVm.cs" />
+    <Compile Include="ViewModels\ProductType\ProductTypeCustomVm.cs" />
+    <Compile Include="ViewModels\Product\EmallsProductVm.cs" />
+    <Compile Include="ViewModels\Product\ProductCustomLabelVm.cs" />
+    <Compile Include="ViewModels\Product\ProductExteraVm.cs" />
+    <Compile Include="ViewModels\Product\ProductMinVm.cs" />
+    <Compile Include="ViewModels\SurveyAnswerDetail\SurveyAnswerDetailVm.cs" />
+    <Compile Include="ViewModels\SurveyQuestionItem\SurveyQuestionItemVm.cs" />
+    <Compile Include="ViewModels\SurveyQuestion\SurveyQuestionVm.cs" />
+    <Compile Include="ViewModels\SurveyAnswer\SurveyAnswerVm.cs" />
+    <Compile Include="ViewModels\Survey\SurveyVm.cs" />
+    <Compile Include="ViewModels\ViewAccount2.cs" />
+    <Compile Include="ViewModels\ViewExameOrder.cs" />
+    <Compile Include="ViewModels\ViewPaymentCertificate.cs" />
+    <Compile Include="ViewModels\ViewPaymentExame.cs" />
+    <Compile Include="ViewModels\ViewPayOrder.cs" />
+    <Compile Include="ViewModels\ViewPrice.cs" />
+    <Compile Include="ViewModels\ViewExameAccountAnswer.cs" />
+    <Compile Include="ViewModels\ViewExameAccountAnswerDetails.cs" />
+    <Compile Include="ViewModels\ViewExameStart.cs" />
+    <Compile Include="ViewModels\ViewExameAnswer.cs" />
+    <Compile Include="ViewModels\ViewExameReportByCourse.cs" />
+    <Compile Include="ViewModels\ViewInnerProductLike.cs" />
+    <Compile Include="ViewModels\ViewPay.cs" />
+    <Compile Include="ViewModels\ViewQuestionRegisterValue.cs" />
+    <Compile Include="ViewModels\ViewReportExameReportByCourse.cs" />
+    <Compile Include="ViewModels\ViewReport2.cs" />
+    <Compile Include="ViewModels\ViewReport.cs" />
+    <Compile Include="ViewModels\ViewReportByCategory.cs" />
+    <Compile Include="ViewModels\ViewReportByLastAvrage.cs" />
+    <Compile Include="ViewModels\ViewReportModel.cs" />
+    <Compile Include="ViewModels\ViewSurveyAnswerModel.cs" />
+    <Compile Include="ViewModels\ViewSurveyQuestionUserItem.cs" />
+    <Compile Include="ViewModels\ViewSurveyQuestionUser.cs" />
+    <Compile Include="ViewModels\WebsiteLanguage\WebsiteLanguageVm.cs" />
+    <Compile Include="ViewModels\ProductLanguage\ProductLanguageVm.cs" />
+    <Compile Include="ViewModels\ProductQuantity\ProductToStoreVm.cs" />
+    <Compile Include="ViewModels\ProductQuantity\ProductQuantityVm.cs" />
+    <Compile Include="ViewModels\Product\ProductCreateVm.cs" />
+    <Compile Include="ViewModels\Product\ProductCompareVm.cs" />
+    <Compile Include="ViewModels\TagPost\TagPostVm.cs" />
+    <Compile Include="ViewModels\Category\CategoryVm.cs" />
+    <Compile Include="ViewModels\Post\PostVm.cs" />
+    <Compile Include="ViewModels\CompetitiveFeature\CompetitiveFeatureVm.cs" />
+    <Compile Include="ViewModels\Product\ProductSearchVm.cs" />
+    <Compile Include="ViewModels\Review\ReviewVm.cs" />
+    <Compile Include="ViewModels\ProductPiceHistory\ProductPiceHistoryVm.cs" />
+    <Compile Include="ViewModels\ProductCustomItem\ProductCustomItemVm.cs" />
+    <Compile Include="ViewModels\ProductCustomField\ProductCustomFieldVm.cs" />
+    <Compile Include="ViewModels\ProductCustomValue\ProductCustomValueVm.cs" />
+    <Compile Include="ViewModels\ProductComment\ProductCommentVm.cs" />
+    <Compile Include="ViewModels\ProductType\ProductTypeVm.cs" />
+    <Compile Include="ViewModels\ProductSubCategory\ProductSubCategoryVm.cs" />
+    <Compile Include="ViewModels\ProductOption\ProductOptionVm.cs" />
+    <Compile Include="ViewModels\ProductCategory\ProductCategoryVm.cs" />
+    <Compile Include="ViewModels\ProductBrand\ProductBrandVm.cs" />
+    <Compile Include="ViewModels\Slider\SliderVm.cs" />
+    <Compile Include="ViewModels\StoreProductQuantity\VarietyVm.cs" />
+    <Compile Include="ViewModels\WebsiteDocument\WebsiteDocumentVm.cs" />
+    <Compile Include="ViewModels\AccountOrderProduct\AccountOrderProductVm.cs" />
+    <Compile Include="ViewModels\Account\AccountShowVm.cs" />
+    <Compile Include="ViewModels\Payment\PaymentVm.cs" />
+    <Compile Include="ViewModels\Product\ProductShowVm.cs" />
+    <Compile Include="ViewModels\Store\StoreShowVm.cs" />
+    <Compile Include="ViewModels\Store\StoreVm.cs" />
+    <Compile Include="ViewModels\AccountOrder\AccountOrderVm.cs" />
+    <Compile Include="ViewModels\Account\SignUpVm.cs" />
+    <Compile Include="ViewModels\Account\SignInVm.cs" />
+    <Compile Include="ViewModels\Merchant\MerchantVm.cs" />
+    <Compile Include="ViewModels\Rebate\RebateVm.cs" />
+    <Compile Include="ViewModels\DeliveryType\DeliveryTypeVm.cs" />
+    <Compile Include="ViewModels\State\StateVm.cs" />
+    <Compile Include="ViewModels\City\CityVm.cs" />
+    <Compile Include="ViewModels\AccountAddress\AccountAddressVm.cs" />
+    <Compile Include="ViewModels\AccountOrdersReport.cs" />
+    <Compile Include="ViewModels\AccountReport.cs" />
+    <Compile Include="ViewModels\CartStoreItem\CartUpdateVm.cs" />
+    <Compile Include="ViewModels\CartStoreItem\CartStoreItemVm.cs" />
+    <Compile Include="ViewModels\CartStore\CartStoreVm.cs" />
+    <Compile Include="ViewModels\ProductOptionItem\ProductOptionItemVm.cs" />
+    <Compile Include="ViewModels\Size\SizeVm.cs" />
+    <Compile Include="ViewModels\Color\ColorVm.cs" />
+    <Compile Include="ViewModels\Picture\PictureVm.cs" />
+    <Compile Include="ViewModels\Code\CodeVm.cs" />
+    <Compile Include="ViewModels\Delivery\DeliveryVm.cs" />
+    <Compile Include="ViewModels\Cart\CartVm.cs" />
+    <Compile Include="ViewModels\EditPasswordProfile.cs" />
+    <Compile Include="ViewModels\Extera\ViewApiExtera.cs" />
+    <Compile Include="ViewModels\Extera\ViewGoldPrice.cs" />
+    <Compile Include="ViewModels\Extera\ViewResult.cs" />
+    <Compile Include="ViewModels\IId.cs" />
+    <Compile Include="ViewModels\ProductsReport.cs" />
+    <Compile Include="ViewModels\Product\ProductVm.cs" />
+    <Compile Include="ViewModels\Report\ColumnBasicChart.cs" />
+    <Compile Include="ViewModels\Report\ColumnDrilldownChart.cs" />
+    <Compile Include="ViewModels\StoreProductQuantity\StoreProductQuantityVm.cs" />
+    <Compile Include="ViewModels\ViewPriceRange.cs" />
+    <Compile Include="ViewModels\ViewProductCategoryCompany.cs" />
+    <Compile Include="ViewModels\ViewProductVisitModel.cs" />
+    <Compile Include="ViewModels\ViewSendTypeStores.cs" />
+    <Compile Include="ViewModels\ViewSurveyAnswer.cs" />
+    <Compile Include="ViewModels\ViewSurveyQuestionItem.cs" />
+    <Compile Include="ViewModels\ViewSurveyQuestion.cs" />
+    <Compile Include="ViewModels\ViewProductCompany.cs" />
+    <Compile Include="ViewModels\ViewSearchCompany.cs" />
+    <Compile Include="ViewModels\ViewSearchBrand.cs" />
+    <Compile Include="ViewModels\ViewSurvey.cs" />
+    <Compile Include="ViewModels\ViewStateReport.cs" />
+    <Compile Include="ViewModels\ViewStoreCompetitiveFeature.cs" />
+    <Compile Include="ViewModels\ViewCompetitiveFeature.cs" />
+    <Compile Include="ViewModels\ViewPostModel.cs" />
+    <Compile Include="ViewModels\ViewStoreComment.cs" />
+    <Compile Include="ViewModels\ViewTag.cs" />
+    <Compile Include="ViewModels\ViewLocation.cs" />
+    <Compile Include="ViewModels\ViewClearing.cs" />
+    <Compile Include="ViewModels\ViewAccountOrderProduct.cs" />
+    <Compile Include="ViewModels\ViewContactUs.cs" />
+    <Compile Include="ViewModels\ViewSearchStore.cs" />
+    <Compile Include="ViewModels\ViewProductVisit.cs" />
+    <Compile Include="ViewModels\ViewProductLikeFavorit.cs" />
+    <Compile Include="ViewModels\ViewProductTypeCustom.cs" />
+    <Compile Include="ViewModels\ViewShippingCity.cs" />
+    <Compile Include="ViewModels\ViewUserStoreComment.cs" />
+    <Compile Include="ViewModels\ViewUserComment.cs" />
+    <Compile Include="ViewModels\ViewWebsiteContactForm.cs" />
+    <Compile Include="ViewModels\ViewWebsiteDetail.cs" />
+    <Compile Include="ViewModels\ViewProductOptionItem.cs" />
+    <Compile Include="ViewModels\ViewProductOption.cs" />
+    <Compile Include="ViewModels\ViewCurrency.cs" />
+    <Compile Include="ViewModels\ViewProductFilter.cs" />
+    <Compile Include="ViewModels\ViewProductQuantity.cs" />
+    <Compile Include="ViewModels\ViewProductVariety.cs" />
+    <Compile Include="ViewModels\ViewShipping.cs" />
+    <Compile Include="ViewModels\ViewShopWebsiteSetting.cs" />
+    <Compile Include="ViewModels\ViewStoreProductQuantity.cs" />
+    <Compile Include="ViewModels\ViewStoreProduct.cs" />
+    <Compile Include="ViewModels\ViewAccountBasketStore.cs" />
+    <Compile Include="ViewModels\ViewBanner.cs" />
+    <Compile Include="ViewModels\ViewProductBarcode.cs" />
+    <Compile Include="ViewModels\ViewProductLike.cs" />
+    <Compile Include="ViewModels\ViewProductTypeBrand.cs" />
+    <Compile Include="ViewModels\ViewRebate.cs" />
+    <Compile Include="ViewModels\ViewReportRebate.cs" />
+    <Compile Include="ViewModels\ViewReportReseller.cs" />
+    <Compile Include="ViewModels\ViewSearchPost.cs" />
+    <Compile Include="ViewModels\ViewSendType.cs" />
+    <Compile Include="ViewModels\ViewShopReseller.cs" />
+    <Compile Include="ViewModels\ViewShopResellerCollection.cs" />
+    <Compile Include="ViewModels\ViewShopResellerGallery.cs" />
+    <Compile Include="ViewModels\ViewShopResellerProduct.cs" />
+    <Compile Include="ViewModels\ViewShopResellerStory.cs" />
+    <Compile Include="ViewModels\ViewShopResellerStoryItem.cs" />
+    <Compile Include="ViewModels\ViewSize.cs" />
+    <Compile Include="ViewModels\ViewStore.cs" />
+    <Compile Include="ViewModels\ViewTelegramAccount.cs" />
+    <Compile Include="ViewModels\ViewAccount.cs" />
+    <Compile Include="ViewModels\ViewAccountAddress.cs" />
+    <Compile Include="ViewModels\ViewAccountBasket.cs" />
+    <Compile Include="ViewModels\ViewAccountOrder.cs" />
+    <Compile Include="ViewModels\ViewAdminDashboard.cs" />
+    <Compile Include="ViewModels\ViewAgreement.cs" />
+    <Compile Include="ViewModels\ViewBank.cs" />
+    <Compile Include="ViewModels\ViewCalendar.cs" />
+    <Compile Include="ViewModels\ViewCalendarDay.cs" />
+    <Compile Include="ViewModels\ViewCalendarEvent.cs" />
+    <Compile Include="ViewModels\ViewCategory.cs" />
+    <Compile Include="ViewModels\ViewCity.cs" />
+    <Compile Include="ViewModels\ViewCode.cs" />
+    <Compile Include="ViewModels\ViewCodeGroup.cs" />
+    <Compile Include="ViewModels\ViewColor.cs" />
+    <Compile Include="ViewModels\ViewCountry.cs" />
+    <Compile Include="ViewModels\ViewDiscount.cs" />
+    <Compile Include="ViewModels\ViewDiscountGroup.cs" />
+    <Compile Include="ViewModels\ViewDocument.cs" />
+    <Compile Include="ViewModels\ViewGallery.cs" />
+    <Compile Include="ViewModels\ViewKeyValue.cs" />
+    <Compile Include="ViewModels\ViewLanguage.cs" />
+    <Compile Include="ViewModels\ViewMerchant.cs" />
+    <Compile Include="ViewModels\ViewNewsletterGroup.cs" />
+    <Compile Include="ViewModels\ViewNotificationProject.cs" />
+    <Compile Include="ViewModels\ViewPayment.cs" />
+    <Compile Include="ViewModels\ViewPaymentSubject.cs" />
+    <Compile Include="ViewModels\ViewPaymentType.cs" />
+    <Compile Include="ViewModels\ViewPicture.cs" />
+    <Compile Include="ViewModels\ViewPost.cs" />
+    <Compile Include="ViewModels\ViewProductComment.cs" />
+    <Compile Include="ViewModels\ViewProductCustomValue.cs" />
+    <Compile Include="ViewModels\ViewProductPicture.cs" />
+    <Compile Include="ViewModels\ViewSearch.cs" />
+    <Compile Include="ViewModels\ViewSeoPack.cs" />
+    <Compile Include="ViewModels\ViewSeoOpenGraph.cs" />
+    <Compile Include="ViewModels\ViewShopChat.cs" />
+    <Compile Include="ViewModels\ViewShopContact.cs" />
+    <Compile Include="ViewModels\ViewShopFollow.cs" />
+    <Compile Include="ViewModels\ViewSimpleApiValue.cs" />
+    <Compile Include="ViewModels\ViewEmailHost.cs" />
+    <Compile Include="ViewModels\ViewError.cs" />
+    <Compile Include="ViewModels\ViewInbox.cs" />
+    <Compile Include="ViewModels\ViewMenu.cs" />
+    <Compile Include="ViewModels\ViewMessage.cs" />
+    <Compile Include="ViewModels\ViewPermission.cs" />
+    <Compile Include="ViewModels\ViewProductBrand.cs" />
+    <Compile Include="ViewModels\ViewProductCategory.cs" />
+    <Compile Include="ViewModels\ViewProductCustomField.cs" />
+    <Compile Include="ViewModels\ViewProductCustomItem.cs" />
+    <Compile Include="ViewModels\ViewProduct.cs" />
+    <Compile Include="ViewModels\ViewProductSubCategory.cs" />
+    <Compile Include="ViewModels\ViewProductType.cs" />
+    <Compile Include="ViewModels\ViewShop.cs" />
+    <Compile Include="ViewModels\ViewShopProductType.cs" />
+    <Compile Include="ViewModels\ViewShopUser.cs" />
+    <Compile Include="ViewModels\ViewSiteUser.cs" />
+    <Compile Include="ViewModels\ViewSiteUserUserGroup.cs" />
+    <Compile Include="ViewModels\ViewSlider.cs" />
+    <Compile Include="ViewModels\ViewSmsNumber.cs" />
+    <Compile Include="ViewModels\ViewSmsProvider.cs" />
+    <Compile Include="ViewModels\ViewSmsSetting.cs" />
+    <Compile Include="ViewModels\ViewSmsType.cs" />
+    <Compile Include="ViewModels\ViewState.cs" />
+    <Compile Include="ViewModels\ViewTelegramBot.cs" />
+    <Compile Include="ViewModels\ViewTelegramCommand.cs" />
+    <Compile Include="ViewModels\ViewTelegramKeyBoard.cs" />
+    <Compile Include="ViewModels\ViewTelegramKeyBoardItem.cs" />
+    <Compile Include="ViewModels\ViewTemplate.cs" />
+    <Compile Include="ViewModels\ViewTest.cs" />
+    <Compile Include="ViewModels\ViewUserGroup.cs" />
+    <Compile Include="ViewModels\ViewUserGroupPermissions.cs" />
+    <Compile Include="ViewModels\ViewWebsiteDocument.cs" />
+    <Compile Include="ViewModels\ViewWebsiteDomain.cs" />
+    <Compile Include="ViewModels\ViewWebsite.cs" />
+    <Compile Include="ViewModels\ViewWebsiteForm.cs" />
+    <Compile Include="ViewModels\ViewWebsiteFormValue.cs" />
+    <Compile Include="Web References\Services.OnlinePayments.EghtesadNovin\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Entities\DatabaseEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DatabaseEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\DatabaseEntities.edmx.diagram">
+      <DependentUpon>DatabaseEntities.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\DataLayer.Services.OnlinePayments.AsanPardakht.RequestOperationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\DataLayer.Services.OnlinePayments.AsanPardakht.RequestReconciliationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\DataLayer.Services.OnlinePayments.AsanPardakht.RequestReversalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\DataLayer.Services.OnlinePayments.AsanPardakht.RequestVerificationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\DataLayer.Services.OnlinePayments.AsanPardakht.TransactionDataPackage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\DataLayer.Services.OnlinePayments.AsanPardakht.TrxStatusFromLocalInvoiceIDResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\merchantservices.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpChargePayRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpCumulativeDynamicPayRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpDynamicPayRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpInquiryRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpPayRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpPosRefundRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpRefundInquiryRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpRefundRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpRefundToPANRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpRefundVerifyRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpReversalRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpSaleReferenceIdRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpSettleRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpVerifyRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\DataLayer.Services.OnlinePayments.BehPardakht.bpVirtualPayRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\IPaymentGateway.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\PaymentGatewayImplService.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.NextPay\Application.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.NextPay\DataLayer.Services.OnlinePayments.NextPay.PaymentVerificationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.NextPay\DataLayer.Services.OnlinePayments.NextPay.PaymentVerificationResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.NextPay\DataLayer.Services.OnlinePayments.NextPay.TokenGeneratorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.NextPay\DataLayer.Services.OnlinePayments.NextPay.TokenGeneratorResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\ConfirmService.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\DataLayer.Services.OnlinePayments.Parsian.ConfirmService.ClientConfirmResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\DataLayer.Services.OnlinePayments.Parsian.ConfirmService.ConfirmPaymentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\DataLayer.Services.OnlinePayments.Parsian.SaleService.ClientPaymentResponseDataBase.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\DataLayer.Services.OnlinePayments.Parsian.SaleService.ClientSaleResponseData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\DataLayer.Services.OnlinePayments.Parsian.SaleService.SalePaymentRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\DataLayer.Services.OnlinePayments.Parsian.SaleService.UDSalePaymentRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\SaleService.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.Saman.InitPayment\initpayment.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.Saman.ReferecePayment\referencepayment.wsdl" />
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\DataLayer.Services.OnlinePayments.ZarinPal.GetUnverifiedTransactionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\DataLayer.Services.OnlinePayments.ZarinPal.PaymentRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\DataLayer.Services.OnlinePayments.ZarinPal.PaymentRequestWithExtraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\DataLayer.Services.OnlinePayments.ZarinPal.PaymentVerificationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\DataLayer.Services.OnlinePayments.ZarinPal.PaymentVerificationWithExtraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\DataLayer.Services.OnlinePayments.ZarinPal.RefreshAuthorityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\PaymentGatewayImplementationService.wsdl" />
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.ArrayOfAnyType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.ArrayOfString.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.GetRemainCreditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.IsBlackListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.SendSMS_Batch_NormalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.SendSMS_LikeToLikeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.SendSMS_LikeToLike_FullResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.SendSMS_SingleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.SingleStatusSMSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.StatusSMSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.STC_SMSSend.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\DataLayer.Services.Sms.Rahavard.STC_SMSStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\RahyabSMSService.wsdl" />
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\DeleteCardsInfoResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\GenerateSignedDataTokenResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\GenerateTransactionDataToSignResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\GetCardInfoResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\InquiryBillResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\InquiryMerchantTokenResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\InquiryThpServiceResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\LoginResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\LogoutResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\merchantService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\merchantService0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\merchantService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\ReverseMerchantTransResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\SaveCardsInfoResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\SimpleReverseMerchantTransResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\SimpleVerifyMerchantTransResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\TechnoPaymentWebServiceService.wsdl" />
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\TransReportResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\UpdateMerchantLogoResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\VerifyMerchantTransResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Services.OnlinePayments.EghtesadNovin\verifyResponseResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Services.Sms.Rahavard\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.Sms.Rahavard\configuration.svcinfo" />
+    <None Include="Service References\Services.Sms.Rahavard\configuration91.svcinfo" />
+    <None Include="Service References\Services.Sms.Rahavard\RahyabSMSService.disco" />
+    <None Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\ConfirmService.disco" />
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Parsian.SaleService\SaleService.disco" />
+    <None Include="Service References\Services.OnlinePayments.Saman.ReferecePayment\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Saman.ReferecePayment\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Saman.ReferecePayment\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Saman.ReferecePayment\referencepayment.disco" />
+    <None Include="Service References\Services.OnlinePayments.Saman.InitPayment\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.Saman.InitPayment\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Saman.InitPayment\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.Saman.InitPayment\initpayment.disco" />
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.BehPardakht\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.NextPay\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.NextPay\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.NextPay\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.ZarinPal\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\configuration.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\configuration91.svcinfo" />
+    <None Include="Service References\Services.OnlinePayments.AsanPardakht\merchantservices.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.AsanPardakht\" />
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.BehPardakht\" />
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.NextPay\" />
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.Parsian.ConfirmService\" />
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.Parsian.SaleService\" />
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.Saman.InitPayment\" />
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.Saman.ReferecePayment\" />
+    <WCFMetadataStorage Include="Service References\Services.OnlinePayments.ZarinPal\" />
+    <WCFMetadataStorage Include="Service References\Services.Sms.Rahavard\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Resource\Resource.csproj">
+      <Project>{e69842f3-a970-4607-815e-5c70fe6f3ee5}</Project>
+      <Name>Resource</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://pna.shaparak.ir/ref-payment2/jax/merchantService%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Services.OnlinePayments.EghtesadNovin\</RelPath>
+      <UpdateFromURL>https://pna.shaparak.ir/ref-payment2/jax/merchantService%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>DataLayer_ir_shaparak_pna_TechnoPaymentWebServiceService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entities\DatabaseEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DatabaseEntities.edmx</DependentUpon>
+      <LastGenOutput>DatabaseEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\DatabaseEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DatabaseEntities.edmx</DependentUpon>
+      <LastGenOutput>DatabaseEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

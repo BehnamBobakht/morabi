@@ -1,0 +1,313 @@
+﻿﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model List<DataLayer.Entities.ExameAccountAnswer>
+
+@{
+    ViewBag.Title = "پرینت کارنامه ها ";
+    Layout = "~/Views/Shared/PrintLayout.cshtml";
+
+}
+
+@if (Model.Any())
+{
+    int count = Model.FirstOrDefault(s=>s.TotalRate>0).ExameReportByCourse.Count();
+    foreach (var course in Model)
+    {
+        string code = "", numberstring = "";
+        if (course.Exame.NumberString != "")
+        {
+course.Exame.NumberString=course.Exame.NumberString==null?"":course.Exame.NumberString;
+            var number = course.Exame.NumberString.Split('-');
+            if (number.Length >= 2)
+            {
+                numberstring = number[0];
+                code = number[1];
+
+            }
+            else
+            {
+                numberstring = course.Exame.NumberString;
+            }
+        }
+        var caption = "";
+        if (course.Exame.ID == 50 || course.Exame.ID == 4)
+        {
+            caption = "آزمون تئوری مربیگری درجه 3";
+        }
+        else
+        {
+            caption = course.Exame.Product.Name;
+        }
+        double? sum = (double)course.ExameReportByCourse.Sum(s => s.TotalRate) / course.ExameReportByCourse.Count();
+    <style>
+        td {
+            border-bottom: 1px solid #000 !important;
+            font-size: 10px !important;
+            font-weight: 400 !important;
+        }
+        th {
+            background: #dddddd !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+        }
+		h3{
+            font-size: 22px !important;
+		}
+		.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, 			.table > tfoot > tr > td {
+			padding: 4px  !important;
+		}
+    </style>
+        <div class="report-back" style="min-height: 950px; height:100vh !important;">
+            <img src="/Panel/assets/images/reportback3.jpg" style="height:100vh !important; width:100vw !important; position:absolute; bottom:0; z-index:0">
+
+            <div class="report-back-details" style="top:-68px;right:81% !important;">
+                <div class="report-back-detailbox align">
+
+                    <span>@course.Exame.StartDate.Value.ToPersian()</span>
+                </div>
+                <div class="report-back-detailbox align" style="margin-top:10px">
+
+                    <span>@numberstring</span>
+                </div>
+                <div class="report-back-detailbox align " style="margin-right: -50px;margin-bottom: 15px !important">
+                    <span style="color: #ee6c30 !important;font-weight:600;font-size: 14px">کد دوره : </span>
+                    <span style="margin-left: 0px; font-size: 13px;" >@code</span>
+                </div>
+            </div>
+            <div style="scale:1;margin-top:24px;">
+                <div class="text-center">
+                    <h3 style="text-align: center; margin-bottom:4px">@course.Exame.Name</h3>
+                </div>
+                <div class="margin-text"  style="font-size:14px;">
+                    <p class="text-justify" style="font-size:20px;">
+                        بدینوسیله گواهی میگردد 
+                        <strong style="font-size:20px;">خانم/آقا</strong>
+                        <strong style="font-size:20px;">@course.Account.FullName @course.Account.LatName</strong>
+                        <strong style="font-size:20px;"> به شماره ملی @course.Account.NationalCode</strong>
+                        در  @course.Exame.Title
+                        در
+                        <strong style="font-size:20px;">تاریخ @course.Exame.DateString</strong>
+                        که با نظارت فدراسیون انجمن های ورزشی برگزار گردید، شرکت نموده و
+                        <strong style="font-size:20px;">با کسب معدل @Math.Round(sum.Value, 1).ToString().Replace("/", ".")</strong>
+                        این دوره را با موفقیت گذرانیده است.
+                        لذا گواهی جهت نامبرده صادر و صرفا جهت شرکت در دوره
+                        @course.Exame.TiteString
+                        دارای اعتبار می باشد.
+
+                    </p>
+
+                </div>
+            </div>
+            <div class="d-flex">
+                <table class="table table-hover table-bordered" style="max-width: 600px;width: 100%;margin: auto; margin-bottom:8px;">
+                    <thead>
+                        <tr>
+                            <th class="text-center bordered">ردیف</th>
+                            <th class="text-center bordered">نام درس</th>
+                            <th class="text-center bordered">نمره</th>
+                            <th class="text-center bordered">نمره به حروف</th>
+                            <th class="text-center bordered d-none">وضعیت</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (course.ExameId == 103)
+                        {
+                            int i = 1;
+                            var corse24 = course.ExameReportByCourse.FirstOrDefault(s => s.CourseId == 24);
+                            var corse25 = course.ExameReportByCourse.FirstOrDefault(s => s.CourseId == 25);
+                            var corse28 = course.ExameReportByCourse.FirstOrDefault(s => s.CourseId == 28);
+
+
+                            foreach (var item in course.ExameReportByCourse.Where(s => s.CourseId != 24 && s.CourseId != 25 && s.CourseId != 28).Distinct())
+                            {
+                                if (i <= count)
+                                {
+                                    if (item.CourseId == 41)
+                                    {
+                                        if (corse24 != null)
+                                        {
+                                            //var total1 = item.CountTrue + item.CountFalse + item.CountNull;
+                                            //var total2 = corse24.CountTrue + corse24.CountFalse + corse24.CountNull;
+                                            //var sumTotal = total1 + total2;
+                                            //var countTrue = item.CountTrue + corse24.CountTrue;
+                                            //if (sumTotal != 20)
+                                            //{
+                                            //    double? avrageRateUsers = 0;
+                                            //    avrageRateUsers = (countTrue * 20);
+                                            //    avrageRateUsers = (double)avrageRateUsers / sumTotal;
+                                            //    item.TotalRate = avrageRateUsers;
+
+                                            //}
+                                            //else
+                                            //{
+                                            //    item.TotalRate = countTrue;
+                                            //}
+                                            item.TotalRate = item.TotalRate + corse24.TotalRate;
+                                            item.TotalRate = item.TotalRate / 2;
+                                        }
+
+
+                                    }
+                                    if (item.CourseId == 42)
+                                    {
+                                        if (corse25 != null)
+                                        {
+                                            //var total1 = item.CountTrue + item.CountFalse + item.CountNull;
+                                            //var total2 = corse25.CountTrue + corse25.CountFalse + corse25.CountNull;
+                                            //var sumTotal = total1 + total2;
+                                            //var countTrue = item.CountTrue + corse25.CountTrue;
+                                            //if (sumTotal != 20)
+                                            //{
+                                            //    double? avrageRateUsers = 0;
+                                            //    avrageRateUsers = (countTrue * 20);
+                                            //    avrageRateUsers = (double)avrageRateUsers / sumTotal;
+                                            //    item.TotalRate = avrageRateUsers;
+
+                                            //}
+                                            //else
+                                            //{
+                                            //    item.TotalRate = countTrue;
+                                            //}
+                                            item.TotalRate = item.TotalRate + corse25.TotalRate;
+                                            item.TotalRate = item.TotalRate / 2;
+                                        }
+                                    }
+                                    if (item.CourseId == 44)
+                                    {
+                                        if (corse28 != null)
+                                        {
+                                            //var total1 = item.CountTrue + item.CountFalse + item.CountNull;
+                                            //var total2 = corse28.CountTrue + corse28.CountFalse + corse28.CountNull;
+                                            //var sumTotal = total1 + total2;
+                                            //var countTrue = item.CountTrue + corse28.CountTrue;
+                                            //if (sumTotal != 20)
+                                            //{
+                                            //    double? avrageRateUsers = 0;
+                                            //    avrageRateUsers = (countTrue * 20);
+                                            //    avrageRateUsers = (double)avrageRateUsers / sumTotal;
+                                            //    item.TotalRate = avrageRateUsers;
+
+                                            //}
+                                            //else
+                                            //{
+                                            //    item.TotalRate = countTrue;
+                                            //}
+                                            item.TotalRate = item.TotalRate + corse28.TotalRate;
+                                            item.TotalRate = item.TotalRate / 2;
+                                        }
+                                    }
+                                    <tr>
+                                        <td class="text-center bordered">@i</td>
+                                        <td class="text-center bordered">@item.ExameCourse.Name</td>
+										
+                                        <td class="text-center bordered">@Math.Round(item.TotalRate.Value, 1).ToString().Replace("/", ".")</td>
+                                        <td class="text-center bordered">@Math.Round(item.TotalRate.Value, 1).ToString().ToPersianNumber()</td>
+
+                                        <td class="text-center bordered">@item.ExameCourse.Name</td>
+
+                                        <td class="text-center bordered d-none"> -</td>
+                                    </tr>
+
+
+                                }
+                                i++;
+
+                            }
+                            <tr>
+                                <td class="text-center bordered">معدل</td>
+                                <td class="text-center bordered">
+
+                                    <strong>@Math.Round(sum.Value, 1).ToString().Replace("/", ".")</strong>
+                                </td>
+                                <td class="text-center bordered" colspan="2">
+
+                                    @if (sum >= course.Exame.PassValue)
+                                    {
+                                        <strong>قبول</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong>مردود</strong>
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+                        else
+                        {
+                            int i = 1;
+                            if (course.ExameId == 110)
+                            {
+                                count = 11;
+                            }
+                            foreach (var item in course.ExameReportByCourse.Distinct())
+                            {
+                                item.TotalRate = item.TotalRate == null ? 0 : item.TotalRate;
+                                if (i <= count)
+                                {
+                                    <tr>
+                                        <td class="text-center bordered">@i</td>
+                                        <td class="text-center bordered">@item.ExameCourse.Name</td>
+										
+                                        <td class="text-center bordered">@Math.Round(item.TotalRate.Value, 1).ToString().Replace("/", ".")</td>
+                                        <td class="text-center bordered">@Math.Round(item.TotalRate.Value, 1).ToString().ToPersianNumber()</td>
+                                        <td class="text-center bordered d-none">
+                                            @if (item.TotalRate.Value >= item.ExameCourse.PassNumber)
+                                            {
+                                                <strong>قبول</strong>
+                                            }
+                                            else
+                                            {
+                                                <strong>مردود</strong>
+                                            }
+                                        </td>
+                                    </tr>
+
+
+                                }
+                                i++;
+
+                            }
+                            <tr>
+                                <td class="text-center bordered">معدل</td>
+                                <td class="text-center bordered">
+
+                                    <strong>@Math.Round(sum.Value, 1).ToString().Replace("/", ".")</strong>
+                                </td>
+                                <td class="text-center bordered" colspan="2">
+                                    @if (sum >= course.Exame.PassValue)
+                                    {
+                                        <strong>قبول</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong>مردود</strong>
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+			<div style="display:flex; justify-content:space-between; align-items: center; max-width: 80%; margin: auto;font-size: 14px;color: #000;font-weight: 800;">
+			<div class="text-center report-margin">
+                <p style="margin-bottom:0">یحیی دادویی مقدم</p>
+                <p>رئیس هیات انجمن های ورزشی استان تهران</p>
+
+            </div>
+            <div class="text-center report-margin">
+                <p style="margin-bottom:0">عباس ناطق نوری</p>
+                <p>رئیس فدراسیون انجمن های ورزشی</p>
+
+            </div>
+			</div>
+        </div>
+    }
+
+}

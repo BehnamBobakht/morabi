@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        @Html.Action("PublicHeader", "Layout", new { Area = "" })
+        @RenderSection("Header", false)
+        <script src="/Assets/js/modernizr.min.js"></script>
+    </head>
+    <body>
+        <div class="account-pages"></div>
+        <div class="clearfix"></div>
+        <div class="wrapper-page">
+            <div class="ex-page-content text-center">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- End wrapper page -->
+        <script>
+			    var resizefunc = [];
+        </script>
+        @Html.Action("PublicFooter", "Layout", new { Area = "" })
+        @RenderSection("Footer", false)
+    </body>
+</html>

@@ -1,0 +1,69 @@
+@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+
+@model List<DataLayer.Entities.ExameQuestion>
+@{
+    Exame exame = ViewBag.Exame;
+
+    ViewBag.Title = "پرینت پاسخ های صحیح";
+    Layout = "~/Views/Shared/PrintLayout.cshtml";
+}
+
+
+<div>
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="form-horizontal">
+
+                @foreach (var course in Model.GroupBy(s => s.ExameCourse))
+                {
+				<h1>@course.Key.Name</h1>
+				<hr>
+                    foreach (var item in course.ToList().OrderBy(s => s.IDRandom))
+                    {
+                        <div class="row" question-value="@course.Key.ID">
+                            <input type="hidden" question-name="QuestionId" id="QuestionId@(item.ID)" value="@item.ID" />
+                            @if (item.Formula != "" && item.Formula != null)
+                            {
+                                <h4 class="m-2">@Html.Raw(item.Formula)</h4>
+                            }
+                            else
+                            {
+                                <h4 class="m-2">@item.Text</h4>
+                            }
+
+
+                            <div>
+                                @foreach (var answer in item.ExameAnswerItem.Where(s => s.Active != false).ToList())
+                                {
+                                    <label for="answer@(answer.ID)">
+                                        <input type="radio" @(item.AnswerId == answer.ID ? "checked" : "") question-name="Answer" value="@answer.ID" id="answer@(answer.ID)" name="btn@(item.ID)" />
+                                        @if (answer.Formula != null && answer.Formula != "")
+                                        {
+                                            <span>@Html.Raw(answer.Formula)</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@answer.Text</span>
+                                        }
+
+                                    </label>
+
+
+                                }
+                            </div>
+                            <hr />
+                        </div>
+                        }
+                    }
+
+
+
+
+                </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>

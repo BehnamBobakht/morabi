@@ -1,0 +1,208 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@model  DataLayer.ViewModels.ViewReport
+@{
+    ViewBag.Title = "کارنامه";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: #ccc;
+        }
+
+
+        .tables_box table {
+            margin: 10px 0;
+        }
+
+        .tables_box {
+            overflow-x: scroll;
+        }
+
+        th {
+            color: black;
+            font-weight: bold;
+        }
+
+        tbody {
+            color: black;
+        }
+    </style>
+}
+
+
+<div class="col-sm-12">
+    <div class="card-box">
+        <div class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                <i class="zmdi zmdi-more-vert"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink(Resource.Lang.Back, "Index")</li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="tables_box">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th> نام و نام خانوادگی : @Model.ExameAccountAnswer.FullName</th>
+                            <th>کد ملی : @Model.ExameAccountAnswer.NationalCode</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>تاریخ : @Model.ExameAccountAnswer.Date.ToPersian()</td>
+                            @*<td>تراز کل : 2525</td>*@
+                            <td>رتبه کل : @Model.ExameAccountAnswer.TotalRateInCountry</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th> وضعیت کلی</th>
+                            <th>امتیاز </th>
+                            <th> امتیاز بدون غلط </th>
+                            <th>امتیاز نهایی </th>
+
+
+                            <th>رتبه کشوری </th>
+                            <th> رتبه در شهر</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>کل</td>
+                            <td>@Model.ExameAccountAnswer.TotalRate</td>
+                            <td>%@Math.Round(Model.ExameAccountAnswer.TotalRateWithoutFalse.Value, 2)</td>
+
+                            <td>%@Math.Round(Model.ExameAccountAnswer.TotalRatePercent.Value, 2)</td>
+                            <td>@Model.ExameAccountAnswer.TotalRateInCountry</td>
+                            <td>@Model.ExameAccountAnswer.TotalRateInCity</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+                @{ int countg = Model.ExameAccountAnswer.AccountAnswerDetails.Count() / 2;}
+                <div class="d-flex">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>شماره سوال</th>
+
+                                <th>پاسخ صحیح</th>
+                                <th>پاسخ شما</th>
+                                <th>پاسخ تشریحی</th>
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 1;
+                                int j = 0;}
+                            @for (j = 0; j <= countg; j++)
+                            {
+                                var cat = Model.ExameAccountAnswer.AccountAnswerDetails[j];
+                                <tr>
+                                    <td>@i</td>
+
+                                    <td>@cat.TrueId</td>
+                                    @if (cat.QuestionId != null)
+                                    {
+                                        <td class="@(cat.IsTrue==false?"danger":"success")">@cat.QuestionId</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td class="@(cat.IsTrue==false?"warning":"")">نزده</td>
+
+                                    }
+                                    <td><a onclick="showModalAnswer('@cat.AnswerDetails')">مشاهده</a></td>
+
+                                </tr>
+
+                                i++;
+                            }
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>شماره سوال</th>
+
+                                <th>پاسخ صحیح</th>
+                                <th>پاسخ شما</th>
+                                <th>پاسخ تشریحی</th>
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @for (int h = j; h < Model.ExameAccountAnswer.AccountAnswerDetails.Count(); h++)
+                            {
+                                var cat = Model.ExameAccountAnswer.AccountAnswerDetails[h];
+                                <tr>
+                                    <td>@i</td>
+
+                                    <td>@cat.TrueId</td>
+                                    @if (cat.QuestionId != null)
+                                    {
+                                        <td class="@(cat.IsTrue==false?"danger":"success")">@cat.QuestionId</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td class="@(cat.IsTrue==false?"warning":"")">نزده</td>
+
+                                    }
+                                    <td><a onclick="showModalAnswer('@cat.AnswerDetails')">مشاهده</a></td>
+
+                                </tr>
+
+                                i++;
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+       
+        <div class="clearfix"></div>
+    </div>
+</div>
+<script src="~/Assets/js/canvasjs.js"></script>
+
+
+
+

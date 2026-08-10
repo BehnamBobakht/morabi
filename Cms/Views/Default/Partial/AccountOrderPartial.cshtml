@@ -1,0 +1,212 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.AccountOrder
+
+@{
+    //Shop shop = new Shop();
+    //if (Model.AccountOrderProduct.Count > 0)
+    //{
+    //    shop = Model.AccountOrderProduct.ToList()[0].Product.Shop;
+    //}
+
+    string time = @Model.Datetime.ToString("HH:mm");
+    string payment_status = Enum_Code.PAYMENT_STATUS_SUCCESSFUL.ToString();
+    string payment_status_service_failed = Enum_Code.PAYMENT_STATUS_SERVICE_FAILED.ToString();
+
+    PaymentProductOrder paymentOrder = Model.PaymentProductOrder.FirstOrDefault(p =>
+        p.Payment.Code.Label == payment_status ||
+        p.Payment.Code.Label == payment_status_service_failed
+    );
+    AccountOrder parenOrder = Model.AccountOrder2;
+    double rebatePrice = 0;
+    if (Model.RebatePrice.HasValue && Model.RebatePrice > 0)
+        rebatePrice = Model.RebatePrice.Value;
+    else if (Model.AccountOrder2.RebatePrice.HasValue && Model.AccountOrder2.RebatePrice > 0)
+        rebatePrice = Model.AccountOrder2.RebatePrice.Value;
+
+}
+
+@section Header {
+    <style>
+        .text-left {
+            text-align: left !important;
+        }
+    </style>
+}
+
+<div class="col-sm-10">
+    <div class="form-horizontal line-height-invoice">
+        <span><b>@Resource.Lang.FactureNumber: </b> @Model.UniqueId</span><br />
+        <span><b>@Resource.Lang.FactureDate: </b> @Model.Datetime.ToPersianComplete() @Resource.Lang.Watch: @time</span><br />
+        <div class="no-print-page">
+            <span><b>@Resource.Lang.FactureStatuse: </b> @Model.Code.Name</span><br />
+
+        </div>
+        <hr />
+
+        <span><b>@Resource.Lang.Buyer: </b>@Model.Account.FullName</span> <span>&nbsp;&nbsp;</span>
+        <span><b>@Resource.Lang.Phone: </b>@Model.Account.Mobile</span> <span>&nbsp;&nbsp;</span>
+
+        <span><b>@Resource.Lang.Address: </b>@Html.Raw(Model.AccountAddress.GetAddressString())</span>
+        @if (Model.AccountAddress.LegalUser)
+        {
+            <span><b>@Resource.Lang.IAmLegalUser </b></span>
+        }
+
+        @*@if (Model.AddressId.HasValue && !string.IsNullOrEmpty(Model.AccountAddress.Latitude) && !string.IsNullOrEmpty(Model.AccountAddress.Longitude))
+            {
+                <hr />
+
+                <div class="map-box">
+                    <input type="hidden" name="Latitude" value="@Model.AccountAddress.Latitude" />
+                    <input type="hidden" name="Longitude" value="@Model.AccountAddress.Longitude" />
+
+                    @Html.Partial("~/Views/Partial/LocationShow.cshtml")
+                </div>
+            }*@
+        <hr />
+        <div>
+            @if (paymentOrder != null)
+            {
+                Payment payment = paymentOrder.Payment;
+
+                <span><b>@Resource.Lang.PaymentStatus: </b>@payment.Code.Name</span> <span>&nbsp;&nbsp;</span>
+                <span><b>@Resource.Lang.ReferenceBank: </b>@payment.Merchant.Bank.Name</span> <span>&nbsp;&nbsp;</span>
+                <span><b>@Resource.Lang.PaymentTrackingCode: </b>@payment.RefNumber</span>
+                <hr />
+            }
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+
+    @if (Model.StoreId.HasValue)
+    {
+        <div class="row">
+            <div class="col-sm-4">
+                خرید شما از فروشگاه :
+            </div>
+            <div class="col-sm-8">
+                @Model.Store.Name
+            </div>
+        </div>
+    }
+
+
+    @*<div class="row">
+            <div class="col-sm-4">
+                فاکتور میخواهد؟
+            </div>
+            <div class="col-sm-8">
+                @(Model.HasFactor == true ? "بله" : "خیر")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">هدیه است ؟</div>
+            <div class="col-sm-8">@(Model.IsGift == true ? "بله" : "خیر")</div>
+        </div>*@
+
+    <table class="table-middle table-print table table-striped table-bordered has-first dataTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Resource.Lang.ProductName</th>
+                <th>@Resource.Lang.Count</th>
+                <th>@Resource.Lang.UnitAmount (@Resource.Lang.Toman)</th>
+                <th>@Resource.Lang.DiscountPercent</th>
+                <th>@Resource.Lang.DiscountedAmount</th>
+                <th>@Resource.Lang.FinalAmount</th>
+                <!--<th>بارکد</th>-->
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.AccountOrderProduct.Count; i++)
+            {
+                AccountOrderProduct item = Model.AccountOrderProduct.ToList()[i];
+                <tr>
+                    <td>@((i + 1).ToString())</td>
+                    <td>
+                        @item.Product.Name
+                        @if (item.StoreProductQuantity.ProductQuantity.ColorId != null)
+                        {
+                            <br />
+                            <span>@Resource.Lang.Color: @item.StoreProductQuantity.ProductQuantity.Color.Name</span>
+                        }
+                        @if (item.StoreProductQuantity.ProductQuantity.SizeId != null)
+                        {
+                            <br />
+                            <span>@Resource.Lang.Size: @item.StoreProductQuantity.ProductQuantity.Size.Name</span>
+                        }
+                        @if (item.StoreProductQuantity.ProductQuantity.OptionItemId != null)
+                        {
+                            <br />
+                            <span>@item.StoreProductQuantity.ProductQuantity.ProductOptionItem.ProductOption.Name: @item.StoreProductQuantity.ProductQuantity.ProductOptionItem.Value</span>
+                        }
+                    </td>
+                    <td>@item.Count</td>
+                    <td>@item.ProductPrice.GetCurrencyFormat() @Resource.Lang.Toman</td>
+                    @if (item.ProductDiscount != 0)
+                    {
+                        <td>@(Math.Ceiling((item.ProductDiscount.Value * 100) / item.ProductPrice.Value)) %</td>
+                    }
+                    else
+                    {
+                        <td>0 %</td>
+                    }
+                    <td>@((item.ProductPrice - item.ProductDiscount).GetCurrencyFormat()) @Resource.Lang.Toman</td>
+                    <td>@((item.Price).GetCurrencyFormat()) @Resource.Lang.Toman</td>
+                    @*<td><img class="qr-code" src="http://chart.apis.google.com/chart?cht=qr&chs=100x100&chl=@item.Product.GetLinkAbsolute()" /></td>*@
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                @if (BaseWebsite.WebsiteSetting.HasCentralizedDelivery)
+                {
+                    if (parenOrder.Delivery != null)
+                    {
+                        <td colspan="6" class="text-left">
+
+                            <span>@Resource.Lang.Shipping :(</span>@parenOrder.Delivery.DeliveryType.Name<span>)</span>
+
+                        </td>
+                        <td>@parenOrder.DeliveryPrice.GetCurrencyFormat() @Resource.Lang.Toman</td>
+                    }
+                }
+                else
+                {
+                    <td colspan="6" class="text-left">
+
+                        <span>@Resource.Lang.Shipping :(</span>@Model.Delivery.DeliveryType.Name<span>)</span>
+
+                    </td>
+                    <td>@Model.DeliveryPrice.GetCurrencyFormat() @Resource.Lang.Toman</td>
+                }
+                <!--<td></td>-->
+            </tr>
+            <tr>
+                <td colspan="6" class="text-left">@Resource.Lang.SiteDiscountRate</td>
+                <td>@Model.DiscountPrice.GetCurrencyFormat() @Resource.Lang.Toman</td>
+                <!--<td></td>-->
+            </tr>
+            <tr>
+
+                    <td colspan="6" class="text-left">@Resource.Lang.DiscountCode </td>
+                    <td>@(rebatePrice.GetCurrencyFormat()) @Resource.Lang.Toman</td>
+               
+
+            </tr>
+            <tr>
+                <td colspan="6" class="text-left">@Resource.Lang.Sum</td>
+                <td>@((Model.Price-rebatePrice).GetCurrencyFormat()) @Resource.Lang.Toman</td>
+                <!--<td></td>-->
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+
+

@@ -1,0 +1,163 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model DataLayer.ViewModels.CreateDiscountVm
+@{
+    //DiscountGroup group = ViewBag.DiscountGroup;
+    //ViewBag.Title = Resource.Lang.RegisterNewCase + "-" + group.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Header {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+}
+@section Script {
+
+    <script>
+        $(".selectpicker").attr("data-live-search", "true");
+
+        $(function () {
+            initializeAddDiscountScript();
+        })
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index", new { storeId = Model.StoreId })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal discount-form">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GroupId, Resource.Lang.DiscountGroup, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("GroupId", null, Resource.Lang.Default, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StoreId, Resource.Lang.Seller, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("StoreId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control selectpicker" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeId, Resource.Lang.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div show-type="41,42,43,44,3099" class="form-group show-type">
+                        <label for="ProductTypeId" class="control-label col-md-2">@Resource.Lang.TypeProduct</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ProductTypeId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control selectpicker" })
+                        </div>
+                    </div>
+                    <div show-type="42,43,44,3099" class="form-group show-type">
+                        <label for="ProductCategoryId" class="control-label col-md-2">@Resource.Lang.Category</label>
+                        <div class="col-md-10" id="product-category-dropDown">
+                            @Html.Action("ProductCategoryDropDown", "ProductCategory", new { area = "store", typeId = Model.ProductTypeId, value = Model.ProductCategoryId })
+                        </div>
+                    </div>
+                    <div show-type="43,44,3099" class="form-group show-type">
+                        @Html.LabelFor(model => model.ProductSubCategoryId, Resource.Lang.Subordinates, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10" id="product-sub-category-dropDown">
+                            @Html.Action("ProductSubCategoryDropDown", "ProductSubCategory", new { area = "store", categoryId = Model.ProductCategoryId, value = Model.ProductSubCategoryId })
+                        </div>
+                    </div>
+                    <div show-type="3096" class="form-group show-type">
+                        @Html.LabelFor(model => model.ProductBrandId, Resource.Lang.Brand, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div id="product-brand-dropDown" class="col-md-10">
+                            @Html.Action("ProductBrandDropDown2", "ProductBrand", new { area = "store", typeId = Model.ProductTypeId, value = Model.ProductBrandId })
+                        </div>
+                    </div>
+                    <div show-type="44,3099" class="form-group show-type">
+                        @Html.LabelFor(model => model.ProductId, Resource.Lang.Product, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div id="product-dropDown" class="col-md-10">
+                            @Html.Action("ProductDropDown", "Product", new { area = "store", storeid = Model.StoreId, producttypeId = Model.ProductTypeId, productCategoryid = Model.ProductCategoryId, productsubCategoryid = Model.ProductSubCategoryId, value = Model.ProductId })
+                        </div>
+                    </div>
+                    <div show-type="3099" class="form-group show-type">
+                        @Html.LabelFor(model => model.StoreProductQuantityId, Resource.Lang.Variety, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div id="product-quantity-dropDown" class="col-md-10">
+                            @Html.Action("StoreProductQuantityDropDown", "Product", new { area = "store", storeid = Model.StoreId, productId = Model.ProductId, value = Model.StoreProductQuantityId })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ValueTypeId, Resource.Lang.TypeOfAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ValueTypeId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.PriceValue, Resource.Lang.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @if (Model.ValueTypeId == 52 || Model.ValueTypeId == null)
+                            {
+                                @Html.EditorFor(model => model.PriceValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.PriceValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @disabled = "disabled" } })
+
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.PercentValue, Resource.Lang.Percent, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @if (Model.ValueTypeId == 53)
+                            {
+                                @Html.EditorFor(model => model.PercentValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.PercentValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @disabled = "disabled" } })
+
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StartDatetime, Resource.Lang.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input id="StartDatetime" name="StartDatetime" class="form-control" autocomplete="off" codeprocess="date" value="@Model.StartDatetime.ToPersian()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EndDatetime, Resource.Lang.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input id="EndDatetime" name="EndDatetime" class="form-control" autocomplete="off" codeprocess="date" value="@Model.EndDatetime.ToPersian()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Active)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index", new { storeid = Model.StoreId })</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+

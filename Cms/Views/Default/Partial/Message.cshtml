@@ -1,0 +1,20 @@
+﻿@using DataLayer.Enumarables;
+@model DataLayer.ViewModels.ViewMessage
+
+@if (Model != null)
+{
+    if (Model.Type == Enum_MessageType.ERROR)
+    {
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            @Model.Body
+        </div>
+    }
+    else if (Model.Type == Enum_MessageType.SUCCESS)
+    {
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            @Model.Body
+        </div>
+    }
+}

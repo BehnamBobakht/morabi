@@ -1,0 +1,19 @@
+﻿@model List<DataLayer.Entities.AccountOrderProduct>
+@foreach (var item in Model)
+{
+<div class="form-check">
+    <input class="form-check-input checkbox"  value="@item.Product.Name" type="checkbox" name="courseItem" id="@("ci"+item.Product.ID)">
+    <label class="form-check-label" for="show-course2">
+        @item.Product.Name
+    </label>
+</div>
+}
+
+
+
+
+
+
+
+
+

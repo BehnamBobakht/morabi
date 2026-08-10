@@ -1,0 +1,245 @@
+﻿@model DataLayer.Entities.Store
+@using DataLayer.Base
+@{
+    ViewBag.Title = Resource.Lang.Profile;
+    Layout = Resources.Default.STORE_LAYOUT;
+}
+
+@section head{
+    <link href="~/Assets/Plugins/fileuploads/css/dropify.min.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/Assets/Plugins/fileuploads/js/dropify.min.js"></script>
+    <script>
+        $(".dropify").dropify({
+            messages: {
+                'default': 'فایل را اینجا بیندازید',
+                'replace': 'برای تغییر تصویر کلیک کنید',
+                'remove': 'حذف',
+                'error': 'خطا در هنگام ارسال تصویر'
+            },
+            error: {
+                'fileSize': 'The file size is too big (1M max).'
+            }
+        });
+
+        $(".dropify").change(function () {
+
+            var fileUpload = $(this).get(0);
+            var files = fileUpload.files;
+            var target = $(fileUpload).attr("target");
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append(files[i].name, files[i]);
+            }
+            $.ajax({
+                url: "/panel/Upload/UploadPhoto",
+                type: "POST",
+                data: data,
+                contentType :false,
+                processData : false,
+                error: function (a) {
+                     ;
+                },
+                success: function (result) {
+                     ;
+                    $("[name=" + target + "]").val(result.Id);
+                }
+            });
+        });
+    </script>
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/store/dashboard"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active">@Resource.Lang.Shipping</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card ">
+                @*@using (Html.BeginForm())
+                    {*@
+
+                @using (Html.BeginForm("Edit", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.ID)
+                        @Html.HiddenFor(model => model.PictureId)
+
+                        @*<div class="form-group">
+                                @Html.LabelFor(model => model.PictureId, "PictureId", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("PictureId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+
+                        @*<div class="form-group">
+                                @Html.LabelFor(model => model.AccountId, "AccountId", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("AccountId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+
+
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    @Html.Label(Resource.Lang.StoreName, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                        @Html.LabelFor(model => model.PictureId, "عکس", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            <input id="PictureId" uploadtype="3" type="file" class="dropify" name="PictureId" codeprocess="upload" data-height="220" />
+                                        </div>
+                                    </div>*@
+
+
+                                <div class="form-group col-md-11 col-lg-12">
+                                    @if (Model.Picture != null)
+                                    {
+                                        <input target="PictureId" type="file" class="dropify" name="file" target="PictureId" data-height="290" data-default-file="@Model.Picture.GetUrl()" />
+                                    }
+                                    else
+                                    {
+                                        <input target="PictureId" type="file" class="dropify" name="file" target="PictureId" data-height="290" />
+                                    }
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    @Html.Label(Resource.Lang.Mobile, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.Phone1, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Phone1, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.Label(Resource.Lang.Phone, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.Phone2, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Phone2, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    @Html.Label(Resource.Lang.Fax, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.Label(Resource.Lang.Address, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.TextAreaFor(model => model.AddressValue, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.AddressValue, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @Html.Label(Resource.Lang.Detail, htmlAttributes: new { @class = "control-label" })
+                                    <div class="">
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.Label(Resource.Lang.Bank, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.BankName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @Html.Label(Resource.Lang.BankAccountNo, htmlAttributes: new { @class = "control-label" })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.BankAccountNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BankAccountNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.Label(Resource.Lang.BankAccountCardNo, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.BankAccountCardNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BankAccountCardNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @Html.Label(Resource.Lang.BankAccountShaba, htmlAttributes: new { @class = "control-label" })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.BankAccountShaba, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BankAccountShaba, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.Label(Resource.Lang.SiteAllotment, htmlAttributes: new { @class = "control-label " })
+                                    <div class="">
+                                        @Html.EditorFor(model => model.BenefitPercent, new { htmlAttributes = new { @disabled = "true", @class = "form-control" } })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+
+                                    <div class=" ">
+                                        @Html.Label(Resource.Lang.SiteApproval)
+                                        <div class="radio">
+                                            <input type="radio" disabled value="true" name="Approve" id="Approve1" @(Model.Approve ? " checked " : "") />
+                                            @Html.Label(Resource.Lang.Accepted, new { @for = "Approve1" })
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" disabled value="false" name="Approve" id="Approve2" @(Model.Approve ? "" : "checked") />
+                                            @Html.Label(Resource.Lang.Disapproval, new { @for = "Approve2" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <div class=" ">
+                                        @Html.Label(Resource.Lang.Status)
+                                        <div class="radio">
+                                            <input type="radio" value="true" name="Active" id="Active1" @(Model.Active ? " checked " : "") />
+                                            @Html.Label(Resource.Lang.Active, new { @for = "Active1" })
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="false" name="Active" id="Active2" @(Model.Active ? "" : "checked") />
+                                            @Html.Label(Resource.Lang.Deactive, new { @for = "Active2" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <div class="col-md-offset-2 ">
+                                        <input type="submit" value="@Resource.Lang.Submit" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

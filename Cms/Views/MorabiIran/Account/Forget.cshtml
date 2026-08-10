@@ -1,0 +1,55 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@{
+    TempData["Title"] = Resource.Lang.RecoveryPassword;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    ViewMessage Message = (ViewMessage)ViewBag.Message;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.RecoveryPassword, Url = "" });
+}
+
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+<section class="form_page forgot-password page-padding">
+    <div class="section-title">
+        <div class="container central flex-column">
+            <div class="section-title central flex-column">
+                <h1>بازیابی رمز عبور</h1>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="form_page_content">
+                    @if (!string.IsNullOrEmpty(Message.Body))
+                    {
+                        <p class="alert alert-danger">
+                            @Message.Body
+                        </p>
+                                               <p class="alert alert-warning">درصورت دریافت کد بر روی  <a href="@Url.Action("Login","Account",new {back= ViewBag.back})">ورود</a>کلیک کرده و شماره موبایل و رمز عبور جدید ارسال شده برایتان را وارد نمایید</p>
+											                          <p class="text-center"><a href="/login" class="btn secondary_btn mb-2">ورود</a></p>                       
+
+
+                    }
+                    <div class="form_box">
+                        <form action="@Url.Action("forget","account")" method="post">
+                            <input name="mobile" class="form-control mb-3" type="text" placeholder="@Resource.Lang.Mobile ">
+                            <input name="email" class="form-control mb-3 d-none" type="text" placeholder="@Resource.Lang.Email ">
+                            <button class="btn primary_btn me-auto" type="submit">
+                                <span>@Resource.Lang.Submit </span>
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+

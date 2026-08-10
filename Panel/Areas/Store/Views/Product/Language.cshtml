@@ -1,0 +1,447 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model ProductCreateVm
+@using DataLayer.Enumarables;
+@{
+    ViewBag.Title = Resource.Lang.RegisterNewProduct;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var setting = BaseWebsite.WebsiteSetting;
+    string PanelUrl = BaseWebsite.PanelUrl;
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
+
+}
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    <script>
+            $(document).ready(function () {
+                initializeAddProductScript();
+            });
+        $(document).on("change", "#ProductTypeId", function () {
+            var request = createRequest();
+            request.url = base_admin_url + "/store/ProductCategory/ProductCategoryDropDown";
+            request.type = "Get";
+            request.data = { typeId: $(this).val() },
+                request.contentType = "html";
+
+            request.success = function (result) {
+                $("#product-category-dropDown").html(result);
+            };
+            $.ajax(request);
+            request.url = base_admin_url + "/store/ProductBrand/ProductBrandDropDown";
+            request.type = "Get";
+            request.data = { typeId: $(this).val() },
+                request.contentType = "html";
+
+            request.success = function (result) {
+                $("#product-brand-dropDown").html(result);
+            };
+
+            $.ajax(request);
+
+            request.url = base_admin_url + "/store/ProductOption/ProductOptionDropDown";
+            request.type = "Get";
+            request.data = { typeId: $(this).val() };
+                request.contentType = "html";
+
+            request.success = function (result) {
+                $("#product-option-dropDown").html(result);
+            };
+            $.ajax(request);
+            request.url = base_admin_url + "/store/Product2/Colors";
+            request.type = "Get";
+            request.data = { producttypeId: $(this).val() };
+                request.contentType = "html";
+            request.success = function (result) {
+                $("#color-container").html(result);
+            };
+            $.ajax(request);
+            request.url = base_admin_url + "/store/Product2/Sizes";
+            request.type = "Get";
+            request.data = { producttypeId: $(this).val() };
+                request.contentType = "html";
+            request.success = function (result) {
+                $("#size-container").html(result);
+            };
+            $.ajax(request);
+        });
+        $(document).on("change", "#ProductCategoryId", function () {
+            var request = createRequest();
+            request.url = base_admin_url + "/store/ProductSubCategory/ProductSubCategoryDropDown";
+            request.type = "Get";
+            request.data = { categoryId: $(this).val() },
+                request.contentType = "html";
+            request.success = function (result) {
+                $("#product-sub-category-dropDown").html(result);
+            };
+            $.ajax(request);
+        });
+        $(document).on("change", "#ProductOptionId", function () {
+            var request = createRequest();
+            request.url = base_admin_url + "/store/ProductOptionItem/ProductOptionItems";
+            request.type = "Get";
+            request.data = { productOptionId: $(this).val() },
+                request.contentType = "html";
+            request.success = function (result) {
+                $("#product-option-item-container").html(result);
+            };
+            $.ajax(request);
+        });
+
+/**/</script>
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.PictureId)
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <legend>@Resource.Lang.ProductInfo</legend>
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Name, Resource.Lang.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @autofocus = "autofocus" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Summary, Resource.Lang.Summery, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Summary, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Description, Resource.Lang.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                @if (setting.HasCodeValue)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="CodeValue" class="control-label col-md-4">@Resource.Lang.ProductCode</label>
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.CodeValue, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @autofocus = "autofocus" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasService)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IsService, Resource.Lang.Services, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                <div class="form-check form-check-inline">
+                                                    <input checked class="form-check-input" type="radio" name="IsService" id="IsServiceF" value="false">
+                                                    <label class="form-check-label" for="IsServiceF">@Resource.Lang.No</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="IsService" id="IsServiceT" value="true">
+                                                    <label class="form-check-label" for="IsServiceT">@Resource.Lang.Yes</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+
+                                @if (setting.HasProductType)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ProductTypeId" class="control-label col-md-4">@Resource.Lang.TypeProduct</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("ProductTypeId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasProductCategory)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ProductCategoryId" class="control-label col-md-4">@Resource.Lang.Category</label>
+                                            <div class="col-md-8" id="product-category-dropDown">
+                                                @Html.Action("ProductCategoryDropDown", "ProductCategory", new { area = "store", typeId = Model.ProductTypeId, value = Model.ProductCategoryId })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasProductSubCategory)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ProductSubCategoryId, Resource.Lang.Subordinates, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8" id="product-sub-category-dropDown">
+                                                @Html.Action("ProductSubCategoryDropDown", "ProductSubCategory", new { area = "store", categoryId = Model.ProductCategoryId, value = Model.ProductSubCategoryId })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasBrand)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.BrandId, Resource.Lang.Brand, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div id="product-brand-dropDown" class="col-md-8">
+                                                @Html.Action("ProductBrandDropDown", "ProductBrand", new { area = "store", typeId = Model.ProductTypeId })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (setting.HasStatus)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.StatusId, Resource.Lang.Status, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("StatusId", null, htmlAttributes: new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.StatusId)
+                                }
+
+                                @if (setting.HasDocument)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DocId, Resource.Lang.AttachmentFile, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                <input id="DocId" name="DocId" type="file" codeprocess="document" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+
+                                @if (setting.HasUnitPrice)
+                                {
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Weight, Resource.Lang.Weight, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+
+                                @if (setting.HasColor)
+                                {
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">@Resource.Lang.ChooseColor</label>
+                                            <div class="col-md-10">
+                                                <div id="div-color-part">
+                                                    <div id="color-container">
+                                                        @Html.Action("Colors", new { productTypeId = Model.ProductTypeId, productId = Model.ID, ColorIds = Model.ColorIds })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (setting.HasSize)
+                                {
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">@Resource.Lang.ChooseSize</label>
+                                            <div class="col-md-10">
+                                                <div id="div-size-part">
+                                                    <div id="size-container">
+                                                        @Html.Action("Sizes", new { productTypeId = Model.ProductTypeId, productId = Model.ID, SizeIds = Model.SizeIds })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+
+                                @if (setting.HasProductOption)
+                                {
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="ProductOptionId" class="control-label col-md-2">@Resource.Lang.ProductOption</label>
+                                    <div class="col-md-10">
+                                        <div id="product-option-dropDown">
+                                            @Html.Action("ProductOptionDropDown", "ProductOption", new { area = "store", typeId = Model.ProductTypeId, value = Model.ProductOptionId })
+                                        </div>
+                                        <div id="product-option-item-container">
+                                            @Html.Action("ProductOptionItems", "ProductOptionItem", new { area = "store", productOptionId = Model.ProductOptionId, productId = Model.ID, optionItemIds = Model.OptionItemIds })
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                              
+                            </div>
+                                }
+
+
+                                @if (setting.HasActive)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Active, Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-4" })
+                                            <div class="col-md-8">
+                                                <select id="Active" class="form-control">
+                                                    <option value="True">@Resource.Lang.Active</option>
+                                                    <option value="False">@Resource.Lang.Deactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.Active)
+                                }
+                                @if (setting.HasSeo)
+                                {
+                                    <h5 class="col-sm-12"> فیلد های مربوط به سئو</h5>
+                                    <div class="col-sm-12  mt-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.H1, "H1", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.H1, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Title, Resource.Lang.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Url, @Resource.Lang.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Img, " عکس ", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Img, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </fieldset>
+
+                        <div class="devider-15"></div>
+                    </div>
+                    <div class="col-sm-6 no-padding-left">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <fieldset>
+                                    <legend>@Resource.Lang.Image</legend>
+                                    <input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="220" target-id="PictureId" />
+                                    <div class="devider-10"></div>
+                                    <div class="devider-10"></div>
+                                    <div class="related-picture-container">
+                                        <div class="row">
+                                            <div class="col-pic-20 add-item">
+                                                <label class="other-picture-item" for="uplOtherPicture">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="display-none">
+                                            <input id="uplOtherPicture" type="file" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        @if (setting.HasService)
+                        {
+                            <div class="row map-div">
+
+                                <div class="col-sm-12  mt-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Latitude, Resource.Lang.Latitude, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Longitude, Resource.Lang.Longitude, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 ">
+                                    <div class="form-group">
+                                        @Html.Label("نقشه", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Partial("~/Views/Partial/LocationPicker.cshtml")
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+ 
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <div>
+                                <div class="col-md-10 no-padding-right col-md-offset-2">
+                                    <div class="row error-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-11">
+                                <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+

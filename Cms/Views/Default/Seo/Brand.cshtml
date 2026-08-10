@@ -1,0 +1,14 @@
+﻿@using DataLayer.Base
+@model  DataLayer.ViewModels.ProductBrandSerachVm
+
+@{
+    string url = Model.ProductBrandVm.Href;
+    TempData["Title"] = Model.ProductBrandVm.Title+ BaseContent.WebsiteDetail.OtherTitle;
+    TempData["OgUrl"] = url;
+    TempData["url"] = url;
+    TempData["MetaDescription"] = Model.ProductBrandVm.Summary;
+    TempData["OgImage"] = Model.ProductBrandVm.Picture.Url;
+}
+
+
+

@@ -1,0 +1,63 @@
+﻿@model DataLayer.Entities.Template
+@{
+    ViewBag.Title = "نمایش اطلاعات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <div class="col-sm-6 no-padding">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            نوع قالب
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Code.Name)
+                        </dd>
+                        <dt>
+                            عنوان قالب
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt>
+                            برچسب
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Label)
+                        </dd>
+                        <dt>
+                            نسخه
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Version)
+                        </dd>
+                        <dt>
+                            نویسنده
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Author)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-3 text-center">
+                    @if (Model.Picture != null)
+                    {
+                        <img src="@Model.Picture.Url" class="img-responsive form-image" />
+                    }
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink("ویرایش", "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

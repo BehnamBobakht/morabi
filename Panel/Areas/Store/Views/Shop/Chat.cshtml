@@ -1,0 +1,106 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model DataLayer.Entities.Account
+
+@{
+    ViewBag.Title = Resource.Lang.ListOfMessages + Model.FullName;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    Shop shop = ViewBag.Shop;
+    List<Account> list = new List<Account>();
+    foreach (ShopChat item in shop.ShopChat)
+    {
+        if (list.Any(p => p.ID == item.AccountId) == false)
+        {
+            list.Add(item.Account);
+        }
+    }
+}
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var wtf = $('.dialog-container');
+            var height = wtf[0].scrollHeight;
+            wtf.scrollTop(height);
+        });
+    </script>
+}
+
+<div class="col-sm-3">
+    <div class="card-box">
+        <h4 class="header-title m-t-0 m-b-30">@Resource.Lang.Audiencelist</h4>
+        <table class="table">
+            <tr>
+                <th colspan="2">
+                    <input type="text" class="form-control" placeholder=@Resource.Lang.SearchAudience />
+                </th>
+            </tr>
+            @foreach (Account item in list)
+            {
+                <tr>
+                    <th style="width:60px;">
+                        <a href="@Url.Action("chat", new { controller = "shop", area = "store", accountId = item.ID })">
+                            @if (item.PictureId == null)
+                            {
+                                <img class="chat-image" src="~/Assets/images/no-image.png" />
+                            }
+                            else
+                            {
+                                <img class="chat-image" src="@item.Picture.GetUrl()" />
+                            }
+                        </a>
+                    </th>
+                    <th class="text-left">
+                        <div class="devider-15"></div>
+                        <a href="@Url.Action("chat", new { controller = "shop", area = "store", accountId = item.ID })">
+                            @item.FullName
+                        </a>
+                    </th>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div class="col-sm-9">
+    <div class="card-box">
+        <h4 class="header-title m-t-0 m-b-30">
+            @if (Model.PictureId == null)
+            {
+                <img class="chat-main-image" src="~/Assets/images/no-image.png" />
+            }
+            else
+            {
+                <img class="chat-main-image" src="@Model.Picture.GetUrl()" />
+            }
+            @Model.FullName
+        </h4>
+        <div class="dialog-container">
+            @foreach (ShopChat item in Model.ShopChat.Where(p => p.ShopId == shop.ID))
+            {
+                if (item.IsAccountSend == false)
+                {
+                    <div class="my-dialog">
+                        @Resource.Lang.You:<br />
+                        @item.Body
+                    </div>
+                }
+                else
+                {
+                    <div class="my-dialog inverse">
+                        @item.Account.FullName:<br />
+                        @item.Body
+                    </div>
+                }
+                <div class="devider-10"></div>
+            }
+        </div>
+        <div>
+            <form action="/store/shop/chat" method="post">
+                <input type="hidden" name="AccountId" value="@Model.ID" />
+                <input type="hidden" name="ShopId" value="@shop.ID" />
+                <input name="Body" class="fit-width message-box" placeholder=@Resource.Lang.WriteYourMessage autofocus="" />
+                </form>
+            </div>
+        </div>
+    </div>
+

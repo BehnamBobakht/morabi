@@ -1,0 +1,54 @@
+﻿@model DataLayer.ViewModels.ProductShowVm
+@using DataLayer.Base
+
+@{
+    TempData["Title"] = (!string.IsNullOrEmpty(Model.Title)?Model.Title:Model.Name)+ BaseContent.WebsiteDetail.OtherTitle;
+    TempData["MetaDescription"] = Model.MetaTagDescription;
+    TempData["canonical"] = Model.ProductTypeUrl;
+    TempData["url"] = Model.ProductUrl;
+    TempData["OgImage"] = Model.Picture.Url;
+    TempData["OgUrl"] = Model.ProductUrl;
+
+    TempData["noIndex"] = Model.NoIndex;
+    TempData["noFollow"] = Model.NoFollow;
+    TempData["OgImageType"] = null;
+}
+<meta name="product_id" content='@Model.ID' />
+<meta name="page_url" content='@Model.ProductUrl' />
+<meta name="price" content='@(Model.Code.Label == DataLayer.Enumarables.Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString()? Model.InexpensiveItemPrice.GetCurrencyFormat(): Resource.Lang.NoAvailable)' />
+<meta name="old_price" content='@(Model.Code.Label == DataLayer.Enumarables.Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString()? Model.InexpensiveItemBasePrice.GetCurrencyFormat(): Resource.Lang.NoAvailable)' />
+<meta name="availability" content='@(Model.Code.Label == DataLayer.Enumarables.Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString()? "instock":Resource.Lang.NoAvailable)' />
+<meta property="og:price:amount" content="@(Model.Code.Label == DataLayer.Enumarables.Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString()? Model.InexpensiveItemPrice.GetCurrencyFormat(): Resource.Lang.NoAvailable)" />
+<meta property="og:price:currency" content="IRR" />
+<script type="application/ld+json">
+    {
+    "@@context": "https://schema.org/",
+    "@@type": "Product",
+    "name": "@Model.Name",
+    "image": "@Model.Picture.Url",
+    "description": "@Model.MetaTagDescription",
+    "brand": {
+    "@@type": "Brand",
+    "name": "@(Model.ProductBrand != null ? Model.ProductBrand.Name : "")"
+    },
+    "review": {
+    "@@type": "Review",
+    "author": {
+    "@@type": "Person",
+    "name": "@BaseContent.WebsiteDetail.Title"
+    },
+    "reviewRating": {
+    "@@type": "Rating",
+    "ratingValue": "4",
+    "bestRating": "5"
+    }
+    },
+    "aggregateRating": {
+    "@@type": "AggregateRating",
+    "ratingValue": "4",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "295"
+    }
+    }
+</script>

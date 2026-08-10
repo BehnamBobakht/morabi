@@ -1,0 +1,15 @@
+﻿@using Stimulsoft.Report.Mvc
+
+@{
+    ViewBag.Title = "گزارش موجودی فروشنده ها";
+    Layout = null;
+}
+
+
+@Html.Stimulsoft().StiMvcViewer(new StiMvcViewerOptions()
+{
+    
+    Theme = StiTheme.Office2013,
+    ActionGetReportSnapshot = "StateOrderReport",
+    ActionViewerEvent = "ViewerEvent"
+})

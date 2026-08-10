@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    @RenderSection("MetaTag", false)
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_MetaTags.cshtml")
+    <title>@(TempData["Title"] != null ? TempData["Title"] : DataLayer.Base.BaseContent.WebsiteDetail.IndexTitle)</title>
+
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Css.cshtml")
+
+    @RenderSection("Head", false)
+</head>
+
+<body>
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Header.cshtml")
+    <section class="profile">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 p-1">
+                    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_UserMenu.cshtml")
+                </div>
+                <div class="col-lg-9 p-1">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/EditProfile.cshtml")
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/ChangePassword.cshtml")
+    
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Footer.cshtml")
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Script.cshtml")
+
+    @RenderSection("endScripts", false)
+    <script>
+        initializeCommonScript();
+        if (screen.width < 700) {
+            $(window).scrollTop(700)
+
+        }
+    </script>
+
+</body>
+</html>

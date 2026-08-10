@@ -1,0 +1,16 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1">
+            <div class="home-report-item central flex-column">
+                <span>@item.GetSummery()</span>
+                <p>@item.GetName()</p>
+            </div>
+        </div>
+        
+    }
+
+}

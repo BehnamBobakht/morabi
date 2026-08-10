@@ -1,0 +1,19 @@
+﻿<div class="from-group">
+    <input type="text" name="Mobile" data-bind="value: viewModel.Account.Mobile" class="form-control" placeholder="@Resource.Lang.UserName ( @Resource.Lang.Email / @Resource.Lang.MobileNumber )">
+</div>
+
+<div class="from-group my-2">
+    <input type="password" name="password" data-bind="value: viewModel.Account.Password" class="form-control" placeholder="@Resource.Lang.Password">
+</div>
+
+<div class="remembber-parent d-flex justify-content-between">
+    <div class="remembber-box d-flex align-items-center">
+        <input type="checkbox" class="ml-1" id="remember" name="remember" value="true" codeprocess-field="remember" data-bind="checked: viewModel.Account.remember" />
+        @Resource.Lang.RememberMe
+    </div>
+    <div class="forget-pass">
+        <a href="/forget"><span>@Resource.Lang.IForgotMyPassword</span></a>
+    </div>
+
+</div>
+

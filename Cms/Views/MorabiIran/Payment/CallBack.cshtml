@@ -1,0 +1,86 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@model ViewPay
+@{
+    ViewBag.Title = Resource.Lang.Payment;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+}
+<section class="basket pagePadding">
+    <div class="container">
+        <div class="basket_box">
+            <div class="row w-100 m-0">
+                <div class="basket_tab w-100">
+                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Cart/_CartHeader.cshtml", model: CartHeader.CallBack)
+                    <div class="tab_content w-100 ">
+                        <div class="message d-flex justify-content-between align-items-center">
+                            @if (Model.Payment.Code.Label == Enum_Code.PAYMENT_STATUS_SUCCESSFUL.ToString())
+                            {
+
+
+                                <div class="bank-result">
+                                    <div class="bank-result-ic">
+                                        <i class="fr-check-circle"></i>
+                                    </div>
+                                    <div class="bank-result-title text-success">
+                                        <div class="successIcon"></div>
+                                        @*<h4>@Resource.Lang.SuccessfulPayment</h4><hr />*@
+
+                                        <h4 id="paymentSuccess">خرید موفق آمیز</h4><hr />
+                                        @foreach (var item in Model.Names)
+                                        {
+                                            <h5>@item</h5>
+                                        }
+                                        <p>@Model.Payment.Account.FullName @Model.Payment.Account.LatName</p>
+                                        <p>عزیز پرداخت شما موفق بود و ثبت نام شما در دوره با موفقیت انجام شد.</p>
+                                        <p>لطفا برای ثبت نهایی تصویر پرداختتان را برای مسئول ثبت نام خودتان ارسال و لینک گروه دوره را دریافت نمایید</p>
+                                        <p>(جهت تکمیل ثبت نام، کد پیگیری خود را برای مسئول ثبت نام ارسال فرمایید)</p>
+                                        <br />
+                                        @foreach (var item in Model.Links)
+                                        {
+                                            <a href="@item">کانال تلگرام : @item</a>
+
+                                        }
+                                        @if (!string.IsNullOrEmpty(Model.Payment.RefNumber))
+                                        {
+                                            <br />
+                                            <span>@Resource.Lang.YourPaymentHasBeenSuccessful</span>
+                                            <span>@Resource.Lang.TrackingNumber: <span class="font-calibri">@Model.Payment.RefNumber</span></span>
+                                        }
+                                        else
+                                        {
+                                            <h4>@Resource.Lang.SuccessfulyOrder</h4>
+                                        }
+                                        <hr />
+                                        <a href="/" class="btn back2home ">بازگشت به صفحه اصلی </a>
+                                        @*<a href="/Profile" class="btn back2order">پی گیری سفارش</a>*@
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="bank-result unsuccessful">
+                                    <div class="bank-result-ic">
+                                        <i class="fr-close"></i>
+                                    </div>
+                                    <div class="bank-result-title text-danger">
+                                        <h4 id="paymentOnSuccess">@Resource.Lang.UnSuccessfulPayment</h4>
+                                        <span>@Resource.Lang.YourPaymentEncounteredError</span>
+                                        <br />
+                                        <a href="@Url.Action("index", "basket")">
+                                            <i class="fr-right"></i>
+                                            <span>@Resource.Lang.BackToBasket</span>
+                                        </a>
+                                        <a href="/" class="btn btn-danger">@Resource.Lang.BackToHomePage</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

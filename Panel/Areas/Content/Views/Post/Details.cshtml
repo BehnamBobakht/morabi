@@ -1,0 +1,76 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.Post
+@{
+    ViewBag.Title = Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <div class="col-md-9 no-padding">
+                    <dl class="dl-horizontal">
+                        <dt>
+                           @Resource.Lang.CategoryName
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Category.Name)
+                        </dd>
+                        <dt>
+                            @Resource.Lang.Title
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt>
+                          @Resource.Lang.Summery
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Summary)
+                        </dd>
+                        <dt>
+                          @Resource.Lang.DateShow
+                        </dt>
+                        <dd>
+                            @Model.ShowDateTime.ToPersian()
+                        </dd>
+                        <dt>
+                         @Resource.Lang.CountVisit
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.VisitCount)
+                        </dd>
+                        <dt>
+                         @Resource.Lang.CountVisit
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.IsSlider)
+                        </dd>
+                        <dt>
+                          @Resource.Lang.ActiveDeactive
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Active)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-md-3">
+                    @if (Model.PictureId != null)
+                    {
+                        <br />
+                        <img src="@Model.Picture.Url" class="img-responsive img-rounded" />
+                    }
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink(Resource.Lang.Edit, "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@using DataLayer.Base
+
+@{
+    string url = BaseWebsite.ShopUrl;
+    TempData["Title"] = BaseContent.WebsiteDetail.IndexTitle;
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    TempData["OgImage"] = BaseContent.WebsiteDetail.LogoAddress;
+    TempData["OgImageType"] = "png";
+    TempData["MetaDescription"] = BaseContent.WebsiteDetail.Summary;
+}
+    <script type="application/ld+json">
+        {
+        "@@context": "http://schema.org",
+        "@@type": "organization",
+        "name":"@BaseContent.WebsiteDetail.Title",
+        "alternateName": "@BaseContent.WebsiteDetail.Title",
+        "url": "@url",
+        "logo": "@BaseContent.WebsiteDetail.LogoAddress",
+        "contactPoint": [{
+        "@@type": "ContactPoint",
+        "telephone": "@BaseContent.WebsiteDetail.Phone",
+        "contactType": "customer service",
+        "areaServed": "IR",
+        "availableLanguage": "Persian"
+        }]
+        }
+    </script>
+
+

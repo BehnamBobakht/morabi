@@ -1,0 +1,21 @@
+﻿@model DataLayer.ViewModels.ViewInnerProductLike
+@if (Model.Islike == true)
+{
+
+    <a href="" codeprocess-action="productlike-remove" codeprocess-callback="reLoadPage" product-id="@Model.ProductId">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.62 20.81C13.28 20.93 12.72 20.93 12.38 20.81C9.48 19.82 3 15.69 3 8.69001C3 5.60001 5.49 3.10001 8.56 3.10001C10.38 3.10001 11.99 3.98001 13 5.34001C14.01 3.98001 15.63 3.10001 17.44 3.10001C20.51 3.10001 23 5.60001 23 8.69001C23 15.69 16.52 19.82 13.62 20.81Z" stroke="#292D32" fill="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </a>
+}
+else
+{
+<a href="" codeprocess-action="productlike-add" product-id="@Model.ProductId" codeprocess-callback="reLoadPage">
+    <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18.0898 2.78851C14.9335 1.02216 12.0572 3.04188 11.0136 4.27253C7.94416 1.05836 5.04126 1.94394 3.97349 2.78851C1.10679 4.7286 1.98273 8.31438 2.77903 9.86477C2.77903 9.86477 8.22045 15.3665 11.0136 18.2079L18.687 10.4801C21.5248 6.62887 19.4713 3.7477 18.0898 2.78851Z" stroke="#C4C4C4" stroke-width="3" stroke-linecap="round" />
+    </svg>
+</a>
+}
+
+
+

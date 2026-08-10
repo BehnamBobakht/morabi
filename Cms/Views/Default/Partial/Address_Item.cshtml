@@ -1,0 +1,35 @@
+﻿@using DataLayer.Base;
+@model DataLayer.Entities.AccountAddress
+
+<div address-row="@Model.ID" class="row">
+    <div class="col-sm-1 select-address">
+        <input id="addressId-@Model.ID" name="addressId" type="radio" value="@Model.ID" />
+        <label for="addressId-@Model.ID">
+            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+        </label>
+        <label for="addressId-@Model.ID">
+            <i class="fa fa-circle-o" aria-hidden="true"></i>
+        </label>
+    </div>
+    <div class="col-sm-10">
+        <div class="address-content">
+            <span>گیرنده: </span><span>@Model.NameFamily.ToPersian()</span><br />
+            <span>شماره تلفن ثابت: </span><span>@Model.Phone.ToPersian()</span><br />
+            <span>شماره همراه: </span><span>@Model.Mobile.ToPersian()</span><br />
+            @if (Model.StateId != null)
+            {
+                <span>استان: </span><span>@Model.State.Name</span><br />
+            }
+            else
+            {
+                <span>استان: </span><span>-</span><br />
+            }
+            <span>آدرس: </span><span>@Model.AddressValue</span>
+        </div>
+    </div>
+    <div class="col-sm-1 no-padding-right edit-content">
+        <a data-toggle="tooltip" codeprocess-action="address-remove" address-id="@Model.ID" data-placement="left" title="حذف آدرس">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>

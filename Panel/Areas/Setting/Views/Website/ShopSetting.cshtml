@@ -1,0 +1,523 @@
+﻿@using DataLayer.ViewModels;
+@model DataLayer.Entities.ShopWebsiteSetting
+@{
+    ViewBag.Title = "تنظیمات وبسایت " + ViewBag.Website.Title;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.WebsiteId)
+    @Html.HiddenFor(model => model.MaxShopProductCount)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasShop, "فروشگاه", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasShop)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasStore, "فروشنده", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasStore)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasProductType, "نوع محصول", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasProductType)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasCompany, "کمپانی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasCompany)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasProductCategory, "دسته بندی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasProductCategory)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasProductSubCategory, "زیردسته", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasProductSubCategory)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasBrand, "برند", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasBrand)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasSummary, "خلاصه", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasSummary)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasDocument, "فایل ضمیمه", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasDocument)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasCodeValue, "کد محصول", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasCodeValue)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasCentralizedDelivery, "ارسال متمرکز", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasCentralizedDelivery)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasSeo, "سئو", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasSeo)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsLoginWithNationalCode, "لاگین با کد ملی انجام میشود؟", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsLoginWithNationalCode)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CdnPictures, "cdn عکس ها", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.CdnPictures)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CdnPicturesQuality, "کیفیت عکس ها ", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.CdnPicturesQuality, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasGarranty, "گارانتی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasGarranty)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasColor, "رنگ", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasColor)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasSize, "سایز", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasSize)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasProductOption, "گزینه های فروش", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasProductOption)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasStatus, "وضعیت", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasStatus)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasLastPrice, "آخرین قیمت", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasLastPrice)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasShowHomePage, "صفحه نخست", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasShowHomePage)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasQuantity, "موجودی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasQuantity)
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasService, "محصول سرویس", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasService)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasCopyProduct, "رونوشت از محصول", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasCopyProduct)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasLoginWithSms, "ورود و ثبت نام پیامکی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasLoginWithSms)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasPrice, "قیمت", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasPrice)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Earnest, Resource.Lang.EarnestPercent, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Earnest, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasPriceRange, Resource.Lang.PriceRange, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasPriceRange)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasMinOrder, "حداقل سفارش", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasMinOrder)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasCustomFields, "فیلدهای اختصاصی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasCustomFields)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasPicture, "تصویر", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasPicture)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasDescription, "توضیحات", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasDescription)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasShowNumber, "اولویت نمایش", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasShowNumber)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasQuantityColor, "موجودی بر اساس رنگ", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasQuantityColor)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasActive, "فعال/غیرفعال", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasActive)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasRequierdState, "انتخاب استان", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasRequierdState)
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasRequierdCity, "انتخاب شهر", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasRequierdCity)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasUserName, "نام کاربری", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HasUserName)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HasUnitPrice, " قیمت واحد دارد ", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox" onclick="CheckUntiPrice();">
+                                @Html.EditorFor(model => model.HasUnitPrice)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UnitPrice, "قیمت واحد", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.UnitPrice)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductMaxOrderCount, "محدودیت تعداد سفارش محصول", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.ProductMaxOrderCount)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MobileIsRequired, "موبایل اجباری", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.MobileIsRequired)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MobileRegix, "الگو موبایل", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.MobileRegix, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailIsRequired, "ایمیل اجباری", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.EmailIsRequired)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailRegix, "الگو ایمیل", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.EmailRegix, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ZipCodeIsRequired, "کد پستی اجباری", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.ZipCodeIsRequired)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ZipCodeRegix, "الگو کدپستی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.ZipCodeRegix, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PhoneIsRequired, "تلفن اجباری", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.PhoneIsRequired)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PhoneRegix, "الگو تلفن", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.PhoneRegix, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PasswordRegix, "الگو پسورد", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.PasswordRegix, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NationalCodeIsRequired, "کد ملی اجباری", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.NationalCodeIsRequired)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NationalCodeRegix, "الگو کد ملی", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.NationalCodeRegix, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="devider-30"></div>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" value="ذخیره" class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,45 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@using DataLayer.Enumarables
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    TempData["Title"] = Resource.Lang.Rules;
+    string url = Url.Action("index", "staticpage", new { id = "rules" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Rules, Url = url });
+
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/StaticPage.cshtml")
+}
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+<section class="ruls page-padding">
+    <div class="section-title">
+        <div class="container central flex-column">
+            <div class="section-title-text central flex-column">
+                <h1>@Resource.Lang.Rules</h1>
+            </div>
+            <div class="section-title-img">
+                <div class="section-title-img">
+                    <img src="/assets/@BaseWebsite.WebsiteLabel/images/title2.png" alt="@BaseContent.WebsiteDetail.Title">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="ruls_content">
+                <div class="text_box">
+                    @Html.Raw(BaseContent.WebsiteDetail.Rules)
+                </div>
+            </div>
+        </div>
+</section>
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+﻿﻿﻿﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model List<DataLayer.Entities.Account>
+
+@{
+    ViewBag.Title = "پرینت گواهی نامه " +Model.Count();
+    Layout = "~/Views/Shared/PrintLayout.cshtml";
+
+}
+
+@if (Model.Any())
+{
+
+    foreach (var item in Model)
+    {
+
+        <div class="report-back seminar-box" style="min-height: 1122px; max-height: 1122px;height: 100%;">
+            <img src="/Panel/assets/images/p22.png">
+            <div class="report-back-details">
+                <div class="report-back-detailbox align" style="margin-top: 20px;">
+                    <span>شماره : </span>
+                    <span>@ViewBag.NumberString</span>
+                </div>
+                <div class="report-back-detailbox align">
+                    <span>تاریخ : </span>
+                    <span>@ViewBag.DatePrint</span>
+                </div>
+            </div>
+            <div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="text-center">
+                    <h1 style="font-family: 'sitefont'; font-size:38px;">گواهی حضور در سمینار آموزشی</h1>
+                </div>
+                <br>
+                <div class="margin-text" >
+                    <p>
+                        بدینوسیله گواهی می شود خانم/آقا @item.FullName @item.LatName
+                    </p>
+                    <p class="text-justify">
+                        با کد ملی @item.NationalCode در سمینار آموزشی «@ViewBag.Name» که در تاریخ @ViewBag.DateFa با نظارت انستیتو بین المللی فدراسیون بدنسازی و پرورش اندام جمهوری اسلامی ایران برگزار گردید ،شرکت و دوره را با موفقیت سپری کرده است.
+
+                    </p>
+
+                </div>
+                <br>
+                <br>
+                <div class="text-center">
+                    <h1 style="font-family: 'sitefont'; font-size:38px;">Certificate of Participation</h1>
+                </div>
+                <br>
+                <div class="margin-text " style="direction: ltr;">
+                    <p style="text-align: left;" >
+                        This certificate is awarded to Ms/Mr @item.FullNameEn @item.LatNameEn
+
+                    </p>
+                    <p class="font-change" style="text-align: left;">
+                     NationlID: «@item.NationalCode.ToEnglishDigit()»  province for succesfully completing «@ViewBag.NameEn»
+                        seminar held on @ViewBag.DateEn under the supervision of the Iranbbf International Institute . 
+                    </p>
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="text-center report-margin">
+                <p>عبدالمهدی نصیرزاده</p>
+                <p>رئیس فدراسیون</p>
+
+                <p>
+                    Abdolmahdi Nasirzade
+                </p>
+                <p>IRANBBF President</p>
+            </div>
+        </div>
+    }
+
+}

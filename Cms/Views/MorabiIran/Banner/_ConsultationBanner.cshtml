@@ -1,0 +1,13 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    <div class="consultation-form-text first">
+        <p>@Model.FirstOrDefault().GetName()</p>
+    </div>
+    <div class="consultation-form-text first">
+        <p>@Model.FirstOrDefault().GetSummery()</p>
+    </div>
+    
+
+}

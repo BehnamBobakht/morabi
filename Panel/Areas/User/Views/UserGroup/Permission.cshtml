@@ -1,0 +1,75 @@
+﻿@model IEnumerable<DataLayer.ViewModels.ViewUserGroupPermissions>
+@{
+    ViewBag.Title = Resource.Lang.UserGroupPermission;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Header {
+    <link href="~/assets/plugins/jstree/style.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .fa-folder {
+            display:none !important;
+        }
+    </style>
+}
+@section Script {
+    <script src="~/assets/plugins/jstree/jstree.min.js"></script>
+    <script src="~/assets/pages/jquery.tree.js"></script>
+    <script type="text/javascript">
+        initializePermissionScript();
+    </script>
+}
+<div codeprocess-back-form="/user/usergroup" codeprocess-ajax-form="/user/usergroup/permission">
+    <input type="hidden" name="UserGroupId" value="@ViewBag.UserGroupId" />
+    <div class="col-md-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div id="checkTree">
+                <ul>
+                    @foreach (var item in Model.Where(s => s.ParentId == null))
+                    {
+                        if (Model.Count(p => p.ParentId == item.PermissionId) > 0)
+                        {
+                            <li value="@item.PermissionId">
+                                @item.PermissionName
+                                <ul>
+                                    @foreach (var child in Model.Where(p => p.ParentId == item.PermissionId))
+                                    {
+                                        if (Model.Count(q => q.ParentId == child.PermissionId) > 0)
+                                        {
+                                            <li value="@child.PermissionId">
+                                                @child.PermissionName
+                                                <ul>
+                                                    @foreach (var sub in Model.Where(p => p.ParentId == child.PermissionId))
+                                                    {
+                                                        <li data-jstree='{"selected":@sub.HasPermission.ToString().ToLower()}' value="@sub.PermissionId">@sub.PermissionName</li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li data-jstree='{"selected":@child.HasPermission.ToString().ToLower()}' value="@child.PermissionId">@child.PermissionName</li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li data-jstree='{"selected":@item.HasPermission.ToString().ToLower()}' value="@item.PermissionId">@item.PermissionName</li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="devider-15"></div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+

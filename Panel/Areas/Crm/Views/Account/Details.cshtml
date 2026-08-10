@@ -1,0 +1,94 @@
+﻿@model DataLayer.Entities.Account
+@{
+    ViewBag.Title = Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Resource.Lang.FullName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FullName)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Email
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
+                        @Resource.Lang.NationalCode
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NationalCode)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Mobile
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Mobile)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Phone
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Address
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Job
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Job)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.WebSite
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Website)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.Instagram
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Instagram)
+                    </dd>
+                    <dt>
+                        @Resource.Lang.WhatsApp
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.WhatsApp)
+                    </dd>
+
+
+
+                    <dt>
+                        @Resource.Lang.DateRegistration
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CreateDatetime)
+                    </dd>
+
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink(Resource.Lang.Edit, "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

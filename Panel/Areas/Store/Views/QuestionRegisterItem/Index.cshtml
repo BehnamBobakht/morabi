@@ -1,0 +1,57 @@
+﻿@using DataLayer.Entities;
+
+@model IEnumerable<DataLayer.Entities.QuestionRegisterItem>
+@{
+    QuestionRegister field = ViewBag.QuestionRegister;
+
+ 
+
+    ViewBag.Title =Resource.Lang.ItemsList + field.Name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("index", new {
+  
+                    @controller ="QuestionRegister",
+                    @action ="index"
+                })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <a href="@Url.Action("create", new { @id = ViewBag.Id })" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>@Resource.Lang.FieldName</th>
+                        <th>@Resource.Lang.Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                            <td>@Html.DisplayFor(modelItem => item.QuestionRegister.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Value)</td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.ID }) |
+                               
+                                @Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

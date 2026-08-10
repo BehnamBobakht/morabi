@@ -1,0 +1,48 @@
+﻿@using DataLayer.Base
+@using DataLayer.Enumarables
+@using DataLayer.ViewModels
+@model DataLayer.ViewModels.PostSearchVm
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var title = Resource.Lang.CommonQuestions;
+    TempData["Title"] = title;
+    TempData["MetaDescription"] = BaseContent.WebsiteDetail.Summary;
+    string url = Url.Action("page", "questions", new
+    {
+        pocategory = "blog"
+    }, Request.Url.Scheme);
+    TempData["url"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = title, Url = url });
+}
+
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="question question_accordion page-padding">
+        <div class="section-title">
+            <div class="container central flex-column">
+                <div class="section-title-text central flex-column">
+                    <h1>@Resource.Lang.CommonQuestions</h1>
+                </div>
+                <div class="section-title-img">
+                    <img src="/assets/@BaseWebsite.WebsiteLabel/images/title2.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="accordion mt-4" id="accordionExample">
+                @foreach (var item in Model.Posts)
+                {
+                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Post/_Questions.cshtml", item)
+                }
+                
+
+            </div>
+        </div>
+    </section>
+</main>
+
+

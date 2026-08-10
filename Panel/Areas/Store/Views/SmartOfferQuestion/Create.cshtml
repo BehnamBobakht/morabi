@@ -1,0 +1,63 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.SmartOfferQuestion
+
+@{
+    ViewBag.Title = "ثبت سوال مشاوره";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+}
+
+<div codeprocess-ajax-form="/store/SmartOfferQuestion/create" codeprocess-back-form="/store/SmartOfferQuestion">
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6 no-padding">
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Question, Resource.Lang.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @autofocus = "autofocus" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Active, Resource.Lang.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @autofocus = "autofocus" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TypeId, Resource.Lang.Type + " " + Resource.Lang.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <input id="btnSubmit" type="button" codeprocess="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@section Script {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeSmartOfferQuestionScript();
+        });
+    </script>
+}

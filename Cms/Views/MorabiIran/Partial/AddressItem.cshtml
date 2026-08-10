@@ -1,0 +1,31 @@
+@model bool
+<div class="basket-address-item">
+    <div class="basket-address">
+        <div class="basketAddress">
+            @if (Model)
+            {
+
+                <div class="pick-address p-2">
+                    <input class="inp-cbx" type="radio" name="addressId" data-bind="value:Id,checked:viewModel.Basket.Address.AddressId" @*onchange="UpdateLocation();"*@ />
+
+                </div>
+            }
+
+            <p>
+
+                <div class="profile_address_name"><span class="font-calibri" data-bind="text: NameFamily "></span></div>
+                <div class="profile_address_phone"><span class="font-calibri" data-bind="text: Mobile"></span> </div>
+            </p>
+        </div>
+
+        <div class="profileADress"><span class="font-calibri" data-bind="text: AddressValue"></span></div>
+
+    </div>
+    <div class="d-flex">
+        <button type="button" data-bind="click: showModalAddressForDelete" class="btn address_delete m-2" data-toggle="modal" data-target="#deletAddress_modal">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+        <button type="button" data-bind="click: showModalAddressForEdit" class="btn  basket_address_edit m-2" data-toggle="modal" data-target="#editaddress_modal"></button>
+
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@using DataLayer.Entities;
+@model DataLayer.Entities.NotificationProject
+@{
+    ViewBag.Title = "نمایش اطلاعات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title="بازگشت"></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>نوع سرور</dt>
+                    <dd>@Html.DisplayFor(model => model.Code.Name)</dd>
+                    <dt>نام سرور</dt>
+                    <dd>@Html.DisplayFor(model => model.Name)</dd>
+                    <dt>نام پروژه</dt>
+                    <dd>@Html.DisplayFor(model => model.ProjectName)</dd>
+                    <dt>کلید اعتبارسنجی</dt>
+                    <dd>@Html.DisplayFor(model => model.AuthorizationValue)</dd>
+                </dl>
+                <hr />
+                @foreach (NotificationApp item in Model.NotificationApp)
+                {
+                    <dl class="dl-horizontal">
+                        <dt>کلید فایربیس</dt>
+                        <dd>@item.GcmKey</dd>
+                        <dt>کلید اتصال داخلی</dt>
+                        <dd>@item.BasicAuthKey</dd>
+                    </dl>
+                }
+                
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink("ویرایش", "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink("بازگشت", "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

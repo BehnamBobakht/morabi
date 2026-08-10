@@ -1,0 +1,53 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model  ProductSearchVm
+@{
+   
+}
+<p class="alert alert-warning">با انتخاب هر دوره آن دوره به سبد خرید شما اضافه میشود و برای مبالغ اقساطی در هر بار یک قسط پرداخت میشود</p>
+@foreach (var item in Model.Products2)
+{
+    bool isAvailable = item.Code.Label == Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString();
+    StoreProductQuantityVm firstStoreProductQuantity = null;
+    if (isAvailable && item.Variety.storeProductQuantities.Any())
+    {
+        firstStoreProductQuantity = item.Variety.storeProductQuantities[0];
+    }
+    <div class=" m-2">
+        @if (isAvailable)
+        {
+        <div class="home-course-link central">
+         
+
+            <label for="@("packageMulti"+item.ID)">
+                <a id="addtocart-btn" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1 })">
+                    <input quantityId="@firstStoreProductQuantity.ID" type="checkbox" id="@("packageMulti"+item.ID)" />
+                    <span>@item.Name</span>
+
+
+                    <span>@firstStoreProductQuantity.Price.GetCurrencyFormat() @Resource.Lang.Toman</span>
+                    @if (item.EuroPrice > 0)
+                    {
+                        <span>(@item.EuroPrice یورو)</span>
+                    }
+                </a>
+                    
+            </label>
+            
+
+        </div>
+        }
+
+    </div>
+}
+
+
+
+
+
+
+
+
+
+

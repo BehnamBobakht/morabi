@@ -1,0 +1,13 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    if (Model.FirstOrDefault().Category.Label == "LoginBanner2" || Model.FirstOrDefault().Category.Label == "RegisterBanner2")
+    {
+        <p class="alert alert-warning">@Model.FirstOrDefault().GetSummery()</p>
+    }
+    else
+    {
+        <p>@Model.FirstOrDefault().GetSummery()</p>
+    }
+}

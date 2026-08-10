@@ -1,0 +1,355 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Base
+@model ResultVm<CartVm>
+
+@{
+    var selectedDelivery = Model.Model.DeliveryList.FirstOrDefault(s => s.ID == Model.Model.DeliveryId);
+}
+@foreach (var storeItem in Model.Model.CartStoreList)
+{
+    <div class="invoiceProducts">
+        <div class="basketpro_titles">
+
+            <div class="tab_titlee ">
+                <strong>@Resource.Lang.Product</strong>
+            </div>
+            <div class="tab_titlee ">
+                <strong>@Resource.Lang.Attributes</strong>
+            </div>
+            <div class="tab_titlee ">
+                <strong>@Resource.Lang.Price (@Resource.Lang.Toman)</strong>
+            </div>
+            <div class="tab_titlee ">
+                <strong>@Resource.Lang.Count</strong>
+            </div>
+            <div class="tab_titlee ">
+                <strong>@Resource.Lang.TotalPrice (@Resource.Lang.Toman)</strong>
+
+            </div>
+        </div>
+        <div class="shop_table_one">
+            <table class="table table-hover invoice_table table-bordered">
+                <tbody>
+                    @foreach (var item in storeItem.CartStoreItemList)
+                    {
+
+                        <tr>
+
+                            <td>
+                                <div class="basketProInfo">
+                                    <div class="basketProInfo">
+                                        <a href="@item.Product.ProductUrl">
+                                            <strong>@item.ProductName</strong>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="infoPrime mt-1">
+                                    @if (item.Color != null)
+                                    {
+                                        <span class="pl-2 detailspan">
+                                            <span class="proinfospan"> @Resource.Lang.Color :</span>
+                                            <span class="p-1 rounded " style="background-color:#@item.Color.HexValue">
+                                                @item.Color.Name
+                                            </span>
+                                        </span>
+                                    }
+                                    @if (item.Size != null)
+                                    {
+                                        <span class="pl-2 detailspan">
+                                            <span class="proinfospan "> @Resource.Lang.Size :</span>
+                                            <span class="p-1 rounded ">
+                                                @item.Size.Name
+                                            </span>
+                                        </span>
+                                    }
+
+                                    @if (item.ProductOptionItem != null)
+                                    {
+                                        <br />
+                                        <span class="detailspan">
+                                            <span class="proinfospan">
+                                                @item.ProductOptionItem.OptionName
+                                            </span>
+
+                                            :
+                                            <span>
+                                                @item.ProductOptionItem.Value
+                                            </span>
+                                        </span>
+                                    }
+                                    @if (item.Description != "" && item.Description != null)
+                                    {
+                                        <strong>@item.Description</strong>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="productprice">
+                                    <div class=" discount">
+                                        @if (item.SingleDiscount > 0)
+                                        {
+                                            <div class="pre_discounted_price">
+                                                <span>@item.SingleBasePrice.ToString("n0") </span>
+                                            </div>
+
+
+                                        }
+                                        @if (item.SingleBasePrice == 1)
+                                        {
+                                            <strong class="text-success">رایگان</strong>
+                                            
+                                        }
+                                        else
+                                        {
+                                            if (item.Product.ProductTypeId != 1)
+                                            {
+                                                <strong class="text-success">@item.SinglePrice.ToString("n0")</strong>
+
+                                            }
+                                            else
+                                            {
+                                                <strong class="text-success">53,000</strong>
+
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="productCount">
+                                    <span class="p-2">@item.Count</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="productprice">
+                                    @if (item.TotalPrice == 1)
+                                    {
+                                        <span>رایگان</span>
+                                    }
+                                    else
+                                    {
+                                        if (item.Product.ProductTypeId != 1)
+                                        {
+                                            <span>@item.TotalPrice.ToString("n0")</span>
+                                        }
+                                        else
+                                        {
+                                            <span>53,000</span>
+                                        }
+                                    }
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            @*<div class="shop_totalprice">
+                    <div class="total_ine">
+                        <span>@Resource.Lang.ShippingPrice:</span>
+                        <span class="text-primary">@storeItem.DeliveryPrice.GetCurrencyFormat()</span>
+                        <span class="laBel">@Resource.Lang.Toman</span>
+                    </div>
+                    <div class="total_ine">
+                        <span>@Resource.Lang.TotalPrice:</span>
+                        <span class="text-primary">@storeItem.BasePrice.GetCurrencyFormat()</span>
+                        <span class="laBel">@Resource.Lang.Toman</span>
+                    </div>
+                    @if (storeItem.Discount > 0)
+                    {
+                        <div class="total_ine">
+                            <span>@Resource.Lang.Discount:</span>
+                            <span class="text-primary">@storeItem.Discount.GetCurrencyFormat()</span>
+                            <span class="laBel">@Resource.Lang.Toman</span>
+                        </div>
+                    }
+
+                    <div class="total_ine">
+                        <span>@Resource.Lang.Payable:</span>
+                        <span class="text-primary">@storeItem.TotalPrice.GetCurrencyFormat()</span>
+                        <span class="laBel">@Resource.Lang.Toman</span>
+                    </div>
+
+                </div>*@
+        </div>
+
+
+    </div>
+    if (!BaseWebsite.WebsiteSetting.HasCentralizedDelivery)
+    {
+        <div class="col-lg-6 p-2">
+
+            @if (!BaseWebsite.WebsiteSetting.HasCentralizedDelivery)
+            {
+                <strong>@Resource.Lang.HowSendShipment:</strong>
+                <ul class="sendingOption">
+                    @foreach (var delivery in storeItem.DeliveryList)
+                    {
+
+                        <li class="@(delivery.ID == storeItem.DeliveryId ? "active" : "")">
+                            @Ajax.ActionLink(linkText: delivery.Title, actionName: "ChangeDelivery", controllerName: "Cart",
+        routeValues: new { storeId = delivery.StoreId, deliveryId = delivery.ID },
+        ajaxOptions: new AjaxOptions
+        {
+            OnBegin = "beginProssess",
+            OnComplete = "deliveryEndProssess",
+            HttpMethod = "Post",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "confirm-cart",
+        })
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+
+    }
+}
+
+@if (BaseWebsite.WebsiteSetting.HasCentralizedDelivery)
+{
+    if (Model.Model.HaveAddress == false)
+    {
+
+        <ul class="sendingOption d-none">
+            @foreach (var delivery in Model.Model.DeliveryList.Where(s => s.BasePrice == 0 && s.MaxDays == 0))
+            {
+                <li class="@(delivery.ID == Model.Model.DeliveryId ? "active" : "")">
+                    @Ajax.ActionLink(linkText: delivery.Title, actionName: "ChangeDelivery", controllerName: "Cart",
+routeValues: new { storeId = delivery.StoreId, deliveryId = delivery.ID },
+ajaxOptions: new AjaxOptions
+{
+    OnBegin = "beginProssess",
+    OnComplete = "endProssess",
+    HttpMethod = "Post",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "confirm-cart",
+})
+                </li>
+            }
+
+        </ul>
+
+    }
+    else
+    {
+        <div class="col-lg-6 p-2  ">
+            <strong>@Resource.Lang.HowSendShipment:</strong>
+            <ul class="sendingOption">
+                @foreach (var delivery in Model.Model.DeliveryList.Where(s => s.BasePrice != 0 && s.MaxDays != 0))
+                {
+                    <li class="@(delivery.ID == Model.Model.DeliveryId ? "active" : "")">
+                        @Ajax.ActionLink(linkText: delivery.Title, actionName: "ChangeDelivery", controllerName: "Cart",
+    routeValues: new { storeId = delivery.StoreId, deliveryId = delivery.ID },
+    ajaxOptions: new AjaxOptions
+    {
+        OnBegin = "beginProssess",
+        OnComplete = "endProssess",
+        HttpMethod = "Post",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "confirm-cart",
+    })
+                    </li>
+                }
+
+            </ul>
+        </div>
+    }
+
+}
+
+<div class="invoice_prices">
+    <ul>
+        <li>
+            <div class="invoice_price border-bottom">
+                <strong>@Resource.Lang.Sum :</strong>
+                @if (Model.Model.PayementPrice == 1)
+                {
+                    <span>رایگان</span>
+                }
+                else
+                {
+                    <span>@Model.Model.BasePrice.ToString("n0") @Resource.Lang.Toman</span>
+                }
+            </div>
+        </li>
+        @if (Model.Model.Discount > 0)
+        {
+            <li>
+                <div class="invoice_price">
+                    <strong>@Resource.Lang.Discount:</strong>
+                    <span>@Model.Model.Discount.ToString("n0") @Resource.Lang.Toman</span>
+                </div>
+            </li>
+        }
+        @if (Model.Model.RebatePrice > 0)
+        {
+            <li>
+                <div class="invoice_price">
+                    <strong>@Resource.Lang.RebateCode :</strong>
+                    <span>@Model.Model.RebatePrice.ToString("n0") @Resource.Lang.Toman</span>
+                </div>
+            </li>
+        }
+
+        @if (Model.Model.HaveAddress == true)
+        {
+            <li>
+
+                <div class="invoice_price">
+                    <strong>@Resource.Lang.ShippingPrice:</strong>
+                    @if (Model.Model.TotalDeliveryPrice > 0)
+                    {
+                        <span>@((Model.Model.TotalDeliveryPrice).ToString("n0")) @Resource.Lang.Toman</span>
+                    }
+                    else if (selectedDelivery != null && selectedDelivery.IsUnknownPrice)
+                    {
+                        <span>@Resource.Lang.PayOnTheSpot</span>
+                    }
+                    else
+                    {
+                        <span>@Resource.Lang.Free</span>
+
+                    }
+                </div>
+            </li>
+        }
+
+
+        <li>
+            <div class="invoice_price_total text-primary border-top">
+                <strong>@Resource.Lang.Payable :</strong>
+                @if (Model.Model.PayementPrice == 1)
+                {
+                    <span>رایگان</span>
+                }
+                else
+                {
+                    <span>@((Model.Model.PayementPrice).ToString("n0")) @Resource.Lang.Toman</span>
+
+                }
+            </div>
+        </li>
+        <li>
+        </li>
+    </ul>
+</div>
+
+
+<hr />
+<!--<div class="row mx-0  ">-->
+@*<div class="col-lg-6 p-1">
+        @Html.TextArea("Model.Model.GiftMessage", Model.Model.GiftMessage, htmlAttributes: new { @class = "form-control", @placeholder = "توضیحات هدیه" })
+
+    </div>*@
+<!--<div class="col-lg-6 p-1">
+        @Html.TextArea("Model.Model.CustomerMessage", Model.Model.CustomerMessage, htmlAttributes: new { @class = "form-control", @placeholder = Resource.Lang.Description })
+    </div>
+</div>-->

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DataLayer.Entities.ProductType>
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+
+@{ViewAccount currentUser = BaseWebsite.CurrentAccount;}
+
+@foreach (var pType in Model.Where(s => s.Active && s.Deleted != true).OrderBy(s => s.Priority))
+{
+    if (pType.ID == 1)
+    {
+        var product = pType.Product.FirstOrDefault();
+
+
+        if (product != null)
+        {
+            <li class="nav-item">
+                @if (currentUser == null)
+                {
+                    <a class="nav-link" href="@Url.Action("Login","Account",new {back=product.GetLinkWithUrl() })">@pType.GetName()</a>
+                }
+                else
+                {
+
+                    <a class="nav-link" href="@product.GetLinkWithUrl()">@pType.GetName()</a>
+
+                }
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@pType.GetUrlNew()"> @pType.GetName()</a>
+            </li>
+        }
+    }
+
+
+    else
+    {
+        var active = "";
+        if (TempData["Id"] != null)
+        {
+            if (TempData["Id"].ToString() == pType.ID.ToString())
+            {
+                active = "active";
+            }
+            else
+            {
+                active = "";
+            }
+        }
+
+        <li class="nav-item @active">
+            <a class="nav-link" href="@pType.GetUrlNew()"> @pType.GetName()</a>
+        </li>
+    }
+
+}
+
+

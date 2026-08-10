@@ -1,0 +1,175 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+
+
+
+@model DataLayer.Entities.ProductCustomField
+@{
+    ProductType productType = ViewBag.ProductType;
+    ProductCategory productCategory = ViewBag.ProductCategory;
+    ProductSubCategory productSubCategory = ViewBag.ProductSubCategory;
+    ProductBrand productBrand = ViewBag.ProductBrand;
+
+    int? typeId = ViewBag.ProductTypeId;
+    int? categoryId = ViewBag.ProductCategoryId;
+    int? subCategoryId = ViewBag.ProductSubCategoryId;
+    int? brandId = ViewBag.ProductBrandId;
+
+    string name = "";
+    if (productType != null)
+    {
+        name = Resource.Lang.ForProductType + productType.Name + " ";
+    }
+    if (productCategory != null)
+    {
+        name = Resource.Lang.ForCategory + productCategory.Name + " ";
+    }
+    if (productSubCategory != null)
+    {
+        name = Resource.Lang.ForSubordinates + productSubCategory.Name + " ";
+    }
+    if (productBrand != null)
+    {
+        name = Resource.Lang.ForBrand + productBrand.Name + " ";
+    }
+
+    ViewBag.Title = Resource.Lang.AddNewField + name;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    string backUrl = Url.Action("index", new { @typeId = typeId, @categoryId = categoryId, @subCategoryId = subCategoryId, @brandId = brandId });
+
+
+
+    List<SelectListItem> ActiveSelectedListItem = new List<SelectListItem>();
+
+
+    ActiveSelectedListItem.Add(new SelectListItem()
+    {
+
+        Text = "true",
+        Value = "true"
+    });
+
+
+    ActiveSelectedListItem.Add(new SelectListItem()
+    {
+        Text = "false",
+        Value = "false"
+
+    });
+
+
+    ViewBag.Active = ActiveSelectedListItem;
+}
+<div codeprocess-ajax-form="/store/customproducttype/create" codeprocess-back-form="@backUrl">
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.ProductTypeId)
+    @Html.HiddenFor(model => model.ProductCategoryId)
+    @Html.HiddenFor(model => model.ProductSubCategoryId)
+    @Html.HiddenFor(model => model.ProductBrandId)
+    @Html.HiddenFor(model => model.SyncId)
+    @Html.HiddenFor(model => model.SyncDatetime)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@backUrl" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeId, Resource.Lang.TypeField, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, Resource.Lang.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                    @foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+                    {
+                        if (lang.Language.Label != Enum_Lang.FA.ToString())
+                        {
+                            <div class="form-group" lang-value="@lang.Language.Label.ToLower()">
+                                <input type="hidden" lang-name="LanguageId" value="@lang.LanguageId" />
+                                <label class="control-label col-md-2">@Resource.Lang.Name (@lang.Language.Name)</label>
+                                <div class="col-md-10">
+                                    <input type="text" lang-name="Name" class="form-control" autocomplete="off" />
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShowNumber, @Resource.Lang.PriorityShow, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ShowNumber, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SyncName, Resource.Lang.RemoteServer, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SyncName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsRequired, Resource.Lang.Forced_NotForced, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsRequired)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InSearchResult, "موثر در جستجو", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.InSearchResult)
+                            </div>
+                        </div>
+                    </div>         
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Hide, "عدم نمایش", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Hide)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @*@Html.EditorFor(model => model.Active)*@
+                                @Html.DropDownList("Active", ActiveSelectedListItem, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <a class="btn btn-inverse" href="@backUrl">@Resource.Lang.Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeProductCustomFieldScript();
+        });
+    </script>
+}

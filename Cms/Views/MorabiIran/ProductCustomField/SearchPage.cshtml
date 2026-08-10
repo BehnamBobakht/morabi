@@ -1,0 +1,23 @@
+﻿@model DataLayer.ViewModels.ProductSearchVm
+
+
+@if (Model.ProductCustomFields.Any())
+{
+    foreach (var item in Model.ProductCustomFields)
+    {
+        
+        <li>
+            <select class="form-control" id="custom_@item.ID" onchange="submit()" name="SelectedCustomFields">
+                <option value="">@item.Name</option>
+                @foreach (var item2 in item.ProductCustomItemList)
+                {
+                    <option value="@item2.ID" @(Model.SelectedCustomFields.Any(e => e.Equals(item2.ID)) ? "selected" : "")>@item2.Value</option>
+
+                }
+
+            </select>
+
+       
+        </li>
+    }
+}

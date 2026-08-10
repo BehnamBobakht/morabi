@@ -1,0 +1,66 @@
+﻿
+<!-- CedarMap CSS SDK -->
+<link href='https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.css' rel='stylesheet' />
+
+<!-- CedarMap Container -->
+<div id="map_nogwhi"></div>
+
+<!-- StyleSheet -->
+<style>
+    #map_nogwhi {
+        position: relative;
+        width: 600px;
+        height: 400px;
+        max-width: 100%;
+    }
+</style>
+<script>
+        //اگر بخواهیم لوکیشن اولیه به نقشه بدهیم
+    var defaultLat =document.getElementsByName("Latitude")[0].value;
+    var defaultLng =document.getElementsByName("Longitude")[0].value;
+  function contactMap() {
+    // Map options
+    var cm_options = {"center":{"lat":defaultLat,"lng":defaultLng},"maptype":"light","scrollWheelZoom":false,"zoomControl":true,"zoom":17,"minZoom":6,"maxZoom":17,"legendControl":false,"attributionControl":false}
+    // Initialized CedarMap
+    var map = window.L.cedarmaps.map('map_nogwhi', 'https://api.cedarmaps.com/v1/tiles/cedarmaps.streets.json?access_token=d2a68b8e5b64b0dcf303e023935edda196c55a18', cm_options);
+    // Markers options
+    var markers = [{"popupContent":"تهران","center":{"lat":defaultLat,"lng":defaultLng},"iconOpts":{"iconUrl":"https://api.cedarmaps.com/v1/markers/marker-default.png","iconRetinaUrl":"https://api.cedarmaps.com/v1/markers/marker-default@2x.png","iconSize":[82,98]}}];
+    var markersLeaflet = [];
+    var _marker = null;
+
+    map.setView(cm_options.center, cm_options.zoom);
+    // Add Markers on Map
+    if (markers.length === 0) return;
+    markers.map(function(marker) {
+      var iconOpts = {
+        iconUrl: marker.iconOpts.iconUrl,
+        iconRetinaUrl: marker.iconOpts.iconRetinaUrl,
+        iconSize: marker.iconOpts.iconSize,
+        popupAnchor: [0, -49]
+      };
+
+      const markerIcon = {
+        icon: window.L.icon(iconOpts)
+      };
+
+      _marker = new window.L.marker(marker.center, markerIcon);
+      markersLeaflet.push(_marker);
+      if (marker.popupContent) {
+        _marker.bindPopup(marker.popupContent);
+      }
+      _marker.addTo(map);
+    });
+    // Bounding Map to Markers
+    if (markers.length > 1) {
+      var group = new window.L.featureGroup(markersLeaflet);
+      map.fitBounds(group.getBounds(), { padding: [30, 30] });
+    }
+  };
+
+  (function(c,e,d,a){
+    var p = c.createElement(e);
+    p.async = 1; p.src = d;
+    p.onload = a;
+    c.body.appendChild(p);
+  })(document, 'script', 'https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.js', contactMap);
+</script>

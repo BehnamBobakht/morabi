@@ -1,0 +1,153 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model IEnumerable<Product>
+@{
+    ViewBag.title = Resource.Lang.Compare;
+    Layout = Resources.KhoshKala.WEBSITE_LAYOUT;
+    var newModel = Model.Distinct().Reverse().Take(3).Reverse().ToList();
+    var newmodelCount = newModel.Count(); List<ProductCustomField> listFields = new List<ProductCustomField>();
+    if (newModel.Any())
+    {
+        Product FirstProduct = newModel.First();
+        listFields = new List<ProductCustomField>();
+        if (FirstProduct.ProductTypeId.HasValue)
+        {
+            listFields.AddRange(FirstProduct.ProductType.ProductCustomField);
+        }
+        if (FirstProduct.ProductCategoryId.HasValue)
+        {
+            listFields.AddRange(FirstProduct.ProductCategory.ProductCustomField);
+        }
+        if (FirstProduct.ProductSubCategoryId.HasValue)
+        {
+            listFields.AddRange(FirstProduct.ProductSubCategory.ProductCustomField);
+        }
+        listFields = listFields.Where(s=>s.SyncName!= "SpecialProduct").Distinct().OrderBy(p => p.ShowNumber).ToList();
+    }
+
+}
+
+
+<nav aria-label="breadcrumb" class="BREADCRUMB">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">@Resource.Lang.Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Resource.Lang.Compare</li>
+        </ol>
+    </div>
+</nav>
+<div class="compare">
+    <div class="container">
+        <div class="compare_box">
+            <div class="home_searchBox">
+                <div class=" my-2 my-lg-0 searchBox">
+
+                    <input id="txtComapreSearch" autocomplete="off" class="form-control mr-sm-2" type="text" placeholder="@Resource.Lang.SearchText ...">
+
+                    <button class="btn  my-sm-0 searchBtn" type="submit">
+                        <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg><!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                    </button>
+                </div>
+
+                <div class="compare-search quick-search-compar" data-bind="visible: viewModel.CompareSearchResult.Results().length > 0">
+                    <div class="search_no_result" data-bind="visible: (viewModel.SearchResult.Results().length == 0 &amp;&amp; viewModel.SearchResult.Name().length > 0)" style="display: none;">
+                        @Resource.Lang.NoResult
+                    </div>
+                    <div class="quick-result-compare show-result-compare">
+                        <!-- ko foreach: viewModel.CompareSearchResult.Results() -->
+                        <div class='q-result-compare clearfix text-right'>
+
+                            <a href="javascript://" class="text-right" data-bind="click: addToCompareList">
+                                <div class="d-flex align-items-center quick_Box_compare">
+                                    <img data-bind="attr: { 'src': (Picture!=null? Picture.Url : '') }" class="img img-thumbnail mr-4" />
+                                    <span class="searchresult-compare" data-bind="text: Name"></span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+            <form class="compare-form">
+                <div class="table-responsive compare-table mt-3">
+                    <table class="table table-bordered">
+
+                        <tbody>
+                            <tr>
+                                <td width="12%"></td>
+                                @for (int i = 0; i < newmodelCount; i++)
+                                {
+                                    var item = newModel[i];
+                                    <td width="22%">
+
+                                        <div class=" mb-4">
+                                            <div class="product_model_box">
+                                                <input type="hidden" name="productId" value="@item.ID" />
+                                                <a>
+                                                    <button type="button" class="close btn-remove-pr" data-dismiss="modal">&times;</button>
+                                                </a>
+                                                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/ProductItem.cshtml", item)
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                }
+                                @if ((4 - newmodelCount) > 0)
+                                {
+                                    for (int i = 1; i <= (4 - newmodelCount); i++)
+                                    {
+                                        <td width="22%"></td>
+
+                                    }
+                                }
+
+                            </tr>
+                            @foreach (var item in listFields)
+                            {
+                                <tr>
+                                    <th class="config-name">@item.GetName()</th>
+                                    @for (int i = 0; i < newmodelCount; i++)
+                                    {
+                                        var pr = newModel[i];
+                                        <td>
+                                            @{
+                                                var productCustomValue = pr.ProductCustomValue.FirstOrDefault(s => s.FieldId == item.ID);
+                                            }
+                                            @if (productCustomValue != null)
+                                            {
+                                                if (productCustomValue.ItemId == null)
+                                                {
+
+                                                    <text>@productCustomValue.Value</text>
+                                                }
+                                                else
+                                                {
+                                                    <text>@productCustomValue.ProductCustomItem.Value</text>
+                                                }
+                                            }
+                                        </td>
+                                    }
+                                    @if ((4 - newmodelCount) > 0)
+                                    {
+                                        for (int i = 1; i <= (4 - newmodelCount); i++)
+                                        {
+                                            <td></td>
+                                        }
+                                    }
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section endScripts {
+    <script type="text/javascript">
+        initializeCompareSearchScripts();
+    </script>
+}

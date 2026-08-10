@@ -1,0 +1,73 @@
+﻿@using DataLayer.Base 
+@model DataLayer.Entities.PaymentCertificate
+@{
+    ViewBag.Title = Resource.Lang.CheckOrderNumber + Model.ID;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_PrintLayout.cshtml";
+}
+
+<div style="width: 3508px;display: flex;justify-content: center;align-items: center;height: 4960px;">
+    <div class="report-back seminar-box" style="height: 4960px;position: relative;width:3508px;">
+        <img src="~/assets/MorabiIran/images/cer.jpg" style="width:3508px;margin: auto;display: block;height: 4960px;object-fit: contain;">
+        <div class="report-back-details">
+            <div class="report-back-detailbox align" >
+              
+                <span style="position: absolute;top: 1862px;left: 329px;font-size: 74px;">@Model.Product.NumberString</span>
+            </div>
+            <div class="report-back-detailbox align">
+               
+                <span style="position: absolute;top: 1766px;left: 312px;font-size: 77px;">@Model.Product.DatePrint</span>
+            </div>
+        </div>
+        <div>
+            <br>
+            <br>
+            <br>
+            <br>
+           
+            <br>
+            <div class="margin-text">
+                <p style="position: absolute;top: 2475px;right: 1270px;font-size: 76px;font-weight: bold;">
+                     @Model.Account.FullName @Model.Account.LatName
+                </p>
+                <p class="text-justify">
+				<p style="position: absolute;top: 2592px;right: 645px;font-size: 76px;font-weight: bold;">@Model.Account.NationalCode</p>
+				<p style="position: absolute;top: 2602px;right: 1851px;font-size: 71px;font-weight: bold;">@Model.Product.NameFa</p>
+				<p style="position: absolute;top: 2708px;right: 730px;font-size: 76px;font-weight: bold;">@Model.Product.TeacherNameFa </p>
+				<p style="position: absolute;top: 2705px;right: 1578px;font-weight: 600;font-size: 76px;"> @Model.Product.Hours</p>
+				<p style="position: absolute;top: 2718px;right: 2019px;font-size: 66px;font-weight: bold;"> @Model.Product.DateFa</p>
+                
+
+                </p>
+
+            </div>
+            <br>
+            <br>
+           
+            <br>
+            <div class="margin-text " style="direction: ltr;">
+                <p style="position: absolute;bottom: 2000px;left: 1294px; font-family: 'Iran-Sans', Calibri;font-weight: bold;font-size: 76px;
+">
+                     @Model.Account.FullNameEn @Model.Account.LatNameEn
+
+                </p>
+                <p class="font-change" style="text-align: left;">
+				<p style="position: absolute;bottom: 1878px;left: 740px;font-family: 'Iran-Sans', Calibri;font-weight: bold;font-size: 76px;">@Model.Account.NationalCode.ToEnglishDigit()</p>
+				<p style="position: absolute;bottom: 1878px;left: 2156px;font-family: 'Iran-Sans', Calibri;font-weight: 600;font-size: 76px;
+">"@Model.Product.NameEn"</p>
+				
+				<p style="position: absolute;bottom: 1755px;left: 645px;font-family: 'Iran-Sans', Calibri;font-weight: bold;font-size: 76px;"> @Model.Product.Hours</p>
+				<p style="position: absolute;bottom: 1763px;left: 924px;font-family: 'Iran-Sans', Calibri;font-weight: 600;font-size: 59px;"> @Model.Product.DateEn</p>
+				<p style="position: absolute;bottom: 1755px;left: 1393px;font-family: 'Iran-Sans', Calibri;font-weight: 600;font-size: 76px;
+">  @Model.Product.TeacherNameEn</p>
+               
+                </p>
+
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+    </div>
+</div>

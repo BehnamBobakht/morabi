@@ -1,0 +1,65 @@
+﻿@using DataLayer.Base;
+@model DataLayer.ViewModels.ViewSearchPost
+@{
+
+    string poIndex = BaseRouteView.GetStringValue(Request, "poIndex");
+
+    string poviewName = BaseRouteView.GetStringValue(Request, "poviewName");
+
+    string poidlabel = BaseRouteView.GetStringValue(Request, "poidlabel");
+
+
+
+    int StartIndex = Model.PageIndex > 4 ? Model.PageIndex - 4 : 1;
+    int EndIndex = (Model.TotalCount / Model.PageSize);
+    int Mod = (Model.TotalCount % Model.PageSize);
+    int CurrentIndex = poIndex.IsInteger() ? poIndex.GetInteger() : 1;
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+
+<div class="pagination fit-width text-dark d-flex justify-content-center">
+        @if (Model.PageIndex > 1)
+        {
+            <a class='btn pagination_btn page_next number arrow' title="@Resource.Lang.FirstPage" href="
+               @Url.Action("SearchCategory", "Post", new {
+           @pocategory = poidlabel,
+           poIndex = 1,
+           @pokeyword  = poviewName,
+           @poviewName = poviewName
+
+       })">
+                <span>
+                    <i class="fa fa-angle-double-right"></i>
+                </span>
+            </a>
+        }
+        @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+        {
+            var index = Model.PageIndex;
+            var active = index == i ? "active" : "";
+            <a class='btn pagination_btn page_number number @active' href="
+            @Url.Action("SearchCategory", "Post", new {
+           @pocategory = poidlabel,
+           poIndex = i,
+           @pokeyword  = poviewName,
+           @poviewName = poviewName
+
+       })">@i</a>
+}
+        @*<a class='more no-display'>...</a>*@
+        @if (Model.PageIndex < EndIndex)
+        {
+            <a class='btn pagination_btn page_prev number arrow' title="@Resource.Lang.LastPage" href="
+                   @Url.Action("SearchCategory", "Post", new {
+           @pocategory = poidlabel,
+           poIndex = EndIndex,
+           @pokeyword  = poviewName,
+           @poviewName = poviewName
+
+       })">
+                <span>
+                    <i class="fa fa-angle-double-left"></i>
+                </span>
+            </a>
+        }
+    </div>

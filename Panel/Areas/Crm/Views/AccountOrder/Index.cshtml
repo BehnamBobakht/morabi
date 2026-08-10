@@ -1,0 +1,682 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+@using PublicDate;
+@model IEnumerable<DataLayer.ViewModels.ViewAccountOrder>
+@{
+    ViewBag.Title = Resource.Lang.ListOfRegisteredOrdersOnSite;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    int? fromOrderId = ViewBag.FromOrderId;
+    int? toOrderId = ViewBag.ToOrderId;
+    int? merchantId = ViewBag.MerchantId;
+    int? typeId = ViewBag.TypeId;
+    int? optionId = ViewBag.OptionId;
+
+    int[] statusId = ViewBag.StatusId_2;
+    string statusString = statusId == null ? null : string.Join("-", statusId);
+    string refId = ViewBag.RefId;
+    string customer = ViewBag.Customer;
+    string giftMessage = ViewBag.GiftMessage;
+
+    string product = ViewBag.Product;
+    string fromDatetime = ViewBag.FromDatetime;
+    string toDatetime = ViewBag.ToDatetime;
+    int selectedId = ViewBag.SelectedId;
+    string index = ViewBag.PageIndex;
+    string pageSize = ViewBag.PageSize;
+    string storeId = ViewBag.StoreId;
+    SelectList listStore = ViewBag.Stores;
+
+    SelectList listCode = ViewBag.StatusId;
+    List<int> PageSizeList = new List<int>() { 10, 20, 50, 100, 500, 5000 };
+    List<Merchant> listMerchant = ViewBag.MerchantList;
+    List<ProductType> listProductType = ViewBag.ProductTypeList;
+    List<ProductOptionItem> listOption = ViewBag.OptionList;
+
+
+    int TotalCount = ViewBag.TotalCount;
+
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+
+    double sumCount = 0;
+    double sumPrice = 0;
+    double sumDelivery = 0;
+    int rowCount = Model.Count();
+
+    if (rowCount > 0)
+    {
+        foreach (ViewAccountOrder item in Model)
+        {
+            sumCount = sumCount + item.ProductCount;
+            sumPrice = sumPrice + (item.Price);
+            sumDelivery = sumDelivery + (item.DeliveryPrice);
+        }
+    }
+    var setting = BaseWebsite.WebsiteSetting;
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/pretty-checkbox/pretty-checkbox.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link href="~/Assets/plugins/Highcharts-8.0.4/page-style.css" rel="stylesheet" />
+
+
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <form method="get" id="order-form" action="~/crm/accountorder">
+                <div class="form-horizontal">
+                    <div class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle card-drop icon circle-icon" data-toggle="dropdown" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.More>
+                            <i class="zmdi zmdi-more-vert"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a target="_blank"
+                                   href="@Url.Action("productlist", new {
+                                    @status = statusString,
+                                    @fromorderid = fromOrderId,
+                                    @toorderid = toOrderId,
+                                    @from = fromDatetime,
+                                    @to = toDatetime,
+                                    @refId = refId,
+                                    @pageIndex = index,
+                                    @pageSize = pageSize,
+                                    @customer = customer,
+                                    @product = product
+                                })">@Resource.Lang.PrintProductList</a>
+                            </li>
+                            <li>
+                                <a target="_blank"
+                                   href="@Url.Action("addresslist", new {
+                                    @status = statusString,
+                                    @fromorderid = fromOrderId,
+                                    @toorderid = toOrderId,
+                                    @from = fromDatetime,
+                                    @to = toDatetime,
+                                    @refId = refId,
+                                    @pageIndex = index,
+                                    @pageSize = 500000,
+                                    @customer = customer,
+                                    @product = product
+                                })">@Resource.Lang.PrintAddressList</a>
+                            </li>
+                            <li>
+                                <a target="_blank"
+                                   href="@Url.Action("exportexcel", new {
+                                    @status = statusString,
+                                    @fromorderid = fromOrderId,
+                                    @toorderid = toOrderId,
+                                    @from = fromDatetime,
+                                    @to = toDatetime,
+                                    @refId = refId,
+                                    @pageIndex = index,
+                                    @pageSize = pageSize,
+                                    @customer = customer,
+                                    @product = product
+                                })">@Resource.Lang.ExcelOutPut</a>
+                            </li>
+                                                  <li>
+                            <a target="_blank"
+                               href="@Url.Action("exportexcel2", new {
+    @status = statusString,
+    @fromorderid = fromOrderId,
+    @toorderid = toOrderId,
+    @from = fromDatetime,
+    @to = toDatetime,
+    @refId = refId,
+    @pageIndex = index,
+    
+    @customer = customer,
+    @product = product
+})">خروجی دوره ها و کتاب</a>
+                        </li>
+						                                          <li>
+                            <a target="_blank"
+                               href="@Url.Action("exportexcel4", new {
+    @status = statusString,
+    @fromorderid = fromOrderId,
+    @toorderid = toOrderId,
+    @from = fromDatetime,
+    @to = toDatetime,
+    @refId = refId,
+    @pageIndex = index,
+    
+    @customer = customer,
+    @product = product
+})">خروجی آزمون ها</a>
+                        </li>
+						 <li>
+                            <a target="_blank"
+                               href="@Url.Action("exportexcel5", new {
+    @status = statusString,
+    @fromorderid = fromOrderId,
+    @toorderid = toOrderId,
+    @from = fromDatetime,
+    @to = toDatetime,
+    @refId = refId,
+    @pageIndex = index,
+    
+    @customer = customer,
+    @product = product
+})">خروجی گواهی ها</a>
+                        </li>
+                            @*<li>
+            <a class="goto-process" href="@Url.Action("gotoprocess", new {
+                @fromorderid = fromOrderId,
+                @toorderid = toOrderId,
+                @from = fromDatetime,
+                @to = toDatetime,
+                @refId = refId,
+                @customer = customer,
+                @status = statusString,
+                @pageIndex = index,
+                @pageSize = pageSize,
+                @orderId = selectedId,
+                @product = product
+            })">@Resource.Lang.SendFactureForProcess</a>
+        </li>
+        <li>
+            <a class="goto-store" href="@Url.Action("gotostore", new {
+                @fromorderid = fromOrderId,
+                @toorderid = toOrderId,
+                @from = fromDatetime,
+                @to = toDatetime,
+                @refId = refId,
+                @customer = customer,
+                @status = statusString,
+                @pageIndex = index,
+                @pageSize = pageSize,
+                @orderId = selectedId,
+                @product = product
+            })">@Resource.Lang.SendFactureForRepository</a>
+        </li>*@
+                        </ul>
+                        <button type="submit" class="card-drop icon circle-icon  glyphicon glyphicon-search" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Search></button>
+                    </div>
+                    <input type="hidden" name="pageIndex" id="pageIndex" value="@index" />
+                    <div class="devider-10"></div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="pageIndex" class="control-label col-md-4">نوع محصول</label>
+                            <div class="col-md-8 row">
+                                <select name="typeId" class="form-control">
+                                    <option value="null">@Resource.Lang.All</option>
+                                    @foreach (ProductType type in listProductType)
+                                    {
+                                        if (typeId == type.ID)
+                                        {
+                                            <option value="@type.ID" selected="selected">@type.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@type.ID">@type.Name</option>
+                                        }
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="pageIndex" class="control-label col-md-4">اقساطی</label>
+                            <div class="col-md-8 row">
+                                <select name="optionId" class="form-control">
+                                    <option value="null">@Resource.Lang.All</option>
+                                    @foreach (ProductOptionItem optionItem in listOption)
+                                    {
+                                        if (optionId == optionItem.ID)
+                                        {
+                                            <option value="@optionItem.ID" selected="selected">@optionItem.Value</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@optionItem.ID">@optionItem.Value</option>
+                                        }
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="orderid" class="control-label col-md-4">@Resource.Lang.FromFactureNumber</label>
+                            <div class="col-md-8 row">
+                                <input name="fromorderid" autocomplete="off" class="form-control" value="@fromOrderId" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="control-label col-md-4">@Resource.Lang.FromDate</label>
+                            <div class="col-md-8 row">
+                                <input id="from" class="form-control" autocomplete="off" codeprocess="date" name="from" value="@fromDatetime" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="orderid" class="control-label col-md-4">@Resource.Lang.UpToTheFactureNumber</label>
+                            <div class="col-md-8 row">
+                                <input name="toorderid" autocomplete="off" class="form-control" value="@toOrderId" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="control-label col-md-4">@Resource.Lang.ToDate</label>
+                            <div class="col-md-8 row">
+                                <input id="to" class="form-control" autocomplete="off" codeprocess="date" name="to" value="@toDatetime" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="refid" class="control-label col-md-4">@Resource.Lang.TrackingCode</label>
+                            <div class="col-md-8 row">
+                                <input id="refid" name="refid" class="form-control" autocomplete="off" value="@refId" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="product" class="control-label col-md-4">@Resource.Lang.Product</label>
+                            <div class="col-md-8 row">
+                                <input id="product" name="product" class="form-control" value="@product" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="giftMessage" class="control-label col-md-4">کد معرف</label>
+                            <div class="col-md-8 row">
+                                <input id="giftMessage" name="giftMessage" class="form-control" value="@giftMessage" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer" class="control-label col-md-4">@Resource.Lang.Buyer</label>
+                            <div class="col-md-8 row">
+                                <input id="customer" name="customer" class="form-control" value="@customer" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pageIndex" class="control-label col-md-4">@Resource.Lang.CountInPage</label>
+                            <div class="col-md-8 row">
+                                <select name="pageSize" class="form-control">
+                                    @foreach (int pageSizeItem in PageSizeList)
+                                    {
+                                        if (pageSize.GetInteger() == pageSizeItem)
+                                        {
+                                            <option value="@pageSizeItem" selected="selected">@pageSizeItem</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@pageSizeItem">@pageSizeItem</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="statusId" class="control-label col-md-2">
+                                @Resource.Lang.Status<br />
+                                <span id="chkCheckAll" do-action="true" style="font-size: 10px; cursor: pointer;">(@Resource.Lang.SelectAll)</span>
+                            </label>
+                            <div class="col-md-10">
+                                @foreach (var item in listCode)
+                                {
+                                    int itemId = item.Value.GetInteger();
+                                    if (statusId != null && statusId.Any(p => p == itemId))
+                                    {
+                                        <label style="margin-left: 30px;">
+                                            <input type="checkbox" name="statusId" checked="checked" value="@item.Value" />
+                                            @item.Text
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label style="margin-left: 30px;">
+                                            <input type="checkbox" name="statusId" value="@item.Value" />
+                                            @item.Text
+                                        </label>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="pageIndex" class="control-label col-md-4">@Resource.Lang.Gate</label>
+                            <div class="col-md-8 row">
+                                <select name="merchantId" class="form-control">
+                                    <option value="0">@Resource.Lang.AllGates</option>
+                                    @foreach (Merchant merchant in listMerchant)
+                                    {
+                                        if (merchantId == merchant.ID)
+                                        {
+                                            <option value="@merchant.ID" selected="selected">@merchant.Bank.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@merchant.ID">@merchant.Bank.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @if (DataLayer.Base.BaseWebsite.WebsiteSetting.HasStore)
+                    {
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="date" class="control-label col-md-4">@Resource.Lang.Store</label>
+                                <div class="col-md-8 row">
+                                    <select id="storeId" class="form-control selectpicker" multiple data-live-search="true" autocomplete="off" name="stores">
+                                        @*<option value="">
+                                @Resource.Lang.Select
+                            </option>*@
+                                        @foreach (var item in listStore)
+                                        {
+                                            <option value="@item.Value" @(item.Value == storeId ? "selected" : "")>
+                                                @item.Text
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-sm-3">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-8 no-padding-right">
+                            <input type="submit" class="btn btn-success col-xs-12" value=@Resource.Lang.Search>
+                        </div>
+
+                    </div>
+                    <div class="devider-10"></div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="date" class="control-label col-md-4">@Resource.Lang.ChartType</label>
+                            <div class="col-md-8 row">
+                                <select id="reportType" class="form-control " autocomplete="off" name="reportType">
+
+
+                                    <option value="@Enum_Report.ORDER_STORE_SELL">
+                                        @Resource.Enum.ORDER_STORE_SELL
+                                    </option>
+                                    <option value="@Enum_Report.ORDER_STORE_SELL_DAY">
+                                        @Resource.Enum.ORDER_STORE_SELL_DAY
+                                    </option>
+                                    <option value="@Enum_Report.ORDER_STORE_SELL_MONTH">
+                                        @Resource.Enum.ORDER_STORE_SELL_MONTH
+                                    </option>
+                                    <option value="@Enum_Report.ORDER_STORE_SELL_YEAR">
+                                        @Resource.Enum.ORDER_STORE_SELL_YEAR
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+
+                        <div class="col-sm-8 no-padding-right">
+                            <input type="button" class="btn btn-success col-xs-12" id="btn-chart" value=@Resource.Lang.DrawChart>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <a class="btn btn-success" href="@Url.Action("ProductListByTypeId", new {
+                                    @status = statusString,
+
+                                    @from = fromDatetime,
+                                    @to = toDatetime,
+                                    @typeId = typeId,
+                                    @optionId= optionId,
+
+                                    @customer = customer
+                                })">
+                            مشاهده محصولات براساس دسته بندی
+                        </a>
+                    </div>
+                    <div class="devider-10"></div>
+                </div>
+            </form>
+            <div class="devider-15"></div>
+            <div class="">
+                <span>تعداد محصولات : </span>
+               
+                <strong>
+                    @sumCount.ToString().ToPersian()
+                </strong>
+
+                <span>جمع سفارش ها : </span>
+
+                <strong>
+                    @sumPrice.GetCurrencyFormat().ToPersian() @Resource.Lang.Toman
+                </strong>
+                <span>جمع حمل و نقل : </span>
+
+                <strong>
+                    @sumDelivery.GetCurrencyFormat().ToPersian() @Resource.Lang.Toman
+                </strong>
+
+                <span>مبلغ کل : </span>
+
+                <strong>
+                    @((sumPrice+ sumDelivery).GetCurrencyFormat().ToPersian()) @Resource.Lang.Toman
+                </strong>
+            </div>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">
+                            <div class="pretty p-default text-center">
+                                <input type="checkbox" select-all="true" />
+                                <div class="state">
+                                    <label></label>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 30px;">#</th>
+                        @if (setting.HasStore)
+                        {
+                            <th>@Resource.Lang.Store</th>
+                            <th>@Resource.Lang.BenefitPercent</th>
+                        }
+                        <th>@Resource.Lang.FactureNumber</th>
+                        <th>@Resource.Lang.Name_Family</th>
+                        <th>@Resource.Lang.ProductCount</th>
+                        <th>@Resource.Lang.PaiedAmount (@Resource.Lang.Toman)</th>
+                        <th>@Resource.Lang.Status</th>
+                        <th>@Resource.Lang.PaymentType</th>
+                        <th>@Resource.Lang.Date</th>
+                        <th>@Resource.Lang.Shipping</th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr row-order-id="@item.Id" row-selected="false">
+                            <td>
+                                <div class="pretty p-default text-center">
+                                    <input type="checkbox" order-id="@item.Id" />
+                                    <div class="state">
+                                        <label></label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.RowId)</td>
+                            @if (setting.HasStore)
+                            {
+                                <td>@item.StoreName</td>
+                                <td>@item.BenefitPercent</td>
+
+                            }
+                            <td>@item.UniqueId</td>
+                            <td>@item.Account.FullName @item.Account.LatName</td>
+                            <td>@item.ProductCount.ToPersian()</td>
+                            <td>
+                                @item.Price.GetCurrencyFormat().ToPersian()
+                            </td>
+                            <td>@item.Status.Name</td>
+                            <td>@item.PaymentType.Name</td>
+                            <td>@item.Datetime.ConvertToPersianDateTime().ToPersian()</td>
+                            <td>
+                                @item.DeliveryType (@item.DeliveryPrice.GetCurrencyFormat())
+                            </td>
+
+                            <td>
+                                @Html.ActionLink(Resource.Lang.Check, "edit", new { id = item.Id }) |
+                                @Html.ActionLink(Resource.Lang.Note + "(" + item.CommentCount + ")", "index", new { controller = "accountordercomment", id = item.Id }) |
+                                <a href="@(BaseWebsite.ShopUrl+"account/PrintAccountOrder/"+item.UniqueId)" target="_blank">@Resource.Lang.Print</a> |
+                                @Html.ActionLink(Resource.Lang.Address, "printaddress", new { id = item.Id }, new { target = "_blank" })
+                            </td>
+                        </tr>
+
+
+                    }
+                </tbody>
+                @*@if (rowCount > 1)
+                {
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-left">@Resource.Lang.Sum</td>
+                            <td>@sumCount.ToString().ToPersian()</td>
+                            <td>@sumPrice.GetCurrencyFormat().ToPersian() @Resource.Lang.Toman</td>
+                            <td>@sumDelivery.GetCurrencyFormat().ToPersian() @Resource.Lang.Toman</td>
+                            <td>@((sumPrice+sumDelivery).GetCurrencyFormat().ToPersian()) @Resource.Lang.Toman</td>
+                            <td colspan="1"></td>
+                        </tr>
+                    </tfoot>
+                }*@
+            </table>
+            <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+
+                <ul class="pagination">
+                    <li class="paginate_button previous" aria-controls="datatable-buttons">
+                        <a href="@Url.Action("index", new {
+                            @status = statusString,
+                            @fromorderid = fromOrderId,
+                            @toorderid = toOrderId,
+                            @from = fromDatetime,
+                            @to = toDatetime,
+                            @refId = refId,
+                            @pageIndex = 1,
+                            @pageSize = pageSize,
+                            @customer = customer,
+                             @product = product
+                        })">@Resource.Lang.FirstPage</a>
+                    </li>
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="paginate_button @active" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                                    @status = statusString,
+                                    @fromorderid = fromOrderId,
+                                    @toorderid = toOrderId,
+                                    @from = fromDatetime,
+                                    @to = toDatetime,
+                                    @refId = refId,
+                                    @pageIndex = i,
+                                    @pageSize = pageSize,
+                                    @customer = customer,
+                                    @product = product
+                            })">@(i.ToPersian())</a>
+                        </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new
+                                    {
+                                    @status = statusString,
+                                    @fromorderid = fromOrderId,
+                                    @toorderid = toOrderId,
+                                    @from = fromDatetime,
+                                    @to = toDatetime,
+                                    @refId = refId,
+                                    @pageIndex = EndIndex,
+                                    @pageSize = pageSize,
+                                    @customer = customer,
+                                    @product = product
+                            })">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                            <a href="#">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div id="chart-content">
+                <figure class="highcharts-figure">
+                    <div id="container"></div>
+
+                </figure>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+
+@section Script {
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/highcharts.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/data.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/drilldown.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/exporting.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/export-data.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/accessibility.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/chart-model.js"></script>
+    <script type="text/javascript">
+
+        initializeOrderListScript();
+
+        $("#btn-chart").click(function () {
+            var chartType = $("#reportType").val();
+            var chart = "";
+
+            $.ajax({
+                url: "/panel/crm/accountorder/report",
+                type: "get",
+                data: $("#order-form").serialize(),
+                dataType: 'json',
+            }).done(function (result) {
+                if (result) {
+                    if (chartType == chartModels.chartTypes.ORDER_STORE_SELL) {
+                        chart = chartModels.columnDrilldown;
+                        chart.series[0].data = result.List;
+                    } else {
+                        chart = chartModels.columnBasic;
+                        chart.xAxis.categories = result.Categories;
+                        chart.series = result.List;
+                    }
+                    chart.title.text = result.ColumnName;
+                    chart.yAxis.title.text = result.yTitle;
+                    Highcharts.chart('container', chart);
+                    Highcharts.setOptions({
+                        lang: {
+                            thousandsSep: ','
+                        }
+                    });
+                    $('html, body').animate({
+                        scrollTop: $("#container").offset().top
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+}

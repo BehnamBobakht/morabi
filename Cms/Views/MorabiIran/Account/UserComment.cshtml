@@ -1,0 +1,39 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+@model Account
+@{
+    TempData["Title"] = Resource.Lang.Comments;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+}
+
+<div class="row m-0">
+    <div class="col-lg-6 p-1">
+        <div class="comentParent">
+            <div class="profileTitle">
+                <h6>@Resource.Lang.VerifiedComment (@Resource.Lang.Product1)</h6>
+            </div>
+            <div class="commentBox">
+                @Html.Action("Search", "ProductComment", new { pcoaccountId = CurrentAccount.Id, pcoviewname = "UserCommentList", pcapproved = true })
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="col-lg-6 p-1">
+        <div class="comentParent">
+            <div class="profileTitle">
+                <h6>@Resource.Lang.UnVerifiedComment (@Resource.Lang.Product1)</h6>
+            </div>
+            <div class="commentBox">
+                @Html.Action("Search", "ProductComment", new { pcoaccountId = CurrentAccount.Id, pcoviewname = "UserCommentList", pcapproved = false })
+            </div>
+
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/UserAnswer.cshtml")
+@Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/UserAnswerStore.cshtml")
+

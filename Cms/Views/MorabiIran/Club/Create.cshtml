@@ -1,0 +1,250 @@
+﻿﻿﻿@using DataLayer.Entities;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@model Clubs
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    if (ViewBag.TypeId == "FIELD_CLUB_TEACHERS")
+    {
+        TempData["Title"] = "ثبت نام در سامانه مربیان";
+    }
+    else if (ViewBag.TypeId == "FIELD_CLUB_OWNER")
+    {
+        TempData["Title"] = "ثبت نام در سامانه باشگاه داران";
+    }
+    else
+    {
+        TempData["Title"] = "ثبت نام در سامانه ورزشکاران";
+    }
+
+
+}
+
+<section class="category page-padding">
+    <div class="container">
+        <div class="form_page_content mt-3">
+            <div class="text-center">
+                <h2 class="text-center">@TempData["Title"]</h2>
+
+            </div>
+            <hr />
+            <div class="form_box row">
+                @using (Html.BeginForm())
+                {
+                    if (!string.IsNullOrEmpty(ViewBag.Message))
+                    {
+                        <p class="alert alert-success">@ViewBag.Message</p>
+                    }
+                    <input type="text" class="d-none" name="back" value="@ViewBag.back" />
+                    <input type="text" class="d-none" value="@Model.Type" name="Type" id="Type" />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label for="phone">نام و نام خانوادگی : *</label>
+                            <input type="text" name="FullName" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="phone">شماره تماس : *</label>
+                            <input type="number" name="Phone" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="phone">کد ملی : </label>
+                            <input type="number" name="NatinalCode" class="form-control" />
+                        </div>
+                        <div class="col-sm-6">
+
+                            <label for="phone">استان محل سکونت : *</label>
+                            @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/_State.cshtml")
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="phone">شهر محل سکونت : *</label>
+                            @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/_City.cshtml")
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="phone">آدرس دقیق محل فعالیت : *</label>
+                            <textarea id="Address" class="form-control" name="Address" required></textarea>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="phone">بیوگرافی : *</label>
+                            <textarea id="Bio" name="Bio" class="form-control" required></textarea>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="phone">رزومه : *</label>
+                            <textarea id="Resumeh" name="Resumeh" class="form-control" required></textarea>
+                        </div>
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">عکس ورزشی : *</label>
+                            <input type="text" class="d-none" required name="PictureId" id="PictureId" />
+                            <input type="file" id="PictureId1www" file-type="picture" class="upload-file3" target-name="PictureId" data-height="220" />
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgPictureId">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">عکس غیر ورزشی : *</label>
+                            <input type="text" class="d-none" required name="Pictue2Id" id="Pictue2Id" />
+                            <input type="file" id="PictureId2ww" file-type="picture" class="upload-file3" target-name="Pictue2Id" data-height="220" />
+                            <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgPictue2Id">
+                        </div>
+                        @if (ViewBag.TypeId == "FIELD_CLUB_TEACHERS")
+                        {
+                            <div class="col-sm-3">
+                                <label for="phone">تصاویر کارت مربیگری : *</label>
+                                <input type="text" class="d-none" name="CoachingPictureId" id="CoachingPictureId" />
+                                <input type="file" id="PictureId3" file-type="picture" class="upload-file3" target-name="CoachingPictureId" data-height="220" />
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgCoachingPictureId">
+                            </div>
+                        }
+                        <div class="col-sm-4">
+                            <label for="phone">رشته فعالیت مورد نظر : *</label>
+                            <input type="text" name="Field" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="phone">درجه مدرک مربیگری : *</label>
+                            <input type="text" name="Coaching1" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="phone">مدرک ملی/بین المللی: *</label>
+                            <input type="text" name="Coaching2" class="form-control" />
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label for="phone">واتس اپ: *</label>
+                            <input type="text" name="Whatapp" class="form-control" />
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">شماره موبایل: *</label>
+                            <input type="number" name="Mobile" class="form-control" />
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">تلگرام: *</label>
+                            <input type="text" name="Telegram" class="form-control" />
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="phone">اینستاگرام: *</label>
+                            <input type="text" name="Instagram" class="form-control" />
+                        </div>
+                        <div>
+                            <label>انتخاب آدرس روی نقشه *</label>
+                            <div class="d-none">
+                                @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @required = true } })
+
+                                @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @required = true } })
+
+                            </div>
+
+                            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/LocationPicker.cshtml")
+
+                        </div>
+                        @if (ViewBag.TypeId == "FIELD_CLUB_OWNER")
+                        {
+                            <div class="col-sm-6">
+                                <label for="phone">آدرس دقیق باشگاه : *</label>
+                                <textarea id="Address2" name="Address2" required class="form-control"></textarea>
+                            </div>
+                            <div class="col-sm-6">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="phone">مجوز باشگاه : *</label>
+                                <input type="text" class="d-none" required name="CertificatePictureId" id="CertificatePictureId" />
+                                <input type="file" id="PictureId44" file-type="picture" class="upload-file3" target-name="CertificatePictureId" data-height="220" />
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgCertificatePictureId">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="phone">تصویر از محیط باشگاه : *</label>
+                                <input type="text" class="d-none" required name="PictureId1" id="PictureId1" />
+                                <input type="file" id="PictureId54" file-type="picture" class="upload-file3" target-name="PictureId1" data-height="220" />
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgPictureId1">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="phone">تصویر از محیط باشگاه : *</label>
+                                <input type="text" class="d-none" required name="PictureId2" id="PictureId2" />
+                                <input type="file" id="PictureId46" file-type="picture" class="upload-file3" target-name="PictureId2" data-height="220" />
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgPictureId2">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="phone">تصویر از محیط باشگاه : *</label>
+                                <input type="text" class="d-none" required name="PictureId3" id="PictureId3" />
+                                <input type="file" id="PictureId47" file-type="picture" class="upload-file3" target-name="PictureId3" data-height="220" />
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgPictureId3">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="phone">تصویر از محیط باشگاه : *</label>
+                                <input type="text" class="d-none" required name="PictureId4" id="PictureId4" />
+                                <input type="file" id="PictureId48" file-type="picture" class="upload-file3" target-name="PictureId4" data-height="220" />
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user" id="imgPictureId4">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="phone">ساعات کاری باشگاه: </label>
+                                <input type="text" name="TimeWork" class="form-control" />
+                            </div>
+                            <div class="col-sm-8">
+                                <label for="phone">نوع و حوزه فعالیت باشگاه یک توضیح مختصر از بیوگرافی و مدیر باشگاه و فعالیت ها : *</label>
+                                <textarea id="BioClub" name="BioClub" required class="form-control"></textarea>
+                            </div>
+                        }
+                        @if (ViewBag.TypeId == "FIELD_CLUB_ATHENTES")
+                        {
+                            <div class="col-sm-6">
+                                <label for="phone">افتخارات و مسابقات : *</label>
+                                <textarea id="Competitions" name="Competitions" required class="form-control"></textarea>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="phone">مدال ها : *</label>
+                                <textarea id="Medals" name="Medals" required class="form-control"></textarea>
+                            </div>
+                        }
+                        <div class="loginFooter">
+                            <button class="btn" type="submit" id="btnRegister">
+                                @Resource.Lang.SignUp
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>
+<div class="modal " id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="addaddress_modal_Title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header producttotal justify-content-start">
+                <h5 class="addaddress_modal_Title" id="editaddress_modal_Title">@Resource.Lang.Doing</h5>
+
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-warning">در حال انجام لطفا منتظر بمانید</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section endScripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            GetStateByCountryIdProfile();
+            function GetStateByCountryIdProfile() {
+                viewModel.State.StateList([]);
+                var request = createRequest();
+                request.url = request.url + codeprocess.api.state.name + "?countryId=" + 118;
+                ajaxLoader(true);
+                request.success = function (result) {
+
+                    viewModel.State.StateList(result.Value);
+
+                    viewModel.State.StateId(viewModel.Account.StateId());
+                    $("#selectedStateProfile").val(viewModel.State.StateId());
+                    GetCityByStateIdProfile(viewModel.State.StateId());
+                };
+                $.ajax(request);
+                ajaxLoader(false);
+            }
+
+        });
+
+    </script>
+}

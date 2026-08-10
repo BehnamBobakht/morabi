@@ -1,0 +1,85 @@
+﻿DELETE FROM AccountOrderProduct
+DELETE FROM PaymentProductOrder
+DELETE FROM Payment
+DELETE FROM Merchant
+DELETE FROM AccountBasket
+DELETE FROM ProductCustomValue
+DELETE FROM ProductCustomItem
+DELETE FROM ProductLike
+DELETE FROM Product
+DELETE FROM ProductSubCategoryLanguage
+DELETE FROM ProductSubCategory
+DELETE FROM ProductCategoryLanguage
+DELETE FROM ProductCustomField
+DELETE FROM ProductCategory
+DELETE FROM ProductTypeLanguage
+DELETE FROM ShopProductType
+DELETE FROM ProductType
+DELETE FROM ShopReportBlock
+DELETE FROM Discount
+DELETE FROM DiscountGroup
+DELETE FROM ShopUser
+DELETE FROM Shop
+DELETE FROM ShopChat
+DELETE FROM AccountAddress
+DELETE FROM AccountOrder
+DELETE FROM AccountLog
+DELETE FROM Account
+DELETE FROM Slider
+DELETE FROM Newsletter
+DELETE FROM Category
+DELETE FROM GalleryPictures
+DELETE FROM Gallery
+DELETE FROM Post
+DELETE FROM WebsiteDomain
+DELETE FROM WebsiteLanguage
+DELETE FROM ShopWebsiteSetting
+DELETE FROM Website
+DELETE FROM Template
+DELETE FROM Picture
+DELETE FROM NotificationApp
+DELETE FROM NotificationProject
+
+
+DBCC CHECKIDENT (AccountOrderProduct, RESEED, 0)
+DBCC CHECKIDENT (PaymentProductOrder, RESEED, 0)
+DBCC CHECKIDENT (Payment, RESEED, 0)
+DBCC CHECKIDENT (Merchant, RESEED, 0)
+DBCC CHECKIDENT (AccountBasket, RESEED, 0)
+DBCC CHECKIDENT (ProductCustomValue, RESEED, 0)
+DBCC CHECKIDENT (ProductCustomItem, RESEED, 0)
+DBCC CHECKIDENT (ProductLike, RESEED, 0)
+DBCC CHECKIDENT (Product, RESEED, 0)
+DBCC CHECKIDENT (ProductSubCategoryLanguage, RESEED, 0)
+DBCC CHECKIDENT (ProductSubCategory, RESEED, 0)
+DBCC CHECKIDENT (ProductCategoryLanguage, RESEED, 0)
+DBCC CHECKIDENT (ProductCustomField, RESEED, 0)
+DBCC CHECKIDENT (ProductCategory, RESEED, 0)
+DBCC CHECKIDENT (ProductTypeLanguage, RESEED, 0)
+DBCC CHECKIDENT (ShopProductType, RESEED, 0)
+DBCC CHECKIDENT (ProductType, RESEED, 0)
+DBCC CHECKIDENT (ShopReportBlock, RESEED, 0)
+DBCC CHECKIDENT (Discount, RESEED, 0)
+DBCC CHECKIDENT (DiscountGroup, RESEED, 0)
+DBCC CHECKIDENT (ShopUser, RESEED, 0)
+DBCC CHECKIDENT (ShopChat, RESEED, 0)
+DBCC CHECKIDENT (Shop, RESEED, 0)
+DBCC CHECKIDENT (Gallery, RESEED, 0)
+DBCC CHECKIDENT (GalleryPictures, RESEED, 0)
+DBCC CHECKIDENT (AccountAddress, RESEED, 0)
+DBCC CHECKIDENT (AccountOrder, RESEED, 0)
+DBCC CHECKIDENT (Account, RESEED, 0)
+DBCC CHECKIDENT (Slider, RESEED, 0)
+DBCC CHECKIDENT (Newsletter, RESEED, 0)
+DBCC CHECKIDENT (Post, RESEED, 0)
+DBCC CHECKIDENT (Category, RESEED, 0)
+DBCC CHECKIDENT (WebsiteDomain, RESEED, 0)
+DBCC CHECKIDENT (WebsiteLanguage, RESEED, 0)
+DBCC CHECKIDENT (Website, RESEED, 0)
+DBCC CHECKIDENT (ShopWebsiteSetting, RESEED, 0)
+DBCC CHECKIDENT (Template, RESEED, 0)
+DBCC CHECKIDENT (Picture, RESEED, 0)
+DBCC CHECKIDENT (NotificationApp, RESEED, 0)
+DBCC CHECKIDENT (NotificationProject, RESEED, 0)
+DBCC CHECKIDENT (UserGroup, RESEED, 0)
+DBCC CHECKIDENT (SiteUser, RESEED, 0)

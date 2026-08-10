@@ -1,0 +1,18 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+
+@if (Model.Any())
+{
+    <div class="footer-links">
+        @foreach (var item in Model)
+        {
+
+            <a href="@item.Url">@item.Name</a>
+
+        }
+
+    </div>
+
+}
+
+

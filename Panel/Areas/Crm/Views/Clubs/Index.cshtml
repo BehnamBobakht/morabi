@@ -1,0 +1,113 @@
+﻿﻿@using DataLayer.Base;
+@model List<DataLayer.Entities.Clubs>
+
+@{
+    ViewBag.Title = Resource.Lang.ListOfRegisteredUsers;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    if (ViewBag.TypeId == DataLayer.Enumarables.Enum_Code.FIELD_CLUB_TEACHERS)
+    {
+        ViewBag.Title = "ثبت نام  سامانه مربیان";
+    }
+    else if (ViewBag.TypeId == DataLayer.Enumarables.Enum_Code.FIELD_CLUB_OWNER)
+    {
+        ViewBag.Title = "ثبت نام  سامانه باشگاه داران";
+    }
+    else
+    {
+        ViewBag.Title = "ثبت نام سامانه ورزشکاران";
+    }
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+            TableManageButtons.init();
+        </script>
+}
+<div>
+
+
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <div class="">
+                <span>تعداد کل : </span>
+
+                <strong>
+                    @Model.Count()
+                </strong>
+            </div>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.Name_Family</th>
+                        <th>@Resource.Lang.Mobile</th>
+                        <th>@Resource.Lang.NationalCode</th>
+                        <th>@Resource.Lang.State</th>
+                        <th>@Resource.Lang.City</th>
+                        <th>@Resource.Lang.Status</th>
+                        <th>الویت نمایش</th>
+                        <th>شاخص</th>
+
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+
+                        </td>
+
+                        <td>@Html.DisplayFor(modelItem => item.Mobile)</td>
+                        <td>@item.NatinalCode.ToPersian()</td>
+                        <td>@Html.DisplayFor(modelItem => item.State.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.City.Name)</td>
+
+                        <td>
+                            @if (item.Active == true)
+                            {
+                                <span>تایید</span>}
+                            else
+                            {
+                                <span>تایید نشده</span>
+                            }
+                        </td>
+                        <td>
+                            <span>@item.ShowNumbr</span>
+                           
+                        </td>
+                        <td>
+
+                            @if (item.IsTop == true)
+                            {
+                                <span>بله</span>}
+                            else
+                            {
+                                <span>خیر</span>
+                            }
+
+                        </td>
+                        <td>
+                            @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.ID }) |
+
+
+                            @*@Html.ActionLink(Resource.Lang.Delete, "delete", new { id = item.Id })*@
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <div class="d-flex">
+
+            </div>
+            
+        </div>
+    </div>
+    <!-- end col -->
+</div>

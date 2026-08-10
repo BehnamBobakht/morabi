@@ -1,0 +1,114 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels;
+@model ProductCreateVm
+@using DataLayer.Enumarables;
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+}
+@section Header {
+
+}
+@section Script {
+
+}
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <legend>@Resource.Lang.ProductInfo</legend>
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < Model.ProductCustomField.Count(); i++)
+                                {
+                                    var item = Model.ProductCustomField[i];
+                                    <div class="col-md-12">
+                                        <input type="hidden" value="@item.ID" name="ProductCustomField[@i].ID" />
+                                        @if (item.TypeLabel == Enum_Code.FIELD_TYPE_BOOLEAN.ToString())
+                                        {
+                                            <div class="form-group">
+                                                @Html.Label(item.Name@*+(item.IsRequired?" ("+Resource.Lang.Required+")":"")*@, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    <select class="form-control" name="ProductCustomField[@i].Value">
+                                                        <option @(item.Value == "False" ? "selected" : "") value="False">@Resource.Lang.No</option>
+                                                        <option @(item.Value == "True" ? "selected" : "") value="True">@Resource.Lang.Yes</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (item.TypeLabel == Enum_Code.FIELD_TYPE_DROPDOWN.ToString())
+                                        {
+                                            <div class="form-group">
+                                                @Html.Label(item.Name@*+(item.IsRequired?" ("+Resource.Lang.Required+")":"")*@, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    <select name="ProductCustomField[@i].ValueItemId" class="form-control">
+                                                        <option>@Resource.Lang.None</option>
+                                                        @foreach (var op in item.ProductCustomItemList)
+                                                        {
+                                                            <option @(item.ValueItemId == op.ID ? "selected" : "") value="@op.ID">@op.Value</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="form-group">
+                                                @Html.Label(item.Name@*+(item.IsRequired?" ("+Resource.Lang.Required+")":"")*@, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    <input class="form-control" name="ProductCustomField[@i].Value" value="@item.Value" />
+
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+
+                                }
+
+
+                            </div>
+                        </fieldset>
+
+
+                    </div>
+
+
+
+                    <div class="col-sm-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-11">
+                                <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+

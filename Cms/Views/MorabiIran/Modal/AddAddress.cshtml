@@ -1,0 +1,24 @@
+﻿@*<div class="modal modal-add-address">*@
+<div class="modal fade modal-add-address" id="addaddress_modal" tabindex="-1" role="dialog" aria-labelledby="addaddress_modal_Title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header producttotal justify-content-start">
+                <h5 class="addaddress_modal_Title" id="editaddress_modal_Title">@Resource.Lang.Address</h5>
+
+            </div>
+            @Html.Partial("~/Views/"+DataLayer.Base.BaseWebsite.WebsiteLabel+"/Partial/_AddAddressContent.cshtml")
+            <div class="modal-footer ">
+                <button type="button" class="btn  default_btn flex-fill m-3" onclick="closeAddressModal()">@Resource.Lang.Close</button>
+
+                @*<button type="button" class="btn seemore flex-fill m-3" data-bs-dismiss="modal">@Resource.Lang.Close</button>*@
+                <button type="button" class="btn primary_btn flex-fill m-3" codeprocess-action="address-add" codeprocess-callback="closeModal,reLoadPage">
+                    <span>
+                        @Resource.Lang.Register
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*</div>*@

@@ -1,0 +1,167 @@
+﻿@using DataLayer.ViewModels;
+
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@model ExameAccountAnswer
+@{
+    var ListQuestion = Model.Exame.ExameQuestion.ToList();
+
+    ViewBag.Title = "پاسخ نامه";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<style>
+    .dot {
+        height: 25px;
+        width: 25px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .dotFill {
+        background-color: #00ff21;
+    }
+
+    .dotFillUser {
+        border: 3px solid #ff0000;
+    }
+
+    .dotFillUserTrue {
+        border: 3px solid #044a1d !important;
+    }
+</style>
+@{ int i = 1;}
+<div class="col-sm-12">
+    <div class="card-box table-responsive">
+        <div class="col-sm-12">
+            @foreach (var item in ListQuestion.GroupBy(s => s.ExameCourse))
+            {
+                i = 1;
+                <div class="row ">
+                    <h3>@item.Key.Name</h3>
+                    <hr />
+                    @foreach (var question in item.Key.ExameQuestion.Where(s => s.ExameId == Model.ExameId))
+                    {
+
+
+                        <div class="question col-md-12 m-2">
+                            <div class="row answer_ques_box">
+                                @if (question.PictureId == null)
+                                {
+                                    <div class="col-sm-12">
+                                        @if (question.ExameCourseCategory == null)
+                                        {
+                                            if (question.Formula != null && question.Formula != "")
+                                            {
+                                                <p><strong>@i- </strong>@Html.Raw(question.Formula)</p>
+
+                                            }
+                                            else
+                                            {
+                                                <p><strong>@i- </strong>@question.Text</p>
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (question.Formula != null && question.Formula != "")
+                                            {
+                                                <p><strong>@i- </strong>(@question.ExameCourseCategory.Name) @Html.Raw(question.Formula)</p>
+                                            }
+                                            else
+                                            {
+                                                <p><strong>@i- </strong>(@question.ExameCourseCategory.Name) @question.Text</p>
+
+                                            }
+
+                                        }
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="col-sm-8">
+                                        @if (question.ExameCourseCategory == null)
+                                        {
+                                            if (question.Formula != null && question.Formula != "")
+                                            {
+                                                <p><strong>@i- </strong>@Html.Raw(question.Formula)</p>
+
+                                            }
+                                            else
+                                            {
+                                                <p><strong>@i- </strong>@question.Text</p>
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (question.Formula != null && question.Formula != "")
+                                            {
+                                                <p><strong>@i- </strong>(@question.ExameCourseCategory.Name) @Html.Raw(question.Formula)</p>
+                                            }
+                                            else
+                                            {
+                                                <p><strong>@i- </strong>(@question.ExameCourseCategory.Name) @question.Text</p>
+
+                                            }
+
+                                        }
+                                    </div>
+                                    <div class="col-sm-4">
+                                        @if (question.PictureId != null)
+                                        {
+                                            <img src="@question.Picture.GetUrl()" />
+                                        }
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="d-flex questionbox">
+                                @{int k = 1;}
+                                @foreach (var answer in question.ExameAnswerItem)
+                                {
+                                    string classNameNotChecked = "";
+                                    var classNameUser = (Model.ExameAccountAnswerDetails.Any(s => s.AnswerId == answer.ID && s.QuestionId == question.ID) ? "dotFillUser" : "");
+                                  
+                                    
+                                    <div class="Answer4qoustion">
+                                        <span class="dot  @classNameUser  @(question.AnswerId == answer.ID ? "dotFill" : "")" name="answer@(answer.ID)" id="answer@(answer.ID)"></span>
+
+                                        @if (answer.Formula != "" && answer.Formula != null)
+                                        {
+                                            <label>
+                                                @k )  @Html.Raw(answer.Formula)
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label>
+                                                @k )  @answer.Text
+                                            </label>
+                                        }
+
+                                        @if (answer.PictureId != null)
+                                        {
+                                            <img src="@answer.Picture.GetUrl()" />
+                                        }
+                                    </div>
+                                    k++;
+                                }
+                            </div>
+
+                        </div>
+                        i++;
+                    }
+                </div>
+
+            }
+            <hr />
+           
+        </div>
+       
+    </div>
+    <div class="clearfix"></div>
+</div>

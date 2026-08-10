@@ -1,0 +1,268 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model IEnumerable<DataLayer.ViewModels.ViewClearing>
+@{
+    ViewBag.Title = Resource.Lang.Clearing;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    int[] codeId = ViewBag.CodeId_2;
+    string codeString = codeId == null ? null : string.Join("-", codeId);
+    string text = ViewBag.Text;
+    string fromDatetime = ViewBag.FromDatetime;
+    string toDatetime = ViewBag.ToDatetime;
+    string index = ViewBag.PageIndex;
+    string pageSize = ViewBag.PageSize;
+    string storeId = ViewBag.StoreId;
+    SelectList listCode = ViewBag.CodeId;
+    SelectList listStore = ViewBag.Stores;
+
+    List<int> PageSizeList = new List<int>() { 10, 20, 50, 100, 500, 5000 };
+
+    int TotalCount = ViewBag.TotalCount;
+
+    int CurrentIndex = index.IsInteger() ? index.GetInteger() : 1;
+    int PageSize = pageSize.IsInteger() ? pageSize.GetInteger() : 10;
+    int StartIndex = CurrentIndex > 4 ? CurrentIndex - 4 : 1;
+    int EndIndex = (TotalCount / PageSize);
+    int Mod = (TotalCount % PageSize);
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+
+    double sumPrice = 0;
+    int rowCount = Model.Count();
+
+    if (rowCount > 0)
+    {
+        foreach (var item in Model)
+        {
+            sumPrice = sumPrice + item.Price;
+        }
+    }
+}
+
+
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+
+            <form method="get" action="~/crm/clearing">
+                <div class="form-horizontal">
+
+                    <input type="hidden" name="pageIndex" id="pageIndex" value="@index" />
+                    <div class="devider-10"></div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="orderid" class="control-label col-md-4">@Resource.Lang.Text</label>
+                            <div class="col-md-8 row">
+                                <input name="text" autocomplete="off" class="form-control" value="@text" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="date" class="control-label col-md-4">@Resource.Lang.FromDate</label>
+                            <div class="col-md-8 row">
+                                <input id="from" class="form-control" autocomplete="off" codeprocess="date" name="from" value="@fromDatetime" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="date" class="control-label col-md-4">@Resource.Lang.ToDate</label>
+                            <div class="col-md-8 row">
+                                <input id="to" class="form-control" autocomplete="off" codeprocess="date" name="to" value="@toDatetime" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="date" class="control-label col-md-4">@Resource.Lang.Store</label>
+                            <div class="col-md-8 row">
+                                <select id="storeId" class="form-control" autocomplete="off" name="storeId">
+                                    <option value="">
+                                        @Resource.Lang.Select
+                                    </option>
+                                    @foreach (var item in listStore)
+                                    {
+                                        <option value="@item.Value" @(item.Value == storeId ? "selected" : "")>
+                                            @item.Text
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+
+                        <div class="form-group">
+                            <label for="pageIndex" class="control-label col-md-4">@Resource.Lang.CountInPage</label>
+                            <div class="col-md-8 row">
+                                <select name="pageSize" class="form-control">
+                                    @foreach (int pageSizeItem in PageSizeList)
+                                    {
+                                        if (pageSize.GetInteger() == pageSizeItem)
+                                        {
+                                            <option value="@pageSizeItem" selected="selected">@pageSizeItem</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@pageSizeItem">@pageSizeItem</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="statusId" class="control-label col-md-2">
+                                @Resource.Lang.Status<br />
+                                <span id="chkCheckAll" do-action="true" style="font-size: 10px; cursor: pointer;">(@Resource.Lang.SelectAll)</span>
+                            </label>
+                            <div class="col-md-10">
+                                @foreach (var item in listCode)
+                                {
+                                    int itemId = item.Value.GetInteger();
+                                    if (codeId != null && codeId.Any(p => p == itemId))
+                                    {
+                                        <label style="margin-left: 30px;">
+                                            <input type="checkbox" name="codeId" checked="checked" value="@item.Value" />
+                                            @item.Text
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label style="margin-left: 30px;">
+                                            <input type="checkbox" name="codeId" value="@item.Value" />
+                                            @item.Text
+                                        </label>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-8 no-padding-right">
+                            <input type="submit" class="btn btn-success col-xs-12" value=@Resource.Lang.Search>
+                        </div>
+                    </div>
+                    <div class="devider-10"></div>
+                </div>
+            </form>
+            <div class="devider-15"></div>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th>@Resource.Lang.Code</th>
+                        <th>@Resource.Lang.Store</th>
+                        <th>@Resource.Lang.Type</th>
+                        <th>@Resource.Lang.FromAccount</th>
+                        <th>@Resource.Lang.ToAccount</th>
+                        <th>@Resource.Lang.Date</th>
+                        <th>@Resource.Lang.Price (@Resource.Lang.Toman)</th>
+
+                        @*<th></th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr row-order-id="@item.Id" row-selected="false">
+
+                            <td>@item.Id.ToPersian()</td>
+                            <td>@item.Store.Name</td>
+                            <td>@item.Code.Name</td>
+                            <td>@item.FromAccount</td>
+                            <td>@item.ToAccount</td>
+
+                            <td>@item.CreateDate.ToPersian().ToPersian()</td>
+                            <td>@item.Price.GetCurrencyFormat().ToPersian()</td>
+
+                            @*<td>
+                                @Html.ActionLink(Resource.Lang.Check, "edit", new { id = item.Id }) |
+                                @Html.ActionLink(Resource.Lang.Print, "print", new { id = item.Id }, new { target = "_blank" }) |
+                            </td>*@
+                        </tr>
+                    }
+                </tbody>
+                @if (rowCount > 0)
+                {
+                    <tfoot>
+                        <tr>
+                            <td colspan="6"></td>
+
+                            <td>
+                                <strong>
+                                    @sumPrice.GetCurrencyFormat().ToPersian() @Resource.Lang.Toman
+                                </strong>
+
+                            </td>
+                        </tr>
+                    </tfoot>
+                }
+            </table>
+            <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                <ul class="pagination">
+                    <li class="paginate_button previous" aria-controls="datatable-buttons">
+                        <a href="@Url.Action("index", new {
+                                @text=text,
+                                @codeStr=codeString,
+                            @from = fromDatetime,
+                            @to = toDatetime,
+                            @pageIndex = 1,
+                            @pageSize = pageSize,
+
+                        })">@Resource.Lang.FirstPage</a>
+                    </li>
+                    @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+                    {
+                        var active = CurrentIndex == i ? "active" : "";
+                        <li class="paginate_button @active" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new {
+                                @text=text,
+                                @codeStr=codeString,
+                            @from = fromDatetime,
+                            @to = toDatetime,
+                            @pageIndex = i,
+                            @pageSize = pageSize,
+
+                            })">@(i.ToPersian())</a>
+                        </li>
+                    }
+                    @if (CurrentIndex < EndIndex)
+                    {
+                        <li class="paginate_button previous" aria-controls="datatable-buttons">
+                            <a href="@Url.Action("index", new
+                                    {
+                                @text=text,
+                                @codeStr=codeString,
+                            @from = fromDatetime,
+                            @to = toDatetime,
+                            @pageIndex =EndIndex,
+                            @pageSize = pageSize,
+                            })">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="paginate_button previous disabled" aria-controls="datatable-buttons">
+                            <a href="#">@Resource.Lang.LastPage</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+
+@section Script {
+    <script type="text/javascript">
+        initializeClearingListScript();
+    </script>
+}
+

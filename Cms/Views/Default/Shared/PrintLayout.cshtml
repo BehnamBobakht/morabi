@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    @RenderSection("Header", false)
+    <style type="text/css">
+        body {
+            font-size: 15px;
+            background-color: white !important;
+            padding: 10px;
+        }
+        .content {
+            margin: 0 auto;
+            background-color: white;
+        }
+        .no-print-page {
+            display: none;
+        }
+    </style>
+    <link href="~/Assets/Plugins/bootstrap-rtl/css/bootstrap.rtl.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                @RenderBody()
+            </div>
+            <!-- End row -->
+        </div> <!-- container -->
+    </div>
+    <script type="text/javascript">
+        window.print();
+    </script>
+    @RenderSection("Script", false)
+<script src="~/Assets/Plugins/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

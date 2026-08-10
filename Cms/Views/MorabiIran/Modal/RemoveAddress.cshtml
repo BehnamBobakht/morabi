@@ -1,0 +1,18 @@
+﻿@*<div class="modal modal-address-delete">*@
+    <div class="modal fade modal-address-delete" id="deletAddress_modal" tabindex="-1" role="dialog" aria-labelledby="deletAddress_modal_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header producttotal justify-content-start">
+                    <h5 class="deletAddress_modal_title" id="exit_profile_modal">@Resource.Lang.Delete @Resource.Lang.Address</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <span>   @Resource.Lang.AreYouSure</span>
+                </div>
+                <div class="modal-footer d-flex">
+                    <button type="button" class="btn default_btn   flex-fill m-3" data-bs-dismiss="modal"><span>@Resource.Lang.Cancel</span></button>
+                    <button id="btnRemoveAddressItem" type="button" codeprocess-action="address-remove" codeprocess-callback="closeModal,reLoadPage" class="btn primary_btn flex-fill m-3 btnRemoveAddressItem"><span>@Resource.Lang.Yes</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+ @*</div>*@

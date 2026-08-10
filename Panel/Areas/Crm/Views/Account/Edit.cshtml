@@ -1,0 +1,409 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Base;
+@model DataLayer.Entities.Account
+@{
+    ViewBag.Title = Resource.Lang.EditCustomerInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Header {
+    <link rel="stylesheet" type="text/css" href="/Assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Script {
+    <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="/assets/plugins/fileuploads/js/dropify.min.js"></script>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.PictureId)
+    @Html.HiddenFor(model => model.CreateDatetime)
+    @*@Html.HiddenFor(model => model.Email)*@
+    @Html.HiddenFor(model => model.NationalPictureId)
+    @Html.HiddenFor(model => model.ImageNational)
+    @Html.HiddenFor(model => model.Image)
+
+    @Html.HiddenFor(model => model.InsurancePictureId)
+    @Html.HiddenFor(model => model.ImageInsurance)
+    @Html.HiddenFor(model => model.EduactionPictureId)
+    @Html.HiddenFor(model => model.ImageEduaction)
+    @Html.HiddenFor(model => model.ShenasnamehPictureId)
+    @Html.HiddenFor(model => model.ImageShenasnameh)
+    @Html.HiddenFor(model => model.PassportPictureId)
+    @Html.HiddenFor(model => model.ImagePassport)
+    @Html.HiddenFor(model => model.InsurancePictureId)
+    @Html.HiddenFor(model => model.ImageInsurance)
+    @Html.HiddenFor(model => model.Coaching2PictureId)
+    @Html.HiddenFor(model => model.ImageCoaching2)
+    @Html.HiddenFor(model => model.Coaching3PictureId)
+    @Html.HiddenFor(model => model.ImageCoaching3)
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6">
+                        <div>
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="row">
+                                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                                </div>
+                            </div>
+                        </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TypeId, Resource.Lang.UserType, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control", @codeprocess = "show-part" })
+                                @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FullName, "نام", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LatName, "نام خانوادگی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.LatName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.LatName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FullNameEn, "نام انگلیسی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.FullNameEn, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.FullNameEn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LatNameEn, "نام خانوادگی انگلیسی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.LatNameEn, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.LatNameEn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FatherName, "نام پدر ", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FatherNameEn, "نام پدر انگلیسی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.FatherNameEn, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.FatherNameEn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ZipCode, "کد پستی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.QuestionAnswer, "پاسخ سوال", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.QuestionAnswer, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.QuestionAnswer, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @if (BaseWebsite.WebsiteSetting.HasUserName)
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ChangeUserName, Resource.Lang.ChangeUserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ChangeUserName)
+                                    @Html.ValidationMessageFor(model => model.ChangeUserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserName, Resource.Lang.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, Resource.Lang.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" name="Email" value="@Model.Email" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Mobile, Resource.Lang.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2069">
+                            @Html.LabelFor(model => model.NationalCode, Resource.Lang.NationalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.NationalCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone, Resource.Lang.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.State, Resource.Lang.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.State != null)
+                                {<p>@Model.State.Name </p>}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address, Resource.Lang.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2069">
+                            @Html.LabelFor(model => model.Job, Resource.Lang.Job, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Job, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Job, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2070">
+                            @Html.LabelFor(model => model.Company, Resource.Lang.CompanyName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2070">
+                            @Html.LabelFor(model => model.CompanyNo, Resource.Lang.CompanyRegistrationNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.CompanyNo, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.CompanyNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2070">
+                            @Html.LabelFor(model => model.ReagentName, Resource.Lang.RepresentativeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ReagentName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.ReagentName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2070">
+                            @Html.LabelFor(model => model.Agent, Resource.Lang.Representative, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Agent, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Agent, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2070">
+                            @Html.LabelFor(model => model.AgentPhone, Resource.Lang.RepresentativeNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.AgentPhone, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.AgentPhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2069">
+                            @Html.LabelFor(model => model.IsMale, Resource.Lang.Man, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsMale)
+                                    @Html.ValidationMessageFor(model => model.IsMale, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" show-part="2069">
+                            @Html.LabelFor(model => model.Description, Resource.Lang.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })*@
+
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SpacialAccount, "کاربر ویژه", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.SpacialAccount)
+                                @Html.ValidationMessageFor(model => model.SpacialAccount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PictureId, "تصویر پرسنلی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture != null)
+                                {
+                                    <img src="@Model.Picture.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.Image" />
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NationalPictureId, "تصویر کارت ملی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture1 != null)
+                                {
+                                    <img src="@Model.Picture1.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImageNational" />
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NationalPictureId, "تصویر کارت ملی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture1 != null)
+                                {
+                                    <img src="@Model.Picture1.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImageNational" />
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EduactionPictureId, "تصویر مدرک تحصیلی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture2 != null)
+                                {
+                                    <img src="@Model.Picture2.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImageEduaction" />
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NationalPictureId, "تصویر پاسپورت ", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture3 != null)
+                                {
+                                    <img src="@Model.Picture3.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImagePassport" />
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ShenasnamehPictureId, "تصویر شناسنامه ", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture4 != null)
+                                {
+                                    <img src="@Model.Picture4.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImageShenasnameh" />
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.InsurancePictureId, "تصویر بیمه ورزشی ", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture5 != null)
+                                {
+                                    <img src="@Model.Picture5.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImageInsurance" />
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Coaching3PictureId, "تصویر مدرک مربیگری درجه 2 ", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture6 != null)
+                                {
+                                    <img src="@Model.Picture6.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImageCoaching2" />
+                                }
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Coaching3PictureId, "تصویر مدرک مربیگری درجه 3 ", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @if (Model.Picture7 != null)
+                                {
+                                    <img src="@Model.Picture7.GetUrl()" />
+                                }
+                                else
+                                {
+                                    <img src="@Model.ImageCoaching3" />
+                                }
+
+                            </div>
+                        </div>
+                        @foreach (var item in Model.QuestionRegisterValue)
+                        {
+                            <div class="form-group">
+                                <label  class ="control-label col-md-2">@item.QuestionRegister.Name</label>
+                                <div class="col-md-10">
+                                    @if (item.FileId > 0)
+                                    {
+                                        <a href="@item.WebsiteDocument.GetUrl()">مشاهده فایل</a>
+                                    }
+                                    else if (item.ItemId > 0)
+                                    {
+                                        <strong>@item.QuestionRegisterItem.Value</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong>@item.Value</strong>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 no-padding-left">
+                        @*<input id="uplFile" type="file" class="dropify" name="file" codeprocess="upload" data-height="290" />*@
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

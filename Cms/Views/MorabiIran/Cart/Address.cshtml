@@ -1,0 +1,60 @@
+﻿@using DataLayer.Base
+@using DataLayer.Enumarables
+@using DataLayer.ViewModels
+@model ResultVm<CartVm>
+
+@{
+    TempData["Title"] = Resource.Lang.Cart;
+
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Cart, Url = BaseWebsite.ShopUrl+"cart" });
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Address, Url = "" });
+
+}
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+<section class="basket section-padding">
+    <div class="container">
+        <div class="basket_box">
+            <div class="row w-100 m-0">
+                <div class="basket_tab w-100">
+
+                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Cart/_CartHeader.cshtml", model: CartHeader.Address)
+                    <div class="tab_content w-100 ">
+                        @using (Ajax.BeginForm("AddressInner", "Cart", new AjaxOptions()
+                        {
+                            UpdateTargetId = "address-cart",
+                            HttpMethod = "get",
+                            LoadingElementId = "ww",
+                        }, htmlAttributes: new { @class = "myform" }))
+                        {
+                            <div id="address-cart">
+                                @Html.Action("AddressInner", "Cart", new { addressId = Model.Model.AddressId })
+                                <strong class="d-none" id="ww">@Resource.Lang.PleaseWait</strong>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Modal/AddAddress.cshtml")
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Modal/RemoveAddress.cshtml")
+
+<script>
+    function OnSuccess(data) {
+
+        if (data.Status == 1) {
+            window.location.href = data.Message;
+        }
+        else {
+            $(".alert-box").removeClass("d-none");
+            $(".alert-box").html(data.Message);
+        }
+    }
+</script>

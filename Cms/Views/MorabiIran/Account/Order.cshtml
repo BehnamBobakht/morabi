@@ -1,0 +1,164 @@
+﻿@using DataLayer.Enumarables;
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@using PublicDate;
+@model IEnumerable<DataLayer.Entities.AccountOrder>
+@{
+    TempData["Title"] = Resource.Lang.Orders;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+
+    string aoStatus = BaseRouteView.GetStringValue(Request, "aoStatus").ToString();
+    if (string.IsNullOrEmpty(aoStatus))
+    {
+        aoStatus = Enum_Code.ORDER_STATUS_INSERTED.ToString();
+    }
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+}
+
+<input type="hidden" name="aoStatus" value="@aoStatus" />
+
+<form id="searchForm">
+    <input type="hidden" name="aoStatus" value="@aoStatus" />
+    <input type="hidden" name="aoViewName" value="Order" />
+    @*<input type="hidden" name="aoAccountId" value="@CurrentAccount.Id" />*@
+</form>
+<div class="row m-0">
+    <div class=" nav orderTitle nav-pills pr-1 pl-1" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        @*data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home"*@
+
+        <input id="order1" value="@Enum_Code.ORDER_STATUS_INSERTED.ToString()" @(aoStatus == Enum_Code.ORDER_STATUS_INSERTED.ToString() ? "checked" : "") type="radio" name="searchorder" checked
+               class="nav-link active" id="v-pills-home-tab" />
+        <label for="order1"> @Resource.Lang.CurrentOrders</label>
+
+        <input id="order2" value="@Enum_Code.ORDER_STATUS_SUCCESS.ToString()" @(aoStatus == Enum_Code.ORDER_STATUS_SUCCESS.ToString() ? "checked" : "") type="radio" name="searchorder"
+               class="nav-link" id="v-pills-messages-tab" />
+        <label for="order2">@Resource.Lang.Paid</label>
+
+        <input id="order3" value="@Enum_Code.ORDER_STATUS_POST.ToString()" @(aoStatus == Enum_Code.ORDER_STATUS_POST.ToString() ? "checked" : "") type="radio" name="searchorder"
+               class="nav-link" id="v-pills-profile-tab" />
+        <label for="order3">@Resource.Lang.OrderDelivered</label>
+
+        <input id="order4" value="@Enum_Code.ORDER_STATUS_CANCEL.ToString()" @(aoStatus == Enum_Code.ORDER_STATUS_CANCEL.ToString() ? "checked" : "") type="radio" name="searchorder"
+               class="nav-link" id="v-pills-settings-tab" />
+        <label for="order4">@Resource.Lang.OrderCancel</label>
+
+
+
+    </div>
+    <div class="col-lg-12 p-1">
+        <div class="tab-content ordersContent" id="v-pills-tabContent">
+            @if (Model.Count() > 0)
+            {
+
+                <div class="tab-pane show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    @foreach (AccountOrder item in Model)
+                    {
+                        int countStr = 0;
+                        <div class="orderParent">
+                            <div class="orderItem">
+                                <div class="itemHeader">
+                                    <span> @Resource.Lang.Order @item.ID.ToPersian()</span>
+                                    <span>@item.Datetime.ToPersianComplete2()</span>
+                                </div>
+                                <div class="orderSumrize">
+                                    @foreach (var orderProduct in item.AccountOrderProduct)
+                                    {
+                                        Product product = orderProduct.Product;
+                                        <a href="@Url.Action("index", "product", new {
+                                                                  prid = product.ID,
+                                                                  pridname = product.Name.StandardUrl()
+                                                                   })">
+
+                                            <span class="btn">@product.Name</span>
+                                            @if (orderProduct.AccountOrder.AccountOrder2.Description != "" && orderProduct.AccountOrder.AccountOrder2.Description != null)
+                                            {
+                                               <span>@orderProduct.AccountOrder.AccountOrder2.Description</span>
+                                            }
+
+                                        </a>
+
+                                    }
+
+                                </div>
+                                <div class="itemFooter">
+                                    <span> @Resource.Lang.TotalAmount: @item.Price.GetCurrencyFormat().ToPersian() @Resource.Lang.Toman</span>
+                                    <span> کد معرف : @item.AccountOrder2.GiftDescription</span>
+
+                                    \                                    <a href="#">
+                                        @Resource.Lang.Details <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="orderItemContent table-responsive">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">@Resource.Lang.Row</th>
+                                            <th scope="col"> @Resource.Lang.Title</th>
+                                            <!-- <th scope="col">@Resource.Lang.Color @Resource.Lang.And @Resource.Lang.Size </th> -->
+                                            <th scope="col">@Resource.Lang.UnitAmount</th>
+                                            <th scope="col">@Resource.Lang.Count</th>
+                                            <th scope="col">@Resource.Lang.TotalPrice</th>
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var orderProduct in item.AccountOrderProduct)
+                                        {
+                                            countStr++;
+                                            Product product = orderProduct.Product;
+                                            <tr>
+                                                <th scope="row">@countStr</th>
+                                                <td>@product.GetName()</td>
+                                                <!-- <td>
+                                                    @(orderProduct.StoreProductQuantity.ProductQuantity.Color != null ? Resource.Lang.Color + " : " + orderProduct.StoreProductQuantity.ProductQuantity.Color.Name : "")
+                                                    <br />
+                                                    @(orderProduct.StoreProductQuantity.ProductQuantity.Size != null ? Resource.Lang.Size + " : " + orderProduct.StoreProductQuantity.ProductQuantity.Size.Name : "")
+                                                </td> -->
+                                                <td>
+                                                    @orderProduct.ProductPrice.GetCurrencyFormat().ToPersian() @Resource.Lang.Corrency
+                                                </td>
+                                                <td>
+                                                    @orderProduct.Count
+                                                </td>
+                                                <td>
+                                                    @orderProduct.Price.GetCurrencyFormat().ToPersian() @Resource.Lang.Corrency
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="tab-pane active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="noResult">
+
+                        <p class="alert"> @Resource.Notify.NotRegistered</p>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section endScripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeOrderSearchScripts();;
+        });
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.Size
+@{
+    ViewBag.Title =Resource.Lang.EditSize;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div codeprocess-ajax-form="/store/size/edit" codeprocess-back-form="/store/size/index/@Model.ProductTypeId">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.SyncId)
+    @Html.HiddenFor(model => model.SyncDatetime)
+    @Html.HiddenFor(model => model.ProductTypeId)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index", new { id = Model.ProductTypeId })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, Resource.Lang.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+                    {
+                        SizeLanguage sizeLanguage = Model.SizeLanguage.FirstOrDefault(p => p.LanguageId == lang.LanguageId);
+                        string sizeLanguageValue = sizeLanguage != null ? sizeLanguage.Name : "";
+
+                        if (lang.Language.Label != Enum_Lang.FA.ToString())
+                        {
+                            <div class="form-group" lang-value="@lang.Language.Label.ToLower()">
+                                <input type="hidden" lang-name="LanguageId" value="@lang.LanguageId" />
+                                <label class="control-label col-md-2">@Resource.Lang.Name (@lang.Language.Name)</label>
+                                <div class="col-md-10">
+                                    <input type="text" lang-name="Name" class="form-control" autocomplete="off" value="@sizeLanguageValue" />
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btnSubmit" type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index", new { id = Model.ProductTypeId })</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeSizeScript();
+        });
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿﻿﻿@using DataLayer.Base;
+@using DataLayer.Enumarables;
+@using DataLayer.ViewModels
+@model ViewProductVisit
+@{
+    TempData["Title"] = Resource.Lang.LastVisit;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+    string prindex = BaseRouteView.GetStringValue(Request, "prindex");
+    string prpageSize = BaseRouteView.GetStringValue(Request, "prpageSize");
+    int CurrentIndex = prindex.IsInteger() ? prindex.GetInteger() : 1;
+}
+
+
+<div class="profileTitle">
+    <h6>@Resource.Lang.LastVisit</h6>
+</div>
+<input type="hidden" name="prindex" value="@CurrentIndex" />
+<input type="hidden" name="prpageSize" value="@prpageSize" />
+
+<div class="lastSeenBox">
+    @if (Model.Results.Count() > 0)
+    {
+        foreach (var item in Model.Results)
+        {
+    <div class="lastItem">
+        <a href="@item.Product.GetLinkWithUrl()">
+            <img width="150" src="@item.Product.Picture.GetUrl()" />
+        </a>
+        <div class="lastItemTxt">
+            <span>@Resource.Lang.ProductName: @item.Product.GetName() </span>
+            <span>
+                @if (item.Product.MinPrice > 0)
+                {
+                    @Resource.Lang.FromPrice <span>:</span> @item.Product.MinPrice.GetCurrencyFormat() @Resource.Lang.Toman
+                }
+            </span>
+        </div>
+        @if (item.Product.ProductCategoryId.HasValue)
+        {
+            <button class="btn" onclick="getSimilarProduct(@item.ID,@item.Product.ProductCategory.ID,@item.Product.Price,'@item.Product.Name','@item.Product.Picture.GetUrl()')">@Resource.Lang.SimilarProducts</button>
+        }
+
+        @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/SimilarProduct.cshtml")
+
+    </div>
+        }
+    }
+
+</div>
+@Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Partial/ProductVisitPagination.cshtml")

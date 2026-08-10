@@ -1,0 +1,29 @@
+﻿@using DataLayer.Base
+<div class="profileBoxParent">
+    <div class="profileTitle">
+        <h6> @Resource.Lang.LastFavorites </h6>
+    </div>
+    <div class="profileBox lastOrders">
+        <!-- ko foreach: viewModel.Account.Favorites().List -->
+        <div class="infoItem" data-bind="css:{'d-none': $index() > 2}">
+            <img data-bind="attr: { src: Product.Picture.Url }" alt="Favorite" title="Favorite" />
+            <div class="d-flex flex-column">
+                <span data-bind="text:Product.Name"></span>
+                <div class="d-flex">
+                    <strong data-bind="text:Product.Price"></strong>
+                    <strong>@Resource.Lang.Toman</strong>
+                </div>
+            </div>
+            <div>
+                <a class="del" href="javascript://" codeprocess-action="productlike-remove" data-bind=" attr: { 'product-id': Product.Id }">
+                <span class="material-icons">
+delete
+</span>
+                </a>
+            </div>
+
+        </div>
+        <!--/ko-->
+        <div class="seeMore"><a href="/Account/Favorite">@Resource.Lang.SeeAll </a></div>
+    </div>
+</div>

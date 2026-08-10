@@ -1,0 +1,126 @@
+﻿@using DataLayer.Base;
+@model DataLayer.ViewModels.ViewSearchProduct
+@{
+    string prindex = BaseRouteView.GetStringValue(Request, "prindex");
+    string prtypeId = BaseRouteView.GetStringValue(Request, "prtypeId");
+    string prcategoryId = BaseRouteView.GetStringValue(Request, "prcategoryId");
+    string prsubcategoryId = BaseRouteView.GetStringValue(Request, "prsubCategoryId");
+    string prbrandId = BaseRouteView.GetStringValue(Request, "prbrandId");
+    string prpageSize = BaseRouteView.GetStringValue(Request, "prpageSize");
+    string prname = BaseRouteView.GetStringValue(Request, "prname");
+    string prtitle = BaseRouteView.GetStringValue(Request, "prtitle");
+    string proutput = BaseRouteView.GetStringValue(Request, "proutput");
+    string prorder = BaseRouteView.GetStringValue(Request, "prorder");
+    string pricefrom = BaseRouteView.GetStringValue(Request, "prpricefrom");
+    string priceto = BaseRouteView.GetStringValue(Request, "prpriceto");
+    string prcustom = BaseRouteView.GetStringValue(Request, "prcustom");
+    string practive = BaseRouteView.GetStringValue(Request, "practive");
+    string prdiscount = BaseRouteView.GetStringValue(Request, "prdiscount");
+    string prstatus = BaseRouteView.GetStringValue(Request, "prstatus");
+    string groupIds = BaseRouteView.GetStringValue(Request, "groupIds");
+    int StartIndex = Model.PageIndex > 4 ? Model.PageIndex - 4 : 1;
+    int EndIndex = (Model.TotalCount / Model.PageSize);
+    int Mod = (Model.TotalCount % Model.PageSize);
+    int CurrentIndex = prindex.IsInteger() ? prindex.GetInteger() : 1;
+    EndIndex = Mod > 0 ? EndIndex + 1 : EndIndex;
+}
+@*<div class="pagination">
+        <a href="#" class="btn pagination_btn page_next"></a>
+        <a href="#" class="btn pagination_btn page_number">1</a>
+        <a href="#" class="btn pagination_btn page_number">2</a>
+        <a href="#" class="btn pagination_btn page_number">3</a>
+        <a href="#" class="btn pagination_btn page_number">4</a>
+        <a href="#" class="btn pagination_btn page_prev"></a>
+    </div>*@
+
+@if (EndIndex > 1)
+{
+
+    <div class="pagination">
+        @if (Model.PageIndex > 1)
+        {
+        <a class="btn pagination_btn page_next" title="@Resource.Lang.FirstPage" href="
+            @Url.Action("search", "product",new {
+           @prtypeId = prtypeId,
+           @prcategoryId = prcategoryId,
+           @prsubcategoryId = prsubcategoryId,
+           @prbrandId = prbrandId,
+           @prindex = 1,
+           @prname  = prname,
+           @prtitle = prtitle,
+           @prorder = prorder,
+           @proutput = proutput,
+           @prpriceto = priceto,
+           @pricefrom = pricefrom,
+           @prpagesize = prpageSize,
+           @prcustom = prcustom,
+           @practive = practive,
+           @prdiscount = prdiscount,
+           @prstatus = prstatus,
+           @groupIds = groupIds,
+
+       })">
+            <span class="material-icons">
+                arrow_forward
+            </span>
+        </a>
+        }
+        @for (int i = StartIndex; i <= EndIndex && i <= CurrentIndex + 4; i++)
+        {
+            var index = Model.PageIndex;
+            var active = index == i ? "active" : "";
+            <a class='btn pagination_btn page_number @active' href="
+            @Url.Action("search", "product", new {
+                @prtypeId = prtypeId,
+                @prcategoryId = prcategoryId,
+                @prsubcategoryId = prsubcategoryId,
+                @prbrandId = prbrandId,
+                @prindex = i,
+                @prname  = prname,
+                @prtitle = prtitle,
+                @prorder = prorder,
+                @proutput = proutput,
+                @prpriceto = priceto,
+                @pricefrom = pricefrom,
+                @prpagesize = prpageSize,
+                @prcustom = prcustom,
+                @practive = practive,
+                @prdiscount = prdiscount,
+                @prstatus = prstatus,
+           @groupIds = groupIds,
+        })">@i</a>
+    }
+        @*<a class='more no-display'>...</a>*@
+        @if (Model.PageIndex < EndIndex)
+        {
+    <a class='btn pagination_btn page_prev' title="@Resource.Lang.LastPage" href="
+                @Url.Action("search", "product", new {
+                    @prtypeId = prtypeId,
+                    @prcategoryId = prcategoryId,
+                    @prsubcategoryId = prsubcategoryId,
+                    @prbrandId = prbrandId,
+                    @prindex = EndIndex,
+                    @prname  = prname,
+                    @prtitle = prtitle,
+                    @prorder = prorder,
+                    @proutput = proutput,
+                    @prpriceto = priceto,
+                    @pricefrom = pricefrom,
+                    @prpagesize = prpageSize,
+                    @prcustom = prcustom,
+                    @practive = practive,
+                    @prdiscount = prdiscount,
+                    @prstatus = prstatus,
+           @groupIds = groupIds,
+                })">
+        <span class="material-icons">
+            arrow_back
+        </span>
+    </a>
+        }
+    </div>
+
+
+}
+
+

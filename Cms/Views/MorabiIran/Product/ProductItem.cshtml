@@ -1,0 +1,57 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model ProductMinVm
+@{
+    var levelFilds = Model.ProductCustomValue.FirstOrDefault(s => s.ProductCustomField.SyncName == "Level");
+
+}
+<div class="swiper-slide">
+    <div class="home-product-item linkitem">
+        <a href="@Model.ProductUrl"></a>
+        <div class="home-product-img central">
+           @if (Model.Picture.Url != "" && Model.Picture.Url != null)
+            {
+                <img src="@Html.Action("thumburl","picture",new {picurl=Model.Picture.Url,width=320 })" alt="@Model.Name">
+
+            }
+            else
+            {
+                <img src="@("https://morabiiran.ir/"+Model.Image)" alt="@Model.Name">
+
+            }
+        </div>
+        <div class="home-product-caption">
+            <span>@Model.Name</span>
+            <p>@Model.Summary.GetSubString(70, true)</p>
+            <div class="home-product-btn align">
+                @if (levelFilds != null)
+                {
+                    if (levelFilds.ProductCustomItem != null)
+                    {
+                        <div class="btn primary-btn px-3 py-2">@levelFilds.ProductCustomItem.Value</div>
+
+                    }
+                }
+
+                <div class="btn addbasket-btn align px-3 py-2">
+                    <svg width="25" height="25" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 15.34V13.4C15 8.90002 18.62 4.48002 23.12 4.06002C28.48 3.54002 33 7.76002 33 13.02V15.78" stroke="#404242" stroke-width="3.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.9999 44H29.9999C38.0399 44 39.4799 40.78 39.8999 36.86L41.3999 24.86C41.9399 19.98 40.5399 16 31.9999 16H15.9999C7.4599 16 6.0599 19.98 6.5999 24.86L8.0999 36.86C8.5199 40.78 9.9599 44 17.9999 44Z" stroke="#404242" stroke-width="3.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30.991 24H31.0089" stroke="#404242" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.989 24H17.007" stroke="#404242" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+                    <span>افزودن به سبد خرید</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

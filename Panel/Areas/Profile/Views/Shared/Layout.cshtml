@@ -1,0 +1,28 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        @Html.Action("PublicHeader", "Layout", new { Area = "" })
+        @RenderSection("Header", false)
+        <script src="~/Assets/js/modernizr.min.js"></script>
+    </head>
+    <body>
+        <div class="account-pages"></div>
+        <div class="clearfix"></div>
+        <div class="wrapper-page right-box">
+            <div class="text-center">
+                <a target="_blank" href="/" class="logo">@Resource.Lang.ContentManagementPanel</a><br />
+                <h5 class="text-muted m-t-0 font-600 font-english display-none">CODEPROCESS.IR</h5>
+                <span>@Resource.Lang.Version 3.0.0</span>
+            </div>
+            @RenderBody()
+        </div>
+        <script>
+            var resizefunc = [];
+        </script>
+        @Html.Action("PublicFooter", "Layout", new { Area = "" })
+        @RenderSection("Footer", false)
+    </body>
+</html>

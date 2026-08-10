@@ -1,0 +1,9 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+@if (Model.Any())
+{
+    <picture>
+        <source media="(min-width:576px)" srcset="@Html.Action("thumburl","picture",new {picurl=@Model.FirstOrDefault().Picture.GetUrl(),width=320 })">
+        <img src="@Html.Action("thumburl","picture",new {picurl=@Model.FirstOrDefault().Picture.GetUrl(),width=320 })" alt="@Model.FirstOrDefault().GetName()">
+    </picture>
+}

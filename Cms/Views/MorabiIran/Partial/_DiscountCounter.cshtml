@@ -1,0 +1,37 @@
+﻿@model DateTime
+@{
+    var gregorianDate = new DateTime();
+    if(Model.Year <1500)
+    {
+        System.Globalization.PersianCalendar pc = new System.Globalization.PersianCalendar();
+
+        gregorianDate = new DateTime(Model.Year, Model.Month, Model.Day, pc).AddDays(1);
+    }
+    else
+    {
+        gregorianDate = Model;
+    }
+
+
+
+
+}
+
+<div class="discount_counter" end_date="@gregorianDate.ToString("yyyy/MM/dd")">
+    <div class="counter_item">
+        <strong class="discount_days">0</strong>
+        <span>@Resource.Lang.Day</span>
+    </div>
+    <div class="counter_item">
+        <strong class="discount_hours">0</strong>
+        <span>@Resource.Lang.Hours</span>
+    </div>
+    <div class="counter_item">
+        <strong class="discount_minutes">0</strong>
+        <span>@Resource.Lang.Minutes</span>
+    </div>
+    <div class="counter_item">
+        <strong class="discount_seconds">0</strong>
+        <span>@Resource.Lang.Seconds</span>
+    </div>
+</div>

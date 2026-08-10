@@ -1,0 +1,10 @@
+﻿@using DataLayer.Base 
+@model DataLayer.Entities.AccountOrder
+@{
+    ViewBag.Title = Resource.Lang.CheckOrderNumber + Model.ID;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_PrintLayout.cshtml";
+}
+
+<div>
+    @Html.Partial("~/Views/"+BaseWebsite.WebsiteLabel+"/Partial/AccountOrderPartial.cshtml", Model)
+</div>

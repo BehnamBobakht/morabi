@@ -1,0 +1,35 @@
+﻿@model DataLayer.Entities.Size
+@{
+    ViewBag.Title = Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index", new { id = Model.ProductTypeId })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>@Resource.Lang.TypeProduct
+                       
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductType.SyncId)
+                    </dd>
+                    <dt>
+                      @Resource.Lang.Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink(Resource.Lang.Edit, "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index", new { id = Model.ProductTypeId })</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

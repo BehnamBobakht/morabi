@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+#form {
+    width: 350px;
+    position: absolute;
+    top: 90px;
+    right: 50px;
+    background-color: rgba(255, 255, 255, .95);
+    font-size: 13px;
+    border-radius: 8px;
+}
+label {
+    float: right;
+}
+select, input[type="text"] {
+    display: block;
+    width: 73%;
+    margin-right: 50px;
+    padding: 4px;
+}
+@keyframes progress{
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -200px 0px;
+  }
+} 
+#loading {
+    visibility: hidden; 
+    color: white;
+    background: repeating-linear-gradient(45deg, #a6e22e, #a6e22e 10px, #e6db74 10px, #e6db74 20px );
+    height: 5px;
+    border-radius: 5px 5px 0 0;
+    animation:progress 2s linear infinite;
+}
+
+.form-component {
+    margin-bottom: 15px;
+}
+
+.form-component label {
+    float: right;
+    width: 50px;
+}
+.autocomplete-suggestion {
+    padding: 10px;
+}
+.autocomplete-suggestion .address {
+    float: right;
+    width: 80%;
+}
+.autocomplete-suggestion .address span {
+    display: block;
+    color: #999;
+}
+.autocomplete-suggestion .street-type {
+    width: 20%;
+    float: left;
+    text-align: left;
+    padding-top: 5px;
+}
+.autocomplete-suggestion .street-type span {
+    display: block;
+    text-align: left;
+    font-size: 11px;
+}

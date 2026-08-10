@@ -1,0 +1,102 @@
+.map {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    width: 100%;
+}
+
+#results {
+    width: 400px;
+    position: absolute;
+    top: 80px;
+    right: 50px;
+    background-color: rgba(255, 255, 255, .95);
+    border-radius: 8px;
+    font-size: 13px;
+}
+#latlng {
+    visibility: hidden;
+    width: 50%;
+    font-family: 'Courier New';
+    color: #fff;
+    background-color: #333;
+    margin: 0 auto;
+    padding: 8px;
+    text-align: center;
+}
+#formatted-address {
+    color: #a6e22e;
+    display: none;
+    direction: rtl;
+    width: 100%;
+    background-color: #333;
+}
+.address-parts {
+    font-family: IranSANS;
+    direction: rtl;
+    width: 100%;
+    color: #a6e22e;
+}
+.address-parts .key {
+    text-align: left;
+}
+
+@keyframes progress{
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -200px 0px;
+  }
+} 
+#loading {
+    visibility: hidden; 
+    color: white;
+    background: repeating-linear-gradient(45deg, #a6e22e, #a6e22e 10px, #e6db74 10px, #e6db74 20px );
+    height: 5px;
+    border-radius: 5px 5px 0 0;
+    animation:progress 2s linear infinite;
+}
+
+#parsed-response {
+    margin: 20px 0;
+    direction: rtl;
+    font: 12px/1.8em;
+    background-color: #333;
+    padding: 10px;
+    display: none;
+}
+
+#raw-response {
+    margin-top: 20px;
+    direction: rtl;
+    font: 12px/1.8em;
+    padding: 10px;
+    display: none;
+    text-align: left;
+    direction: ltr;
+    background: #272822;
+    height: 200px;
+    overflow: scroll;
+    color: #fff;
+}
+
+pre {
+    white-space: pre-wrap;
+    /* css-3 */
+    white-space: -moz-pre-wrap;
+    /* Mozilla, since 1999 */
+    white-space: -pre-wrap;
+    /* Opera 4-6 */
+    white-space: -o-pre-wrap;
+    /* Opera 7 */
+    word-wrap: break-word;
+    /* Internet Explorer 5.5+ */
+    color: #fff;
+}
+
+.string { color: #a6e22e; }
+.number { color: #ae81ff; }
+.boolean { color: #f92672; }
+.null { color: magenta; }
+.key { color: #e6db74; }

@@ -1,0 +1,102 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@model DataLayer.Entities.Gallery
+
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    string url = Url.Action("Index", "StaticPage", new { id = "Gallery" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["Title"] = Model.GetName();
+    var breadcrumb = new List<BreadcrumbVm>();
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Media, Url = @Url.Action("search", "gallery", new { gacategory = "gallery" }, Request.Url.Scheme) });
+    ViewBag.PageName = "gallery";
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Model.GetName(), Url = url });
+    DataLayer.Entities.GalleryPictures firstPic = Model.GalleryPictures.FirstOrDefault();
+}
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    <section class="gallery-inner page-padding">
+        <div class="container">
+            <div class="section-title position-relative align">
+                <h1>@Model.Name</h1>
+            </div>
+            <div class="gallery-inner-text">
+                <p>@Model.Body</p>
+            </div>
+            <div class="gallery-main-img" data-aos="zoom-in" data-aos-duration="1000">
+                @if (firstPic.Picture.Url.Contains(".mp4"))
+                {
+                    <a data-fancybox="gallery" href="@firstPic.Picture.GetUrl()">
+                        <video width="100%" height="380px" controls>
+                            <source src="@firstPic.Picture.GetUrl()" type="video/mp4">
+                        </video>
+                    </a>
+                }
+                else
+                {
+                    <a data-fancybox="gallery" href="@firstPic.Picture.GetUrl()">
+                        <img src="@firstPic.Picture.GetUrl()" />
+                    </a>
+                }
+            </div>
+            <div class="gallery-other-imgs">
+                <div class="owl-carousel owl-theme slider5">
+                    @foreach (var item in Model.GalleryPictures)
+                    {
+
+                        if (item.Picture.Url.Contains(".mp4"))
+                        {
+                            <div class="item" data-aos="zoom-in" data-aos-duration="1000">
+                                <div class="gallery-other-img">
+                                    <a data-fancybox="gallery" href="@item.Picture.GetUrl()">
+                                        <video width="100%" height="380px" controls>
+                                            <source src="@item.Picture.GetUrl()" type="video/mp4">
+                                        </video>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                        }
+                        else
+                        {
+                            <div class="item" data-aos="zoom-in" data-aos-duration="1000">
+                                <div class="gallery-other-img">
+                                    <a data-fancybox="gallery" href="@item.Picture.GetUrl()">
+                                        <img src="@item.Picture.GetUrl()" />
+                                    </a>
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+                <div class="slider-navigation">
+                    <a class="btn prev central">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_2938_1681" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                <rect width="24" height="24" fill="white" />
+                            </mask>
+                            <g mask="url(#mask0_2938_1681)">
+                                <path d="M8.46394 20.4852L16.9492 11.9999L8.46394 3.51466L7.04972 4.92888L14.1208 11.9999L7.04973 19.071L8.46394 20.4852Z" fill="#2E3A59" />
+                            </g>
+                        </svg>
+                    </a>
+                    <a class="btn next central">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_6_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                <rect width="24" height="24" fill="white" />
+                            </mask>
+                            <g mask="url(#mask0_6_2)">
+                                <path d="M15.5361 3.51471L7.05078 12L15.5361 20.4853L16.9503 19.0711L9.87921 12L16.9503 4.92892L15.5361 3.51471Z" fill="#2E3A59" />
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+

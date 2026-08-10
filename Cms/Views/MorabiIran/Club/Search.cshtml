@@ -1,0 +1,64 @@
+﻿﻿@using DataLayer.Entities;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+
+@model List<Clubs>
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    if (ViewBag.TypeId == "FIELD_CLUB_TEACHERS")
+    {
+        TempData["Title"] = "سامانه مربیان" +" استان "+ViewBag.StateName;
+    }
+    else if (ViewBag.TypeId == "FIELD_CLUB_OWNER")
+    {
+        TempData["Title"] = "سامانه باشگاه داران" +  " استان " + ViewBag.StateName;
+    }
+    else
+    {
+        TempData["Title"] = "سامانه ورزشکاران" + " استان " + ViewBag.StateName;
+    }
+    string url = Url.Action("Search", "clubs");
+    TempData["url"] = url;
+    TempData["MetaDescription"] = BaseContent.WebsiteDetail.Summary;
+}
+
+<div class="page_addres">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">@Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item"><a href="#">@TempData["Title"]</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<section class="brands">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="brand-title d-flex justify-content-center flex-column align-items-center mb-3">
+                    <h1 class="text-center">@TempData["Title"]</h1>
+					<a class="text-secondary" href="/club/create?typeId=@ViewBag.TypeId">(ثبت نام در سامانه)</a>
+                </div>
+                
+
+            </div>
+            <div class="row">
+
+                @Html.Action("Search2", "Club", new { baviewName = "Search2", typeId = ViewBag.TypeId, stateId = ViewBag.StateId, isTop = true })
+
+
+            </div>
+
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-3">
+                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Club/ClubItem.cshtml", item)
+
+                </div>
+            }
+            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Club/_Pagination.cshtml")
+
+        </div>
+    </div>
+</section> 

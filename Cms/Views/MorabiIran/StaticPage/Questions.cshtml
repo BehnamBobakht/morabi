@@ -1,0 +1,46 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    TempData["Title"] = Resource.Lang.FrequentlyAskedQuestions;
+    string url = Url.Action("index", "staticpage", new { id = "questions" }, Request.Url.Scheme);
+    TempData["url"] = url;
+    TempData["OgUrl"] = url;
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.FrequentlyAskedQuestions, Url = url });
+
+}
+@section MetaTag{
+    @Html.Partial("~/Views/Default/Seo/StaticPage.cshtml")
+}
+
+
+
+
+
+
+
+
+
+
+
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+    <section class="question question_accordion page-padding">
+        <div class="container">
+            <div class="section-title central flex-column">
+                <h1>@Resource.Lang.FrequentlyAskedQuestions</h1>
+            </div>
+
+
+            <div class="accordion mt-4" id="accordionExample">
+                @Html.Action("Search", "Post", new { pocategory = "Questions", poviewName = "_Questions" })
+
+
+            </div>
+        </div>
+    </section>
+</main>
+
+

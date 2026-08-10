@@ -1,0 +1,89 @@
+﻿@model DataLayer.Entities.Menu
+@{
+    ViewBag.Title = Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <div class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                <i class="zmdi zmdi-more-vert"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink(Resource.Lang.Back, "Index")</li>
+            </ul>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                       @Resource.Lang.MenuName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)</dd>
+                    <dt>
+                       @Resource.Lang.Link
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Link)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.PriorityShow
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ShowNumber)
+                    </dd>
+                    <dt>
+                      @Resource.Lang.DateTimeUpdate
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.UpdateDatetime)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.ActiveDeactive
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Active)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.CategoryName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Category.Name)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.MenuType
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Code.Name)
+                    </dd>
+                    <dt>
+                       @Resource.Lang.GalleryName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Gallery.Name)
+                    </dd>
+                    <dt>
+                      @Resource.Lang.TopMenuName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Menu2.Name)
+                    </dd>
+                    <dt>
+                      @Resource.Lang.PostName
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Post.Name)
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink(@Resource.Lang.Edit, "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink(@Resource.Lang.Back, "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

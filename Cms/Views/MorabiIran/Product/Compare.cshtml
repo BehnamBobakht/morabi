@@ -1,0 +1,128 @@
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model ProductCompareVm
+@{
+    ViewBag.title = Resource.Lang.Compare;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Compare, Url = "" });
+}
+
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+
+<section class="page-padding">
+    <div class="container">
+        <div class="compare_search">
+            <div class="serachBox">
+                <div class="searchForm mb-0">
+                    <input id="txtComapreSearch" autocomplete="off" class="form-control" type="text" placeholder="@Resource.Lang.Search">
+                    <button class="btn searchBtn" type="submit">
+                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="140">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3706 10.2214C19.3706 12.6089 18.4717 14.7883 17.0001 16.4273L24.719 24.266C24.8844 24.434 24.8844 24.706 24.719 24.874C24.5535 25.042 24.2857 25.042 24.1202 24.874L16.4011 17.0353C14.7869 18.5297 12.6415 19.4425 10.2897 19.4425C5.28269 19.4425 1.20898 15.3057 1.20898 10.2211C1.20898 5.13656 5.28269 0.999733 10.2897 1C15.2969 1 19.3706 5.13682 19.3706 10.2214ZM2.05622 10.2214C2.05622 14.8318 5.74967 18.5828 10.2903 18.5828C14.8304 18.5828 18.5243 14.8315 18.5243 10.2214C18.5243 5.61042 14.8306 1.85947 10.2903 1.85947C5.74967 1.85947 2.05622 5.61042 2.05622 10.2214Z" fill="#658D32" />
+                                <path d="M17.0001 16.4273L16.2561 15.7592L15.6278 16.4589L16.2876 17.1289L17.0001 16.4273ZM24.719 24.266L24.0064 24.9676L24.0064 24.9676L24.719 24.266ZM24.1202 24.874L23.4077 25.5757L24.1202 24.874ZM16.4011 17.0353L17.1137 16.3336L16.4333 15.6428L15.7218 16.3015L16.4011 17.0353ZM10.2897 1L10.2896 2H10.2897V1ZM17.7442 17.0954C19.3749 15.2793 20.3706 12.8639 20.3706 10.2214H18.3706C18.3706 12.3538 17.5686 14.2974 16.2561 15.7592L17.7442 17.0954ZM25.4315 23.5644L17.7127 15.7256L16.2876 17.1289L24.0064 24.9676L25.4315 23.5644ZM25.4315 25.5757C25.9802 25.0184 25.9802 24.1216 25.4315 23.5643L24.0064 24.9676C23.7886 24.7464 23.7886 24.3936 24.0064 24.1723L25.4315 25.5757ZM23.4077 25.5757C23.9649 26.1415 24.8743 26.1415 25.4315 25.5757L24.0064 24.1723C24.2327 23.9426 24.6065 23.9426 24.8328 24.1723L23.4077 25.5757ZM15.6886 17.7369L23.4077 25.5757L24.8328 24.1723L17.1137 16.3336L15.6886 17.7369ZM10.2897 20.4425C12.9059 20.4425 15.2909 19.4259 17.0805 17.7691L15.7218 16.3015C14.283 17.6335 12.3771 18.4425 10.2897 18.4425V20.4425ZM0.208984 10.2211C0.208984 15.8434 4.71596 20.4425 10.2897 20.4425V18.4425C5.84941 18.4425 2.20898 14.7679 2.20898 10.2211H0.208984ZM10.2897 0C4.71596 -0.000296831 0.208984 4.59883 0.208984 10.2211H2.20898C2.20898 5.67428 5.84941 1.99976 10.2896 2L10.2897 0ZM20.3706 10.2214C20.3706 4.59907 15.8636 0 10.2897 0V2C14.7302 2 18.3706 5.67457 18.3706 10.2214H20.3706ZM10.2903 17.5828C6.3164 17.5828 3.05622 14.2941 3.05622 10.2214H1.05622C1.05622 15.3695 5.18295 19.5828 10.2903 19.5828V17.5828ZM17.5243 10.2214C17.5243 14.2938 14.2636 17.5828 10.2903 17.5828V19.5828C15.3971 19.5828 19.5243 15.3693 19.5243 10.2214H17.5243ZM10.2903 2.85947C14.2639 2.85947 17.5243 6.14813 17.5243 10.2214H19.5243C19.5243 5.07271 15.3974 0.859467 10.2903 0.859467V2.85947ZM3.05622 10.2214C3.05622 6.14811 6.31644 2.85947 10.2903 2.85947V0.859467C5.18291 0.859467 1.05622 5.07273 1.05622 10.2214H3.05622Z" fill="#658D32" />
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+                <div class=" search_result">
+                    <div class="search_no_result " data-bind="visible: (viewModel.CompareSearchResult.Results().length == 0 && viewModel.CompareSearchResult.Name().length > 0)">
+                        @Resource.Lang.NoResult
+                    </div>
+                    <div class=" search_with_result" data-bind="visible: viewModel.CompareSearchResult.Results().length > 0">
+
+                        <ul>
+                            <!-- ko foreach: viewModel.CompareSearchResult.Results() -->
+                            <li class="textHover">
+                                <a href="javascript://" class="text-right" data-bind="click: addToCompareList">
+                                    <div class="d-flex align-items-center quick_Box_compare">
+                                        <img width="60" data-bind="attr: { 'src': (Picture!=null? Picture.Url : '') }" class="img img-thumbnail mr-4" />
+                                        <strong class="searchresult-compare" data-bind="text: Name"></strong>
+                                    </div>
+                                </a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <form class="compare-form compare_table table-responsive">
+            <table class="table table-bordered mb-0">
+
+                <tbody>
+                    <tr>
+                        <td></td>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model.Products[i];
+                            <td class="product_cell ">
+                                <input type="hidden" name="productId" value="@item.ID" />
+                                <button type="button" class="btn remove_td close btn-remove-pr">×</button>
+                                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/ProductCompareItem.cshtml", item)
+                            </td>
+                        }
+                        @if ((3 - Model.Count) > 0)
+                        {
+                            for (int i = 1; i <= (3 - Model.Count); i++)
+                            {
+                                <td></td>
+
+                            }
+                        }
+
+                    </tr>
+                    @foreach (var item in Model.CustomFields)
+                    {
+                        <tr>
+                            <th class="comapreitem_name">@item.Name</th>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                var pr = Model.Products[i];
+                                <td>
+                                    @{
+                                        var productCustomValue = pr.ProductCustomValue.FirstOrDefault(s => s.FieldId == item.ID);
+                                    }
+                                    @if (productCustomValue != null)
+                                    {
+                                        if (productCustomValue.ItemId == null)
+                                        {
+                                            <text>@productCustomValue.Value</text>
+                                        }
+                                        else
+                                        {
+                                            <text>@productCustomValue.ProductCustomItem.Value</text>
+                                        }
+                                    }
+                                </td>
+                            }
+                            @if ((3 - Model.Count) > 0)
+                            {
+                                for (int i = 1; i <= (3 - Model.Count); i++)
+                                {
+                                    <td></td>
+
+                                }
+                            }
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</section>
+
+
+
+@section endScripts {
+    <script type="text/javascript">
+        viewModel.CompareSearchResult.ProductSubCategory(@Model.SubCategoryId);
+        initializeCompareSearchScripts();
+    </script>
+}

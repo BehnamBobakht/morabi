@@ -1,0 +1,272 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.AccountOrder
+
+@{
+
+    string time = @Model.Datetime.ToString("HH:mm");
+    string payment_status = Enum_Code.PAYMENT_STATUS_SUCCESSFUL.ToString();
+    string payment_status_service_failed = Enum_Code.PAYMENT_STATUS_SERVICE_FAILED.ToString();
+
+    PaymentProductOrder paymentOrder = Model.PaymentProductOrder.FirstOrDefault(p =>
+        p.Payment.Code.Label == payment_status ||
+        p.Payment.Code.Label == payment_status_service_failed
+    );
+}
+
+@section Header {
+
+}
+
+<section class="factur">
+    <div class="container">
+        <div class="factur_box">
+            <div class="factur_head">
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-print-4">
+                        <strong>فاکتور فروش</strong>
+                    </div>
+                    <div class="col-print-4 central">
+                        @*<img src="assets/images/construction-site_147644-7.jpg" alt="">*@
+                    </div>
+                    <div class="col-print-4 text-left">
+                        <div class="factour_infoLine">
+                            <strong>شماره فاکتور:</strong>
+                            <span>@Model.UniqueId</span>
+                        </div>
+                        <div class="factour_infoLine">
+                            <strong>تاریخ:</strong>
+                            <span>@Model.Datetime.ToPersian()</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="factur_seller">
+                <div class="row">
+                    <div class="col-print-3">
+                        <div class="factour_infoLine">
+                            <strong>فروشنده:</strong>
+                            <span>@BaseContent.WebsiteDetail.Title</span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>استان:</strong>
+                            <span>تهران</span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>شهر:</strong>
+                            <span>تهران</span>
+                        </div>
+                    </div>
+                    <div class="col-print-3">
+                        <div class="factour_infoLine">
+                            <strong>کد اقتصادی:</strong>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>شماره ثبت:</strong>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-print-7">
+                        <div class="factour_infoLine">
+                            <strong>نشانی:</strong>
+                            <span>@BaseContent.WebsiteDetail.Address</span>
+                        </div>
+                    </div>
+                    <div class="col-print-3">
+                        <div class="factour_infoLine">
+                            <strong>کدپستی:</strong>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>تلفن:</strong>
+                            <span>@BaseContent.WebsiteDetail.Phone</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="factur_buyer">
+                <div class="row">
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>خریدار :</strong>
+                            <span>@Model.AccountAddress.NameFamily</span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>کدملی:</strong>
+                            <span>@Model.AccountAddress.NationalCode</span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>استان:</strong>
+                            <span>@(Model.AccountAddress.StateId.HasValue? Model.AccountAddress.State.Name:"")</span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>شهر:</strong>
+                            <span>@(Model.AccountAddress.CityId.HasValue? Model.AccountAddress.City.Name:"")</span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>تلفن:</strong>
+                            <span>@(Model.AccountAddress.Mobile)</span>
+                        </div>
+                    </div>
+                    <div class="col-print-2">
+                        <div class="factour_infoLine">
+                            <strong>کدپستی:</strong>
+                            <span>@(Model.AccountAddress.PostalCode)</span>
+                        </div>
+                    </div>
+                    <div class="col-print-12">
+                        <div class="factour_infoLine">
+                            <strong>نشانی:</strong>
+                            <span>@Model.AccountAddress.AddressValue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">ردیف</th>
+                            <th scope="col" colspan="2">شرح کالا و اصالت</th>
+                            <th scope="col">تعداد</th>
+                            <th scope="col">مبلغ واحد</th>
+                            <th scope="col">مجموع مبلغ کالا</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int counter = 1;}
+                        @foreach (var item in Model.AccountOrderProduct)
+                        {
+                            <tr>
+                                <th scope="row">@counter</th>
+                                <td colspan="2">
+                                    @item.Product.GetName()
+
+                                    @if (item.StoreProductQuantity.ProductQuantity.ColorId != null)
+                                    {
+                                        <br />
+                                        <span>@Resource.Lang.Color: @item.StoreProductQuantity.ProductQuantity.Color.Name</span>
+                                    }
+                                    @if (item.StoreProductQuantity.ProductQuantity.SizeId != null)
+                                    {
+                                        <br />
+                                        <span>@Resource.Lang.Size: @item.StoreProductQuantity.ProductQuantity.Size.Name</span>
+                                    }
+                                    @if (item.StoreProductQuantity.ProductQuantity.OptionItemId != null)
+                                    {
+                                        <br />
+                                        <span>@item.StoreProductQuantity.ProductQuantity.ProductOptionItem.ProductOption.Name: @item.StoreProductQuantity.ProductQuantity.ProductOptionItem.Value</span>
+                                    }
+                                </td>
+                                <td>@item.Count</td>
+                                <td>@item.ProductPrice.Value.GetCurrencyFormat()</td>
+                                <td>@item.Price.GetCurrencyFormat()</td>
+                            </tr>
+                            counter++;
+                        }
+
+
+                        <tr>
+                            <td colspan="4">
+                                <div class="factur_cost">
+                                    <div class="factour_infoLine">
+                                        <span>
+                                            نحوه ارسال:
+                                        </span>
+                                        @if (Model.Delivery != null)
+                                        {
+                                            <span>@Model.Delivery.DeliveryType.Name</span>
+                                        }   
+                                        else if (Model.ParentId != null && Model.AccountOrder2.DeliveryId.HasValue)
+                                        {
+                                            <span>@Model.AccountOrder2.Delivery.DeliveryType.Name</span>
+                                        }
+                                    </div>
+                                    <span>هرینه ارسال</span>
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                @if (Model.DeliveryPrice > 0)
+                                {
+                                    @Model.DeliveryPrice @Resource.Lang.Toman
+                                }
+                                else
+                                {
+<text>@Resource.Lang.Free</text>
+                                }
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="factur_cost justify-content-end">
+                                    <span>مبلغ تخفیف</span>
+                                </div>
+                            </td>
+                            <td colspan="2">@Model.DiscountPrice.GetCurrencyFormat()</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="factur_cost">
+                                    <div class="factour_infoLine">
+                                        @*<span>
+                                            روش پرداخت سفارش:
+                                        </span>
+                                        <span>در محل</span>*@
+                                    </div>
+                                    <strong>مجموع مبلغ پرداختی</strong>
+                                </div>
+                            </td>
+                            <td colspan="2"><strong>@Model.Price.GetCurrencyFormat() تومان</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="factur_cost">
+                                    <strong>مهر فروشنده</strong>
+                                </div>
+                            </td>
+                            <td colspan="3">
+                                <div class="factur_cost">
+                                    <strong>مهر و امضای خریدار</strong>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <span>یادداشت مشتری:</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+

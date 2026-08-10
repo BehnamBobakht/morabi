@@ -1,0 +1,63 @@
+﻿@using DataLayer.Base 
+@model IEnumerable<DataLayer.Entities.Store>
+@{
+    ViewBag.Title = Resource.Lang.ShopList;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th>@Resource.Lang.ShopName </th>
+                        <th>@Resource.Lang.Seller </th>
+                        <th>@Resource.Lang.Address</th>
+                        <th>@Resource.Lang.Phone</th>
+                        <th>@Resource.Lang.WebSite</th>
+                        <th>@Resource.Lang.Confirmation</th>
+                        <th>@Resource.Lang.RegisterDate</th>
+                        <th>@Resource.Lang.Active</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@(item.Account.FullName +" ("+ item.Account.Mobile +")" )</td>
+                            <td>@Html.DisplayFor(modelItem => item.AddressValue)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Phone1)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Website)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Approve)</td>
+                            <td>@item.CrateDate.ToPersianWithTime()</td>
+                            <td>@Html.DisplayFor(modelItem => item.Active)</td>
+                            <td>
+                                @Html.ActionLink(Resource.Lang.StoreProducts, "Index", new { Controller = "StoreProduct", storeId = item.ID }) |
+                                @Html.ActionLink(Resource.Lang.OrdersList, "Index", new {Area="Crm", Controller = "AccountOrder", storeId = item.ID }) |
+
+                                @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.ID }) 
+
+                                @*@Html.ActionLink(Resource.Lang.Detail, "details", new { id = item.ID }) |
+        @Html.ActionLink(@Resource.Lang.Delete, "delete", new { id = item.ID })*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div><!-- end col -->
+</div>

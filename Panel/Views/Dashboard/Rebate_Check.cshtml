@@ -1,0 +1,37 @@
+﻿
+<div>
+    <input type="hidden" />
+    <div class="col-lg-4 col-md-6">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-30">@Resource.Lang.CheckDiscountCode</h4>
+            <div class="widget-chart-1">
+                <div class="form-group">
+                    <label class="control-label col-md-2">@Resource.Lang.DiscountCode</label>
+                    <div class="col-md-8">
+                        <input type="text" name="codevalue" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <input id="checkRebateOnline" type="submit" value=@Resource.Lang.Check class="btn btn-success" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="devider-15"></div>
+                <div class="btn-container" style="display: none">
+                    <div class="col-md-6">
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            @Resource.Lang.ThisDiscountcodeIsValid
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <div class="devider-10"></div>
+                        <a id="btnPrintRebate" target="_blank" class="btn btn-inverse" href="">@Resource.Lang.Print</a>
+                        <input id="btnCancelRebate" type="button" class="btn btn-danger" value=@Resource.Lang.FaileThisCode />
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

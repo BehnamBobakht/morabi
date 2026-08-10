@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DataLayer.Entities.Sms>
+@using DataLayer.Base;
+@{
+    ViewBag.Title = Resource.Lang.SendSMS;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.AddNewCase></a>
+            <a href="@Url.Action("sms")" class="btn btn-primary">ارسال گروهی پیامک</a>
+
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>@Resource.Lang.Text</th>
+                        <th>@Resource.Lang.Reciver</th>
+                        <th>@Resource.Lang.Date</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                        <td>@item.Body</td>
+
+                        <td>@item.Receive</td>
+                        <td>@item.CreateDatetime.ToPersian()</td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

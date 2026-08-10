@@ -1,0 +1,11 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Base
+@model ProductSearchVm
+
+@foreach (var item in Model.Products)
+{
+    <div class="swiper-slide justify">
+        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/CourseItem.cshtml", item)
+    </div>
+}
+

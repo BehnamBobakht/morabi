@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="fa-IR">
+<head>
+    @RenderSection("MetaTag", false)
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_MetaTags.cshtml")
+    <title>@(TempData["Title"] != null ? TempData["Title"] : DataLayer.Base.BaseContent.WebsiteDetail.IndexTitle)</title>
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Css.cshtml")
+
+    @RenderSection("Head", false)
+<script type="text/javascript">
+  window.RAYCHAT_TOKEN = "53883ef9-eabb-452b-9451-cd19e76e7c13";
+    (function () {
+      d = document;
+      s = d.createElement("script");
+      s.src = "https://widget-react.raychat.io/install/widget.js";
+      s.async = 1;
+      d.getElementsByTagName("head")[0].appendChild(s);
+    })();
+  </script>
+</head>
+
+<body>
+
+
+        @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Header.cshtml")
+    
+    @RenderBody()
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Footer.cshtml")
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Script.cshtml")
+    @RenderSection("endScripts", false)
+    <script>
+        initializeCommonScript();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿
+@using DataLayer.Enumarables;
+@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@model IEnumerable<DataLayer.Entities.AccountOrderProduct>
+@{
+    TempData["Title"] = Resource.Lang.Orders;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+
+    string typeId = BaseRouteView.GetStringValue(Request, "typeId").ToString();
+
+    ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+}
+
+<div class="row m-0">
+
+    <div class="col-lg-12 p-1">
+        <div class="tab-content ordersContent" id="v-pills-tabContent">
+
+            @if (Model.Count() > 0)
+            {
+
+
+            <div class="row">
+                @foreach (var orderProduct in Model)
+                {
+
+                    Product product = orderProduct.Product;
+                    <div class="col-sm-4">
+
+                        <div class="home-course-item linkitem in-progress">
+
+                            <a href="@product.GetLinkWithUrl()"></a>
+                            <div class="home-course-img central position-relative">
+                                @if (product.Image != "" && product.Image != null)
+                                {<img src="@("https://morabiiran.ir/"+product.Image)" alt="@product.Name">
+
+                                }
+                                else
+                                {
+                                    <img src="@Html.Action("thumburl","picture",new {picurl=product.Picture.GetUrl(),width=320 })" alt="@product.Name">
+
+                                }
+                                <div class="home-course-in-progress central">
+
+                                    <span>@product.Name</span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div>
+
+                            @if (product.HasPrint == true)
+                            {
+                                <div class="">
+                                    @if (!product.PaymentCertificate.Any(s => s.StatusId == 1072 && s.AccountId == CurrentAccount.Id && s.Type == 1))
+                                    {
+                                        <a style="background: var(--primary);color: #fff;padding: 3px;margin: 10px 0;" class="btn" href="/PaymentCertificate/Start?type=1&&productId=@product.ID">دریافت گواهی آنلاین</a>
+
+                                    }
+                                    else
+                                    {
+                                        <a style="background: var(--primary);color: #fff;padding: 3px;margin: 10px 0;" class="btn" href="/Account/PrintCertificate?ID=@product.PaymentCertificate.FirstOrDefault(s => s.StatusId == 1072 && s.AccountId == CurrentAccount.Id && s.Type == 1).ID">دانلود گواهی آنلاین</a>
+
+                                    }
+                                    @if (!product.PaymentCertificate.Any(s => s.StatusId == 1072 && s.AccountId == CurrentAccount.Id && s.Type == 2))
+                                    {
+                                        <a style="background: var(--primary);color: #fff;padding: 3px;margin: 10px 0;" class="btn " href="/PaymentCertificate/Start?type=2&&productId=@product.ID">دریافت گواهی فیزیکی</a>
+
+                                    }
+                                    else
+                                    {
+                                        <p style="font-size: 14px;margin: 5px 0 10px 0;color: var(--secondary);font-weight: 500;">درخواست گواهی فیزیکی ثبت شد</p>
+                                    }
+
+                                </div>
+                            }
+                            <a href="@product.LinkTelegram">
+                                <p>کانال تلگرام:</p>
+                                <p>@product.LinkTelegram </p>
+
+                            </a>
+
+                            @*}
+                    }*@
+
+                        </div>
+                    </div>
+                    
+                    if (product.ProductsId != "" && product.ProductsId != null)
+                    {
+                        foreach (var id in product.ProductsId.Split(','))
+                        {
+                            if (id != "")
+                            {
+                                
+                                @Html.Action("SearchProductIds", "Product", new { id = id })
+
+                            }
+
+                        }
+
+                    }
+
+                }
+                @Html.Action("SearchCourse", "Product", new { aoStatus = DataLayer.Enumarables.Enum_Code.ORDER_STATUS_SUCCESS, typeId = 2, accountId = CurrentAccount.Id, aoViewName = "ListCourseOldAccount" })
+
+            </div>
+            }
+            else
+            {
+                <div class="tab-pane active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="noResult">
+
+                        <p class="alert"> @Resource.Notify.NotRegistered</p>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section endScripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeOrderSearchScripts();;
+        });
+    </script>
+}

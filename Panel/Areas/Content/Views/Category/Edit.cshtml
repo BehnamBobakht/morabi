@@ -1,0 +1,137 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.Category
+@{
+    ViewBag.Title = @Resource.Lang.EditCategory;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
+}
+
+@section Script {
+    <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeNewCategoryScript();
+        });
+    </script>
+}
+
+<div codeprocess-back-form="/Content/Category" codeprocess-ajax-form="/Content/Category/Edit">
+
+    @Html.HiddenFor(model => model.ID)
+    <input type="hidden" id="pictureUploadId" value="@Model.PictureId" />
+
+    <div class="col-sm-12 category_page">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WebsiteId, @Resource.Lang.WebSite, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("WebsiteId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.WebsiteId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeId, @Resource.Lang.CategoryType, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control typeid" })
+                            @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, @Resource.Lang.CategoryName, htmlAttributes: new { @class = "control -label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Label, @Resource.Lang.Lable, htmlAttributes: new { @class = "control -label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Label, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Label, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.URL, "URL", htmlAttributes: new { @class = "control -label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 no-padding">
+                        <div class="form-group">
+                            <label class="control-label col-md-1">@Resource.Lang.Context</label>
+                            <div class="col-md-11">
+                                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @codeprocess = "editor", @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="button" class="btn btn-success" id="btnSubmit" value=@Resource.Lang.Save />
+                            <span class="btn btn-inverse">@Html.ActionLink(@Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+            {
+                if (lang.Language.Label != Enum_Lang.FA.ToString())
+                {
+                    CategoryLanguage categoryLanguage = Model.CategoryLanguage.FirstOrDefault(p => p.LanguageId == lang.LanguageId);
+                    <fieldset lang-value="@lang.Language.Label.ToLower()" class="ltr-fieldset">
+
+                        <input type="hidden" lang-name="LanguageId" value="@lang.LanguageId" />
+                        <legend>@lang.Language.Label</legend>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@lang.Language.Name</label>
+                            <div class="col-md-10">
+                                <input type="text" lang-name="Name" id="Name@(lang.Language.Label)" class="form-control" autocomplete="off" value="@(categoryLanguage != null ? categoryLanguage.Name : "")" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Body</label>
+                            <div class="col-md-10">
+                                <input type="text" lang-name="Body" id="Body@(lang.Language.Label)" class="form-control" autocomplete="off" codeprocess="editor" value="@(categoryLanguage != null ? categoryLanguage.Body : "")" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">URL</label>
+                            <div class="col-md-10">
+                                <input type="text" lang-name="URL" id="URL@(lang.Language.Label)" class="form-control" autocomplete="off" value="@(categoryLanguage != null ? categoryLanguage.URL : "") " />
+                            </div>
+                        </div>
+
+                    </fieldset>
+                }
+            }
+            <div class="col-sm-6 no-padding-left">
+                @if (Model.PictureId != null)
+                {
+                    <input id="PictureId" type="file" class="dropify" name="PictureId" codeprocess="upload" data-height="290" data-default-file="@Model.Picture.GetUrl()" />
+                }
+                else
+                {
+                    <input id="PictureId" type="file" class="dropify" name="PictureId" codeprocess="upload" data-height="290" />
+                }
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

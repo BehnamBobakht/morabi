@@ -1,0 +1,78 @@
+﻿@using DataLayer
+@model DataLayer.ViewModels.ViewCalendar
+
+@{
+    ViewBag.Title = "تقویم کاری";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="dropdown pull-right">
+                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("بازگشت", "Index")</li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6 no-padding">
+                            <div class="calendar-container">
+                                <div class="col-sm-4 text-left font-bold">
+                                    <a href="/calendar/view/prev/@Model.Year@Model.Month">
+                                        <h4><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>ماه قبل</h4>
+                                    </a>
+                                </div>
+                                <div class="col-sm-4 text-center font-bold">
+                                    <h4>@Model.MonthString @Model.Year.ToPersian()</h4>
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <a href="/calendar/view/next/@Model.Year@Model.Month">
+                                        <h4>ماه بعد<i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i></h4>
+                                    </a>
+                                </div>
+                                <div class="devider-10"></div>
+                                <div class="calendar-weekday"><div class="calendar-content">شنبه</div></div>
+                                <div class="calendar-weekday"><div class="calendar-content">یکشنبه</div></div>
+                                <div class="calendar-weekday"><div class="calendar-content">دوشنبه</div></div>
+                                <div class="calendar-weekday"><div class="calendar-content">سه شنبه</div></div>
+                                <div class="calendar-weekday"><div class="calendar-content">چهارشنبه</div></div>
+                                <div class="calendar-weekday"><div class="calendar-content">پنجشنبه</div></div>
+                                <div class="calendar-weekday"><div class="calendar-content">جمعه</div></div>
+
+                                @foreach (var item in Model.Days)
+                                {
+                                    <div class="calendar-cell">
+                                        <a href="/calendar/event/@item.Datetime.Ticks.ToString()" class="calendar-content" is-today="@item.IsToday.ToString()" is-closed="@item.IsClosed.ToString()" is-past="@item.IsPast.ToString()" datetime-value="@item.Datetime.ToShortDateString()">
+                                            <span class="calendar-day">@item.Day</span>
+                                            @if (item.Events.Count > 2)
+                                            {
+                                                <span class="calendar-event">...</span>
+                                            }
+                                            else
+                                            {
+                                                foreach (var obj in item.Events)
+                                                {
+                                                    <span class="calendar-event" data-toggle="tooltip" data-placement="right" data-original-title="@obj.Description" type="@obj.Type">@obj.StartTime-@obj.EndTime</span>
+                                                }
+                                            }
+                                        </a>
+                                    </div>
+                                }
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

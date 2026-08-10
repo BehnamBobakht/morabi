@@ -1,0 +1,46 @@
+﻿@using DataLayer.Entities;
+@model IEnumerable<DataLayer.Entities.Dashboard>
+
+@{
+    ViewBag.Title =Resource.Lang.HomeAdminPanel;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    Shop shop = ViewBag.Shop;
+    int? shopId = shop != null ? shop.ID : default(int?);
+}
+
+@foreach (Dashboard item in Model)
+{
+    @Html.Action(item.ActionName, new
+    {
+        area = "",
+        controller = "dashboard",
+        viewurl = item.ViewUrl,
+        shopId = shopId
+    })
+}
+
+@section Header {
+    <link rel="stylesheet" href="~/assets/plugins/chartist/dist/chartist.min.css">
+    <style type="text/css">
+        .simple-line-chart, .simple-line-chart * {
+            direction: ltr !important;
+        }
+    </style>
+}
+
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeDashboardPageScript();
+        });
+    </script>
+    <script src="~/assets/plugins/chartist/dist/chartist.min.js"></script>
+    <script src="~/assets/plugins/chartist/dist/chartist-plugin-tooltip.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeReportByWeekdayScript();
+        });
+    </script>
+}
+
+

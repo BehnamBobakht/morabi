@@ -1,0 +1,104 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@model DataLayer.Entities.StoreComment
+@{
+    ViewBag.Title = Resource.Lang.CheckUsersOpinion;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.StoreId)
+    @Html.HiddenFor(model => model.AccountId)
+    @Html.HiddenFor(model => model.EmailAddress)
+    @Html.HiddenFor(model => model.NameFamily)
+    @Html.HiddenFor(model => model.Body)
+    @Html.HiddenFor(model => model.Datetime)
+    @Html.HiddenFor(model => model.Rate)
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div>
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="row">
+                                @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StoreId, Resource.Lang.StoreName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10 control-label">
+                            @Model.Store.Name
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AccountId, Resource.Lang.CustomerInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10 control-label">
+                            @if (Model.AccountId == null)
+                            {
+                                <span class="control-label">@Model.NameFamily (@Model.EmailAddress)</span>
+                            }
+                            else
+                            {
+                                <span class="control-label">@Model.Account.FullName (@Model.Account.Email)</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Body, Resource.Lang.OpinionContext, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10 control-label">
+                            @Html.Raw(Model.Body)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Datetime, @Resource.Lang.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10 control-label">
+                            @Model.Datetime.ToPersianWithTime().ToPersian()
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AnswerString, @Resource.Lang.Response, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.AnswerString, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.AnswerString, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Approved, Resource.Lang.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @if (Model.Approved == null)
+                            {
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="null" type="radio" checked="checked" /> @Resource.Lang.NotChecked</label>
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="True" type="radio" /> @Resource.Lang.Confirmation</label>
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="False" type="radio" /> @Resource.Lang.Failed</label>
+                            }
+                            else if (Model.Approved == true)
+                            {
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="null" type="radio" /> @Resource.Lang.NotChecked</label>
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="True" type="radio" checked="checked" />@Resource.Lang.Confirmation</label>
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="False" type="radio" /> @Resource.Lang.Failed</label>
+                            }
+                            else if (Model.Approved == false)
+                            {
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="null" type="radio" /> @Resource.Lang.NotChecked</label>
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="True" type="radio" /> @Resource.Lang.Confirmation</label>
+                                <label class="margin-right-10"><input id="Approved" name="Approved" value="False" type="radio" checked="checked" /> @Resource.Lang.Failed</label>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}

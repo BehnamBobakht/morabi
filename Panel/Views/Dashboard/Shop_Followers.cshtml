@@ -1,0 +1,19 @@
+﻿@model int
+
+<div class="col-lg-4 col-md-6">
+    <div class="card-box">
+        <h4 class="header-title m-t-0 m-b-30"> @Resource.Lang.Followers </h4>
+        <div class="widget-chart-1">
+            <div class="widget-chart-box-1">
+                <a href="@Url.Action("follow", new { @controller="shop", @area="store" })">
+                    <i class="fa fa-heart home-shop-icon" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="widget-detail-1">
+                <h2 class="p-t-10 m-b-0"> @Model </h2>
+                <p class="text-muted">@Resource.Lang.FollowersUntill  </p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

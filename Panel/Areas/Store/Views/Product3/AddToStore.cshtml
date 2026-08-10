@@ -1,0 +1,112 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model DataLayer.ViewModels.ProductToStoreVm
+@{
+    ViewBag.Title = "اضافه کردن محصول به فروشنده";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Header {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+}
+@section Script {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script>
+        $(".selectpicker").attr("data-live-search", "true");
+        $(".selectpicker").change(function () { 
+           var productId= $("#ProductId").val();
+            var storeId = $("#StoreId").val();
+            window.location.replace('/panel/store/product/addtostore?productId=' + productId + '&storeId=' + storeId);
+        });
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="row">
+                <div class="col-sm-2">
+                    <span class="control-label font-bold">@Resource.Lang.Product</span>
+                    <div>
+                        @Html.DropDownList("ProductId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control selectpicker" })
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <span class="control-label font-bold">@Resource.Lang.Seller</span>
+                    <div>
+                        @Html.DropDownList("StoreId", null, Resource.Lang.Select, htmlAttributes: new { @class = "form-control selectpicker" })
+                    </div>
+                </div>
+
+                <div class="devider-15"></div>
+            </div>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>@Resource.Lang.ProductName</th>
+                        <th>@Resource.Lang.Count</th>
+                        <th>@Resource.Lang.Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ProductQuantities.Count; i++)
+                    {
+                        var quantity = Model.ProductQuantities[i];
+                        <tr >
+
+                            <td>
+                            <input type="hidden" name="ProductQuantities[@i].ID" value="@quantity.ID" />
+                            @((i + 1).ToPersian())</td>
+
+                            <td>
+                                @quantity.ProductName (@quantity.ProductId)
+                                @if (quantity.ColorId.HasValue)
+                                {
+                                    <string> - @Resource.Lang.Color : @quantity.Color.Name </string>
+                                }
+                                @if (quantity.SizeId.HasValue)
+                                {
+                                    <string> - @Resource.Lang.Size : @quantity.Size.Name </string>
+                                }
+                                @if (quantity.OptionItemId.HasValue)
+                                {
+                                    <string> - @quantity.ProductOptionItem.OptionName :  @quantity.ProductOptionItem.Value </string>
+                                }
+                            </td>
+                            <td>
+                            <input name="ProductQuantities[@i].Count" class="count text-center" type="number" value="@quantity.Count" />
+                            </td>
+                            <td>
+                            <input name="ProductQuantities[@i].Price" class="price text-center" type="text" value="@quantity.Price" />
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="devider-30"></div>
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <div>
+                        <div class="col-md-10 no-padding-right col-md-offset-2">
+                            <div class="row error-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="text-center">
+                        <input type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                        <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+

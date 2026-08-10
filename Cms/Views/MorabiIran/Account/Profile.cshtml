@@ -1,0 +1,52 @@
+﻿@using DataLayer.Base 
+@{
+    TempData["Title"] = "Profile";
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_LayoutUser.cshtml";
+}
+
+    <div class="profileBoxParent">
+        <div class="profileTitle">
+            <h6>@Resource.Lang.PersonalInformation</h6>
+        </div>
+        <div class="profileBox">
+            <div class="infoItem">
+                <span>@Resource.Lang.Name</span>
+                <strong data-bind="text: viewModel.Account.FullName"> </strong>
+
+            </div>
+            <div class="infoItem">
+                <span>@Resource.Lang.Email</span>
+                <strong data-bind="text:viewModel.Account.Email"> </strong>
+            </div>
+            <div class="infoItem">
+                <span>@Resource.Lang.NationalCode</span>
+                <strong data-bind="text: viewModel.Account.NationalCode"> </strong>
+            </div>
+            <div class="infoItem">
+                <span>@Resource.Lang.Mobile</span>
+                <strong data-bind="text: viewModel.Account.Mobile"> </strong>
+            </div>
+            <div class="infoItem">
+                <span>@Resource.Lang.Newsletters</span>
+                <strong> @Html.Action("Search", "NewsLetter", new { nlEmail = Model.Email, nlviewName = "ExistNewsLetter" })</strong>
+            </div>
+            <div class="infoItem bankCart">
+                <span>@Resource.Lang.BankAccountCardNo</span>
+                @*@if (Model.CardNumber.Trim().Length==16)
+                {
+                    <strong>**** - **** - **** - @Model.CardNumber.Substring(12, 4)</strong>
+                }*@
+                <strong data-bind="text:viewModel.Account.CardNumber"></strong>
+
+            </div>
+            <div class="seeMore flex-row">
+                <div class="seeMore p-0">
+                <button class="w-50" onclick="showEditProfile()"> @Resource.Lang.EditProfile</button></div>
+                <button class=" w-50" data-bs-toggle="modal" data-bs-target="#change_password_modal">
+               @Resource.Lang.ChangePassword
+            </button>
+            </div>
+
+        </div>
+    </div>
+

@@ -1,0 +1,191 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model List<AccountOrderProduct>
+
+@{
+    ViewBag.Title = Resource.Lang.ProductList;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    double sumPrice = 0;
+    int sumCount = 0;
+    int? typeId = ViewBag.TypeId;
+
+    int? optionId = ViewBag.OptionId;
+
+
+    string product = ViewBag.Product;
+    string fromDatetime = ViewBag.FromDatetime;
+    string toDatetime = ViewBag.ToDatetime;
+    string statusString = ViewBag.statusString;
+    string index = ViewBag.PageIndex;
+    string pageSize = ViewBag.PageSize;
+    typeId = typeId == null ? 0 : typeId;
+    optionId = optionId == null ? 0 : optionId;
+
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="~/assets/plugins/pretty-checkbox/pretty-checkbox.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link href="~/Assets/plugins/Highcharts-8.0.4/page-style.css" rel="stylesheet" />
+
+
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <div class="col-sm-12">
+                <div class="text-left font-bold">
+                    @Resource.Lang.Date: @DateTime.Now.ToPersianWithTime().ToPersian()
+                </div>
+                <div class="devider-15"></div>
+                <table class="table table-striped table-bordered has-first">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>@Resource.Lang.Customer</th>
+
+                            <th>@Resource.Lang.ProductName</th>
+
+                            <th>@Resource.Lang.Category</th>
+                            <th>@Resource.Lang.Date</th>
+
+                            <th>@Resource.Lang.Price</th>
+                            <th>@Resource.Lang.DiscontAmount</th>
+                            <th>@Resource.Lang.TotalPrice</th>
+
+
+                            <th>@Resource.Lang.Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model[i];
+
+
+                            <tr>
+                                <td>@((i + 1).ToString().ToPersian())</td>
+                                <td>@item.AccountOrder.Account.FullName</td>
+
+                                <td>
+                                    @item.Product.Name
+                                @if (item.AccountOrder.AccountOrder2.Description != null && item.AccountOrder.AccountOrder2.Description != "")
+                                {
+                                    <strong> (@item.AccountOrder.AccountOrder2.Description) </strong>
+                                }
+                            </td>
+                            <td>@item.Product.ProductType.Name</td>
+                            <td>@item.Datetime.ToPersian()</td>
+                            <td>@item.ProductPrice</td>
+                            <td>@item.ProductDiscount</td>
+                            <td>@item.Price</td>
+                            <td>@item.Count</td>
+
+                        </tr>
+                    }
+                        <tr>
+                            <td colspan="7"></td>
+                            <td>@Model.Sum(s => s.Price).GetCurrencyFormat().ToPersian()</td>
+                            <td>@Model.Sum(s => s.Count)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="date" class="control-label col-md-4">@Resource.Lang.ChartType</label>
+                        <div class="col-md-8 row">
+                            <select id="reportType" class="form-control " autocomplete="off" name="reportType">
+
+
+                                <option value="@Enum_Report.ORDER_STORE_SELL">
+                                    @Resource.Enum.ORDER_STORE_SELL
+                                </option>
+                                <option value="@Enum_Report.ORDER_STORE_SELL_DAY">
+                                    @Resource.Enum.ORDER_STORE_SELL_DAY
+                                </option>
+                                <option value="@Enum_Report.ORDER_STORE_SELL_MONTH">
+                                    @Resource.Enum.ORDER_STORE_SELL_MONTH
+                                </option>
+                                <option value="@Enum_Report.ORDER_STORE_SELL_YEAR">
+                                    @Resource.Enum.ORDER_STORE_SELL_YEAR
+                                </option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+
+                    <div class="col-sm-8 no-padding-right">
+                        <input type="button" class="btn btn-success col-xs-12" id="btn-chart" value=@Resource.Lang.DrawChart>
+                    </div>
+                </div>
+
+            </div>
+            <div id="chart-content">
+                <figure class="highcharts-figure">
+                    <div id="container"></div>
+
+                </figure>
+            </div>
+        </div>
+    </div>
+    <div>
+
+    </div>
+</div>
+
+@section Script {
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/highcharts.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/data.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/drilldown.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/exporting.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/export-data.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/code/modules/accessibility.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/Highcharts-8.0.4/chart-model.js"></script>
+    <script type="text/javascript">
+
+
+        $("#btn-chart").click(function () {
+            var chartType = $("#reportType").val();
+            var reportType = $("#reportType").val();
+
+            var chart = "";
+
+            $.ajax({
+                url: "/panel/crm/AccountOrderProduct/report",
+                type: "get",
+                data: { optionId: @optionId, statusString: '@statusString', from: '@fromDatetime', to: '@toDatetime', typeId: @typeId, reportType: reportType},
+                dataType: 'json',
+            }).done(function (result) {
+                if (result) {
+                    console.log(result.List)
+
+                    if (chartType == chartModels.chartTypes.ORDER_STORE_SELL) {
+                        chart = chartModels.columnDrilldown;
+                        chart.series[0].data = result.List;
+                    } else {
+                        chart = chartModels.columnBasic;
+                        chart.xAxis.categories = result.Categories;
+                        chart.series = result.List;
+                    }
+                    chart.title.text = result.ColumnName;
+                    chart.yAxis.title.text = result.yTitle;
+                    Highcharts.chart('container', chart);
+                    Highcharts.setOptions({
+                        lang: {
+                            thousandsSep: ','
+                        }
+                    });
+                    $('html, body').animate({
+                        scrollTop: $("#container").offset().top
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,117 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.Menu
+@{
+    ViewBag.Title = @Resource.Lang.AddNewMenu;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    string backUrl = Url.Action("index");
+}
+
+<div codeprocess-ajax-form="/content/menu/create" codeprocess-back-form="/content/menu">
+    @Html.AntiForgeryToken()
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@backUrl" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back ></a>
+            <div class="col-sm-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, @Resource.Lang.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                    @foreach (WebsiteLanguage lang in BaseLanguage.GetWebsiteLanguages())
+                    {
+                        if (lang.Language.Label != Enum_Lang.FA.ToString())
+                        {
+                            <div class="form-group" lang-value="@lang.Language.Label.ToLower()">
+                                <input type="hidden" lang-name="LanguageId" value="@lang.LanguageId" />
+                                <label class="control-label col-md-2">@Resource.Lang.Title (@lang.Language.Name)</label>
+                                <div class="col-md-10">
+                                    <input type="text" lang-name="Name" class="form-control" autocomplete="off" />
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ParentId, @Resource.Lang.TopMenu, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ParentId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeId, @Resource.Lang.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeId", null, htmlAttributes: new { @codeprocess = "show-part", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div show-part="3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CategoryId, @Resource.Lang.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div show-part="4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GalleryId, @Resource.Lang.Gallery, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("GalleryId", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div show-part="1">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PostId, @Resource.Lang.Post, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("PostId", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div show-part="2">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Link, @Resource.Lang.Link, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShowNumber, @Resource.Lang.PriorityShow, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ShowNumber, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Active, @Resource.Lang.ActiveDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Active)
+                            </div>
+                        </div>
+                    </div>
+                    @Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                            <a class="btn btn-inverse" href="@backUrl">@Resource.Lang.Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initializeMenuPageScript();
+        });
+    </script>
+}

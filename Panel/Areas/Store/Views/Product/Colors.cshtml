@@ -1,0 +1,74 @@
+﻿@using DataLayer.ViewModels
+@model List<ColorVm>
+    <div class="check-item-box">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+
+            <div class="select-color-item" title="@item.Name">
+                <input  type="checkbox" value="@item.ID" name="ColorIds" id="color_@item.ID" c-name="@item.Name" @(item.Selected ? "checked" : "") @(item.Exist ? "disabled" : "") />
+
+                <label for="color_@item.ID" style="background:#@item.HexValue" >@item.Name</label>
+            </div>
+
+        }
+
+    </div>
+
+<style>
+    .check-item-box{
+        display: flex;
+        flex-wrap: wrap
+    }
+    .select-color-item {
+    min-width: 64px;
+    height: 38px;
+    border-radius: 5px;
+    position: relative;
+    margin: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid #a0a0a0;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 4px;
+}
+
+
+    .select-color-item input{
+        /*display: none*/
+        margin: 0;
+        margin-left: 10px
+    }
+
+    .select-color-item label{
+        min-width:30px;
+        height:30px;
+        border-radius: 5px;
+        border:1px solid #A0A0A0;
+        margin:0
+
+    }
+
+.select-color-item input:checked + lable::after {
+    content: ' x ';
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: #fff;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #a0a0a0;
+}
+    .select-color-item.disable{
+        pointer-events: none;
+        background: #a0a0a0 !important;
+        border: 1px solid #A0A0A0;
+    }
+
+</style>

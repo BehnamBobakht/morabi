@@ -1,0 +1,95 @@
+﻿@model DataLayer.Entities.ShopReseller
+@{
+    ViewBag.Title = Resource.Lang.ShowInfo;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AddressValue)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AddressValue)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Manager)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Manager)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Phone1)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone1)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Phone2)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone2)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Fax)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Fax)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Website)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Website)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.City.Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.City.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Picture.Url)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Picture.Url)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Shop.Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Shop.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SiteUser.FullName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.SiteUser.FullName)
+                    </dd>
+                </dl>
+            </div>
+            <div class="form-group">
+                <div>
+                    <span class="btn btn-primary">@Html.ActionLink(Resource.Lang.Edit, "edit", new { id = Model.ID })</span>
+                    <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

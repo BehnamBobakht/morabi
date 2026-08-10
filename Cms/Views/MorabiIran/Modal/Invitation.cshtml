@@ -1,0 +1,24 @@
+﻿
+    <div class="modal fade" id="modalInvitation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header producttotal justify-content-start">
+                    <h5 class="modal-title" id="edit_profile_modal">@Resources.KhoshKala.InvitationToKhoshKala</h5>
+                </div>
+                <div class="modal-body text-right">
+                    @*<form action="">*@
+                        <div class="address_modal_input">
+                            <input type="text" name="mestr"  id="txtInvitation" data-bind="value:viewModel.Invait.EmailOrPhone" class="form-control" placeholder="@Resource.Lang.EnterEmailOrMobile">
+                        </div>
+                    @*</form>*@
+                </div>
+                <div class="modal-footer d-flex">
+                    <button type="button" class="btn seemore  flex-fill m-3" data-bs-dismiss="modal">@Resource.Lang.Close</button>
+                    <button  codeprocess-action="invait-add" class="btn green_btn  flex-fill m-3"  >
+                        @Resource.Lang.Register </button >
+
+                        @*codeprocess-action="account-edit"*@
+                </div>
+            </div>
+        </div>
+    </div>

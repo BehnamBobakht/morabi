@@ -1,0 +1,35 @@
+﻿@model DataLayer.ViewModels.ProductSearchVm
+@{ 
+    if (!string.IsNullOrEmpty(Model.Description))
+    {
+        Model.Description = Model.Description.Replace("../../../", "/panel/");
+        Model.Description = Model.Description.Replace("../../", "/panel/");
+    }
+}
+@if (!string.IsNullOrEmpty(Model.Description) && !string.IsNullOrEmpty(Model.MinDescription))
+{
+    <div class="seeMoreBox">
+        <div class="seeMore">
+            <div class="title mb-2">
+                <strong class="titleText">@Resource.Lang.ReadMore</strong>
+            </div>
+            <div class="seeMoreText">
+                <div class="totlalText" style="display: none;"> 
+                    <p>
+                        @Html.Raw(Model.Description)
+                    </p>
+                    <button class="hideMoreTextBtn primary_btn"><span>@Resource.Lang.Close</span></button>
+                </div>
+                <div class="limitedText">
+                    <p>
+                        @Html.Raw(Model.MinDescription)
+
+                    </p>
+                    <button class="seeMoreButton primary_btn"><span>@Resource.Lang.More</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

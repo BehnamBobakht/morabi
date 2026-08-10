@@ -1,0 +1,749 @@
+﻿﻿@using DataLayer.ViewModels
+@using DataLayer.Base;
+@using DataLayer.Enumarables
+@model DataLayer.ViewModels.ProductShowVm
+
+@{
+    bool isAvailable = Model.Code.Label == Enum_Code.PRODUCT_STATUS_AVAILABLE.ToString();
+    StoreProductQuantityVm firstStoreProductQuantity = null;
+    if (isAvailable && Model.Variety.storeProductQuantities.Any())
+    {
+        firstStoreProductQuantity = Model.Variety.storeProductQuantities[0];
+    }
+
+    ViewAccount currentUser = BaseWebsite.CurrentAccountOnline;
+    Model.RateAvarage = Model.RateAvarage == 0 ? 5 : Model.RateAvarage;
+}
+<div class="col-lg-4 p-0">
+    <div class="product-images">
+        @Html.Action("IndexPictures", "Product", new { Model = Model, productId = Model.ID })
+    </div>
+</div>
+<div class="col-lg-4 col-sm-7 p-0 ps-sm-3">
+    <div class="product-details-box1 d-flex flex-column h-100">
+        @if (Model.ProductTypeId == 2)
+        {
+            <div class="product-name">
+                <h1>نام دوره: @Model.Name</h1>
+            </div>
+        }
+        else
+        {
+            <div class="product-name">
+                <h1>@Model.Name</h1>
+            </div>
+        }
+        <div class="product-text">
+            <p>@Model.Summary</p>
+        </div>
+        <div class="product-deadlines">
+            @if (Model.ProductTypeId == 2)
+            {
+                <div class="pro-warning d-flex">
+                    <div class="pro-warning-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0_1746_3320" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+                                <rect width="24" height="24" fill="white" />
+                            </mask>
+                            <g mask="url(#mask0_1746_3320)">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2.73441 21.0022C1.96407 21.0022 1.48301 20.1678 1.86898 19.5012L11.1345 3.49701C11.5197 2.83173 12.4802 2.83172 12.8654 3.49701L22.1309 19.5011C22.5169 20.1678 22.0358 21.0022 21.2655 21.0022H2.73441C2.73441 21.0022 1.96407 21.0022 2.73441 21.0022ZM13 18.0001H12.0647C12.0433 18.0015 12.0217 18.0022 12 18.0022C11.9782 18.0022 11.9566 18.0015 11.9352 18.0001H11V16.0001H13V18.0001ZM13 14.0022H11V9.00218H13V14.0022Z" fill="#FF7200" />
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="pro-warning-text d-flex flex-column">
+                        <span>تاریخ برگزاری حدودی هست و تاریخ دقیق در کانال دوره اعلام میشود</span>
+                    </div>
+                </div>
+
+                <div class="product-deadline-item">
+                    <span>تاریخ شروع ثبت نام</span>
+                    <span>
+                        @Model.StartDatetime.ToPersianComplete()
+                    </span>
+                </div>
+                <div class="product-deadline-item">
+                    <span>تاریخ پایان ثبت نام</span>
+                    <span>@Model.EndDatetime.ToPersianComplete()</span>
+                </div>
+
+                <div class="product-deadline-item">
+                    <span>تاریخ شروع دوره</span>
+                    <span>@Model.FromDatetime.ToPersianComplete()</span>
+                </div>
+
+                <div class="product-deadline-item">
+                    <span>تاریخ پابان دوره</span>
+                    <span>@Model.ToDatetime.ToPersianComplete()</span>
+                </div>
+
+
+
+            }
+            @if (Model.ProductTypeId == 1)
+            {
+
+
+                <div>
+                    <p>در صورت درخواست گواهی برای دوره های شرکت شده از لیست  دوره ها دوره خود را انتخاب نمایید</p>
+                    <p>در غیر این صورت گزینه سایر را انتخاب کنید</p>
+                    <div>
+                        <div class="form-check">
+                            <input class="form-check-input" checked onchange="showCourse(0)" value="0" type="radio" name="course" id="show-course1">
+                            <label class="form-check-label" for="show-course1">
+                                سایر
+                            </label>
+                        </div>
+                        <div class="divetext ">
+                            <textarea id="desCription" cols="20" rows="5" class="form-control" placeholder="عنوان و یا عناوین دوره های خود را به صورت کامل اینجا بنویسید">
+</textarea>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" onchange="showCourse(1)" value="1" type="radio" name="course" id="show-course2">
+                            <label class="form-check-label" for="show-course2">
+                                انتخاب دوره
+                            </label>
+
+                        </div>
+                        <div class="add-subtract">
+                            @if (currentUser != null)
+                            {
+                                <span class="d-none" id="add-count" readonly type="number" min="0">0</span>
+
+                                <div class="couseList d-none">
+                                    @Html.Action("SearchAccountOrder", "Product", new { statusId2 = "2068-2073", typeId = 2, accountId = currentUser.Id, aoViewName = "ListCourse" })
+                                    @Html.Action("SearchCourse", "Product", new { aoStatus = DataLayer.Enumarables.Enum_Code.ORDER_STATUS_SUCCESS, typeId = 2, accountId = currentUser.Id, aoViewName = "ListCourseOld" })
+
+                                </div>
+                            }
+                            else
+                            {
+                                <a class="btn btn-secondary" href="@Url.Action("Login","Account",new {back=Model.ProductUrl})">ورود به حساب کاربری</a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (isAvailable)
+            {
+                if (Model.Variety.Colors.Any())
+                {
+                    <div class="product-size color">
+                        <div class="product-size-title align">
+                            <span>@Resource.Lang.Color</span>
+                        </div>
+                        @foreach (var color in Model.Variety.Colors)
+                        {
+                            @Ajax.ActionLink(linkText: " ",
+            actionName: "IndexInner",
+            controllerName: "Product",
+            routeValues: new { model = Model, productId = Model.ID, colorId = color.ID },
+            htmlAttributes: new { @class = "btn-optionitem m-1 pr-1 pl-1 text-center" + (color.ID == Model.Variety.ColorId ? " selectColor" : ""), @style = "background-color:#" + color.HexValue, @rel = "nofollow" },
+            ajaxOptions: new AjaxOptions
+            {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "product-index",
+            OnBegin = "beginProssess",
+            OnComplete = "endProssess"
+            })
+                        }
+                    </div>
+                }
+                if (Model.Variety.Sizes.Any())
+                {
+                    <div class="product-size">
+                        <div class="product-size-title align">
+                            <span>@Resource.Lang.Size</span>
+                        </div>
+                        @foreach (var size in Model.Variety.Sizes)
+                        {
+                            @Ajax.ActionLink(linkText: size.Name,
+            actionName: "IndexInner",
+            controllerName: "Product",
+            routeValues: new { model = Model, productId = Model.ID, colorId = Model.Variety.ColorId, sizeId = size.ID },
+            htmlAttributes: new { @class = "btn-optionitem m-1 pr-1 pl-1 text-center" + (size.ID == Model.Variety.SizeId ? " selectColor" : ""), @style = "background-color:#fff", @rel = "nofollow" },
+            ajaxOptions: new AjaxOptions
+            {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "product-index",
+            OnBegin = "beginProssess",
+            OnComplete = "endProssess"
+            })
+                        }
+                    </div>
+                }
+                if (Model.Variety.OptionItems.Any())
+                {
+                    <div class="product-size">
+                        <div class="product-size-title align">
+                            <span>@Model.Variety.OptionName</span>
+                        </div>
+
+                        @foreach (var option in Model.Variety.OptionItems)
+                        {
+                            @Ajax.ActionLink(linkText: option.Value,
+            actionName: "IndexInner",
+            controllerName: "Product",
+            routeValues: new { model = Model, productId = Model.ID, colorId = Model.Variety.ColorId, sizeId = Model.Variety.SizeId, optionItemId = option.ID },
+            htmlAttributes: new { @class = "btn-optionitem m-1 pr-1 pl-1 text-center" + (option.ID == Model.Variety.OptionItemId ? " selectColor" : ""), @style = "background-color:#fff", @rel = "nofollow" },
+            ajaxOptions: new AjaxOptions
+            {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "product-index",
+            OnBegin = "beginProssess",
+            OnComplete = "endProssess"
+            })
+                        }
+                    </div>
+                }
+            }
+        </div>
+        @if (currentUser != null && Model.Variety.OptionItems.Any())
+        {
+            @Html.Action("GetPrice", "Product", new { productId = Model.ID })
+
+        }
+    </div>
+</div>
+<div class="col-lg-4 col-sm-5 p-0">
+    <div class="product-details-box2">
+        @*@if (Model.LinkTelegram != null)
+            {
+                <div class="product-telegram linkitem align">
+                    <a href="@Model.LinkTelegram"></a>
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16 32C7.16344 32 0 24.8366 0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32ZM16.6919 12.0074C15.2589 12.6034 12.3949 13.8371 8.09992 15.7083C7.40248 15.9856 7.03714 16.257 7.00388 16.5223C6.94767 16.9706 7.50915 17.1472 8.27374 17.3876C8.37774 17.4203 8.4855 17.4542 8.59598 17.4901C9.34822 17.7346 10.3601 18.0207 10.8862 18.0321C11.3633 18.0424 11.8959 17.8457 12.4839 17.4419C16.4968 14.7331 18.5683 13.3639 18.6983 13.3344C18.7901 13.3136 18.9172 13.2874 19.0034 13.3639C19.0895 13.4405 19.0811 13.5855 19.0719 13.6244C19.0163 13.8615 16.8123 15.9106 15.6717 16.971C15.3161 17.3015 15.0639 17.536 15.0124 17.5896C14.8969 17.7096 14.7791 17.823 14.666 17.9321C13.9672 18.6058 13.4431 19.111 14.695 19.936C15.2967 20.3325 15.7781 20.6603 16.2584 20.9874C16.7829 21.3446 17.306 21.7009 17.9829 22.1446C18.1554 22.2576 18.3201 22.375 18.4805 22.4894C19.0909 22.9246 19.6393 23.3155 20.3168 23.2532C20.7105 23.217 21.1172 22.8468 21.3237 21.7427C21.8118 19.1335 22.7712 13.4801 22.9929 11.1505C23.0123 10.9464 22.9879 10.6851 22.9683 10.5705C22.9486 10.4558 22.9076 10.2924 22.7586 10.1715C22.582 10.0283 22.3095 9.99805 22.1877 10.0001C21.6335 10.01 20.7834 10.3056 16.6919 12.0074Z" fill="#1FA2EB" />
+                    </svg>
+                    <span>لینک گروه تلگرام این دوره</span>
+                    <div class="btn primary-btn me-auto">وارد شو</div>
+                </div>
+            }*@
+
+        <div class="product-invoice">
+
+            @if (isAvailable && Model.IsPackage != true)
+            {
+
+
+                if (Model.DiscountValue > 0)
+                {
+
+
+                    <div class="product-invoice-item central px-2 px-lg-4 py-3">
+                        @if (Model.ProductTypeId == 2)
+                        {
+                            <span>هزینه دوره :</span>
+                        }
+                        else
+                        {
+                            <span>قیمت :</span>
+                        }
+                        <span>@firstStoreProductQuantity.BasePrice.ToString("n0")</span>
+                        <span>@Resource.Lang.Toman</span>
+                    </div>
+                    <div class="product-invoice-item central px-2 px-lg-4 py-3">
+                        @if (Model.ProductTypeId == 2)
+                        {
+                            <span>تخفیف این دوره :</span>
+                        }
+                        else
+                        {
+                            <span>تخفیف :</span>
+                        }
+
+                        <span>@Model.DiscountValue.ToString("n0")</span>
+                        <span>@Resource.Lang.Toman</span>
+                    </div><div class="product-invoice-item final central px-2 px-lg-4 py-3">
+                        <span>مبلغ قابل پرداخت :</span>
+                        @if (Model.IsFree)
+                        {
+
+                            <span>رایگان</span>
+                        }
+                        else if (Model.EuroPrice > 0)
+                        {
+                            <span>@Model.EuroPrice</span>
+                            <span>یورو (€)</span>
+                        }
+                        else
+                        {
+                            <span>@firstStoreProductQuantity.Price.ToString("n0")</span>
+                            <span>@Resource.Lang.Toman</span>
+                        }
+
+                    </div>
+
+                }
+                else
+                {
+                    if (Model.IsFree)
+                    {
+                        <span>رایگان</span>
+                    }
+                    else if (Model.EuroPrice > 0)
+                    {
+                        <div class="product-invoice-item final central px-2 px-lg-4 py-3">
+                            <span>مبلغ قابل پرداخت :</span>
+                            <span>@Model.EuroPrice</span>
+                            <span>یورو (€)</span>
+
+
+
+                        </div>
+                        <div class="product-invoice-item final central px-2 px-lg-4 py-3">
+
+                            <span>@firstStoreProductQuantity.Price.ToString("n0")</span>
+                            <span>@Resource.Lang.Toman</span>
+                        </div>
+                    }
+
+                    else
+                    {
+                        if (Model.ProductTypeId != 1)
+                        {
+                            <div class="product-invoice-item final central px-2 px-lg-4 py-3">
+                                <span>مبلغ قابل پرداخت :</span>
+                                <span>@firstStoreProductQuantity.Price.ToString("n0")</span>
+                                <span>@Resource.Lang.Toman</span>
+                            </div>
+                        }
+                    }
+                }
+            }
+            <div class="product-invoice-btn px-2 px-lg-4">
+                @if (isAvailable || Model.IsSelectMulti == true)
+                {
+                    if (Model.HasExpire == false)
+                    {
+                        if (Model.ProductTypeId == 3)
+                        {
+                            <div class="pro-counter-box">
+                                <a class="btn footer-membership-btn">@Resource.Lang.Count</a>
+                                <div class="pro-counter align justify-content-around add-subtract">
+                                    <a href="javascript://" class=" increase-count" stock-count="@firstStoreProductQuantity.Count">
+                                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0.186594 6.448V4.192H3.95459V0.52H6.18659V4.192H9.83459V6.448H6.18659V10H3.95459V6.448H0.186594Z" fill="black" />
+                                        </svg>
+                                    </a>
+                                    <span id="add-count" readonly type="number" min="1">1</span>
+                                    <a href="javascript://" class="quantity-button decrease-count">
+                                        <svg width="10" height="3" viewBox="0 0 10 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0.186594 2.448V0.0959998H9.83459V2.448H0.186594Z" fill="black" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1})">افزودن به سبد</a>
+                        }
+                        else if (Model.ProductTypeId == 2)
+                        {
+                            if (currentUser == null)
+                            {
+                                <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-bs-toggle="modal" data-bs-target="#exampleModal">ثبت نام در دوره</a>
+
+                            }
+                            else
+                            {
+                                var isValid = true;
+                                if (Model.IsParport == true && currentUser.PassportPictureId == null)
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsShenasnameh == true && currentUser.ShenasnamehPictureId == null)
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsCoaching2 == true && currentUser.Coaching2PictureId == null)
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsCoaching3 == true && currentUser.Coaching3PictureId == null)
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsBirthday == true && currentUser.BirthDay == null)
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsPictureId == true && currentUser.PictureID == null)
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsNationalId == true && currentUser.NationalPictureId == null)
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsQuestion == true && (currentUser.QuestionAnswer == null || currentUser.QuestionAnswer == ""))
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.IsEduaction == true && currentUser.EduactionPictureId == null)
+                                {
+                                    isValid = false;
+                                }
+                                if ((currentUser.FullName == "" || currentUser.FullName == null) || (currentUser.FullNameEn == "" || currentUser.FullNameEn == null) || (currentUser.NationalCode == "" || currentUser.NationalCode == null))
+                                {
+                                    isValid = false;
+                                }
+                                if (Model.QuestionRegisterProduct.Any())
+                                {
+                                    foreach (var question in Model.QuestionRegisterProduct)
+                                    {
+                                        if (currentUser.QuestionRegisterValue == null)
+                                        {
+                                            isValid = false;
+                                        }
+                                        else if (!currentUser.QuestionRegisterValue.Any(s => s.FieldId == question.FieldId))
+                                        {
+                                            isValid = false;
+                                        }
+                                    }
+                                }
+                                if (isValid == true)
+                                {
+                                    if (Model.IsPackage == true)
+                                    {
+                                        if (Model.IsSelectMulti == true)
+                                        {
+                                            @Html.Action("SearchPartial", "Product", new
+                                           {
+                                               prId = "",
+                                               IsHidden = true,
+                                               prstock = true@*hasExpire = false*@,
+Isactive = true,
+ProductsId = Model.ProductsId + "," + Model.ID,
+prpagesize = 12,
+prviewname = "PackageTwoItemList",
+prorder = DataLayer.Enumarables.Enum_ProductOrder.SHOWNUMBER,
+typeId = 2
+})
+                                        }
+                                        else
+                                        {
+
+                                            @Html.Action("SearchPartial", "Product", new
+                                            {
+                                                prId = "",
+                                                IsHidden = true,
+                                                prstock = true@*hasExpire = false*@,
+Isactive = true,
+ProductsId = Model.ProductsId + "," + Model.ID,
+prpagesize = 12,
+prviewname = "PackageOneItemList",
+prorder = DataLayer.Enumarables.Enum_ProductOrder.SHOWNUMBER,
+typeId = 2
+})
+                                            if (ViewBag.TestId != true)
+                                            {
+                                                <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket d-none" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket4" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1 })">ثبت نام در دوره</a>
+
+                                            }
+                                            else
+                                            {
+                                                <p class="alert alert-warning">شما قبلا این پکیج را به سبد اضافه کرده اید در صورت تغییر پکیج را از سبد خرید حذف مجدد اضافه کنید</p>
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1 })">ثبت نام در دوره</a>
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-bs-toggle="modal" data-bs-target="#edit_profile_modal2">تکمیل پروفایل</a>
+
+                                }
+
+                            }
+                        }
+                        else if (Model.ProductTypeId == 1)
+                        {
+                            <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1,description="سایر"  })">درخواست ارسال گواهی</a>
+                        }
+                        else
+                        {
+                            <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1 })">افزودن به سبد</a>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="home-course-unavailable central">
+                            <span>اتمام اعتبار</span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="home-course-unavailable central">
+                        <span>ناموجود</span>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Resource.Lang.SignIn </h5>
+                <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="width: 120px;height: 120px;fill: #3A5F9B;border: 4px solid #3A5F9B;border-radius: 50%;padding: 10px;">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: none;
+                                stroke: #fff;
+                                stroke-linecap: round;
+                                stroke-miterlimit: 10;
+                                stroke-width: 2px;
+                            }
+                        </style>
+                    </defs>
+                    <title />
+                    <path d="M0,32A32,32,0,1,0,32,0,32,32,0,0,0,0,32Z" />
+                    <g id="User"><path class="cls-1" d="M46,42.18v5.91a0.91,0.91,0,0,1-.9.91H18a0.91,0.91,0,0,1-.9-0.91V42.18c0-4.77,6.47-8.64,14.45-8.64S46,37.41,46,42.18Z" /><ellipse class="cls-1" cx="31.55" cy="21.18" rx="6.42" ry="6.18" /></g>
+                </svg>
+            </div>
+            <div class="modal-footer d-flex flex-column">
+
+                <a href="@Url.Action("Login","Account",new {back=Model.ProductUrl })"
+                   class="btn primary_btn w-100">
+                    <span>@Resource.Lang.IhaveCode</span>
+                </a>
+                <a href="@Url.Action("Register","Account",new {back=Model.ProductUrl })" class="btn secondary_btn w-100">@Resource.Lang.IHaveNotRegisteredBefore </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="edit_profile_modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header producttotal justify-content-start">
+                <h5 class="modal-title" id="edit_profile_modal">@Resource.Lang.EditProfile</h5>
+            </div>
+            <div class="modal-body text-right">
+                <form action="">
+                    <div class="row">
+                        @if (Model.IsPictureId == true)
+                        {
+                            <div class="address_modal_input col-lg-6 text-center">
+                                <input type="hidden" id="ProfilePicId" name="" />
+                                <label for="name">تصویر پرسنلی : </label>
+                                <input type="file" id="PictureId" file-type="picture" class="upload-file1" name="PictureId" target-name="PictureId" data-height="220" />
+                                <!--ko if:viewModel.Account.PictureUrl()==null || viewModel.Account.PictureUrl()==''-->
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                                <!--/ko-->
+                                <!--ko ifnot:viewModel.Account.PictureUrl()==null || viewModel.Account.PictureUrl()==''-->
+                                <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.PictureUrl}" />
+                                <button class="btn btn-danger m-1" id="btbRemovePic1" onclick="RemovePic1()">@Resource.Lang.Delete</button>
+                                <!--/ko-->
+                            </div>
+                        }
+                        @if (Model.IsNationalId == true)
+                        {
+                            <div class="address_modal_input col-lg-6 text-center">
+
+                                <label for="name">تصویر کارت ملی : </label>
+                                <input type="file" id="NationalPictureId" file-type="picture" class="upload-file2" name="NationalPictureId" target-name="1" data-height="220" />
+                                <!--ko if:viewModel.Account.NationalPictureUrl()==null || viewModel.Account.NationalPictureUrl()==''-->
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                                <!--/ko-->
+                                <!--ko ifnot:viewModel.Account.NationalPictureUrl()==null || viewModel.Account.NationalPictureUrl()==''-->
+                                <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.NationalPictureUrl}" />
+                                <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(1)">@Resource.Lang.Delete</button>
+                                <!--/ko-->
+                            </div>
+                        }
+
+                        @if (Model.IsParport == true)
+                        {
+                            <div class="address_modal_input col-lg-6 text-center">
+
+                                <label for="name">تصویر پاسپورت : </label>
+                                <input type="file" id="PassportPictureId" file-type="picture" class="upload-file2" name="PassportPictureId" target-name="3" data-height="220" />
+                                <!--ko if:viewModel.Account.PassportPictureUrl()==null || viewModel.Account.PassportPictureUrl()==''-->
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                                <!--/ko-->
+                                <!--ko ifnot:viewModel.Account.PassportPictureUrl()==null || viewModel.Account.PassportPictureUrl()==''-->
+                                <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.PassportPictureUrl}" />
+                                <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(3)">@Resource.Lang.Delete</button>
+                                <!--/ko-->
+                            </div>
+                        }
+                        @if (Model.IsShenasnameh == true)
+                        {
+                            <div class="address_modal_input col-lg-6 text-center">
+
+                                <label for="name">تصویر شناسنامه : </label>
+                                <input type="file" id="ShenasnamehPictureId" file-type="picture" class="upload-file2" name="ShenasnamehPictureId" target-name="2" data-height="220" />
+                                <!--ko if:viewModel.Account.ShenasnamehPictureUrl()==null || viewModel.Account.ShenasnamehPictureUrl()==''-->
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                                <!--/ko-->
+                                <!--ko ifnot:viewModel.Account.ShenasnamehPictureUrl()==null || viewModel.Account.ShenasnamehPictureUrl()==''-->
+                                <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.ShenasnamehPictureUrl}" />
+                                <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(2)">@Resource.Lang.Delete</button>
+                                <!--/ko-->
+                            </div>
+                        }
+                        @if (Model.IsEduaction == true)
+                        {
+                            <div class="address_modal_input col-lg-6 text-center">
+
+                                <label for="name">تصویر مدرک تحصیلی : </label>
+                                <input type="file" id="EduactionPictureId" file-type="picture" class="upload-file2" name="EduactionPictureId" target-name="5" data-height="220" />
+                                <!--ko if:viewModel.Account.EduactionPictureUrl()==null || viewModel.Account.EduactionPictureUrl()==''-->
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                                <!--/ko-->
+                                <!--ko ifnot:viewModel.Account.EduactionPictureUrl()==null || viewModel.Account.EduactionPictureUrl()==''-->
+                                <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.EduactionPictureUrl}" />
+                                <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(5)">@Resource.Lang.Delete</button>
+                                <!--/ko-->
+                            </div>
+                        }
+                        @if (Model.IsCoaching2 == true)
+                        {
+                            <div class="address_modal_input col-lg-6 text-center">
+
+                                <label for="name">تصویر مدرک مربیگری درجه 2 : </label>
+                                <input type="file" id="Coaching2PictureId" file-type="picture" class="upload-file2" name="Coaching2PictureId" target-name="6" data-height="220" />
+                                <!--ko if:viewModel.Account.Coaching2PicturerUrl()==null || viewModel.Account.Coaching2PicturerUrl()==''-->
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                                <!--/ko-->
+                                <!--ko ifnot:viewModel.Account.Coaching2PicturerUrl()==null || viewModel.Account.Coaching2PicturerUrl()==''-->
+                                <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.Coaching2PicturerUrl}" />
+                                <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(6)">@Resource.Lang.Delete</button>
+                                <!--/ko-->
+                            </div>
+                        }
+                        @if (Model.IsCoaching3 == true)
+                        {
+                            <div class="address_modal_input col-lg-6 text-center">
+
+                                <label for="name">تصویر مدرک مربیگری درجه 3 : </label>
+                                <input type="file" id="Coaching3PictureId" file-type="picture" class="upload-file2" name="Coaching3PictureId" target-name="7" data-height="220" />
+                                <!--ko if:viewModel.Account.Coaching3PicturerUrl()==null || viewModel.Account.Coaching3PicturerUrl()==''-->
+                                <img height="150px" width="150px" src="/assets/MorabiIran/images/user.png" alt="user">
+                                <!--/ko-->
+                                <!--ko ifnot:viewModel.Account.Coaching3PicturerUrl()==null || viewModel.Account.Coaching3PicturerUrl()==''-->
+                                <img src="" id="PicImg" height="150px" width="150px" data-bind="attr:{'src':viewModel.Account.Coaching3PicturerUrl}" />
+                                <button class="btn btn-danger m-1" id="btbRemovePic2" onclick="RemovePic2(7)">@Resource.Lang.Delete</button>
+                                <!--/ko-->
+                            </div>
+                        }
+                        @if (Model.IsBirthday == true)
+                        {
+                            <div class="address_modal_input col-lg-6">
+                                <label for="phone">@Resource.Lang.BirthDate : </label>
+                                <input type="text" name="birthdate" data-bind="value: viewModel.Account.FaBirthDay" class="form-control datepicker">
+                            </div>
+                        }
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">@Resource.Lang.Name_Family : </label>
+                            <input type="text" name="name" class="form-control" data-bind="value: viewModel.Account.FullName">
+                        </div>
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">نام انگلیسی : </label>
+                            <input type="text" name="FullNameEn" class="form-control" data-bind="value: viewModel.Account.FullNameEn">
+                        </div>
+
+                        <div class="address_modal_input col-lg-6">
+                            <label for="name">@Resource.Lang.NationalCode : </label>
+                            <input type="text" name="NationalCode" class="form-control" data-bind="value: viewModel.Account.NationalCode">
+                        </div>
+                        @if (Model.IsQuestion == true)
+                        {
+                            <div class="address_modal_input col-lg-12">
+                                <label for="phone"> دوره ایی که در سایت فدراسيون ثبت نام کرده اید و شماره دوره آنرا بنویسید : </label>
+                                <input type="text" name="birthdate" data-bind="value: viewModel.Account.QuestionAnswer" class="form-control datepicker">
+                                <p>
+
+                                    (راهنما:وارد سایت فدراسیون شده وارد پنل کاربری خود شوید کارنامه دوره را زده نام دوره و شماره دوره نوشته شده است
+                                    بعنوان مثال:دوره درجه ۳ بدنسازی دانشگاه جامع به کد دوره ۶۰۶۶۶)
+                                </p>
+                            </div>
+                        }
+                    <div class="row">
+                        @if (Model.WebsiteDocument != null)
+                        {
+                            <div class="col-sm-6 text-center p-5">
+                                <a href="@Model.WebsiteDocument.Url" target="_blank" class="btn btn-danger">دانلود فایل ورد نمونه</a>
+                            </div>
+                        }
+                        @if (Model.WebsiteDocument1 != null)
+                        {
+                            <div class="col-sm-6 text-center p-5">
+                                <a href="@Model.WebsiteDocument1.Url" target="_blank" class="btn btn-danger">دانلود فایل پی دی اف نمونه</a>
+                            </div>
+                        }
+                        @foreach (var item in Model.QuestionRegisterProduct)
+                        {
+                            if (item.QuestionRegister.TypeId == 26)
+                            {
+                                <div class="address_modal_input col-lg-6 text-center col-question" lang-value="@item.QuestionRegister.ID">
+                                    <input type="hidden" lang-name="questionFieldId" value="@item.QuestionRegister.ID" />
+                                    <input type="hidden" lang-name="questionFileId" required class="" id="@("DocumentId"+item.ID)" />
+                                    <label for="name">@item.QuestionRegister.Name : </label>
+                                    <input type="file" filed-id="@item.QuestionRegister.ID" tag-id="@item.ID" />
+                                    <input type="hidden" lang-name="questionValue" filed-id="@item.QuestionRegister.ID" class="form-control questionText" value="" />
+                                    <input type="hidden" lang-name="questionItemId" filed-id="@item.QuestionRegister.ID" class="form-control questionText" value="null" />
+
+                                    <a id="@("FileUpload"+item.ID)" class="btn btn-primary d-none" target="_blank">دانلود فایل</a>
+
+                                </div>
+                            }
+                            if (item.QuestionRegister.TypeId == 21)
+                            {
+                                <div class="address_modal_input col-lg-6 text-center col-question" lang-value="@item.QuestionRegister.ID">
+                                    <input type="hidden" lang-name="questionFieldId" value="@item.QuestionRegister.ID" />
+                                    <label for="name">@item.QuestionRegister.Name : </label>
+                                    <input type="hidden" lang-name="questionItemId" filed-id="@item.QuestionRegister.ID" class="form-control questionText" value="null" />
+                                    <input type="hidden" lang-name="questionFileId" class="" id="@("DocumentId"+item.ID)" value="nll" />
+
+                                    <input type="text" lang-name="questionValue" required filed-id="@item.QuestionRegister.ID" class="form-control questionText" />
+                                </div>
+                            }
+                            if (item.QuestionRegister.TypeId == 27)
+                            {
+                                <div class="address_modal_input col-lg-6 text-center col-question" lang-value="@item.QuestionRegister.ID">
+                                    <input type="hidden" lang-name="questionFieldId" value="@item.QuestionRegister.ID" />
+                                    <input type="hidden" lang-name="questionFileId" class="" id="@("DocumentId"+item.ID)" value="nll" />
+                                    <input type="hidden" lang-name="questionValue" filed-id="@item.QuestionRegister.ID" class="form-control questionText" value="" />
+
+                                    <label for="name">@item.QuestionRegister.Name : </label>
+                                    <select class="form-control questionSelect" lang-name="questionItemId" filed-id="@item.QuestionRegister.ID">
+                                        @foreach (var amswer in item.QuestionRegister.QuestionRegisterItem)
+                                        {
+                                            <option value="@amswer.ID">@amswer.Value</option>
+                                        }
+                                    </select>
+
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex">
+                <button type="button" class="btn default_btn  flex-fill m-3" data-bs-dismiss="modal">@Resource.Lang.Close</button>
+                <button type="button" class="btn primary_btn  flex-fill m-3" codeprocess-action="account-edit" codeprocess-callback="closeModal,reLoadPage"><span>@Resource.Lang.Register</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Modal/ModalLoading.cshtml")

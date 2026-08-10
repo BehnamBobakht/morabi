@@ -1,0 +1,60 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@using DataLayer.Enumarables;
+@model DataLayer.Entities.AccountOrder
+
+@{
+    ViewBag.Title = "پرینت آدرس سفارش شماره " + Model.ID;
+    Layout = "~/Views/Shared/PrintLayout.cshtml";
+
+    Shop shop = new Shop();
+    if (Model.AccountOrderProduct.Count > 0)
+    {
+        shop = Model.AccountOrderProduct.ToList()[0].Product.Shop;
+    }
+    string strAddress = Enum_Code.CONTACT_TYPE_ADDRESS.ToString();
+    string strPostal = Enum_Code.CONTACT_TYPE_POSTAL_CODE.ToString();
+    //ShopContact contactPostalCode = shop.ShopContact.FirstOrDefault(p => p.Code.Label == strPostal);
+    //ShopContact contactAddress = shop.ShopContact.FirstOrDefault(p => p.Code.Label == strAddress);
+}
+
+@if (Model.AccountAddress != null)
+{
+    <div class="col-sm-12">
+        <div class="form-horizontal line-height-invoice">
+            <div style="max-width:700px; margin: 0 auto;">
+                <h4>
+                    <span style="width: 100%; text-align: right; display: inline-block">
+                        <span>@Resource.Lang.Sender: @BaseContent.WebsiteDetail.Title &nbsp;&nbsp;&nbsp;</span>
+
+                        <span>شماره تماس: @BaseContent.WebsiteDetail.Phone</span>
+                        <br />
+
+                        <span>آدرس: @BaseContent.WebsiteDetail.Address</span>
+                        
+                    </span>
+                    <br /><br />
+                          <span style="width: 100%; text-align: right; display: inline-block">
+                              <span>@Resource.Lang.Receiver: @Model.AccountAddress.NameFamily &nbsp;&nbsp;&nbsp;</span>
+                              <span>@Resource.Lang.Phone: @Model.AccountAddress.Phone &nbsp; @Model.Account.Mobile &nbsp;&nbsp;&nbsp;</span>
+                              <span> @Resource.Lang.PostalCode: @Model.AccountAddress.PostalCode</span>
+                              <br />
+                              <span> @Resource.Lang.Address:</span>
+
+                              @if (Model.AccountAddress.StateId != null)
+                              {
+                                  <span>@Model.AccountAddress.State.Name - </span>
+                              }
+                              @if (Model.AccountAddress.CityId != null)
+                              {
+                                  <span>@Model.AccountAddress.City.Name - </span>
+                              }
+                              @Model.AccountAddress.AddressValue<br />
+                              <br />
+                               
+                          </span>
+                </h4>
+            </div>
+        </div>
+    </div>
+}

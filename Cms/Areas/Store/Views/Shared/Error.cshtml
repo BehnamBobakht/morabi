@@ -1,0 +1,69 @@
+﻿@using DataLayer.ViewModels
+@using DataLayer.Base
+@{
+    ViewBag.Title = Resource.Lang.Error;
+    Layout = Resources.Default.STORE_LAYOUT_BLANK;
+     ViewAccount CurrentAccount = BaseWebsite.CurrentAccount;
+ 
+}
+
+<div class="card auth_form">
+
+    <div class="header">
+        <img class="logo" src="/areas/store/assets/images/logo.svg" alt="">
+        <h5>@Resource.Lang.ResponseError</h5>
+
+    </div>
+    <div class="body">
+        <a href="/" class="btn btn-primary btn-block waves-effect waves-light">@Resource.Lang.HomePage</a>
+        @if (CurrentAccount == null)
+        {
+            <div class="signin_with mt-3">
+                قبلا به عنوان فروشنده ثبت نام
+
+                <span class="text-success">کرده ام</span>
+                (<a class="link" href="/Account/Login?back=@ViewBag.back"> @Resource.Lang.SignIn </a>)
+            </div>
+            <div class="signin_with mt-3">
+                قبلا به عنوان فروشنده ثبت نام
+                <span class="text-danger">نکرده ام</span>
+                (<a class="link" href="/Account/Login?back=/store/account/register"> @Resource.Lang.SignUp </a>)
+            </div>
+        }
+        else
+        {
+            if (CurrentAccount.StoreId == 0)
+            {
+                <div class="signin_with mt-3">
+                    (<a class="link" href="/Account/Login?back=/store/account/register"> @Resource.Lang.SignUp </a>)
+                </div>
+            }
+            else
+            {
+                if (!CurrentAccount.Store.Approve)
+                {
+                    <div class="signin_with mt-3">
+                        <span class="text-danger">درخواست فروشندگی شما فعلا مورد تایید قرار گرفته نشده است</span>
+                       (<a class="link" href="/contactUs"> @Resource.Lang.ContactUs </a>)
+                    </div>
+                }
+                if (!CurrentAccount.Store.Active)
+                {
+                    <div class="signin_with mt-3">
+                        <span class="text-danger">حساب فروشندگی شما فعال نیست</span>
+                      (<a class="link" href="/contactUs"> @Resource.Lang.ContactUs </a>)
+                    </div>
+                }
+            }
+        }
+
+    </div>
+</div>
+
+
+
+
+
+@section picture{
+    <img src="~/areas/store/assets/images/404.svg" />
+}

@@ -1,0 +1,196 @@
+﻿
+@using DataLayer.Base
+@using DataLayer.Enumarables
+@using DataLayer.ViewModels
+
+@model  DataLayer.ViewModels.PostVm
+
+
+@{
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    if (!string.IsNullOrEmpty(Model.Body))
+    {
+        Model.Body = Model.Body.Replace("../../../", "/panel/");
+    }
+    var breadcrumb = new List<BreadcrumbVm>();
+
+    breadcrumb.Add(new BreadcrumbVm()
+    {
+        Title = Model.CategoryName,
+        Url = Url.Action("page", "post", new
+        {
+            pocategory = Model.Category.Label
+        }, Request.Url.Scheme)
+    });
+    breadcrumb.Add(new BreadcrumbVm()
+    {
+        Title = Model.Name,
+        Url = Model.Href
+    });
+}
+@section MetaTag {
+    @Html.Partial("~/Views/Default/Seo/Post_Index.cshtml", Model)
+}
+
+<main>
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+
+    @if (Model.Category.Label == "blog" || Model.Category.Label == "news")
+    {
+
+        <section class="blog_inner page-padding">
+            <div class="container">
+                <div class="section-title central flex-column">
+                    <h1>@Model.Name</h1>
+                </div>
+                <div class="blog_topBox">
+                    <div class="row w-100 m-0">
+                        <div class="col-md-6 p-0">
+                            <div class="blog-summary">
+                                <div class="blogSummary_txt">
+                                    <strong>@Resource.Lang.Abstract</strong>
+                                    <p>
+                                        @Model.Summary
+                                    </p>
+                                </div>
+                                <div class="itemStats">
+                                    <div class="date centeral">
+                                        <i class="bi bi-calendar-week"></i>
+                                        <span>@Model.CreateDateTime.ToPersianComplete()</span>
+
+                                    </div>
+                                    <div class="seen centeral">
+                                        <i class="bi bi-eye"></i>
+                                        <span>@Model.VisitCount @Resource.Lang.Visit</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="blog_inner_img_box">
+                                <img src="@Model.Picture.Url" alt="@Model.Name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text_box">
+                    @if (Model.Aparat != "" && Model.Aparat != null)
+                    {
+                        <p>@Html.Raw(Model.Aparat)</p>
+                    }
+                    @if (Model.FileId != null)
+                    {
+                        <video width="100%" height="100%" controls poster="@Model.Picture.Url">
+                            <source src="@Model.WebsiteDocument.Url" type="video/mp4">
+                        </video>
+                    }
+                    <p>
+                        @Html.Raw(Model.Body)
+                    </p>
+                </div>
+                <div class="autor_blog">
+                    @if (Model.WriterPictureId != null)
+                    {
+                        <div class="autor-img">
+                            <img src="@Model.Picture1.Url" alt="@BaseContent.WebsiteDetail.Title">
+                        </div>
+
+
+                    }
+                    <div class="autor-info">
+                        <div class="autor-name">
+                            <p>@Model.Writer</p>
+                        </div>
+                        <div class="autor-speciality"> @Model.WriterPostion</div>
+                    </div>
+
+                </div>
+                @if (Model.Keywords != null)
+                {<div class="content-tags">
+                        <span><i class="bi bi-link-45deg"></i> لينك هاي مرتبط:</span>
+                        @{ var tags = Model.Keywords.Split('-');}
+                        @foreach (var item in tags)
+                        {
+                            <a href="#">@item</a>
+                        }
+
+
+                    </div>
+
+                }
+
+                <div class="relatedArticles p-3">
+                    <div class="right_title"><strong>مطالب مرتبط</strong></div>
+                    <div class="owl-carousel owl-theme relatedArticles_slider mt-3" id="relatedArticles_slider">
+                        @Html.Action("Search", "Post", new { poorder = Enum_PostOrder.NONE, pocategory = Model.Category.Label, poviewName = "_BlogMostVist", poSize = 4 })
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    
+    else
+    {
+        <section class="blog_inner page-padding">
+            <div class="container">
+                <div class="section-title central flex-column">
+                    <h1>@Model.Name</h1>
+                </div>
+                <div class="blog_topBox">
+                    <div class="row w-100 m-0">
+                        <div class="col-md-6 p-0">
+                            <div class="blog-summary">
+                                <div class="blogSummary_txt">
+
+                                    <p>
+                                        @Model.Summary
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="blog_inner_img_box">
+                                @if (Model.Aparat != "" && Model.Aparat != null)
+                                {
+                                    <p>@Html.Raw(Model.Aparat)</p>
+                                }
+                                else if(Model.FileId != null)
+                                {
+                                <video width="100%" height="100%" controls poster="@Model.Picture.Url">
+                                    <source src="@Model.WebsiteDocument.Url" type="video/mp4">
+                                </video>
+                                }
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text_box">
+                   
+                    <p>
+                        @Html.Raw(Model.Body)
+                    </p>
+                </div>
+
+                @if (Model.Keywords != null)
+                {<div class="content-tags">
+                        <span><i class="bi bi-link-45deg"></i> لينك هاي مرتبط:</span>
+                        @{ var tags = Model.Keywords.Split('-');}
+                        @foreach (var item in tags)
+                        {
+                            <a href="#">@item</a>
+                        }
+
+
+                    </div>
+
+                }
+
+
+            </div>
+        </section>
+    }
+
+</main>

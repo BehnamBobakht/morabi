@@ -1,0 +1,85 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model SignInVm
+
+@{ TempData["Title"] = Resource.Lang.SignIn;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
+    if (ViewBag.back == null)
+    {
+        ViewBag.back = "/";
+    }
+    if (ViewBag.Message == null)
+    {
+        ViewBag.Message = new ViewMessage();
+    }
+    var message = (ViewMessage)ViewBag.Message;
+    var breadcrumb = new List<BreadcrumbVm>();
+    TempData["noIndex"] = true;
+    TempData["noFollow"] = true;
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.SignIn, Url = "" });
+}
+
+@Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Partial/_Breadcrumb.cshtml", breadcrumb)
+<section class="form_page loginRegister page-padding" id="login_register">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-6 col-md-6 p-0 register_col">
+                <div class="loginBox registerBox">
+                    <div class="section-title central flex-column align-items-start">
+                        <h1>ورود</h1>
+                    </div>
+                    <div class="login-register-text">
+                        @Html.Action("Search", "Banner", new { bacategory = "LoginBanner", baviewName = "_LoginText", baSize = 1 })
+                    </div>
+                    <div class="form_page_content mt-3">
+                        <div class="form_box">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.HiddenFor(model => model.BackUrl)
+                                if (!string.IsNullOrEmpty(Model.Message))
+                                {
+                                    <p class="alert @(Model.Status==DataLayer.Enumarables.ResultStatus.Error?"alert-danger":"alert-success") ">@Model.Message</p>}
+                                @Html.TextBoxFor(model => model.Mobile, htmlAttributes: new { @class = "form-control", @placeholder = Resource.Lang.MobileNumber })
+                                <div class="loginFooter">
+                                    <button type="submit" class="btn">@Resource.Lang.SignIn</button>
+                                    <a href="@Url.Action("SignUp","account",new { back=Model.BackUrl})" class="btn">
+                                       
+
+                                            حساب کاربری ندارم و می خواهم ثبت نام کنم
+                                        
+                                    </a>
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 p-0">
+                <div class="login-register-img">
+                    @Html.Action("Search", "Banner", new { bacategory = "LoginBanner", baviewName = "_ImageBanner", baSize = 1 })
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

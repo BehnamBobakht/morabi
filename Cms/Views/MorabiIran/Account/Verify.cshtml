@@ -1,0 +1,88 @@
+﻿
+@using DataLayer.Base
+@using DataLayer.ViewModels
+@model SignInVm
+
+@{ ViewBag.Title = Resource.Lang.Verify;
+    Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml"; }
+
+<div class="page_address">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">@Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Resource.Lang.Verify </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+@Html.HiddenFor(model => model.Mobile)
+@Html.HiddenFor(model => model.BackUrl)
+                <section class="loginRegister py-5">
+
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-5">
+                                <div class="loginBox">
+                                    <div class="title">
+                                        <strong class="titleText">@Resource.Lang.SignIn</strong>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        @if (!string.IsNullOrEmpty(Model.Message))
+                                        {
+                                            <p class="alert @(Model.Status==DataLayer.Enumarables.ResultStatus.Error?"alert-danger":"alert-success") ">@Model.Message</p>
+
+                                        <a href="@Url.Action("Verify","Account",new {mobile=Model.Mobile,backurl=Model.BackUrl })"> ارسال مجدد </a> }
+                                        else
+                                        {
+                                        <a class="d-none resend_btn btn default_btn ms-auto" href="@Url.Action("Verify","Account",new {mobile=Model.Mobile,backurl=Model.BackUrl })"> ارسال مجدد </a>
+                                        <span class="countdown"></span>
+                                        }
+
+
+                                        <div class="from-group">
+                                            @Html.TextBoxFor(model => model.Password, htmlAttributes: new { @class = "form-control", @placeholder = Resource.Lang.Code })
+                                        </div>
+
+                                        <div class="loginFooter">
+                                            <button type="submit" class="btn primary_btn"><span>@Resource.Lang.SignIn</span></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>}
+@section endScripts{
+    <script>
+        var numItems = $('.countdown').length;
+        if (numItems > 0) {
+            var timer2 = "3:01";
+            var interval = setInterval(function () {
+                var timer = timer2.split(':');
+                //by parsing integer, I avoid all extra string processing
+                var minutes = parseInt(timer[0], 10);
+                var seconds = parseInt(timer[1], 10);
+                if (minutes === 0 && seconds === 0) {
+                    $('.countdown').html("");
+                    $('.resend_btn').removeClass("d-none")
+                } else {
+                    --seconds;
+                    minutes = (seconds < 0) ? --minutes : minutes;
+                    if (minutes < 0) clearInterval(interval);
+                    seconds = (seconds < 0) ? 59 : seconds;
+                    seconds = (seconds < 10) ? '0' + seconds : seconds;
+                    //minutes = (minutes < 10) ?  minutes : minutes;
+                    $('.countdown').html(minutes + ':' + seconds);
+                    timer2 = minutes + ':' + seconds;
+                }
+
+            }, 1000);
+        }
+
+    </script>
+    }

@@ -1,0 +1,178 @@
+﻿@model DataLayer.Entities.OnlineOrder
+@using DataLayer.ViewModels;
+@using DataLayer.Base;
+
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+    ViewBag.Title = "سفارش آنلاین ";
+
+
+}
+@section Header {
+    <link rel="stylesheet" type="text/css" href="/Assets/plugins/fileuploads/css/dropify.min.css" />
+}
+@section Script {
+    <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="/assets/plugins/fileuploads/js/dropify.min.js"></script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index")" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="col-sm-6">
+
+                        <div>
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="row">
+                                    @*@Html.Partial("~/Views/Public/Message.cshtml", (ViewMessage)ViewBag.Message)*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-danger">
+                            @ViewBag.onlineMessage
+                        </div>
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RefrenceCode, "کد پیگیری", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.RefrenceCode
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NationalCode, Resource.Lang.NationalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.NationalCode
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.subject, Resource.Lang.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.subject
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone, Resource.Lang.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.Phone
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Body, "محتوا", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.Body
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DateTimeOrder, "زمان درخواست", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.DateTimeOrder
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FileId, "دانلود فایل", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <a href="@Model.WebsiteDocument.GetUrl() ">دانلود فایل</a>
+                            </div>
+                        </div>
+
+                        <form action="/OnlineOrder/Edit" method="post" id="onlineOrderForm">
+
+                            @Html.HiddenFor(model => model.ID)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Price, Resource.Lang.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Price)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.StatusOrder, Resource.Lang.OrderStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("StatusOrder", "انتخاب کنید")
+                                </div>
+                            </div>
+
+                            <div>
+                                <button  type="submit" class="btn btn-success">@Resource.Lang.Save</button>
+                            </div>
+
+                        </form>
+
+
+
+                        <hr />
+                        <h1>اطلاعات اسپل</h1>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, "نام درخواست دهنده", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.Name
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FatherName, "نام پدر", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.FatherName
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PlaceBirth, "مکان تولد", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.PlaceBirth
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BirthDay, "تاریخ تولد به میلادی", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Model.BirthDay
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PassportFileID, "دانلود فایل", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <a href="@Model.WebsiteDocument1.GetUrl()">دانلود فایل</a>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+
+                                <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index")</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6 no-padding-left">
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+
+
+
+
+

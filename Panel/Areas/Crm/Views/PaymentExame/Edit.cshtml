@@ -1,0 +1,109 @@
+﻿@model DataLayer.Entities.AccountOrder
+@using DataLayer.Entities;
+@using DataLayer.Base;
+@{
+    ViewBag.Title = Resource.Lang.CheckOrderNumber + Model.UniqueId;
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+    AccountOrder parenOrder = Model.AccountOrder2;
+
+}
+<div class="col-sm-12">
+    <div class="card-box">
+        <a href="@Url.Action("index", new { status = Model.StatusId })" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+        <a href="@Url.Action("index", "accountordercomment", new { @id = Model.ID })" class="icon circle-icon glyphicon glyphicon-comment" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Note></a>
+        <a href="@Url.Action("print", new { @id = Model.ID })" class="icon circle-icon glyphicon glyphicon-print" target="_blank" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Print></a>
+        <a href="@Url.Action("printAddress", new { @id = Model.ID })" class="icon circle-icon glyphicon glyphicon-print" target="_blank" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.PrintAddress></a>
+        <br />
+        <br />
+        <div class="bx-shadow m-3  bg-lightdark">
+            <h5>@Resource.Lang.Sum @Resource.Lang.Factor</h5>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <strong>@Resource.Lang.TransmissionAndPackagingCosts :</strong>
+                    @if (parenOrder.Delivery != null)
+                    {
+                        <span>(</span>@parenOrder.Delivery.DeliveryType.Name<span>)</span>
+                    }
+                    <span class="text-left"> @parenOrder.DeliveryPrice.GetCurrencyFormat() @Resource.Lang.Toman</span>
+                </div>
+                <div class="col-sm-3">
+                    <strong >@Resource.Lang.SiteDiscountRate:</strong>
+
+                    <span >@parenOrder.DiscountPrice.GetCurrencyFormat() @Resource.Lang.Toman</span>
+                </div>
+                <div class="col-sm-3">
+                    @if (parenOrder.RebateId == null)
+                    {
+                        <strong class="text-left">@Resource.Lang.DiscountCode: </strong>
+                        <span>@("0") @Resource.Lang.Toman</span>
+                    }
+                    else
+                    {
+                        <strong class="text-left">@Resource.Lang.DiscountCode: (@parenOrder.Rebate.Name)</strong>
+                        <span>@(parenOrder.RebatePrice.GetCurrencyFormat()) @Resource.Lang.Toman</span>
+                    }
+                </div>
+                <div class="col-sm-3">
+                    <strong class="text-left">@Resource.Lang.Sum:</strong>
+                    <span>@parenOrder.Price.GetCurrencyFormat() @Resource.Lang.Toman</span>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                @Html.Partial("~/Areas/Crm/Views/AccountOrder/Partial.cshtml", Model)
+            </div>
+            <hr />
+
+            <div class="col-sm-6">
+
+                @using (Html.BeginForm("changestatus", "accountorder", FormMethod.Post))
+                {
+                    <input type="hidden" name="OrderId" value="@Model.ID" />
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StatusId, Resource.Lang.OrderStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8 row">
+                                @Html.DropDownList("StatusId", null, htmlAttributes: new { @class = "form-control", @codeprocess = "show-part" })
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, Resource.Lang.Description, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8 row">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                       
+                        @if (ViewBag.SmsBody != null)
+                        {
+                            <div show-part="2073" class="form-group">
+                                <label class="control-label col-md-4">@Resource.Lang.SendSMS</label>
+                                <div class="col-md-8 row">
+                                    <textarea type="text" name="SmsBody" class="form-control" autocomplete="off">@ViewBag.SmsBody</textarea>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        }
+                    </div>
+                    <div class="clear"></div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8 no-padding">
+                            <input type="submit" value=@Resource.Lang.Save class="btn btn-success" />
+                            <a class="btn btn-primary" href="@Url.Action("index", "accountordercomment", new { id = Model.ID })">@Resource.Lang.Notes (@Model.AccountOrderComment.Count)</a>
+                            <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "index", new { status = Model.StatusId })</span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+

@@ -1,0 +1,23 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+
+@model PostVm
+
+
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading_@Model.ID">
+                <button class="accordion-button btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@Model.ID"
+                        aria-controls="collapse_@Model.ID">
+                    @Model.Name
+                </button>
+            </h2>
+            <div id="collapse_@Model.ID" class="accordion-collapse collapse " aria-labelledby="heading_@Model.ID"
+                 data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>
+                        @Html.Raw(Model.Body)
+                    </p>
+                </div>
+            </div>
+        </div>

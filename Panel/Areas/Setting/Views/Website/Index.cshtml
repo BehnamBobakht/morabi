@@ -1,0 +1,56 @@
+﻿@using DataLayer.Enumarables;
+@model IEnumerable<DataLayer.ViewModels.ViewWebsite>
+@{
+    ViewBag.Title = "لیست وبسایت ها";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@section Footer {
+    @Html.Action("TableScript", "Layout", new { area = "" })
+}
+@section Script {
+    <script type="text/javascript">
+        TableManageButtons.init();
+    </script>
+}
+<div>
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <a href="@Url.Action("create")" class="icon circle-icon glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title="افزودن مورد جدید"></a>
+            <table id="datatable-buttons" class="table table-striped table-bordered has-first">
+                <thead>
+                    <tr>
+                        <th class="first">#</th>
+                        <th>عنوان</th>
+                        <th>نوع وبسایت</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.RowId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Type.Name)</td>
+                            <td>
+                                @Html.ActionLink("ویرایش", "edit", new { id = item.Id }) |
+                                @Html.ActionLink("دامنه ها", "domain", new { id = item.Id }) |
+                                @Html.ActionLink("زبان ها", "language", new { id = item.Id }) |
+
+                                @if (item.Type.Label == Enum_Code.SYSTEM_TYPE_SHOP.ToString())
+                                {
+                                    @Html.ActionLink("تنظیمات فروشگاه", "shopsetting", new { websiteId = item.Id }) <span>|</span>
+                                }
+
+                                @Html.ActionLink("قالب", "template", new { id = item.Id, @controller="website" }) |
+                                @Html.ActionLink("جزئیات", "details", new { id = item.Id }) |
+                                @Html.ActionLink("حذف", "delete", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end col -->
+</div>

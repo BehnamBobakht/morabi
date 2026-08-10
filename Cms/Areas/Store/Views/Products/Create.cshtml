@@ -1,0 +1,133 @@
+﻿@using DataLayer.Base;
+@using DataLayer.ViewModels;
+@using DataLayer.Enumarables;
+
+@{
+    Layout = Resources.Default.STORE_LAYOUT;
+
+}
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item ">@Resource.Lang.Products</li>
+                <li class="breadcrumb-item active">@Resource.Lang.New</li>
+
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <a class="btn btn-primary btn-icon float-right right_icon_toggle_btn" href="/store/products"><i class="zmdi zmdi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-sm-6">
+                <div class="header-search headerSearchFix">
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="zmdi zmdi-search"></i></span>
+                        </div>
+                        <input id="txtHeaderSearch" type="text" class="form-control timepicker" placeholder="نام محصول را وارد نمایید" data-dtp="dtp_M1uj4">
+
+                    </div>
+                    <div class="quick-search">
+                        
+                        <div class="quick-no-results " data-bind="visible: (viewModel.SearchResult.Results().length == 0 && viewModel.SearchResult.Name() != '')">
+                            <span>@Resource.Lang.NoResult</span>
+                        </div>
+                        <div class="quick-results show-result" data-bind="visible: viewModel.SearchResult.Results().length > 0">
+                            <!-- ko foreach: viewModel.SearchResult.Results -->
+                            <div class='q-result-one clearfix '>
+                                <a href="javascript://" class="" data-bind="click:addToProductList ">
+                                    <!--ko if:Picture!=null -->
+                                    <img class="img img-thumbnail" data-bind="attr: { 'src': Picture.Url }" />
+                                    <!--/ko-->
+                                    <span data-bind="text: Name"></span>
+
+                                </a>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                    <input type="hidden" name="proutput" value="@Enum_ProductOutput.SEARCH.ToString().ToLower()" />
+                    <input type="hidden" name="prpagesize" value="12" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="row clearfix file_manager">
+
+    <!--ko foreach : viewModel.Store.ProductList-->
+    <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="card">
+            <div class="file">
+                <a href="javascript:void(0);">
+                    <div class="hover">
+                        <button type="button" data-bind="click:removeFromProductList" class="btn btn-icon btn-icon-mini btn-round btn-danger">
+                            <i class="zmdi zmdi-delete"></i>
+                        </button>
+                    </div>
+                    <div class="icon">
+                        <img width="180" height="180" data-bind="attr: { 'src': Picture.Url }" />
+                    </div>
+                    <div class="file-name">
+                        <p class="m-b-5 text-muted" data-bind="text:Name"></p>
+                        @*<small>اندازه: 42 کیلوبایت <span class="date text-muted">02 نوامبر 2019</span></small>*@
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <input name="products" type="hidden" data-bind="value:ID" />
+
+    <!--/ko-->
+</div>
+<input  class="btn btn-primary" type="submit" value="اضافه کردن به لیست محصولات" />
+
+}
+@section script {
+    <script>
+        function initializeHeaderSearchScripts() {
+            $("#txtHeaderSearch").keyup(function () {
+                var searchValue = $(this).val().trim();
+                if (searchValue.length > 0) {
+                    if (searchValue == "") {
+                        $(".header-search .quick-results").hide();
+                        $(".header-search .quick-no-results").hide();
+                    } else {
+                        $(".header-search .quick-results").show();
+                        $(".header-search .quick-no-results").show();
+
+                        viewModel.SearchResult.Name(searchValue);
+                        viewModel.SearchResult.PageSize(5);
+
+                        doSearchProduct(true);
+                    }
+                } else {
+                    $(".header-search .quick-results").hide();
+                    $(".header-search .quick-no-results").hide();
+                }
+            });
+        }
+        function addToProductList(data, event) {
+            viewModel.Store.ProductList.push(data);
+        }
+        function removeFromProductList(data, event) {
+            viewModel.Store.ProductList.remove(function (item) {
+                return item.Id == data.Id;
+            })
+        }
+        initializeHeaderSearchScripts();
+    </script>
+}

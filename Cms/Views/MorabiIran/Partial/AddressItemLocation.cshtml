@@ -1,0 +1,33 @@
+@model bool
+<div class="basket-address-item">
+    <div class="basket-address">
+        <div class="basketAddress">
+            @if (Model)
+            {
+
+                <div class="pick-address p-2">
+                    <input class="inp-cbx" type="radio" name="addressIdLocation" data-bind="value:Id,checked:viewModel.Basket.Address.AddressId"  onchange="UpdateLocation();" />
+
+                </div>
+            }
+
+            <p>
+
+                <div class="profile_address_name"><span class="font-calibri" data-bind="text: NameFamily "></span></div>
+                <div class="profile_address_phone"><span class="font-calibri" data-bind="text: Mobile"></span> </div>
+            </p>
+        </div>
+       
+                <div class="profileADress"><span class="font-calibri" data-bind="text: AddressValue"></span></div>
+      
+    </div>
+ <div class="d-flex">
+     <button type="button" data-bind="click: showModalAddressForDelete" class="btn address_delete m-2" data-toggle="modal" data-target="#deletAddress_modal">
+         <i class="fa fa-trash" aria-hidden="true"></i>
+     </button>
+            <button type="button" data-bind="click: showModalAddressForEdit" class="btn  basket_address_edit m-2" data-toggle="modal" data-target="#editaddress_modal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            </button>
+
+        </div>
+</div>

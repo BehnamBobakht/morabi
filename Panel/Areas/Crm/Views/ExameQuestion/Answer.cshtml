@@ -1,0 +1,76 @@
+﻿@using DataLayer.ViewModels;
+@using DataLayer.Entities;
+
+@model List<DataLayer.Entities.ExameQuestion>
+@{
+    Exame exame = ViewBag.Exame;
+
+    ViewBag.Title = "انتخاب پاسخ های صحیح";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+<div codeprocess-back-form="/Crm/ExameQuestion?id=@exame.ID" codeprocess-ajax-form="/Crm/ExameQuestion/Answer">
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <a href="@Url.Action("index",new { id=exame.ID})" class="icon circle-icon glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="bottom" title=@Resource.Lang.Back></a>
+            <div class="form-horizontal">
+               
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="row" question-value="@item.ID">
+                            <input type="hidden" question-name="QuestionId" id="QuestionId@(item.ID)" value="@item.ID" />
+                            @if (item.Formula != "" && item.Formula != null)
+                            {
+                                <h4 class="m-2">@Html.Raw(item.Formula)</h4>
+                            }
+                            else
+                            {
+                                <h4 class="m-2">@item.Text</h4>
+                            }
+
+
+                            <div>
+                                @foreach (var answer in item.ExameAnswerItem.Where(s => s.Active != false).ToList())
+                                {
+                                    <label for="answer@(answer.ID)">
+                                        <input type="radio" @(item.AnswerId == answer.ID ? "checked" : "") question-name="Answer" value="@answer.ID" id="answer@(answer.ID)" name="btn@(item.ID)" />
+                                        @if (answer.Formula != null && answer.Formula != "")
+                                        {
+                                            <span>@Html.Raw(answer.Formula)</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@answer.Text</span>
+                                        }
+
+                                    </label>
+
+
+                                }
+                            </div>
+                            <hr />
+                        </div>
+                    }
+
+                
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value=@Resource.Lang.Register class="btn btn-success" />
+                        <span class="btn btn-inverse">@Html.ActionLink(Resource.Lang.Back, "Index", new { id = exame.ID })</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+@section Script {
+    <script>
+        initializeAnswerExamePageScript();
+    </script>
+}

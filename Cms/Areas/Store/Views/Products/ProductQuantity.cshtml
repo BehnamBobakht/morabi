@@ -1,0 +1,150 @@
+﻿@using DataLayer.Entities;
+@using DataLayer.Base;
+
+@model StoreProduct
+
+@{
+    ViewBag.Title = Resource.Lang.Variety;
+}
+@section script{
+    <script>
+        $(".btn-edit").click(function () {
+            var elm = $(this);
+            var productquantityId = elm.attr("data-product-quantity-id");
+            var count = elm.attr("data-count");
+            var price = elm.attr("data-price");
+            var warranty = elm.attr("data-warranty");
+            $(".input-box [name=count]").val(count);
+            $(".input-box [name=price]").val(price);
+            $(".input-box [name=warranty]").val(warranty);
+            $(".input-box select[name='productQuantityId']").val(productquantityId);
+        })
+    </script>
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="zmdi zmdi-home"></i> @Resource.Lang.Home</a></li>
+                <li class="breadcrumb-item">@Resource.Lang.Product</li>
+                <li class="breadcrumb-item ">@Resource.Lang.Variety</li>
+                <li class="breadcrumb-item active">@Model.Product.Name</li>
+            </ul>
+            <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
+            <a class="btn btn-primary btn-icon float-right right_icon_toggle_btn" href="/store/products"><i class="zmdi zmdi-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card project_list">
+                @using (Html.BeginForm())
+                {
+                    @*@Html.AntiForgeryToken()*@
+                    @Html.Hidden("StoreProductId", Model.ID)
+                    <div class="row clearfix input-box">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <select class="form-control" id="productQuantityId" name="productQuantityId">
+                                    @if (Model.Product.ProductQuantity.Any() && (Model.Product.ProductQuantity.First().ColorId != null || Model.Product.ProductQuantity.First().SizeId != null || Model.Product.ProductQuantity.First().OptionItemId != null))
+                                    {
+                                        foreach (var item in Model.Product.ProductQuantity)
+                                        {
+                                            var colorName = item.ColorId.HasValue ? Resource.Lang.Color + " : " + item.Color.Name : "";
+                                            var size = item.SizeId.HasValue ? " | " + Resource.Lang.Size + " : " + item.Size.Name : "";
+                                            var option = item.OptionItemId.HasValue ? " | " + item.ProductOptionItem.ProductOption.Name + " : " + item.ProductOptionItem.Value : "";
+                                            <option value="@item.ID"> @colorName @size  @option</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@Model.Product.ProductQuantity.First().ID"> @Model.Product.GetName()</option>
+
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input type="text" autocomplete="off" name="count" class="form-control" placeholder="@Resource.Lang.Count">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input type="text" name="price" autocomplete="off" class="form-control" placeholder="@Resource.Lang.Price">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input type="text" name="warranty" autocomplete="off" class="form-control" placeholder="@Resource.Lang.Warranty">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" value="@Resource.Lang.New / @Resource.Lang.Edit" />
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <div class="table-responsive">
+                    <table class="table table-hover c_table theme-color">
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">@Resource.Lang.Product</th>
+                                <th>@Resource.Lang.Variety </th>
+                                <th>@Resource.Lang.Quantity </th>
+                                <th>@Resource.Lang.Price (@Resource.Lang.Corrency)</th>
+                                @*<th>@Resource.Lang.Discount (@Resource.Lang.Corrency)</th>*@
+                                <th>@Resource.Lang.Warranty</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.StoreProductQuantity.OrderBy(s => s.StoreProduct.ProductId))
+                            {
+                                var size = item.ProductQuantity.SizeId.HasValue ? item.ProductQuantity.Size.GetName() : "-";
+                                var color = item.ProductQuantity.ColorId.HasValue ? "#" + item.ProductQuantity.Color.HexValue : "";
+                                var colorName = item.ProductQuantity.ColorId.HasValue ? item.ProductQuantity.Color.GetName() : "-";
+                                var option = item.ProductQuantity.OptionItemId.HasValue ? " | " + item.ProductQuantity.ProductOptionItem.ProductOption.Name + " : " + item.ProductQuantity.ProductOptionItem.Value : "";
+
+                                <tr>
+                                    <td>
+                                        <strong>@item.StoreProduct.Product.GetName()</strong><br>
+                                    </td>
+
+                                    <td>@Resource.Lang.Color : @colorName <span style="background: @color" class="badge "> </span>| @Resource.Lang.Size : @size | @option</td>
+
+                                    <td>
+                                        @item.Count
+                                        <div class="progress">
+                                            <div class="progress-bar l-coral" role="progressbar" aria-valuenow="@(item.Count*100 / 20)" aria-valuemin="0" aria-valuemax="20" style="width: @(item.Count*100 / 20)%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>@item.Price.GetCurrencyFormat()</td>
+                                    @*<td>@item.DiscountValue.GetCurrencyFormat()</td>*@
+
+                                    <td>@item.Warranty</td>
+                                    <td>
+                                        <a data-product-quantity-id="@item.ProductQuantityId" data-count="@item.Count" data-price="@item.Price" data-warranty="@item.Warranty" class="btn-edit btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-edit"></i></a>
+                                        <a href="@Url.Action("PriceRange","Products",new {Area ="Store",StoreProductQuantityId=item.ID })" class="btn-edit btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-money-box"></i></a>
+
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

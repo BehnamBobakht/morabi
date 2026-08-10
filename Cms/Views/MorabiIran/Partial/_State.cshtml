@@ -1,0 +1,8 @@
+﻿<div class="form-group">
+    <select class="form-control" onchange="stateDropProfile()" name="StateId" id="selectedStateProfile"  @*data-bind="value:viewModel.Account.StateId"*@ >
+        <option value="0">@Resource.Lang.Select</option>
+        <!--ko foreach: viewModel.State.StateList() -->
+        <option data-bind="value:Id , text:Name"></option>
+        <!--/ko-->
+    </select>
+</div>

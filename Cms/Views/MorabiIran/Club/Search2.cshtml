@@ -1,0 +1,15 @@
+﻿﻿@using DataLayer.Entities;
+@using DataLayer.Base;
+@using DataLayer.Enumarables;
+
+@model List<Clubs>
+
+
+@foreach (var item in Model)
+{
+<div class="col-sm-3">
+
+    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Club/ClubItem.cshtml", item)
+
+</div>
+}

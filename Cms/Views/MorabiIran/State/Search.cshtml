@@ -1,0 +1,16 @@
+﻿@using DataLayer.Base;
+@using DataLayer.Entities;
+@model List<State>
+
+<select name="StateId" id="StateId" class="form-control">
+    <option value="0">استان خود را انتخاب نمایید</option>
+    @foreach (var item in Model)
+    {
+
+        <option value="@item.ID">
+            @item.Name
+        </option>
+    }
+</select>
+
+        

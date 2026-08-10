@@ -1,0 +1,99 @@
+﻿
+
+<style>
+    .map-contaner {
+        height: 250px;
+        width: auto;
+        position: relative;
+        margin-bottom: 5px;
+    }
+
+        .map-contaner .location-img {
+            position: absolute;
+            z-index: 100;
+            top: 50%;
+            left: 50%;
+            z-index: 4000;
+            margin: -43px 0 0 -12px;
+        }
+
+        .map-contaner .map {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+</style>
+<link href='https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.css' rel='stylesheet' />
+<script src='https://api.cedarmaps.com/cedarmaps.js/v1.8.1/cedarmaps.js'></script>
+
+<div class="map-contaner">
+    <!-- علامت لوکیشن وسط نقشه-->
+    <img class="location-img" src="~/Assets/plugins/cedarmaps/demos/img/place-holder.png">
+    <!-- محل لود نقشه-->
+    <div id='map' class='map'></div>
+</div>
+<script>
+
+    try {
+        //توکن گرفته شده از سایت سیدار مپ ، به دلیل محدودیت فراخوانی برای هر سایت از توکن متفاوت استفاده کنید
+        L.cedarmaps.accessToken = "d2a68b8e5b64b0dcf303e023935edda196c55a18";
+    } catch (err) {
+        throw new Error('You need to get an access token to be able to use cedarmaps SDK. ' +
+            'Send us an email to <support@cedarmaps.com>');
+    }
+
+    var tileJSONUrl = 'https://api.cedarmaps.com/v1/tiles/cedarmaps.streets.json?access_token=' + L.cedarmaps.accessToken,
+        marker;
+    //اگر بخواهیم لوکیشن اولیه به نقشه بدهیم
+    var defaultLat =document.getElementsByName("Latitude")[0].value;
+    var defaultLng =document.getElementsByName("Longitude")[0].value;
+    //اگر لوکیشن اولیه نداشتیم از   جی پی اس   لوکیشن بگیر
+    if (!defaultLat || !defaultLng) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+
+        function showPosition(position) {
+            defaultLat = position.coords.latitude;
+            defaultLng = position.coords.longitude;
+        }
+    }
+    // اگه دو گزینه بالا نشد مختصات اولیه رو میدان ازادی بگیر
+    if (!defaultLat || !defaultLng) {
+         defaultLat = 35.69972240678235;
+            defaultLng = 51.337491850000006;
+            }
+    
+    
+
+
+    // Initializing our map
+    var map = L.cedarmaps.map('map', tileJSONUrl, {
+        scrollWheelZoom: true
+    }).setView([defaultLat, defaultLng], 15);
+    // تنظیمات سرچ روی نقشه
+    var geocoderControl = L.cedarmaps.geocoderControl('cedarmaps.streets', {
+        keepOpen: true,
+        autocomplete: true
+    });
+    map.addControl(geocoderControl);
+    //زمانی که کاربر برروی دراپ دان مکانی که سرچ کرده کلیک میکنه
+    geocoderControl.on('select', function (item) {
+        $(".leaflet-control-mapbox-geocoder-results").html("");
+    });
+
+    var geocoder = L.cedarmaps.geocoder('cedarmaps.streets');
+    // زمانی که کاربر در نقشه پیمایش میکنه بلافاصله در تکس باکس نشون بده
+    map.on('moveend', function (e) {
+        //مختصات مرکز نقشه 
+        var centerLatLng = map.getCenter();
+        //نوشتن عرض جغرافیایی در تکست باکس
+        $("[name=Latitude]").val(centerLatLng.lat);
+                //نوشتن طول جغرافیایی در تکست باکس
+       $("[name=Longitude]").val(centerLatLng.lng);
+    });
+</script>
+
+
