@@ -10,7 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
-//using OfficeOpenXml;
+using OfficeOpenXml;
 using System.Data;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
@@ -411,6 +411,8 @@ namespace Panel.Areas.Store.Controllers
         {
             _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.Product_New);
 
+          
+            
             bool status = true;
             if (string.IsNullOrEmpty(productVm.Name))
             {
@@ -633,6 +635,9 @@ namespace Panel.Areas.Store.Controllers
         {
             _context.Permission.CheckPagePermission(_context.SiteUser.GetCurrentUser(), Enum_Permission.Product_Edit);
 
+            // Keep the selected course end date valid through the end of that day.
+            
+         
             bool status = true;
             if (string.IsNullOrEmpty(productVm.Name))
             {
@@ -719,45 +724,45 @@ namespace Panel.Areas.Store.Controllers
             var dataResult = model;
             if (!dataResult.Any()) return;
 
-            //var excelPackage = new ExcelPackage();
-            //var sheet = excelPackage.Workbook.Worksheets.Add(Resource.Lang.StoreProducts);
+            var excelPackage = new ExcelPackage();
+            var sheet = excelPackage.Workbook.Worksheets.Add(Resource.Lang.StoreProducts);
 
-            //var row = 1;
-            //sheet.Cells[$"A{row}"].Value = "آیدی";
+            var row = 1;
+            sheet.Cells[$"A{row}"].Value = "آیدی";
 
-            //sheet.Cells[$"B{row}"].Value = "آیدی فروشنده";
-            //sheet.Cells[$"C{row}"].Value = "آیدی محصول";
+            sheet.Cells[$"B{row}"].Value = "آیدی فروشنده";
+            sheet.Cells[$"C{row}"].Value = "آیدی محصول";
 
-            //sheet.Cells[$"D{row}"].Value = Resource.Lang.ProductName;
+            sheet.Cells[$"D{row}"].Value = Resource.Lang.ProductName;
 
-            //sheet.Cells[$"E{row}"].Value = $"{Resource.Lang.Price} ({Resource.Lang.Toman})";
-            //sheet.Cells[$"F{row}"].Value = Resource.Lang.Count;
+            sheet.Cells[$"E{row}"].Value = $"{Resource.Lang.Price} ({Resource.Lang.Toman})";
+            sheet.Cells[$"F{row}"].Value = Resource.Lang.Count;
 
-            //foreach (var item in dataResult)
-            //{
+            foreach (var item in dataResult)
+            {
 
-            //    foreach (var spq in item.ProductQuantities)
-            //    {
-            //        row++;
-            //        sheet.Cells[$"A{row}"].Value = spq.ID;
+                foreach (var spq in item.ProductQuantities)
+                {
+                    row++;
+                    sheet.Cells[$"A{row}"].Value = spq.ID;
 
-            //        sheet.Cells[$"B{row}"].Value = item.StoreId;
-            //        sheet.Cells[$"C{row}"].Value = item.ProductId;
+                    sheet.Cells[$"B{row}"].Value = item.StoreId;
+                    sheet.Cells[$"C{row}"].Value = item.ProductId;
 
-            //        sheet.Cells[$"D{row}"].Value = spq.ProductName;
+                    sheet.Cells[$"D{row}"].Value = spq.ProductName;
 
-            //        sheet.Cells[$"E{row}"].Value = spq.Price;
-            //        sheet.Cells[$"F{row}"].Value = spq.Count;
-            //    }
+                    sheet.Cells[$"E{row}"].Value = spq.Price;
+                    sheet.Cells[$"F{row}"].Value = spq.Count;
+                }
 
-            //}
+            }
 
-            //sheet.Cells["A:AZ"].AutoFitColumns();
-            //Response.Clear();
-            //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            //Response.AppendHeader("Content-Disposition", "attachment; filename=StoreProducts.xlsx");
-            //Response.BinaryWrite(excelPackage.GetAsByteArray());
-            //Response.End();
+            sheet.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=StoreProducts.xlsx");
+            Response.BinaryWrite(excelPackage.GetAsByteArray());
+            Response.End();
         }
         public ActionResult UpdateEuroPrice(int price)
         {
@@ -837,48 +842,48 @@ namespace Panel.Areas.Store.Controllers
             //var fileBytes = new byte[file.ContentLength];
             //var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
 
-            //using (var package = new ExcelPackage(file.InputStream))
-            //{
-            //    var currentSheet = package.Workbook.Worksheets;
-            //    var workSheet = currentSheet.First();
-            //    var noOfCol = workSheet.Dimension.End.Column;
-            //    var noOfRow = workSheet.Dimension.End.Row;
-            //    for (var rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
-            //    {
-            //        var id = (workSheet.Cells[rowIterator, 1].Value ?? "").ToString();
+            using (var package = new ExcelPackage(file.InputStream))
+            {
+                var currentSheet = package.Workbook.Worksheets;
+                var workSheet = currentSheet.First();
+                var noOfCol = workSheet.Dimension.End.Column;
+                var noOfRow = workSheet.Dimension.End.Row;
+                for (var rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                {
+                    var id = (workSheet.Cells[rowIterator, 1].Value ?? "").ToString();
 
-            //        var storeId = (workSheet.Cells[rowIterator, 2].Value ?? "").ToString();
-            //        var productId = (workSheet.Cells[rowIterator, 3].Value ?? "").ToString();
-            //        var price = (workSheet.Cells[rowIterator, 5].Value ?? 0).ToString();
-            //        var count = (workSheet.Cells[rowIterator, 6].Value ?? 0).ToString();
-            //        var model = new ProductToStoreVm();
+                    var storeId = (workSheet.Cells[rowIterator, 2].Value ?? "").ToString();
+                    var productId = (workSheet.Cells[rowIterator, 3].Value ?? "").ToString();
+                    var price = (workSheet.Cells[rowIterator, 5].Value ?? 0).ToString();
+                    var count = (workSheet.Cells[rowIterator, 6].Value ?? 0).ToString();
+                    var model = new ProductToStoreVm();
 
-            //        var ProductQuantity = new ProductQuantityVm();
-            //        var list = new List<ProductQuantityVm>();
+                    var ProductQuantity = new ProductQuantityVm();
+                    var list = new List<ProductQuantityVm>();
 
-            //        if (storeId != null && productId != null && id != null)
-            //        {
-            //            model.ProductId = int.Parse(productId);
-            //            ProductQuantity.ProductId = int.Parse(productId);
+                    if (storeId != null && productId != null && id != null)
+                    {
+                        model.ProductId = int.Parse(productId);
+                        ProductQuantity.ProductId = int.Parse(productId);
 
-            //            model.StoreId = int.Parse(storeId);
-            //            ProductQuantity.ID = int.Parse(id);
-            //            if (price != null && count != null)
-            //            {
-            //                ProductQuantity.Count = int.Parse(count);
-            //                ProductQuantity.Price = int.Parse(price);
-            //                list.Add(ProductQuantity);
-            //                model.ProductQuantities = list;
-            //            }
-
-
-            //            _context.ProductQuantity.AddProductToStore(unitOfWork: _context, productToStore: model);
-
-            //        }
-            //    }
+                        model.StoreId = int.Parse(storeId);
+                        ProductQuantity.ID = int.Parse(id);
+                        if (price != null && count != null)
+                        {
+                            ProductQuantity.Count = int.Parse(count);
+                            ProductQuantity.Price = int.Parse(price);
+                            list.Add(ProductQuantity);
+                            model.ProductQuantities = list;
+                        }
 
 
-            //}
+                        _context.ProductQuantity.AddProductToStore(unitOfWork: _context, productToStore: model);
+
+                    }
+                }
+
+
+            }
             return RedirectToAction("Index");
         }
         public ActionResult AddToStore(int productId, int? storeId)

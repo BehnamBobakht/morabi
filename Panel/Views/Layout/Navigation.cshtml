@@ -225,6 +225,10 @@
                     @if (Model.Contains(Enum_Permission.Product.ToString()))
                     {
                         <li>@Html.ActionLink(Resource.Lang.Products, "index", new { @area = "store", @controller = "product" })</li>
+                        <li>@Html.ActionLink("ویدئوهای دوره‌ها", "index", new { @area = "store", @controller = "MediaVideo" })</li>
+                        <li>@Html.ActionLink("PDFهای دوره‌ها", "index", new { @area = "store", @controller = "CourseDocument" })</li>
+                        <li>@Html.ActionLink("ویدئوهای خصوصی", "Collections", new { @area = "store", @controller = "MediaVideo" })</li>
+                        <li>@Html.ActionLink("افزودن دستی کاربران به دوره", "index", new { @area = "store", @controller = "MediaEnrollment" })</li>
                     }
                     @if (Model.Contains(Enum_Permission.Shop_Profile.ToString()))
                     {

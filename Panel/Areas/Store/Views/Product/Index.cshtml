@@ -157,14 +157,15 @@
                                 <td>
                                     @Html.ActionLink(Resource.Lang.Edit, "edit", new { id = item.ID }) |
                                     @Html.ActionLink("لینک معرف", "InterUser", new { productidInter = item.ID }) |
-                                    @Html.ActionLink("انتخاب سوالات", "QuestionRegister", new { id = item.ID }) |
+@Html.ActionLink("انتخاب سوالات", "QuestionRegister", new { id = item.ID }) |
 
                                     @Html.ActionLink("پرینت گواهی", "PrintReport", new { id = item.ID }) |
                                     @Html.ActionLink("درخواست گواهی", "PaymentCertificate", new { id = item.ID }) |
                                     @Html.ActionLink("پرینت کل گواهی فیزیکی", "PrintReportCertificateAllNumber", new { id = item.ID }) |
                                     @Html.ActionLink("پرینت گواهی فیزیکی", "PrintReportCertificate", new { id = item.ID }) |
-                                    @Html.ActionLink("لیست گواهی فیزیکی", "ExcelCertificate", new { id = item.ID }) |
-                                    @Html.ActionLink("لیست گواهی آنلاین", "ExcelCertificateOnline", new { id = item.ID }) |
+ @Html.ActionLink("لیست گواهی فیزیکی", "ExcelCertificate", new { id = item.ID }) |
+ @Html.ActionLink("لیست گواهی آنلاین", "ExcelCertificateOnline", new { id = item.ID }) |
+
 
                                     @if (setting.HasQuantity)
                                     {

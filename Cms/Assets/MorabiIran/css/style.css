@@ -6964,3 +6964,11 @@ font-size: 160%;
 	left: 10px;
 	z-index: 1;
 }
+.new-face{
+
+  direction: rtl;
+  font-family: "Vazirmatn", "IRANYekan", "IRANSans", Tahoma, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}

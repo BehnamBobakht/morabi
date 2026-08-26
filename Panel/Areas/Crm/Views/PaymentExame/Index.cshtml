@@ -2,6 +2,7 @@
 @using DataLayer.Entities;
 @using DataLayer.Enumarables;
 @using DataLayer.ViewModels;
+@using PublicDate;
 @model IEnumerable<DataLayer.Entities.PaymentExame>
 @{
     ViewBag.Title = "آزمون مجدد";
@@ -118,7 +119,7 @@
                             </td>
                             <td>@item.Code.Name</td>
 
-                            <td>@item.Datetime.ToPersianWithTime().ToPersian()</td>
+                            <td>@item.Datetime.ConvertToPersianDateTime().ToPersian()</td>
 
                             <td>@item.RefNumber</td>
 

@@ -11,17 +11,17 @@
 }
 @section Header {
     <link rel="stylesheet" type="text/css" href="~/assets/plugins/fileuploads/css/dropify.min.css" />
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6gthJH1gedfNoHYxdVszi7us5_8mpTo&libraries=places&callback=initAutocomplete&language=fa"></script>
+    @*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo6gthJH1gedfNoHYxdVszi7us5_8mpTo&libraries=places&callback=initAutocomplete&language=fa"></script>
     <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
-    <link href="~/Assets/plugins/location-picker-master/src/location-picker.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link href="~/Assets/plugins/location-picker-master/src/location-picker.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="~/assets/css/bootstrap-select.css" />
 
 }
 @section Script {
     <script src="~/assets/plugins/tinymce/tinymce.min.js"></script>
     <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
-    <script src="~/Assets/plugins/location-picker-master/src/location-picker.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+   @* <script src="~/Assets/plugins/location-picker-master/src/location-picker.js"></script>*@
+    <script src="~/assets/js/bootstrap-select.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -766,14 +766,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 ">
-                                    <div class="form-group">
-                                        @Html.Label("نقشه", htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.Partial("~/Views/Partial/LocationPicker.cshtml")
-                                        </div>
-                                    </div>
-                                </div>
+
+                            @*<div class="col-sm-12 ">
+    <div class="form-group">
+        @Html.Label("نقشه", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.Partial("~/Views/Partial/LocationPicker.cshtml")
+        </div>
+    </div>
+</div>*@
                             </div>
                         </div>
                     }

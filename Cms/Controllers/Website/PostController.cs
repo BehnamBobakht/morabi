@@ -8,7 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Cms.Controllers.Website;
-//using OfficeOpenXml;
+using OfficeOpenXml;
 using System.Net.Http;
 using DataLayer.Api;
 
@@ -498,33 +498,33 @@ namespace Cms.Controllers
                     var fs = System.IO.File.OpenRead(path);
                     var bytes = new byte[fs.Length];
                     fs.Read(bytes, 0, Convert.ToInt32(fs.Length));
-                    //using (var package = new ExcelPackage(fs))
-                    //{
-                    //    var currentSheet = package.Workbook.Worksheets;
-                    //    var workSheet = currentSheet.First();
-                    //    var row = Convert.ToInt32(workSheet.Cells[1, 1].Value);
-                    //    var col = Convert.ToInt32(workSheet.Cells[1, 2].Value);
-                    //    var model = new string[row][];
-                    //    for (int i = 1; i <= row; i++)
-                    //    {
-                    //        model[i - 1] = new string[col];
+                    using (var package = new ExcelPackage(fs))
+                    {
+                        var currentSheet = package.Workbook.Worksheets;
+                        var workSheet = currentSheet.First();
+                        var row = Convert.ToInt32(workSheet.Cells[1, 1].Value);
+                        var col = Convert.ToInt32(workSheet.Cells[1, 2].Value);
+                        var model = new string[row][];
+                        for (int i = 1; i <= row; i++)
+                        {
+                            model[i - 1] = new string[col];
 
-                    //        int j = 0;
-                    //        for (; j < col; j++)
-                    //        {
-                    //            string value = workSheet.Cells[i + 1, j + 1].Value?.ToString();
-                    //            if (value == null)
-                    //            {
-                    //                value = "";
-                    //            }
-                    //            model[i - 1][j] = value;
-                    //        }
-                    //    }
+                            int j = 0;
+                            for (; j < col; j++)
+                            {
+                                string value = workSheet.Cells[i + 1, j + 1].Value?.ToString();
+                                if (value == null)
+                                {
+                                    value = "";
+                                }
+                                model[i - 1][j] = value;
+                            }
+                        }
 
-                    //    var a = model;
-                    //    return BaseController.GetView(this, Enum_ResultType.RESULT_TYPE_VIEWNAME, viewName, model);
+                        var a = model;
+                        return BaseController.GetView(this, Enum_ResultType.RESULT_TYPE_VIEWNAME, viewName, model);
 
-                    //}
+                    }
                 }
             }
 

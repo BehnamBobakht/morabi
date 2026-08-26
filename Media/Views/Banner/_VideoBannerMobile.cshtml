@@ -1,0 +1,18 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <section class="my-videos-hero video-banner-mobile">
+            <img class="hero-banner-image"
+                 src="@item.Picture.GetUrl()"
+                 alt="@item.Name"
+                 loading="eager" />
+            <div class="container my-videos-hero-inner">
+              
+            </div>
+        </section>
+    }
+}

@@ -1,0 +1,31 @@
+﻿@using System
+@using System.Linq
+@model IEnumerable<Media.Models.MediaCardViewModel>
+@{ ViewBag.Title = "ویدئوهای خصوصی من"; }
+
+
+@Html.Action("Search", "Banner", new { bacategory = "VideoBanner", baSize = 1, baviewName = "_VideoBanner" })
+@Html.Action("Search", "Banner", new { bacategory = "VideoBannerMobile", baSize = 1, baviewName = "_VideoBannerMobile" })
+<section class="container course-section">
+    <div class="section-heading"><h1>مجموعه‌های اختصاصی من</h1></div>
+    <div class="course-grid private-course-grid">
+        @foreach (var item in Model)
+        {
+            <article class="course-card progress-course-card">
+                <a class="course-image" href="@Url.Action("Watch", "MyVideos", new { id = item.ID })">
+                    <img src="@(string.IsNullOrWhiteSpace(item.ImageUrl) ? Url.Content("~/Assets/images/img1.png") : Url.Content(item.ImageUrl))" alt="@item.Title" loading="lazy" />
+                    <span class="lesson-count">@item.SessionCount جلسه</span>
+                </a>
+                <div class="course-card-body">
+                    <h3>@item.Title</h3>
+                    <p>@item.CompletedCount از @item.SessionCount جلسه مشاهده‌شده</p>
+                    <a class="primary-button" href="@Url.Action("Watch", "MyVideos", new { id = item.ID })">مشاهده مجموعه</a>
+                </div>
+            </article>
+        }
+        @if (!Model.Any())
+        {
+            <div class="empty-state">موردی برای نمایش وجود ندارد.</div>
+        }
+    </div>
+</section>

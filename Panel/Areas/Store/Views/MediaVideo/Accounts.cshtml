@@ -1,0 +1,81 @@
+﻿@model Panel.Areas.Store.Models.CollectionAccountsModel
+@{
+    ViewBag.Title = "کاربران مجموعه «" + Model.Collection.Title + "»";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var totalPages = Math.Max(1, (int)Math.Ceiling(Model.TotalCount / (double)Model.PageSize));
+}
+<div class="col-sm-12">
+    @if (TempData["MediaSuccess"] != null)
+    {
+        <div class="alert alert-success">@TempData["MediaSuccess"]</div>
+    }
+    <div class="card-box">
+        <form method="get" class="row">
+            <input type="hidden" name="id" value="@Model.Collection.ID" />
+            <div class="form-group col-md-9">
+                <label>جست‌وجوی نام، موبایل یا کد ملی</label>
+                <input class="form-control" name="search" value="@Model.Search" autocomplete="off" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>&nbsp;</label>
+                <button class="btn btn-primary form-control">جست‌وجو</button>
+            </div>
+        </form>
+        <p class="text-muted">بدون جست‌وجو فقط کاربران دارای دسترسی نمایش داده می‌شوند.</p>
+
+        <form method="post" action="@Url.Action("AssignAccounts")">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="collectionId" value="@Model.Collection.ID" />
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr><th></th><th>شناسه</th><th>نام</th><th>موبایل</th><th>کد ملی</th><th>وضعیت</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.Accounts)
+                    {
+                        <tr>
+                            <td>
+                                @if (!item.Assigned)
+                                {
+                                    <input type="checkbox" name="accountIds" value="@item.AccountId" />
+                                }
+                            </td>
+                            <td>@item.AccountId</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Mobile</td>
+                            <td>@item.NationalCode</td>
+                            <td>@(item.Assigned ? "دارای دسترسی" : "بدون دسترسی")</td>
+                            <td>
+                                @if (item.Assigned)
+                                {
+                                    <button type="submit" class="btn btn-danger btn-xs"
+                                            formaction="@Url.Action("RemoveAccount")"
+                                            name="accountId" value="@item.AccountId"
+                                            onclick="return confirm('دسترسی این کاربر لغو شود؟')">
+                                        لغو دسترسی
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Accounts.Any())
+                    {
+                        <tr><td colspan="7" class="text-center">کاربری پیدا نشد.</td></tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            @if (totalPages > 1)
+            {
+                <ul class="pagination">
+                @for (var p = 1; p <= totalPages; p++)
+                {
+                    <li class="@(p == Model.PageIndex ? "active" : "")"><a href="@Url.Action("Accounts", new { id = Model.Collection.ID, search = Model.Search, page = p })">@p</a></li>
+                }
+                </ul>
+            }            <button class="btn btn-success">اعطای دسترسی به کاربران انتخاب‌شده</button>
+            <a class="btn btn-default" href="@Url.Action("Collections")">بازگشت</a>
+        </form>
+    </div>
+</div>

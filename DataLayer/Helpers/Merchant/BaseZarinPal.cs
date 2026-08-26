@@ -1,7 +1,6 @@
 ﻿using DataLayer.Base;
 using DataLayer.Entities;
 using DataLayer.Enumarables;
-using DataLayer.Services.OnlinePayments.NextPay;
 using DataLayer.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace DataLayer.Helpers.Merchant
             try
             {
                 string host = string.IsNullOrEmpty(payment.Merchant.ExternalInfo2) ? BaseWebsite.ShopUrl : payment.Merchant.ExternalInfo2;
-                string redirectAddress = host + "payment/callback?id=" + payment.ID;
+                string redirectAddress = host + "payment/callback?id=" + payment.ID; 
                 string amount = (payment.Amount * 10).ToString();
 
                 ZarinPal.ZarinPal zarinpal = ZarinPal.ZarinPal.Get();
@@ -175,28 +174,28 @@ namespace DataLayer.Helpers.Merchant
                     payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
                 }
 
-                //var zarinpal = ZarinPal.ZarinPal.Get();
-                //var pv = new PaymentVerification(payment.Merchant.MerchantId, (long)payment.Amount, Authority);
-                //var verificationResponse = zarinpal.InvokePaymentVerification(pv);
-                //if (verificationResponse.Status == 100)
-                //{
-                //    try
-                //    {
-                //        payment.RefNumber = verificationResponse.RefID;
-                //        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SUCCESSFUL);
-                //        //_context.Payment.DoPaymentServices(_context, payment);
-                //        BaseCart.DoPaymentCallBack(_context, payment);
-                //        _context.Payment.Save();
-                //    }
-                //    catch (Exception)
-                //    {
-                //        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SERVICE_FAILED);
-                //    }
-                //}
-                //else
-                //{
-                //    payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
-                //}
+                var zarinpal = ZarinPal.ZarinPal.Get();
+                var pv = new PaymentVerification(payment.Merchant.MerchantId, (long)payment.Amount, Authority);
+                var verificationResponse = zarinpal.InvokePaymentVerification(pv);
+                if (verificationResponse.Status == 100)
+                {
+                    try
+                    {
+                        payment.RefNumber = verificationResponse.RefID;
+                        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SUCCESSFUL);
+                        //_context.Payment.DoPaymentServices(_context, payment);
+                        BaseCart.DoPaymentCallBack(_context, payment);
+                        _context.Payment.Save();
+                    }
+                    catch (Exception)
+                    {
+                        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SERVICE_FAILED);
+                    }
+                }
+                else
+                {
+                    payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
+                }
                 _context.Save();
                 payment = _context.Payment.GetById(payment.ID);
                 return payment;
@@ -218,28 +217,28 @@ namespace DataLayer.Helpers.Merchant
                     payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
                 }
 
-                //var zarinpal = ZarinPal.ZarinPal.Get();
-                //var pv = new PaymentVerification(payment.Merchant.MerchantId, (long)payment.Amount, Authority);
-                //var verificationResponse = zarinpal.InvokePaymentVerification(pv);
-                //if (verificationResponse.Status == 100)
-                //{
-                //    try
-                //    {
-                //        payment.RefNumber = verificationResponse.RefID;
-                //        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SUCCESSFUL);
-                //        //_context.Payment.DoPaymentServices(_context, payment);
-                //        BaseCart.DoPaymentCallBack2(_context, payment);
-                //        _context.Payment.Save();
-                //    }
-                //    catch (Exception)
-                //    {
-                //        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SERVICE_FAILED);
-                //    }
-                //}
-                //else
-                //{
-                //    payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
-                //}
+                var zarinpal = ZarinPal.ZarinPal.Get();
+                var pv = new PaymentVerification(payment.Merchant.MerchantId, (long)payment.Amount, Authority);
+                var verificationResponse = zarinpal.InvokePaymentVerification(pv);
+                if (verificationResponse.Status == 100)
+                {
+                    try
+                    {
+                        payment.RefNumber = verificationResponse.RefID;
+                        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SUCCESSFUL);
+                        //_context.Payment.DoPaymentServices(_context, payment);
+                        BaseCart.DoPaymentCallBack2(_context, payment);
+                        _context.Payment.Save();
+                    }
+                    catch (Exception)
+                    {
+                        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SERVICE_FAILED);
+                    }
+                }
+                else
+                {
+                    payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
+                }
                 _context.Save();
                 payment = _context.PaymentCertificate.GetById(payment.ID);
                 return payment;
@@ -261,28 +260,28 @@ namespace DataLayer.Helpers.Merchant
                     payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
                 }
 
-                //var zarinpal = ZarinPal.ZarinPal.Get();
-                //var pv = new PaymentVerification(payment.Merchant.MerchantId, (long)payment.Amount, Authority);
-                //var verificationResponse = zarinpal.InvokePaymentVerification(pv);
-                //if (verificationResponse.Status == 100)
-                //{
-                //    try
-                //    {
-                //        payment.RefNumber = verificationResponse.RefID;
-                //        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SUCCESSFUL);
-                //        //_context.Payment.DoPaymentServices(_context, payment);
-                //        BaseCart.DoPaymentCallBack3(_context, payment);
-                //        _context.Payment.Save();
-                //    }
-                //    catch (Exception)
-                //    {
-                //        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SERVICE_FAILED);
-                //    }
-                //}
-                //else
-                //{
-                //    payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
-                //}
+                var zarinpal = ZarinPal.ZarinPal.Get();
+                var pv = new PaymentVerification(payment.Merchant.MerchantId, (long)payment.Amount, Authority);
+                var verificationResponse = zarinpal.InvokePaymentVerification(pv);
+                if (verificationResponse.Status == 100)
+                {
+                    try
+                    {
+                        payment.RefNumber = verificationResponse.RefID;
+                        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SUCCESSFUL);
+                        //_context.Payment.DoPaymentServices(_context, payment);
+                        BaseCart.DoPaymentCallBack3(_context, payment);
+                        _context.Payment.Save();
+                    }
+                    catch (Exception)
+                    {
+                        payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_SERVICE_FAILED);
+                    }
+                }
+                else
+                {
+                    payment.StatusId = _context.Code.GetIdByLabel(Enum_Code.PAYMENT_STATUS_VERIFY_ERROR);
+                }
                 _context.Save();
                 payment = _context.PaymentExame.GetById(payment.ID);
                 return payment;

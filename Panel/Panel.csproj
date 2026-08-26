@@ -16,7 +16,7 @@
     <RootNamespace>Panel</RootNamespace>
     <AssemblyName>Panel</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -66,7 +66,7 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>C:\Users\Behnam\Desktop\EPPlus.dll</HintPath>
+      <HintPath>..\packages\Exel\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
@@ -75,8 +75,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.IO.RecyclableMemoryStream">
-      <HintPath>C:\Users\Behnam\Desktop\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Exel\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -107,6 +108,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web">
       <Private>True</Private>
@@ -2437,6 +2439,11 @@
     <Compile Include="Areas\Store\Controllers\DiscountController.cs" />
     <Compile Include="Areas\Store\Controllers\PriceRangeController.cs" />
     <Compile Include="Areas\Store\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Store\Controllers\MediaEnrollmentController.cs" />
+    <Compile Include="Areas\Store\Controllers\MediaVideoController.cs" />
+      <Compile Include="Areas\Store\Controllers\CourseDocumentController.cs" />
+      <Compile Include="Areas\Store\Models\CourseDocumentModels.cs" />
+    <Compile Include="Areas\Store\Models\MediaVideoModels.cs" />
     <Compile Include="Areas\Store\Controllers\ProductCategoryCompanyController.cs" />
     <Compile Include="Areas\Store\Controllers\ProductCompanyController.cs" />
     <Compile Include="Areas\Store\Controllers\SmartOfferAnswerController.cs" />
@@ -3321,6 +3328,18 @@
     <Content Include="Areas\Crm\Views\PaymentExame\Edit.cshtml" />
     <Content Include="Areas\Crm\Views\PaymentExame\Index.cshtml" />
     <Content Include="Areas\Store\Views\Product\InterUser.cshtml" />
+    <Content Include="Areas\Store\Views\MediaEnrollment\Index.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\Index.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\CourseForm.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\CollectionForm.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\Sessions.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\Visits.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\SessionForm.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\Accounts.cshtml" />
+    <Content Include="Areas\Store\Views\MediaVideo\Collections.cshtml" />
+      <Content Include="Areas\Store\Views\CourseDocument\Index.cshtml" />
+      <Content Include="Areas\Store\Views\CourseDocument\Form.cshtml" />
+      <Content Include="Areas\Store\Views\CourseDocument\Visits.cshtml" />
     <Content Include="Areas\Crm\Views\Exame\DeleteExameAnswerAll2.cshtml" />
     <Content Include="Areas\Store\Views\QuestionRegister\Create.cshtml" />
     <Content Include="Areas\Store\Views\QuestionRegister\Delete.cshtml" />

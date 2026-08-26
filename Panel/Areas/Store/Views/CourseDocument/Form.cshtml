@@ -1,0 +1,13 @@
+﻿@model Panel.Areas.Store.Models.CourseDocumentModel
+@{ViewBag.Title=Model.ID==0?"افزودن PDF دوره":"ویرایش PDF دوره";Layout="~/Views/Shared/Layout.cshtml";}
+<div class="col-sm-12"><div class="card-box">
+@using(Html.BeginForm()){ @Html.AntiForgeryToken() @Html.HiddenFor(x=>x.ID) @Html.ValidationSummary(false,"",new{@class="text-danger"})
+<div class="form-group"><label>دوره</label>@Html.DropDownListFor(x=>x.ProductId,(IEnumerable<SelectListItem>)ViewBag.Products,"انتخاب دوره",new{@class="form-control selectpicker",data_live_search="true"})</div>
+<div class="form-group">@Html.LabelFor(x=>x.Title)@Html.TextBoxFor(x=>x.Title,new{@class="form-control"})</div>
+<div class="form-group">@Html.LabelFor(x=>x.Description)@Html.TextAreaFor(x=>x.Description,5,1,new{@class="form-control"})</div>
+<div class="form-group">@Html.LabelFor(x=>x.PdfUrl)@Html.TextBoxFor(x=>x.PdfUrl,new{@class="form-control",dir="ltr",placeholder="https://.../file.pdf"})<small class="text-muted">برای نمایش صفحه‌به‌صفحه، لینک باید HTTPS و دارای دسترسی CORS باشد.</small></div>
+<div class="form-group">@Html.LabelFor(x=>x.SortOrder)@Html.TextBoxFor(x=>x.SortOrder,new{@class="form-control",type="number"})</div>
+<div class="form-group"><label>@Html.CheckBoxFor(x=>x.Active) فعال</label></div><button class="btn btn-success">ذخیره</button> <a class="btn btn-default" href="@Url.Action("Index")">بازگشت</a>}
+</div></div>
+@section Header{<link rel="stylesheet" href="@Url.Content("~/Assets/css/bootstrap-select.css")"/>}
+@section Script{<script src="@Url.Content("~/Assets/js/bootstrap-select.js")"></script><script>$(function(){$('#ProductId').selectpicker({liveSearch:true,noneResultsText:'دوره‌ای پیدا نشد'});});</script>}

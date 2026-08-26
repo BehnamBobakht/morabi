@@ -31,49 +31,48 @@ namespace DataLayer.Base
             }
             get
             {
-                return "Morabiiran";
-                //if (HttpContext.Current.Session["WEBSITE_LABEL"] == null)
-                //{
-                //    UnitOfWork _context = new UnitOfWork();
-                //    Uri url = HttpContext.Current.Request.Url;
-                //    string label = url.Host == "localhost" ? url.Host + ":" + url.Port : url.Host;
-                //    string wildCardDomain = WildCardDomain;
-                //    if (label.Count(p => p == '.') > 1 && string.IsNullOrEmpty(wildCardDomain) == false)
-                //    {
-                //        string[] domains = label.Split(new char[] { '.' });
-                //        string subDomain = domains[0];
-                //        label = label.Replace(subDomain + ".", "");
-                //    }
-                //    WebsiteDomain domain = _context
-                //        .WebsiteDomain
-                //        .FirstOrDefault(p => (
-                //            p.Domain == "http://" + label + "/" ||
-                //            p.Domain == "http://" + label ||
-                //            p.Domain == "https://" + label + "/" ||
-                //            p.Domain == "https://" + label ||
-                //            p.Domain == label) && p.Website.Code.Label == Enum_Code.SYSTEM_TYPE_SHOP.ToString());
-                //    if (domain != null)
-                //    {
-                //        Template template = domain.Website.Template;
-                //        if (template != null)
-                //            label = template.Label;
-                //        else
-                //            label = "Default";
+                if (HttpContext.Current.Session["WEBSITE_LABEL"] == null)
+                {
+                    UnitOfWork _context = new UnitOfWork();
+                    Uri url = HttpContext.Current.Request.Url;
+                    string label = url.Host == "localhost" ? url.Host + ":" + url.Port : url.Host;
+                    string wildCardDomain = WildCardDomain;
+                    if (label.Count(p => p == '.') > 1 && string.IsNullOrEmpty(wildCardDomain) == false)
+                    {
+                        string[] domains = label.Split(new char[] { '.' });
+                        string subDomain = domains[0];
+                        label = label.Replace(subDomain + ".", "");
+                    }
+                    WebsiteDomain domain = _context
+                        .WebsiteDomain
+                        .FirstOrDefault(p => (
+                            p.Domain == "http://" + label + "/" ||
+                            p.Domain == "http://" + label ||
+                            p.Domain == "https://" + label + "/" ||
+                            p.Domain == "https://" + label ||
+                            p.Domain == label) && p.Website.Code.Label == Enum_Code.SYSTEM_TYPE_SHOP.ToString());
+                    if (domain != null)
+                    {
+                        Template template = domain.Website.Template;
+                        if (template != null)
+                            label = template.Label;
+                        else
+                            label = "Default";
 
-                //        if (domain.LanguageId != null)
-                //        {
-                //            _context.WebsiteLanguage.SetCurrentLanguage(domain.Language.Culture);
-                //        }
+                        if (domain.LanguageId != null)
+                        {
+                            _context.WebsiteLanguage.SetCurrentLanguage(domain.Language.Culture);
+                        }
 
-                //        HttpContext.Current.Session["WEBSITE_LABEL"] = label;
-                //    }
-                //    else
-                //        label = "Default";
-                //    _context.Dispose();
-                //    return label;
-                //}
-                //else
-                //    return HttpContext.Current.Session["WEBSITE_LABEL"].ToString();
+                        HttpContext.Current.Session["WEBSITE_LABEL"] = label;
+                    }
+                    else
+                        label = "Default";
+                    _context.Dispose();
+                    return label;
+                }
+                else
+                    return HttpContext.Current.Session["WEBSITE_LABEL"].ToString();
             }
         }
 

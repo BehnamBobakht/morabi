@@ -981,7 +981,6 @@ namespace DataLayer.Base
 });
 
             Mapper.Compile();
-            
         }
     }
 }

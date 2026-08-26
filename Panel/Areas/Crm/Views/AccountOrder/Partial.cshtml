@@ -2,7 +2,6 @@
 @using DataLayer.Entities;
 @using DataLayer.Enumarables;
 @using PublicDate;
-
 @model DataLayer.Entities.AccountOrder
 
 @{
@@ -23,10 +22,10 @@ p.Payment.Code.Label == payment_status_service_failed
     double rebatePrice = 0;
     if (Model.RebatePrice.HasValue && Model.RebatePrice > 0)
         rebatePrice = Model.RebatePrice.Value;
-    else if (Model.AccountOrder2.RebatePrice.HasValue && Model.AccountOrder2.RebatePrice > 0)
+    else if(Model.AccountOrder2.RebatePrice.HasValue && Model.AccountOrder2.RebatePrice > 0)
         rebatePrice = Model.AccountOrder2.RebatePrice.Value;
 
-}
+    }
 
 
 

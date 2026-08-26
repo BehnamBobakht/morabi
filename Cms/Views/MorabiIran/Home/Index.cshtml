@@ -29,8 +29,24 @@
     <img src="/assets/@BaseWebsite.WebsiteLabel/images/slider-back.png" alt="">
 </div>
 <main>
-    @Html.Action("Search", "Banner", new { bacategory = "PopUpbanner", baSize = 1, baviewName = "_PopUpbanner" })
+  @Html.Action("Search", "Banner", new { bacategory = "PopUpbanner", baSize = 1, baviewName = "_PopUpbanner" })
     @Html.Action("Search", "Slider", new { slviewname = "MainSlider" })
+  @*  <div class="modal" tabindex="-1" id="popIndex">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title">عنوان</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" />
+						<a>لینک تستی</a>
+                    </div>
+
+                </div>
+            </div>
+        </div> *@
+
     <section class="home-reports">
         <div class="container">
             <div class="row central">
@@ -44,13 +60,13 @@
                 <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1 central">
                     <div class="home-report-item report2 central flex-column">
 
-                        <span>@ViewBag.CountRegCourse.ToString("n0")</span>
+                        <span>@ViewBag.CountRegCourse.ToString("n0")</span> 
                         <p>شرکت کنندگان در دوره</p>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-4 col-6 p-1 central">
                     <div class="home-report-item report3 central flex-column">
-
+                        
                         <span>@ViewBag.CountQuiz.ToString("n0")</span>
                         <p>شرکت کنندگان در آزمون</p>
                     </div>
@@ -197,33 +213,31 @@
                 </div>
                 <div class="tab-pane fade" id="home-cat2" role="tabpanel" aria-labelledby="home-cat2-tab">
                     <div class="row" id="divres2">
-                        <div class="col-lg-4 p-0">
-                            <div class="home-calculator-img central">
-                                <figure class="highcharts-figure">
-                                    <div id="container"></div>
-                                </figure>
-                            </div>
-                        </div>
-                        <div class="col-lg-1 p-0"></div>
-                        <div class="col-lg-3 p-0 my-3 my-lg-0">
-                            <div class="home-calculator-text h-100 justify flex-column">
-                                <h1>شاخص توده بدنی چیست؟</h1>
-                                <p>
-                                    (Body Mass Index = BMI) نشان دهنده میزان چربی بدن است. افراد با دانستن بی ام آی بدنشان می توانند ذهنیتی نسبی از وضعیت جسمی شان بدست آوردند و در صورت نیاز به درمان و حفظ سلامتی تصمیم بگیرند.
-                                    شاخص حجم بدن (BMI) فرمولی است که توسط آماردان بلژیکی ساخته و توسط آدولف کتلت توسعه یافت.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-lg-1 p-0"></div>
-                        <div class="col-lg-3 p-0">
-                            <div class="home-calculator-result h-100 align flex-column justify-content-around">
-                                <p>درصد چربی شما : </p>
-                                <span id="CH"></span>
-                                <a href="#" class="btn secondary-btn w-100 py-2">محاسبه مجدد</a>
-                            </div>
-                        </div>
+						<div class="col-lg-4 p-0">
+                                    <div class="home-calculator-img central">
+                                        <figure class="highcharts-figure">
+                                            <div id="container"></div>
+                                        </figure>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 p-0"></div>
+                                <div class="col-lg-3 p-0 my-3 my-lg-0">
+                                    <div class="home-calculator-text h-100 justify flex-column">
+                                        <h1>شاخص توده بدنی چیست؟</h1>
+                                        <p>(Body Mass Index = BMI) نشان دهنده میزان چربی بدن است. افراد با دانستن بی ام آی بدنشان می توانند ذهنیتی نسبی از وضعیت جسمی شان بدست آوردند و در صورت نیاز به درمان و حفظ سلامتی تصمیم بگیرند.
+                                            شاخص حجم بدن (BMI) فرمولی است که توسط آماردان بلژیکی ساخته و توسط آدولف کتلت توسعه یافت.</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 p-0"></div>
+                                <div class="col-lg-3 p-0">
+                                    <div class="home-calculator-result h-100 align flex-column justify-content-around">
+                                        <p>درصد چربی شما : </p>
+										<span id="CH"></span>
+                                        <a href="#" class="btn secondary-btn w-100 py-2">محاسبه مجدد</a>
+                                    </div>
+                                </div>
                         @*<strong>درصد چربی شما : </strong>
-                            <strong id="CH"></strong>*@
+                        <strong id="CH"></strong>*@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="home-cat3" role="tabpanel" aria-labelledby="home-cat3-tab">

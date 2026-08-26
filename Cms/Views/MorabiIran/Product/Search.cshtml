@@ -307,7 +307,17 @@ else
                                         var list1 = Model.Products2.Where(s => s.ProductCategoryId == 1003).ToList();
                                         var list2 = Model.Products2.Where(s => s.ProductCategoryId == 1004).ToList();
                                         var list3 = Model.Products2.Where(s => s.ProductCategoryId == 1005).ToList();
+  var list4 = Model.Products2.Where(s => s.ProductCategoryId == 1007).ToList();
+  <h5>@list4.FirstOrDefault().ProductCategoryName</h5>
+  <hr />
+  foreach (var item in list4)
+  {
+      <div class="col-lg-3 col-sm-4 p-1">
+          @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/ExamItem.cshtml", item)
 
+
+      </div>
+  }
                                         <h5>@list1.FirstOrDefault().ProductCategoryName</h5>
                                         <hr />
                                         foreach (var item in list1)

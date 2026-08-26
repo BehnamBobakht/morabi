@@ -1,0 +1,22 @@
+﻿@using System.Linq
+@model Media.Models.CourseDocumentListViewModel
+@{ ViewBag.Title = "PDFهای " + Model.ProductTitle; }
+
+<section class="container document-page">
+    <nav class="breadcrumbs"><a href="@Url.Action("Index", "Learning")">دوره‌ها</a><span>/</span><span>@Model.ProductTitle</span></nav>
+    <div class="document-heading">
+        <div><span class="eyebrow">منابع مطالعاتی دوره</span><h1>PDFهای @Model.ProductTitle</h1></div>
+        <span>@Model.Documents.Count فایل</span>
+    </div>
+    <div class="document-grid">
+        @foreach(var item in Model.Documents)
+        {
+            <article class="document-card @(item.IsViewed ? "viewed" : "")">
+                <div class="document-icon">PDF</div>
+                <div class="document-copy"><h2>@item.Title</h2>@if(!string.IsNullOrWhiteSpace(item.Description)){<p>@item.Description</p>}<span>@(item.IsViewed ? "مشاهده‌شده" : "مشاهده نشده")</span></div>
+                <a class="primary-button" href="@Url.Action("Read", new { id=item.ID })">مطالعه PDF</a>
+            </article>
+        }
+        @if(!Model.Documents.Any()){<div class="empty-state">PDF فعالی برای این دوره ثبت نشده است.</div>}
+    </div>
+</section>

@@ -2,7 +2,7 @@
 using DataLayer.Entities;
 using DataLayer.Enumarables;
 using DataLayer.ViewModels;
-//using OfficeOpenXml;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,17 +29,17 @@ namespace Panel.Areas.Content.Controllers
         [HttpPost]
         public ActionResult Import(HttpPostedFileBase exelFile)
         {
-            //using (var package = new ExcelPackage(exelFile.InputStream))
-            //{
-            //    var currentSheet = package.Workbook.Worksheets;
-            //    var workSheet = currentSheet.First();
-            //    var noOfCol = workSheet.Dimension.End.Column;
-            //    var noOfRow = workSheet.Dimension.End.Row;
+            using (var package = new ExcelPackage(exelFile.InputStream))
+            {
+                var currentSheet = package.Workbook.Worksheets;
+                var workSheet = currentSheet.First();
+                var noOfCol = workSheet.Dimension.End.Column;
+                var noOfRow = workSheet.Dimension.End.Row;
 
-            //    var spqId = (workSheet.Cells[1, 1].Value ?? "").ToString();
+                var spqId = (workSheet.Cells[1, 1].Value ?? "").ToString();
 
                 return View();
-            //}
+            }
         }
 
 

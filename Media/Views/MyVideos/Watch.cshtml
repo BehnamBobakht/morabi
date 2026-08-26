@@ -1,0 +1,115 @@
+@using System
+@using System.Linq
+@model Media.Models.MediaWatchViewModel
+@{
+    ViewBag.Title = Model.OwnerTitle;
+    var sessions = Model.Sessions.ToList();
+    var completedCount = sessions.Count(x => x.IsCompleted);
+    var currentIndex = sessions.FindIndex(x => x.ID == Model.Current.ID);
+    var previousSession = currentIndex > 0 ? sessions[currentIndex - 1] : null;
+    var nextSession = currentIndex >= 0 && currentIndex < sessions.Count - 1 ? sessions[currentIndex + 1] : null;
+}
+<div class="container player-page" data-protected-media="true">
+    <nav class="breadcrumbs">
+        <a href="@Url.Action("Index")">بازگشت</a><span>/</span><span>@Model.OwnerTitle</span>
+    </nav>
+
+    <div class="player-layout">
+        <section class="player-column">
+            <div class="video-shell">
+                <video id="protected-video" controls playsinline webkit-playsinline="true" controlsList="nodownload noremoteplayback" disablePictureInPicture preload="metadata" poster="@(string.IsNullOrWhiteSpace(Model.Current.ImageUrl) ? Url.Content("~/Assets/images/img1.png") : Url.Content(Model.Current.ImageUrl))">
+                    <source src="@Model.StreamUrl" />
+                </video>
+            </div>
+
+            <article class="lesson-details">
+                <span class="lesson-kicker">جلسه در حال پخش</span>
+                <h1>@Model.Current.Title</h1>
+                @if (!string.IsNullOrWhiteSpace(Model.Current.Description))
+                {
+                    <p>@Model.Current.Description</p>
+                }
+
+                @if (previousSession != null || nextSession != null)
+                {
+                    <nav class="lesson-navigation" aria-label="جابه‌جایی بین جلسات">
+                        @if (previousSession != null)
+                        {
+                            <a class="lesson-nav previous" href="@Url.Action("Watch", new { id = Model.OwnerId, sessionId = previousSession.ID })">
+                                <small>جلسه قبل</small>
+                                <strong>@previousSession.Title</strong>
+                                <span aria-hidden="true">←</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="lesson-nav-placeholder"></span>
+                        }
+
+                        @if (nextSession != null)
+                        {
+                            <a class="lesson-nav next" href="@Url.Action("Watch", new { id = Model.OwnerId, sessionId = nextSession.ID })">
+                                <small>جلسه بعد</small>
+                                <strong>@nextSession.Title</strong>
+                                <span aria-hidden="true">→</span>
+                            </a>
+                        }
+                    </nav>
+                }
+            </article>
+        </section>
+
+        <aside class="sessions-panel">
+            <div class="sessions-heading">
+                <div class="sessions-title-row">
+                    <div>
+                        <h2>فهرست جلسات</h2>
+                        <span>@sessions.Count جلسه</span>
+                    </div>
+                    <span class="viewed-count">@completedCount مشاهده‌شده</span>
+                </div>
+                <div class="course-progress-summary">
+                    <div class="progress-label">
+                        <strong>وضعیت مشاهده</strong>
+                        <span>@completedCount از @sessions.Count جلسه مشاهده‌شده</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="session-list">
+                @foreach (var item in sessions)
+                {
+                    var isCurrent = item.ID == Model.Current.ID;
+                    var isCompleted = item.IsCompleted;
+                    <a class="session-item @(isCurrent ? "active" : "") @(isCompleted ? "done" : "")" href="@Url.Action("Watch", new { id = Model.OwnerId, sessionId = item.ID })">
+                        <span class="session-action" aria-hidden="true">
+                            @if (isCurrent)
+                            {
+                                <span class="pause-icon"></span>
+                            }
+                            else if (isCompleted)
+                            {
+                                <span class="check-icon">✓</span>
+                            }
+                            else
+                            {
+                                <span class="play-triangle"></span>
+                            }
+                        </span>
+                        <span class="session-copy">
+                            <strong class="session-name">@item.Title</strong>
+                            <small>@(isCompleted ? "مشاهده‌شده" : "مشاهده نشده")</small>
+                        </span>
+                    </a>
+                }
+            </div>
+        </aside>
+    </div>
+
+</div>
+<script>
+(function(){
+    document.addEventListener('contextmenu',function(e){if(e.target.closest('[data-protected-media]'))e.preventDefault();});
+    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&(e.key==='s'||e.key==='u'||e.key==='p'))e.preventDefault();if(e.key==='F12'||((e.ctrlKey||e.metaKey)&&e.shiftKey&&(e.key==='I'||e.key==='J'||e.key==='C')))e.preventDefault();});
+})();
+</script>

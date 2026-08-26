@@ -20,7 +20,7 @@
 <input name="accountId" id="accountId" type="hidden" value="@accountId" />
 <input name="accountId" id="accountAnswerId" type="hidden" value="@Model.AccountAnswer.ID" />
 
-<section class="quiz-inner page-padding">
+<section class="quiz-inner page-padding new-face">
     <div class="container">
         <div class="ruls_content">
             <div class="section-title position-relative align">
@@ -83,7 +83,7 @@
                                                 @{int k = 1;}
                                                 @foreach (var answer in item.ExameAnswerItem.Where(s => s.Active != false))
                                                 {
-                                                    <div class="Answer4qoustion col-md-12 col-6 px-1">
+                                                    <div class="Answer4qoustion col-md-12 col-6 px-1 col-12">
                                                         <div class="quiz-question-answers align">
                                                             <input question-name="Answer" @*onchange="AddExame(@item.ID,@answer.ID)"*@ type="radio" @*@(Model.AccountAnswer.ExameAccountAnswerDetails.Any(s => s.AnswerId == answer.ID && s.QuestionId == item.ID) ? "checked" : "")*@ id="answer@(answer.ID)" name="answerbtn@(item.ID)" value="@answer.ID">
                                                             <label for="answer@(answer.ID)">

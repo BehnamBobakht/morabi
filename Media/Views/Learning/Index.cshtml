@@ -1,0 +1,72 @@
+﻿@using System.Linq
+@model IEnumerable<Media.Models.LearningCourseViewModel>
+@{ ViewBag.Title = "دوره‌های من"; }
+
+@Html.Action("Search", "Banner", new { bacategory = "CourseBanner", baSize = 1, baviewName = "_VideoBanner" })
+@Html.Action("Search", "Banner", new { bacategory = "CourseBannerMobile", baSize = 1, baviewName = "_VideoBannerMobile" })
+
+<section class="container course-section learning-page">
+    <div class="section-heading"><h1>دوره‌های من</h1></div>
+    <div class="course-grid">
+        @foreach (var item in Model)
+        {
+            <article class="course-card learning-card">
+                <div class="course-image">
+                    <img src="@(string.IsNullOrWhiteSpace(item.ImageUrl) ? Url.Content("~/Assets/images/img1.png") : Url.Content(item.ImageUrl))" alt="@item.Title" loading="lazy" />
+                </div>
+                <div class="course-card-body">
+                    <h3>@item.Title</h3>
+                    <div class="learning-actions">
+                        @if (item.HasVideos)
+                        {
+                            <a class="learning-button video" href="@Url.Action("Watch", "Courses", new { id = item.ID })">ویدئوهای دوره</a>
+                        }
+                        @if (item.HasDocuments)
+                        {
+                            <a class="learning-button pdf" href="@Url.Action("Index", "Documents", new { id = item.ID })">PDFهای دوره</a>
+                        }
+                        @if (item.HasExam)
+                        {
+                            if (item.ExamUnlocked)
+                            {
+                                @* آدرس آزمون را در href زیر قرار دهید. *@
+                                <a class="learning-button exam" href="/account/searchaccountorder2?aoViewName=OrderExame&statusId2=2068-2073&typeId=5">آزمون دوره</a>
+                            }
+                            else
+                            {
+                                <button class="learning-button exam locked" type="button" data-learning-lock>آزمون دوره</button>
+                            }
+                        }
+                    </div>
+                </div>
+            </article>
+        }
+        @if (!Model.Any())
+        {
+            <div class="empty-state">دوره‌ای دارای ویدئو یا PDF برای نمایش وجود ندارد.</div>
+        }
+    </div>
+</section>
+
+<div class="learning-modal" id="learning-lock-modal" hidden>
+    <div class="learning-modal-card" role="dialog" aria-modal="true" aria-labelledby="learning-modal-title">
+        <button type="button" class="learning-modal-close" aria-label="بستن">×</button>
+        <h2 id="learning-modal-title">آزمون هنوز فعال نیست</h2>
+        <p>برای ورود به آزمون باید ابتدا همه ویدئوها و PDFهای این دوره را مشاهده کنید.</p>
+        <button type="button" class="primary-button learning-modal-ok">متوجه شدم</button>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        (function () {
+            var modal = document.getElementById('learning-lock-modal');
+            function close() { modal.hidden = true; document.body.classList.remove('modal-open'); }
+            document.querySelectorAll('[data-learning-lock]').forEach(function (button) { button.addEventListener('click', function () { modal.hidden = false; document.body.classList.add('modal-open'); }); });
+            modal.querySelector('.learning-modal-close').addEventListener('click', close);
+            modal.querySelector('.learning-modal-ok').addEventListener('click', close);
+            modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
+        })();
+    </script>
+}

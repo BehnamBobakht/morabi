@@ -1,0 +1,27 @@
+﻿@model Panel.Areas.Store.Models.MediaCollectionIndexModel
+@{
+    ViewBag.Title = "ویدئوهای خصوصی";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var totalPages = Math.Max(1, (int)Math.Ceiling(Model.TotalCount / (double)Model.PageSize));
+}
+<div class="col-sm-12">
+    @if (TempData["MediaSuccess"] != null) { <div class="alert alert-success">@TempData["MediaSuccess"]</div> }
+    @if (TempData["MediaError"] != null) { <div class="alert alert-danger">@TempData["MediaError"]</div> }
+    <div class="card-box">
+        <div class="clearfix"><h3 class="pull-right">مجموعه‌های ویدئویی خصوصی</h3><a class="btn btn-success pull-left" href="@Url.Action("CollectionForm")">افزودن مجموعه</a></div>
+        <form method="get" class="row"><div class="form-group col-md-9"><label>جست‌وجوی عنوان یا توضیحات</label><input class="form-control" name="search" value="@Model.Search" /></div><div class="form-group col-md-3"><label>&nbsp;</label><button class="btn btn-primary form-control">جست‌وجو</button></div></form>
+                <div class="table-responsive"><table class="table table-striped table-bordered">
+            <thead><tr><th>کاور</th><th>#</th><th>عنوان</th><th>جلسات</th><th>کاربران فعال</th><th>وضعیت</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var item in Model.Collections) {
+                <tr><td>@if (!string.IsNullOrWhiteSpace(item.PictureUrl)) { <img src="@Url.Content(item.PictureUrl)" style="width:80px;height:48px;object-fit:cover" /> }</td><td>@item.ID</td><td>@item.Title</td><td>@item.SessionCount</td><td>@item.AccountCount</td><td>@(item.Active ? "فعال" : "غیرفعال")</td>
+                    <td><a href="@Url.Action("Sessions", new { id = item.ID })">جلسات</a> | <a href="@Url.Action("Accounts", new { id = item.ID })">کاربران</a> | <a href="@Url.Action("CollectionForm", new { id = item.ID })">ویرایش</a>
+                        <form method="post" action="@Url.Action("DeleteCollection")" style="display:inline">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@item.ID" /><button type="submit" class="btn btn-link" onclick="return confirm('این مجموعه حذف شود؟')">حذف</button></form>
+                    </td></tr>
+            }
+            @if (!Model.Collections.Any()) { <tr><td colspan="7" class="text-center">موردی ثبت نشده است.</td></tr> }
+            </tbody>
+        </table></div>
+        @if (totalPages > 1) { <ul class="pagination">@for (var p = 1; p <= totalPages; p++) { <li class="@(p == Model.PageIndex ? "active" : "")"><a href="@Url.Action("Collections", new { search = Model.Search, page = p })">@p</a></li> }</ul> }
+    </div>
+</div>

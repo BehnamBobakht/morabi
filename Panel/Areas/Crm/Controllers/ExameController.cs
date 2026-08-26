@@ -3,7 +3,7 @@ using DataLayer.Base;
 using DataLayer.Entities;
 using DataLayer.Enumarables;
 using DataLayer.ViewModels;
-//using OfficeOpenXml;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -47,82 +47,82 @@ namespace Panel.Areas.Crm.Controllers
 
             var list = _context.ExameAccountAnswer.Search(exameId: exameId, IsPass: IsPass);
             int row = 1;
-            //var excelPackage = new ExcelPackage();
+            var excelPackage = new ExcelPackage();
 
-            //var sheet = excelPackage.Workbook.Worksheets.Add(Resource.Lang.Customerlist + DateTime.Now.ToString("yyyyMMddhhmmss"));
-            //int i = 4;
-            //sheet.Cells[row, 1].Value = "ردیف";
-            //sheet.Cells[row, 2].Value = "نام و نام خانوادگی";
+            var sheet = excelPackage.Workbook.Worksheets.Add(Resource.Lang.Customerlist + DateTime.Now.ToString("yyyyMMddhhmmss"));
+            int i = 4;
+            sheet.Cells[row, 1].Value = "ردیف";
+            sheet.Cells[row, 2].Value = "نام و نام خانوادگی";
 
-            //sheet.Cells[row, 3].Value = "کد ملی";
-            //var course = list.FirstOrDefault().ExameReportByCourse;
-            //foreach (var item in course)
-            //{
-            //    sheet.Cells[row, i].Value = item.ExameCourse.Name;
-            //    i++;
-            //}
-            //sheet.Cells[row, i].Value = "معدل";
-            //i++;
-            //sheet.Cells[row, i].Value = "وضعیت";
+            sheet.Cells[row, 3].Value = "کد ملی";
+            var course = list.FirstOrDefault().ExameReportByCourse;
+            foreach (var item in course)
+            {
+                sheet.Cells[row, i].Value = item.ExameCourse.Name;
+                i++;
+            }
+            sheet.Cells[row, i].Value = "معدل";
+            i++;
+            sheet.Cells[row, i].Value = "وضعیت";
 
-            //int j = 1;
-            //row++;
-            //foreach (var item in list)
-            //{
-            //    double? sum = (double)item.ExameReportByCourse.Sum(s => s.TotalRate) / item.ExameReportByCourse.Count();
+            int j = 1;
+            row++;
+            foreach (var item in list)
+            {
+                double? sum = (double)item.ExameReportByCourse.Sum(s => s.TotalRate) / item.ExameReportByCourse.Count();
 
-            //    i = 4;
-            //    sheet.Cells[row, 1].Value = j;
+                i = 4;
+                sheet.Cells[row, 1].Value = j;
 
-            //    sheet.Cells[row, 2].Value = item.Account.FullName + " " + item.Account.LatName;
-            //    sheet.Cells[row, 3].Value = item.Account.NationalCode;
+                sheet.Cells[row, 2].Value = item.Account.FullName + " " + item.Account.LatName;
+                sheet.Cells[row, 3].Value = item.Account.NationalCode;
 
-            //    foreach (var filed in item.ExameReportByCourse)
-            //    {
-            //        if (filed.TotalRate != null)
-            //        {
-            //            sheet.Cells[row, i].Value = @Math.Round(filed.TotalRate.Value, 1).ToString().Replace("/", ".");
-            //            i++;
-            //        }
-            //        else
-            //        {
-            //            sheet.Cells[row, i].Value = "0";
-            //            i++;
-            //        }
+                foreach (var filed in item.ExameReportByCourse)
+                {
+                    if (filed.TotalRate != null)
+                    {
+                        sheet.Cells[row, i].Value = @Math.Round(filed.TotalRate.Value, 1).ToString().Replace("/", ".");
+                        i++;
+                    }
+                    else
+                    {
+                        sheet.Cells[row, i].Value = "0";
+                        i++;
+                    }
                   
-            //    }
-            //    if (sum != null)
-            //    {
-            //        sheet.Cells[row, i].Value = @Math.Round(sum.Value, 1).ToString().Replace("/", ".");
-            //        i++;
-            //    }
-            //    else
-            //    {
-            //        sheet.Cells[row, i].Value = "0";
-            //        i++;
-            //    }
-            //    if (sum >= item.Exame.PassValue)
-            //    {
-            //        sheet.Cells[row, i].Value = "قبول";
+                }
+                if (sum != null)
+                {
+                    sheet.Cells[row, i].Value = @Math.Round(sum.Value, 1).ToString().Replace("/", ".");
+                    i++;
+                }
+                else
+                {
+                    sheet.Cells[row, i].Value = "0";
+                    i++;
+                }
+                if (sum >= item.Exame.PassValue)
+                {
+                    sheet.Cells[row, i].Value = "قبول";
 
-            //    }
-            //    else
-            //    {
-            //        sheet.Cells[row, i].Value = "مردود";
-            //    }
+                }
+                else
+                {
+                    sheet.Cells[row, i].Value = "مردود";
+                }
 
-            //    row++;
-            //    j++;
+                row++;
+                j++;
 
-            //}
+            }
 
 
-            //sheet.Cells["A:AZ"].AutoFitColumns();
-            //Response.Clear();
-            //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            //Response.AppendHeader("Content-Disposition", "attachment; filename=Customerlist" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".xlsx");
-            //Response.BinaryWrite(excelPackage.GetAsByteArray());
-            //Response.End();
+            sheet.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=Customerlist" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".xlsx");
+            Response.BinaryWrite(excelPackage.GetAsByteArray());
+            Response.End();
         }
 
         public ActionResult AnswerUser(int Id)

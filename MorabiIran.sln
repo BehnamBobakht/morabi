@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cms", "Cms\Cms.csproj", "{3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublicDate", "PublicDate\PublicDate.csproj", "{79D99DD2-8EB1-443D-A6FA-65AA876D6DDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media", "Media\Media.csproj", "{A2FD20FC-47E4-4A39-AD0C-76B6CB910482}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{79D99DD2-8EB1-443D-A6FA-65AA876D6DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D99DD2-8EB1-443D-A6FA-65AA876D6DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D99DD2-8EB1-443D-A6FA-65AA876D6DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2FD20FC-47E4-4A39-AD0C-76B6CB910482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2FD20FC-47E4-4A39-AD0C-76B6CB910482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2FD20FC-47E4-4A39-AD0C-76B6CB910482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2FD20FC-47E4-4A39-AD0C-76B6CB910482}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

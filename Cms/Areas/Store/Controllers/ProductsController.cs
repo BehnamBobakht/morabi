@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using DataLayer.Entities;
 using DataLayer.Base;
 using Cms.Areas.Store.Security;
-//using OfficeOpenXml;
+using OfficeOpenXml;
 
 
 namespace Cms.Areas.Store.Controllers
@@ -237,39 +237,39 @@ namespace Cms.Areas.Store.Controllers
 
             if (!dataResult.Any()) return;
 
-            //var excelPackage = new ExcelPackage();
-            //var sheet = excelPackage.Workbook.Worksheets.Add(Resource.Lang.StoreProducts);
+            var excelPackage = new ExcelPackage();
+            var sheet = excelPackage.Workbook.Worksheets.Add(Resource.Lang.StoreProducts);
 
-            //var row = 1;
+            var row = 1;
 
-            //sheet.Cells[$"A{row}"].Value = Resource.Lang.ID;
-            //sheet.Cells[$"B{row}"].Value = Resource.Lang.ProductName;
-            //sheet.Cells[$"C{row}"].Value = Resource.Lang.Color;
-            //sheet.Cells[$"D{row}"].Value = Resource.Lang.Size;
-            //sheet.Cells[$"E{row}"].Value = Resource.Lang.ProductOption;
-            //sheet.Cells[$"F{row}"].Value = $"{Resource.Lang.Price} ({Resource.Lang.Toman})";
-            //sheet.Cells[$"G{row}"].Value = Resource.Lang.Count;
+            sheet.Cells[$"A{row}"].Value = Resource.Lang.ID;
+            sheet.Cells[$"B{row}"].Value = Resource.Lang.ProductName;
+            sheet.Cells[$"C{row}"].Value = Resource.Lang.Color;
+            sheet.Cells[$"D{row}"].Value = Resource.Lang.Size;
+            sheet.Cells[$"E{row}"].Value = Resource.Lang.ProductOption;
+            sheet.Cells[$"F{row}"].Value = $"{Resource.Lang.Price} ({Resource.Lang.Toman})";
+            sheet.Cells[$"G{row}"].Value = Resource.Lang.Count;
 
-            //foreach (var spq in dataResult)
-            //{
-            //    row++;
-            //    sheet.Cells[$"A{row}"].Value = spq.ID;
-            //    sheet.Cells[$"B{row}"].Value = spq.ProductQuantity.Product.GetName();
-            //    sheet.Cells[$"C{row}"].Value = spq.ProductQuantity.Color?.GetName();
-            //    sheet.Cells[$"D{row}"].Value = spq.ProductQuantity.Size?.GetName();
-            //    sheet.Cells[$"E{row}"].Value = spq.ProductQuantity.OptionItemId.HasValue
-            //        ? $"{spq.ProductQuantity.ProductOptionItem.ProductOption.Name} : {spq.ProductQuantity.ProductOptionItem.Value}"
-            //        : null;
-            //    sheet.Cells[$"F{row}"].Value = spq.Price;
-            //    sheet.Cells[$"G{row}"].Value = null;
-            //}
+            foreach (var spq in dataResult)
+            {
+                row++;
+                sheet.Cells[$"A{row}"].Value = spq.ID;
+                sheet.Cells[$"B{row}"].Value = spq.ProductQuantity.Product.GetName();
+                sheet.Cells[$"C{row}"].Value = spq.ProductQuantity.Color?.GetName();
+                sheet.Cells[$"D{row}"].Value = spq.ProductQuantity.Size?.GetName();
+                sheet.Cells[$"E{row}"].Value = spq.ProductQuantity.OptionItemId.HasValue
+                    ? $"{spq.ProductQuantity.ProductOptionItem.ProductOption.Name} : {spq.ProductQuantity.ProductOptionItem.Value}"
+                    : null;
+                sheet.Cells[$"F{row}"].Value = spq.Price;
+                sheet.Cells[$"G{row}"].Value = null;
+            }
 
-            //sheet.Cells["A:AZ"].AutoFitColumns();
-            //Response.Clear();
-            //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            //Response.AppendHeader("Content-Disposition", "attachment; filename=StoreProducts.xlsx");
-            //Response.BinaryWrite(excelPackage.GetAsByteArray());
-            //Response.End();
+            sheet.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=StoreProducts.xlsx");
+            Response.BinaryWrite(excelPackage.GetAsByteArray());
+            Response.End();
         }
 
         [HttpPost]
@@ -291,49 +291,49 @@ namespace Cms.Areas.Store.Controllers
             //var fileBytes = new byte[file.ContentLength];
             //var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
             var products = new List<Product>();
-            //using (var package = new ExcelPackage(file.InputStream))
-            //{
-            //    var currentSheet = package.Workbook.Worksheets;
-            //    var workSheet = currentSheet.First();
-            //    var noOfCol = workSheet.Dimension.End.Column;
-            //    var noOfRow = workSheet.Dimension.End.Row;
-            //    for (var rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
-            //    {
-            //        var spqId = (workSheet.Cells[rowIterator, 1].Value ?? "").ToString();
-            //        var trueId = int.TryParse(spqId, out var id);
-            //        if (!trueId) continue;
-            //        if (allowedQuantities.All(storeProductQuantity => storeProductQuantity.ID != id)) continue;
+            using (var package = new ExcelPackage(file.InputStream))
+            {
+                var currentSheet = package.Workbook.Worksheets;
+                var workSheet = currentSheet.First();
+                var noOfCol = workSheet.Dimension.End.Column;
+                var noOfRow = workSheet.Dimension.End.Row;
+                for (var rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                {
+                    var spqId = (workSheet.Cells[rowIterator, 1].Value ?? "").ToString();
+                    var trueId = int.TryParse(spqId, out var id);
+                    if (!trueId) continue;
+                    if (allowedQuantities.All(storeProductQuantity => storeProductQuantity.ID != id)) continue;
 
-            //        var spq = _context.StoreProductQuantity.GetById(id);
+                    var spq = _context.StoreProductQuantity.GetById(id);
 
-            //        var spqPrice = (workSheet.Cells[rowIterator, 6].Value ?? 0).ToString();
-            //        if (string.IsNullOrWhiteSpace(spqPrice)) spq.Price = 0;
-            //        else
-            //        {
-            //            var truePrice = double.TryParse(spqPrice, out var price);
-            //            if (!truePrice) continue;
-            //            if (price < 0) continue;
-            //            spq.Price = price;
-            //        }
+                    var spqPrice = (workSheet.Cells[rowIterator, 6].Value ?? 0).ToString();
+                    if (string.IsNullOrWhiteSpace(spqPrice)) spq.Price = 0;
+                    else
+                    {
+                        var truePrice = double.TryParse(spqPrice, out var price);
+                        if (!truePrice) continue;
+                        if (price < 0) continue;
+                        spq.Price = price;
+                    }
 
-            //        var spqCount = (workSheet.Cells[rowIterator, 7].Value ?? "").ToString();
-            //        if (!string.IsNullOrWhiteSpace(spqCount))
-            //        {
-            //            var trueCount = int.TryParse(spqCount, out var count);
-            //            if (trueCount && count > 0)
-            //                spq.Count += count;
-            //        }
+                    var spqCount = (workSheet.Cells[rowIterator, 7].Value ?? "").ToString();
+                    if (!string.IsNullOrWhiteSpace(spqCount))
+                    {
+                        var trueCount = int.TryParse(spqCount, out var count);
+                        if (trueCount && count > 0)
+                            spq.Count += count;
+                    }
 
-            //        _context.StoreProductQuantity.Update(spq);
-            //        if(!products.Any(x=>x.ID==spq.ProductQuantity.ProductId))
-            //        {
-            //            products.Add(spq.ProductQuantity.Product);
-            //        }
-            //    }
+                    _context.StoreProductQuantity.Update(spq);
+                    if(!products.Any(x=>x.ID==spq.ProductQuantity.ProductId))
+                    {
+                        products.Add(spq.ProductQuantity.Product);
+                    }
+                }
 
-            //    _context.Save();
-            //    BaseStore.UpdateProductQuantity(products: products, unitOfWork: _context);
-            //}
+                _context.Save();
+                BaseStore.UpdateProductQuantity(products: products, unitOfWork: _context);
+            }
             return RedirectToAction("Index");
         }
 

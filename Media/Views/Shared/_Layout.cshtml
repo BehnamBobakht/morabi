@@ -1,0 +1,101 @@
+﻿@{
+    var pageTitle = ViewBag.Title as string ?? "رسانه مربی ایران";
+}
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <meta name="theme-color" content="#ff5a0a" />
+
+    <title>@pageTitle | مربی ایران</title>
+
+    <link rel="stylesheet"
+          href="@Url.Content("~/Assets/css/media.css?v=20260823-3")" />
+
+    <link rel="stylesheet"
+          href="@Url.Content("~/Assets/css/private-watch.css?v=20260818-1")" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">
+        رفتن به محتوای اصلی
+    </a>
+
+    <header class="site-header">
+        <div class="container header-inner">
+
+            <a class="brand"
+               href="/"
+               aria-label="رسانه مربی ایران">
+
+                <span class="brand-logo-frame">
+                    <img src="@Url.Content("~/Assets/images/logo.png")"
+                         alt="مربی ایران"
+                         width="210"
+                         height="55" />
+                </span>
+            </a>
+
+            <nav class="main-nav" aria-label="منوی اصلی">
+                <a href="@Url.Action("Index", "Learning")">دوره‌ها</a>
+              
+
+                <a href="@Url.Action("Index", "MyVideos")">
+                    ویدئوهای خصوصی من
+                </a>
+            </nav>
+
+            <div class="header-actions">
+
+                <button class="mobile-menu-button"
+                        type="button"
+                        aria-label="باز کردن منو"
+                        aria-controls="mobile-navigation"
+                        aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+              
+
+                <a class="profile-link" href="/profile">
+                    <span>بازگشت به پروفایل</span>
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <nav id="mobile-navigation"
+             class="mobile-navigation"
+             aria-label="منوی موبایل"
+             hidden>
+
+            <a href="@Url.Action("Index", "Learning")">دوره‌ها</a>
+            
+
+            <a href="@Url.Action("Index", "MyVideos")">
+                ویدئوهای خصوصی من
+            </a>
+
+            <a href="/profile">
+                بازگشت به پروفایل
+            </a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        @RenderBody()
+    </main>
+
+    <script src="@Url.Content("~/Assets/js/media.js")"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -126,11 +126,25 @@ htmlAttributes: new { @class = "rebate-form" }))
     </div>
 </section>
 
-<script>
-    function reLoadConfirmCart() {
-        $(".confirm-cart").submit();
-    }
-    function reLoadPage() {
-        location.reload();
-    }
-</script>
+@section endScripts {
+    <script>
+        (function () {
+            if ($('.merchant-container .merchant_item.active').length === 0) {
+                var merchant = $('.merchant-container .merchant_item').first();
+
+                if (merchant.length) {
+                    merchant[0].click();
+                }
+            }
+        })();
+    </script>
+    <script>
+
+        function reLoadConfirmCart() {
+            $(".confirm-cart").submit();
+        }
+        function reLoadPage() {
+            location.reload();
+        }
+    </script>
+}

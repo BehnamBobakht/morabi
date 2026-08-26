@@ -45,8 +45,20 @@
 
 @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Modal/AddAddress.cshtml")
 @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Modal/RemoveAddress.cshtml")
-
+@section endScripts {
 <script>
+    (function () {
+        if ($('.user_address_item input[type="radio"]:checked').length === 0) {
+            var firstAddress = $('.user_address_item .pro-plus-number').first();
+
+            if (firstAddress.length) {
+                firstAddress[0].click();
+            }
+        }
+    })();
+</script>
+<script>
+
     function OnSuccess(data) {
 
         if (data.Status == 1) {
@@ -58,3 +70,4 @@
         }
     }
 </script>
+}

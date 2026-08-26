@@ -16,7 +16,7 @@
         <div class="card-box">
             <div class="form-horizontal">
 			 @{ int i = 1;}
-                @foreach (var item in Model.Distinct())
+                @foreach (var item in Model.GroupBy(x => x.CourseId).Select(g => g.First()))
                 {
                     <div class="row" question-value="@item.ID">
                         <input type="hidden" question-name="ID" value="@item.ID" />

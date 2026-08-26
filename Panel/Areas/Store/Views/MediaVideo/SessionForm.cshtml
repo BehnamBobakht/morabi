@@ -1,0 +1,30 @@
+﻿@model Panel.Areas.Store.Models.VideoCollectionSessionModel
+@{
+    ViewBag.Title = Model.ID == 0 ? "افزودن جلسه به «" + Model.CollectionTitle + "»" : "ویرایش جلسه";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<div class="col-sm-12"><div class="card-box">
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.ID)
+    @Html.HiddenFor(x => x.VideoCollectionId)
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-group">@Html.LabelFor(x => x.Title)@Html.TextBoxFor(x => x.Title, new { @class = "form-control" })</div>
+    <div class="form-group">@Html.LabelFor(x => x.Description)@Html.TextAreaFor(x => x.Description, 4, 1, new { @class = "form-control" })</div>
+    <div class="form-group">@Html.LabelFor(x => x.VideoUrl)@Html.TextBoxFor(x => x.VideoUrl, new { @class = "form-control", dir = "ltr" })</div>
+    <div class="form-group">@Html.LabelFor(x => x.SortOrder)@Html.TextBoxFor(x => x.SortOrder, new { @class = "form-control", type = "number" })</div>
+    @Html.HiddenFor(x => x.PictureId)
+    <div class="form-group">
+        <label>تصویر کاور</label>
+        <input type="file" name="coverFile" class="form-control" accept="image/jpeg,image/png,image/webp" />
+        <small class="text-muted">فرمت JPG، PNG یا WEBP؛ حداکثر ۵ مگابایت</small>
+        @if (!string.IsNullOrWhiteSpace(Model.PictureUrl))
+        {
+            <div style="margin-top:10px"><img src="@Url.Content(Model.PictureUrl)" alt="کاور" style="width:180px;max-height:110px;object-fit:cover;border-radius:5px" /></div>
+        }
+        @Html.ValidationMessageFor(x => x.PictureId, "", new { @class = "text-danger" })
+    </div>    <div class=""><label>@Html.CheckBoxFor(x => x.Active) فعال</label></div>
+    <button class="btn btn-success">ذخیره</button>
+    <a class="btn btn-default" href="@Url.Action("Sessions", new { id = Model.VideoCollectionId })">بازگشت</a>
+}
+</div></div>
