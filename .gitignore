@@ -219,3 +219,6 @@ orleans.codegen.cs
 *.sap
 ipch/
 .localhistory/
+/Cms/App_GlobalResources/Vtraad
+/Panel/Uploads
+/WebApi
