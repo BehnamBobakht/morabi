@@ -75,6 +75,27 @@
         holder.dataset.rendered = "0";
     }
 
+
+    async function registerPersianFallbackFonts() {
+        if (!window.FontFace || !document.fonts || !iosViewer) return;
+
+        var regularUrl = iosViewer.dataset.fallbackFont;
+        var boldUrl = iosViewer.dataset.fallbackFontBold;
+        var aliases = ["Vazirmatn", "Vazirmatn Regular", "Vazirmatn-Regular", "Vazir"];
+        var jobs = [];
+
+        aliases.forEach(function (name) {
+            var face = new FontFace(name, 'url("' + regularUrl + '")', { weight: "400", style: "normal" });
+            jobs.push(face.load().then(function (loaded) { document.fonts.add(loaded); }).catch(function () { return null; }));
+        });
+
+        ["Vazirmatn", "Vazirmatn Bold", "Vazirmatn-Bold", "Vazir Bold"].forEach(function (name) {
+            var face = new FontFace(name, 'url("' + boldUrl + '")', { weight: "700", style: "normal" });
+            jobs.push(face.load().then(function (loaded) { document.fonts.add(loaded); }).catch(function () { return null; }));
+        });
+
+        await Promise.all(jobs);
+    }
     function goToIOSPage(page, smooth) {
         if (!iosMode || !iosViewer) return;
         page = Math.max(1, Math.min(totalPages, Number(page) || 1));
@@ -113,6 +134,9 @@
                 cMapUrl: iosViewer.dataset.pdfCmaps,
                 cMapPacked: true,
                 standardFontDataUrl: iosViewer.dataset.pdfFonts,
+                disableFontFace: true,
+                useSystemFonts: false,
+                fontExtraProperties: true,
                 rangeChunkSize: 65536,
                 disableAutoFetch: true,
                 disableStream: true,
@@ -157,7 +181,11 @@
                 var base = page.getViewport({ scale: 1 });
                 var cssWidth = Math.max(1, holder.clientWidth);
                 var viewport = page.getViewport({ scale: cssWidth / base.width });
-                var pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                var deviceRatio = window.devicePixelRatio || 1;
+                var isMobileRender = isIOSDevice() || window.matchMedia("(max-width: 768px)").matches;
+                var pixelRatio = isMobileRender
+                    ? Math.min(deviceRatio * 1.5, 4.5)
+                    : Math.min(Math.max(deviceRatio * 1.5, 2), 3);
                 var canvas = document.createElement("canvas");
                 var context = canvas.getContext("2d", { alpha: false });
 

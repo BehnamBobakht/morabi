@@ -93,6 +93,8 @@
                  data-pdf-worker="@Url.Content("~/Assets/pdfjs/build/pdf.worker.js")"
                  data-pdf-cmaps="@Url.Content("~/Assets/pdfjs/web/cmaps/")"
                  data-pdf-fonts="@Url.Content("~/Assets/pdfjs/web/standard_fonts/")"
+                 data-fallback-font="@Url.Content("~/Assets/fonts/YekanBakhFaNum-Regular.ttf")"
+                 data-fallback-font-bold="@Url.Content("~/Assets/fonts/YekanBakhFaNum-Bold.ttf")"
                  hidden></div>
             <div class="pdf-protection-layer" aria-hidden="true"></div>
 
@@ -254,5 +256,5 @@
 
 
 @section scripts {
-    <script src="@Url.Content("~/Assets/js/document-reader.js?v=20260825-2")"></script>
+    <script src="@Url.Content("~/Assets/js/document-reader.js?v=20260831-7")"></script>
 }
