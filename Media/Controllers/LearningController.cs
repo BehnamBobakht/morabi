@@ -24,7 +24,19 @@ SELECT p.ID,p.Name,REPLACE(pic.Url,'SYSTEM_TYPE_PANEL','/panel') ImageUrl,
  CONVERT(bit,CASE WHEN EXISTS(SELECT 1 FROM dbo.Exame e WHERE e.ProductId=p.ID AND ISNULL(e.Active,1)=1 AND ISNULL(e.Deleted,0)=0) THEN 1 ELSE 0 END) HasExam
 FROM dbo.Product p
 LEFT JOIN dbo.Picture pic ON pic.ID=p.PictureId
-WHERE EXISTS(SELECT 1 FROM dbo.AccountOrderProduct aop INNER JOIN dbo.AccountOrder ao ON ao.ID=aop.OrderId LEFT JOIN dbo.Code c ON c.ID=ao.StatusId WHERE aop.ProductId=p.ID AND ao.AccountId=@A AND (c.Label='ORDER_STATUS_SUCCESS' OR ao.StatusId IN(2068,2073)))
+WHERE EXISTS(
+ SELECT 1
+ FROM dbo.AccountOrderProduct aop
+ INNER JOIN dbo.AccountOrder ao ON ao.ID=aop.OrderId
+ INNER JOIN dbo.Product purchasedProduct ON purchasedProduct.ID=aop.ProductId
+ LEFT JOIN dbo.Code c ON c.ID=ao.StatusId
+ WHERE ao.AccountId=@A
+ AND (c.Label='ORDER_STATUS_SUCCESS' OR ao.StatusId IN(2068,2073))
+ AND (
+  aop.ProductId=p.ID
+  OR ','+REPLACE(ISNULL(purchasedProduct.ProductsId,''),' ','')+',' LIKE '%,'+CONVERT(varchar(20),p.ID)+',%'
+ )
+)
 AND (EXISTS(SELECT 1 FROM dbo.CourseVideoSession s WHERE s.ProductId=p.ID AND s.Active=1) OR EXISTS(SELECT 1 FROM dbo.CourseDocument d WHERE d.ProductId=p.ID AND d.Active=1))
 ORDER BY p.ID DESC";
             using (var cn = MediaDatabase.Open())

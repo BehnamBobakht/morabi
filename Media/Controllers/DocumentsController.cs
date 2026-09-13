@@ -312,33 +312,28 @@ namespace Media.Controllers
         private bool Owns(int productId)
         {
             const string sql = @"
-                SELECT CASE
-                    WHEN EXISTS
-                    (
-                        SELECT 1
-                        FROM dbo.AccountOrderProduct aop
-                        INNER JOIN dbo.AccountOrder ao
-                            ON ao.ID=aop.OrderId
-                        LEFT JOIN dbo.Code c
-                            ON c.ID=ao.StatusId
-                        WHERE ao.AccountId=@A
-                          AND aop.ProductId=@P
-                          AND
-                          (
-                              c.Label='ORDER_STATUS_SUCCESS'
-                              OR ao.StatusId IN(2068,2073)
-                          )
-                    )
-                    THEN 1
-                    ELSE 0
-                END";
+                SELECT CASE WHEN EXISTS
+                (
+                    SELECT 1
+                    FROM dbo.AccountOrderProduct aop
+                    INNER JOIN dbo.AccountOrder ao ON ao.ID=aop.OrderId
+                    INNER JOIN dbo.Product purchasedProduct ON purchasedProduct.ID=aop.ProductId
+                    LEFT JOIN dbo.Code c ON c.ID=ao.StatusId
+                    WHERE ao.AccountId=@A
+                      AND (c.Label='ORDER_STATUS_SUCCESS' OR ao.StatusId IN(2068,2073))
+                      AND
+                      (
+                          aop.ProductId=@P
+                          OR ','+REPLACE(ISNULL(purchasedProduct.ProductsId,''),' ','')+','
+                             LIKE '%,'+CONVERT(varchar(20),@P)+',%'
+                      )
+                ) THEN 1 ELSE 0 END";
 
             using (var cn = MediaDatabase.Open())
             using (var cmd = new SqlCommand(sql, cn))
             {
                 cmd.Parameters.Add("@A", SqlDbType.BigInt).Value = CurrentAccountId;
                 cmd.Parameters.Add("@P", SqlDbType.Int).Value = productId;
-
                 return Convert.ToBoolean(cmd.ExecuteScalar());
             }
         }
