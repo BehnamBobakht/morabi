@@ -1,0 +1,21 @@
+@model DataLayer.Entities.Account
+@{ ViewBag.Title = "بازیابی رمز عبور"; }
+<section class="auth-page container">
+    <div class="auth-card">
+        <div class="auth-brand">
+            <span>رسانه مربی ایران</span>
+            <h1>بازیابی رمز عبور</h1>
+            <p>شماره موبایل حساب کاربری‌تان را وارد کنید تا رمز عبور جدید برایتان ارسال شود.</p>
+        </div>
+        @using (Html.BeginForm("Forget", "Account", FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            if (ViewBag.Error != null) { <div class="auth-error">@ViewBag.Error</div> }
+            if (ViewBag.Success != null) { <div class="auth-success">@ViewBag.Success</div> }
+            <label for="mobile">شماره موبایل</label>
+            <input class="auth-input" id="mobile" name="mobile" value="@Model.Mobile" autocomplete="tel" inputmode="numeric" dir="ltr" required placeholder="09xxxxxxxxx" />
+            <button class="auth-submit" type="submit">ارسال رمز عبور جدید</button>
+        }
+        <p class="auth-switch"><a href="@Url.RouteUrl("MediaLogin")">بازگشت به ورود رسانه</a></p>
+    </div>
+</section>

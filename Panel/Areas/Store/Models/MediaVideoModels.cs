@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -35,8 +35,13 @@ namespace Panel.Areas.Store.Models
         [Display(Name = "ترتیب")]
         public int SortOrder { get; set; }
 
+        [Display(Name = "دمو")]
+        public bool IsDemo { get; set; }
+
         [Display(Name = "فعال")]
         public bool Active { get; set; }
+
+        public int VisitCount { get; set; }
     }
 
     public class VideoCollectionModel

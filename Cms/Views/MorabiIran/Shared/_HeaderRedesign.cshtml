@@ -1,0 +1,43 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@{ ViewAccount currentUser = BaseWebsite.CurrentAccount; }
+<header class="mr-site-header" id="mr-top">
+  <div class="mr-header-shell">
+    <a class="mr-brand" href="/">
+      <img src="/assets/@BaseWebsite.WebsiteLabel/images/Logo-Morabi-Iran.png" alt="@BaseContent.WebsiteDetail.Title" />
+      <span class="mr-brand-copy"><span>مربی <b>ایران</b></span><small>MORABI IRAN</small></span>
+    </a>
+    <nav class="mr-nav" aria-label="منوی اصلی">
+        <a href="/">خانه</a>
+        <a href="/search/courses">دوره‌ها</a>
+        <a href="/search/books">کتاب‌ها</a>
+        <a href="/media/learning">ویدئوهای دوره</a>
+        <div class="mr-nav-dropdown"><button type="button">سامانه‌ها <span>⌄</span></button><div><a href="/club/map?typeId=FIELD_CLUB_TEACHERS">سامانه مربیان</a><a href="/club/map?typeId=FIELD_CLUB_ATHENTES">سامانه ورزشکاران</a><a href="/club/map?typeId=FIELD_CLUB_OWNER">سامانه باشگاه‌ها</a></div></div>
+        <a href="@Url.Action(currentUser == null ? "Login" : "Profile", "Account")">پروفایل</a>
+        <a href="/st/contactUs">تماس با ما</a>
+        <a href="/st/aboutUs">درباره ما</a>
+    </nav>
+    <div class="mr-search-widget mr-search-desktop"><label class="mr-search-box" aria-label="جستجو در سایت"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg><input type="search" class="mr-search-input" placeholder="جستجو در دوره، کتاب و مجله..." autocomplete="off" spellcheck="false"/><button type="button" class="mr-search-clear" aria-label="پاک کردن جستجو">×</button></label><div class="mr-search-panel" aria-live="polite" aria-label="نتایج جستجو"></div></div>
+    <div class="mr-header-actions">
+      <a class="mr-login" href="@Url.Action(currentUser == null ? "Login" : "Profile", "Account")"
+         aria-label="@(currentUser == null ? "ورود / ثبت‌نام" : "پروفایل من")">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.5" />
+              <path d="M5 20v-2a7 7 0 0 1 14 0v2" />
+          </svg>
+          <span>@(currentUser == null ? "ورود / ثبت‌نام" : "پروفایل من")</span>
+      </a>
+      <a class="mr-cart" href="@Url.Action("Index", "Cart")" aria-label="سبد خرید"><span id="cart-badge">@Html.Action("CartBadge", "Cart")</span><svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.5L20.5 7H6.2"/><circle cx="9.5" cy="20" r="1"/><circle cx="17.5" cy="20" r="1"/></svg></a>
+      <button class="mr-menu-toggle" type="button" aria-label="باز کردن منو">☰</button>
+    </div>
+  </div>
+  <nav class="mr-mobile-nav" aria-label="منوی موبایل"><a href="/">خانه</a><a href="/search/courses">دوره‌ها</a><a href="/search/books">کتاب‌ها</a><a href="/media/learning">ویدئوهای دوره</a><details><summary>سامانه‌ها</summary><a href="/club/map?typeId=FIELD_CLUB_TEACHERS">سامانه مربیان</a><a href="/club/map?typeId=FIELD_CLUB_ATHENTES">سامانه ورزشکاران</a><a href="/club/map?typeId=FIELD_CLUB_OWNER">سامانه باشگاه‌ها</a></details><a href="@Url.Action(currentUser == null ? "Login" : "Profile", "Account")">پروفایل</a><a href="/st/contactUs">تماس با ما</a><a href="/st/aboutUs">درباره ما</a></nav>
+</header>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var toggles = document.querySelectorAll('.mr-menu-toggle');
+        var menu = document.querySelector('.mr-mobile-nav');
+        if (menu) Array.prototype.forEach.call(toggles, function (toggle) { toggle.addEventListener('click', function () { menu.classList.toggle('open'); }); });
+    });
+</script>
+<script src="/assets/@BaseWebsite.WebsiteLabel/js/header-search-v2.js?v=3" defer></script>

@@ -6825,6 +6825,191 @@ width: 100%;
 	text-align: center;
 }
 @media print {
+    .report-back {
+        width: 100%;
+        height: 100vh !important;
+        position: relative;
+        max-height: 100vh !important;
+        min-height: 100vh !important;
+        padding-top: 105px;
+    }
+
+        .report-back > img {
+            position: absolute;
+            z-index: 0;
+            height: 107%;
+            width: 100%;
+            top: -60px;
+            bottom: -20px;
+            display: block;
+        }
+
+        .report-back div {
+            z-index: 1;
+            position: relative;
+        }
+
+        .report-back .table {
+            font-size: 11px !important;
+        }
+
+        .report-back .table {
+            border: 1px solid #000 !important;
+        }
+
+            .report-back .table th,
+            .report-back .table td,
+            .report-back .table tr {
+                border: 1px solid #000 !important;
+            }
+
+    .bordered {
+        border: 1px solid #000 !important;
+    }
+}
+
+.flost-mobile-menu .basket-btn {
+    position: relative;
+}
+
+    .flost-mobile-menu .basket-btn .badge {
+        position: absolute;
+        top: -19px;
+        right: 18px;
+    }
+
+    .flost-mobile-menu .basket-btn svg {
+        width: 25px;
+        height: 25px;
+    }
+
+.basket-header > span {
+    color: black;
+    font-size: 10px !important;
+    margin-top: 6px;
+    text-align: center;
+}
+
+.basket-header {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width:992px) {
+    #cart-error {
+        position: absolute;
+        top: -136px !important;
+        left: 0 !important;
+        z-index: 1;
+    }
+
+    .login-basket {
+        display: none;
+    }
+
+    footer {
+        padding-bottom: 90px;
+    }
+}
+
+.highcharts-container {
+    max-width: 800px !important;
+    max-height: 400px !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.map-page #container2 {
+    max-width: 700px;
+    width: 100%;
+}
+
+.couchItem {
+    padding: 20px;
+    background: #0c630e;
+    color: #fff;
+    border-radius: 15px;
+    margin-bottom: 22px !important;
+    padding: 0;
+    overflow: hidden;
+}
+
+    .couchItem .home-product-caption {
+        border-right: 0;
+        padding: 20px;
+        background: linear-gradient(#117e13,#08420a);
+    }
+
+.home-product-img img {
+    max-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+}
+
+.map-page .title {
+    font-size: 160%;
+    font-weight: 500;
+}
+
+.add-couch {
+    background: var(--primary);
+    border-color: var(--primary);
+    margin: 0px auto 10px 0;
+    display: block;
+    width: max-content;
+    border-radius: 10px;
+}
+
+.map-page .map-parent {
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+#cart-error {
+    position: absolute;
+    top: 110px;
+    left: 10px;
+    z-index: 1;
+}
+
+.new-face {
+    direction: rtl;
+    font-family: "Vazirmatn", "IRANYekan", "IRANSans", Tahoma, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+/* پوپ‌آپ صفحهٔ اصلی: فقط در موبایل تصویر بدون فضای خالی اضافی نمایش داده شود. */
+@media (max-width: 575.98px) {
+	#popIndex .modal-dialog {
+		width: calc(100% - 24px);
+		max-width: none;
+		margin: 12px auto;
+	}
+
+	#popIndex .modal-body {
+		padding: 12px;
+	}
+
+	#popIndex .modal-body img {
+		display: block;
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		margin: 0;
+		object-fit: initial;
+	}
+
+	#popIndex .modal-body a {
+		margin-top: 12px;
+	}
+}
+@media print {
 	.report-back {
 	  width: 100%;
 	  height: 100vh !important;
@@ -6971,4 +7156,270 @@ font-size: 160%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+
+.morabi-site-footer {
+    padding: 0;
+    background: none;
+}
+.morabi-site-footer .morabi-footer-content {
+    position: relative;
+    padding: 72px 0 18px;
+    background: #070907;
+    color: #fff;
+    overflow: hidden;
+}
+.morabi-site-footer .stadium-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, #80601d55, transparent 38%),
+        repeating-linear-gradient(105deg, transparent 0 120px, #ffffff07 121px 122px);
+    animation: morabi-footer-glow 6s ease-in-out infinite alternate;
+}
+@keyframes morabi-footer-glow {
+    to { opacity: .6; transform: scale(1.04); }
+}
+.morabi-site-footer .footer-grid,
+.morabi-site-footer .footer-bottom {
+    position: relative;
+    width: min(1400px, calc(100% - 32px));
+    margin-inline: auto;
+}
+.morabi-site-footer .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 60px;
+}
+.morabi-site-footer .footer-grid > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+.morabi-site-footer .footer-grid > div > b {
+    margin-bottom: 8px;
+    color: #d6b253;
+    font-size: 12px;
+}
+.morabi-site-footer .footer-grid a,
+.morabi-site-footer .footer-grid p {
+    color: #8e948d;
+    font-size: 9px;
+}
+.morabi-site-footer .footer-logo-link { display: flex; }
+.morabi-site-footer .site-logo {
+    width: 136px;
+    height: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(231, 183, 78, .18));
+}
+.morabi-site-footer .footer-brand p { max-width: 290px; }
+.morabi-site-footer .footer-bottom {
+    margin-top: 45px;
+    padding-top: 18px;
+    border-top: 1px solid #2e322d;
+    display: flex;
+    justify-content: space-between;
+    color: #70766f;
+    font-size: 8px;
+}
+@media (min-width: 1281px) {
+    .morabi-site-footer .footer-grid { gap: 80px; }
+}
+@media (max-width: 760px) {
+    .morabi-site-footer .footer-grid,
+    .morabi-site-footer .footer-bottom { width: calc(100% - 28px); }
+    .morabi-site-footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 35px; }
+    .morabi-site-footer .footer-brand { grid-column: 1 / -1; }
+    .morabi-site-footer .site-logo { width: 128px; height: 42px; }
+    .morabi-site-footer .footer-bottom { display: block; text-align: center; }
+}
+@media (max-width: 430px) {
+    .morabi-site-footer .footer-grid { grid-template-columns: 1fr; }
+    .morabi-site-footer .footer-brand { grid-column: auto; }
+}
+
+
+.morabi-site-footer .newsletter {
+    padding: 55px 0;
+    background: #0b0d0b;
+    color: #fff;
+    border-bottom: 1px solid #31342f;
+}
+.morabi-site-footer .newsletter-layout {
+    width: min(1400px, calc(100% - 32px));
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 45px;
+}
+.morabi-site-footer .newsletter span { color: #e7b74e; font-size: 9px; }
+.morabi-site-footer .newsletter h2 { margin: 3px 0; font-size: 29px; }
+.morabi-site-footer .newsletter p { margin: 0; color: #8f958e; font-size: 9px; }
+.morabi-site-footer .newsletter form {
+    width: min(440px, 100%);
+    height: 52px;
+    padding: 5px;
+    display: flex;
+    border: 1px solid #50564e;
+    border-radius: 11px;
+    background: #151915;
+}
+.morabi-site-footer .newsletter input {
+    flex: 1;
+    min-width: 0;
+    padding: 0 13px;
+    border: 0;
+    background: none;
+    color: #fff;
+}
+.morabi-site-footer .newsletter button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0 12px;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 115px;
+    border: 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #c43b42, #841920);
+    color: #fff;
+    font-weight: 900;
+    box-shadow: 0 8px 20px #7c172c55;
+}
+@media (max-width: 760px) {
+    .morabi-site-footer .newsletter-layout {
+        width: calc(100% - 28px);
+        display: block;
+        text-align: center;
+    }
+    .morabi-site-footer .newsletter form { margin: 22px auto 0; }
+}
+@media (max-width: 430px) {
+    .morabi-site-footer .newsletter form { height: auto; display: block; }
+    .morabi-site-footer .newsletter input,
+    .morabi-site-footer .newsletter button { width: 100%; height: 48px; }
+    .morabi-site-footer .newsletter button { margin-top: 8px; }
+}
+
+.floating-chat{position:fixed;z-index:95;right:22px;bottom:22px;min-height:60px;padding:8px 18px 8px 16px;display:flex;align-items:center;gap:10px;border:1px solid #f3ce6e;background:linear-gradient(135deg,#131713,#050705);color:#fff;border-radius:18px;box-shadow:0 16px 42px #0005,0 0 0 5px #e7b74e1a;transition:transform .25s,box-shadow .25s}
+.floating-chat:hover{transform:translateY(-5px);box-shadow:0 22px 48px #0008,0 0 0 7px #e7b74e24}
+.floating-chat>svg{width:26px;height:26px;fill:none;stroke:#ffda7d;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.chat-copy{display:flex;flex-direction:column;line-height:1.35}
+.chat-copy b{font-size:12px}
+.chat-copy small{color:#aeb5ad;font-size:9px}
+.chat-pulse{position:absolute;top:8px;right:9px;width:8px;height:8px;border:2px solid #111;background:#5ee382;border-radius:50%;box-shadow:0 0 0 0 #5ee38299;animation:chatPulse 1.9s infinite}
+@keyframes chatPulse{70%{box-shadow:0 0 0 8px #5ee38200}100%{box-shadow:0 0 0 0 #5ee38200}}
+.floating-instagram{position:fixed;z-index:95;right:206px;bottom:22px;width:60px;height:60px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(135deg,#7a1b74,#e84870 58%,#f5a63b);color:#fff;box-shadow:0 16px 36px #69163a55;transition:transform .25s,box-shadow .25s}
+.floating-instagram:hover{transform:translateY(-5px) rotate(4deg);box-shadow:0 21px 42px #69163a88}
+.floating-instagram svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.floating-instagram .social-fill{fill:currentColor;stroke:none}
+.floating-instagram { right: auto; left: 22px; }
+.floating-chat, .floating-instagram { box-sizing: border-box; text-decoration: none; }
+.floating-chat { direction: rtl; }
+@media (max-width: 760px) {
+    .floating-chat { right: 14px; bottom: 14px; min-height: 54px; padding: 7px 14px 7px 12px; border-radius: 16px; }
+    .floating-chat > svg, .floating-instagram svg { width: 23px; height: 23px; }
+    .floating-chat .chat-copy b { font-size: 11px; }
+    .floating-chat .chat-copy small { font-size: 8px; }
+    .floating-instagram { left: 14px; bottom: 14px; width: 54px; height: 54px; border-radius: 16px; }
+}
+@media (max-width: 390px) {
+    .floating-chat { right: 10px; bottom: 10px; min-height: 50px; }
+    .floating-chat .chat-copy small { display: none; }
+    .floating-instagram { left: 10px; bottom: 10px; width: 50px; height: 50px; }
+}
+
+.morabi-cursor-dot,
+.morabi-cursor-ring {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+    border-radius: 50%;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .morabi-cursor-dot.visible,
+    .morabi-cursor-ring.visible { display: block; }
+    .morabi-cursor-dot {
+        width: 7px;
+        height: 7px;
+        background: #8dff23;
+        box-shadow: 0 0 14px #8dff23;
+    }
+    .morabi-cursor-ring {
+        width: 34px;
+        height: 34px;
+        border: 1px solid #e7b74ebd;
+        background: #e7b74e0d;
+        transition: width .2s, height .2s, background .2s;
+    }
+    .morabi-cursor-ring.action {
+        width: 54px;
+        height: 54px;
+        background: #e7b74e22;
+        border-color: #e7b74e;
+    }
+}
+
+@media (max-width: 760px) {
+    .morabi-site-footer {
+        flex-shrink: 0;
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+    }
+    .morabi-site-footer .morabi-footer-content {
+        padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+    }
+    .morabi-site-footer .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px 16px;
+    }
+    .morabi-site-footer .footer-brand { grid-column: 1 / -1; }
+    .morabi-site-footer .newsletter form,
+    .morabi-site-footer .newsletter input { box-sizing: border-box; }
+    a.floating-chat,
+    a.floating-instagram {
+        position: fixed;
+        z-index: 1050;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        visibility: visible;
+    }
+    a.floating-chat { display: flex; }
+    a.floating-instagram { display: grid; }
+}
+
+@media (max-width: 760px) {
+    .morabi-social-actions {
+        position: fixed;
+        z-index: 1050;
+        left: 12px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        display: flex;
+        justify-content: space-between;
+        direction: ltr;
+        pointer-events: none;
+    }
+    .morabi-social-actions a.floating-chat,
+    .morabi-social-actions a.floating-instagram {
+        position: relative;
+        inset: auto;
+        display: grid;
+        place-items: center;
+        width: 50px;
+        height: 50px;
+        min-height: 50px;
+        padding: 0;
+        pointer-events: auto;
+    }
+    .morabi-social-actions .chat-copy { display: none; }
 }

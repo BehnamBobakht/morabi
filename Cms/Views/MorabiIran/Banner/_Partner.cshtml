@@ -1,0 +1,12 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <article><img src="@item.Picture.GetUrl()" alt="" loading="lazy"><span>@item.GetName()</span></article>
+    }
+}
+

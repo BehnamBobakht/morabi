@@ -11,6 +11,7 @@ namespace Media
             ViewEngines.Engines.Add(new RazorViewEngine());
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            DataLayer.Base.MapAll.Maping();
         }
     }
 }

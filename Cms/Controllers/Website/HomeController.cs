@@ -20,10 +20,40 @@ namespace Cms.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.CountVisit = 10000; /*_context.WebsiteView.Count();*/
-            ViewBag.CountRegCourse = 10000; /*_context.CoursePayment.Count() + _context.AccountOrderProduct.SearchCount(typeId: 2, status: DataLayer.Enumarables.Enum_Code.ORDER_STATUS_SUCCESS);*/
-            ViewBag.CountQuiz = 10000; /*_context.QuizPayment.Where(s => s.Status == 1).ToList().Count() + _context.AccountOrderProduct.SearchCount(typeId: 1001, status: DataLayer.Enumarables.Enum_Code.ORDER_STATUS_SUCCESS);*/
             return PartialView(BaseController.GetView(this));
+        }
+
+        [ChildActionOnly]
+        public ActionResult HomeCourses(int take = 12)
+        {
+            // Card-only projection: title, category, image, link, price and discount.
+            var cards = _context.Product.GetHomeCards(productTypeId: 2, take: take, prioritizeDiscount: true);
+            return PartialView("~/Views/" + BaseWebsite.WebsiteLabel + "/Home/_HomeCourses.cshtml", cards);
+        }
+
+        [ChildActionOnly]
+        public ActionResult HomeBooks(int take = 12)
+        {
+            // "books" is the existing custom-label convention used by the old home action.
+            var cards = _context.Product.GetHomeCards(customLabel: "books", take: take, prioritizeDiscount: true);
+            return PartialView("~/Views/" + BaseWebsite.WebsiteLabel + "/Home/_HomeBooks.cshtml", cards);
+        }
+
+        [ChildActionOnly]
+        [OutputCache(Duration = 300, VaryByParam = "categoryLabel;take")]
+        public ActionResult HomePosts(string categoryLabel = "blog", int take = 5)
+        {
+            // Card-only projection: title, summary, category, image and destination URL.
+            var cards = _context.Post.GetHomeCards(categoryLabel: categoryLabel, take: take);
+            return PartialView("~/Views/" + BaseWebsite.WebsiteLabel + "/Home/_HomePosts.cshtml", cards);
+        }
+
+        [ChildActionOnly]
+        [OutputCache(Duration = 300, VaryByParam = "take")]
+        public ActionResult HomeVideos(int take = 10)
+        {
+            var cards = _context.Post.GetHomeCards(categoryLabel: "video", take: 10, orderByShowNumber: true);
+            return PartialView("~/Views/" + BaseWebsite.WebsiteLabel + "/Home/_HomeVideos.cshtml", cards);
         }
     
 

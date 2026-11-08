@@ -1,0 +1,38 @@
+@model DataLayer.Entities.Account
+@{
+    ViewBag.Title = "ثبت‌نام";
+    var back = ViewBag.Back as string ?? "/learning";
+}
+<section class="auth-page container">
+    <div class="auth-card auth-register-card">
+        <div class="auth-brand">
+            <span>عضویت در رسانه مربی ایران</span>
+            <h1>ساخت حساب کاربری</h1>
+            <p>این حساب در سایت اصلی و بخش آموزش قابل استفاده است.</p>
+        </div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="back" value="@back" />
+            if (ViewBag.Error != null) { <div class="auth-error">@ViewBag.Error</div> }
+            <div class="auth-grid">
+                <div><label for="FullName">نام</label>@Html.TextBoxFor(x => x.FullName, new { @class = "auth-input", autocomplete = "given-name", required = "required", placeholder = "نام فارسی" })</div>
+                <div><label for="LatName">نام خانوادگی</label>@Html.TextBoxFor(x => x.LatName, new { @class = "auth-input", autocomplete = "family-name", required = "required", placeholder = "نام خانوادگی فارسی" })</div>
+                <div><label for="FullNameEn">نام انگلیسی</label>@Html.TextBoxFor(x => x.FullNameEn, new { @class = "auth-input english-input", autocomplete = "given-name", required = "required", dir = "ltr", pattern = "[A-Za-z][A-Za-z .'-]*", title = "نام را فقط با حروف انگلیسی وارد کنید", placeholder = "First name" })</div>
+                <div><label for="LatNameEn">نام خانوادگی انگلیسی</label>@Html.TextBoxFor(x => x.LatNameEn, new { @class = "auth-input english-input", autocomplete = "family-name", required = "required", dir = "ltr", pattern = "[A-Za-z][A-Za-z .'-]*", title = "نام خانوادگی را فقط با حروف انگلیسی وارد کنید", placeholder = "Last name" })</div>
+            </div>
+            <label for="Mobile">شماره موبایل</label>
+            @Html.TextBoxFor(x => x.Mobile, new { @class = "auth-input", autocomplete = "tel", inputmode = "numeric", required = "required", dir = "ltr", placeholder = "09xxxxxxxxx" })
+            <label for="NationalCode">کد ملی</label>
+            @Html.TextBoxFor(x => x.NationalCode, new { @class = "auth-input", inputmode = "numeric", required = "required", dir = "ltr", maxlength = "10", placeholder = "کد ملی ۱۰ رقمی" })
+            <label for="StateId">استان</label>
+            @Html.DropDownListFor(x => x.StateId, (SelectList)ViewBag.States, "استان خود را انتخاب کنید", new { @class = "auth-input auth-select", required = "required" })
+            <div class="auth-grid">
+                <div><label for="Password">رمز عبور</label>@Html.PasswordFor(x => x.Password, new { @class = "auth-input", autocomplete = "new-password", required = "required" })</div>
+                <div><label for="confirmPassword">تکرار رمز عبور</label><input class="auth-input" id="confirmPassword" type="password" name="confirmPassword" autocomplete="new-password" required /></div>
+            </div>
+            <button class="auth-submit" type="submit">ثبت‌نام و ورود</button>
+        }
+        <p class="auth-switch">قبلاً ثبت‌نام کرده‌اید؟ <a href="@Url.Action("Login", new { back = back })">وارد شوید</a> <span aria-hidden="true">|</span> <a href="@Url.RouteUrl("MediaForget")">فراموشی رمز عبور</a></p>
+    </div>
+</section>

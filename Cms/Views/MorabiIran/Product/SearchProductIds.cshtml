@@ -43,7 +43,7 @@
                     }
                     else
                     {
-                        <a style="background: var(--primary);color: #fff;padding: 3px;margin: 10px 0;" class="btn" href="/Account/PrintCertificate?ID=@Model.PaymentCertificate.FirstOrDefault(s => s.StatusId == 1072 && s.AccountId == CurrentAccount.Id && s.Type == 1).ID">دانلود گواهی آنلاین</a>
+                        @* <a style="background: var(--primary);color: #fff;padding: 3px;margin: 10px 0;" class="btn" href="/Account/PrintCertificate?ID=@Model.PaymentCertificate.FirstOrDefault(s => s.StatusId == 1072 && s.AccountId == CurrentAccount.Id && s.Type == 1).ID">دانلود گواهی آنلاین</a> *@
 
                     }
                     @if (!Model.PaymentCertificate.Any(s => s.StatusId == 1072 && s.AccountId == CurrentAccount.Id && s.Type == 2))

@@ -67,7 +67,7 @@ namespace Cms.Controllers.Api
             account.Id = currentAccount.Id;
             result = ApiAccount.Put_Account(_context, account, account.Id);
             if (result.Code == ApiResult.ResponseCode.Success)
-                _context.Account.SetCurrentAccount((ViewAccount)result.Value, currentAccount.Password, true);
+                _context.Account.RefreshCurrentAccount((ViewAccount)result.Value);
             return result;
         }
 
@@ -92,7 +92,7 @@ namespace Cms.Controllers.Api
             ApiResult result = ApiAccount.Put_ChangeUserName(_context, account.Id, userName);
             //(_context, account.Id, oldPassword, newPassword, confirmPassword);
             if (result.Code == ApiResult.ResponseCode.Success)
-                _context.Account.SetCurrentAccount((ViewAccount)result.Value, userName, false);
+                _context.Account.RefreshCurrentAccount((ViewAccount)result.Value);
             return result;
         }
         protected override void Dispose(bool disposing)

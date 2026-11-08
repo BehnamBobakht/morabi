@@ -1,4 +1,4 @@
-﻿@using System.Linq
+@using System.Linq
 @model Panel.Areas.Store.Models.MediaVisitIndexModel
 @{
     ViewBag.Title = "گزارش مشاهده «" + Model.MediaTitle + "»";
@@ -8,7 +8,7 @@
 <div class="col-sm-12">
     <div class="card-box">
         <div class="clearfix">
-            <h3 class="pull-right">@ViewBag.Title</h3>
+            <h3 class="pull-right">@ViewBag.Title <small class="label label-info">جمع کل بازدید: @Model.TotalCount</small></h3>
             <a class="btn btn-default pull-left" href="@(Model.Source == "course" ? Url.Action("Index") : Url.Action("Sessions", new { id = Model.ParentId }))">بازگشت</a>
         </div>
         <form method="get" class="row">

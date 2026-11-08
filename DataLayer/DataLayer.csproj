@@ -1371,6 +1371,7 @@
     <Compile Include="ViewModels\Payment\PaymentVm3.cs" />
     <Compile Include="ViewModels\Payment\PaymentVm2.cs" />
     <Compile Include="ViewModels\Post\PostSearchVm.cs" />
+    <Compile Include="ViewModels\Home\HomeCardVm.cs" />
     <Compile Include="ViewModels\Banner\BannerVm.cs" />
     <Compile Include="ViewModels\PostQuestion\PostQuestionVm.cs" />
     <Compile Include="ViewModels\Post\ResultPostIndex.cs" />

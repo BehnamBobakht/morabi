@@ -18,15 +18,15 @@
             <div class="form-group col-md-4"><label>&nbsp;</label><button class="btn btn-primary form-control">نمایش</button></div>
         </form>
         <div class="table-responsive"><table class="table table-striped table-bordered">
-            <thead><tr><th>کاور</th><th>#</th><th>دوره</th><th>عنوان</th><th>ترتیب</th><th>وضعیت</th><th></th></tr></thead>
+            <thead><tr><th>کاور</th><th>#</th><th>دوره</th><th>عنوان</th><th>ترتیب</th><th>نوع</th><th>بازدید کل</th><th>وضعیت</th><th>لینک مستقیم</th><th></th></tr></thead>
             <tbody>
             @foreach (var item in Model.CourseVideos) {
-                <tr><td>@if (!string.IsNullOrWhiteSpace(item.PictureUrl)) { <img src="@Url.Content(item.PictureUrl)" style="width:80px;height:48px;object-fit:cover" /> }</td><td>@item.ID</td><td>@item.ProductName</td><td>@item.Title</td><td>@item.SortOrder</td><td>@(item.Active ? "فعال" : "غیرفعال")</td>
+                <tr><td>@if (!string.IsNullOrWhiteSpace(item.PictureUrl)) { <img src="@Url.Content(item.PictureUrl)" style="width:80px;height:48px;object-fit:cover" /> }</td><td>@item.ID</td><td>@item.ProductName</td><td>@item.Title</td><td>@item.SortOrder</td><td>@(item.IsDemo ? "دمو" : "ویژه خریداران")</td><td>@item.VisitCount</td><td>@(item.Active ? "فعال" : "غیرفعال")</td><td><a class="btn btn-default btn-xs" target="_blank" href="https://morabiiran.com/media/courses/watch/@item.ProductId?sessionId=@item.ID">باز کردن / کپی لینک</a></td>
                     <td><a class="btn btn-info btn-xs" href="@Url.Action("Visits", new { source = "course", id = item.ID })">گزارش مشاهده کاربران</a> | <a href="@Url.Action("CourseForm", new { id = item.ID })">ویرایش</a>
                         <form method="post" action="@Url.Action("DeleteCourse")" style="display:inline">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@item.ID" /><button type="submit" class="btn btn-link" onclick="return confirm('این ویدئو حذف شود؟')">حذف</button></form>
                     </td></tr>
             }
-            @if (!Model.CourseVideos.Any()) { <tr><td colspan="7" class="text-center">موردی ثبت نشده است.</td></tr> }
+            @if (!Model.CourseVideos.Any()) { <tr><td colspan="10" class="text-center">موردی ثبت نشده است.</td></tr> }
             </tbody>
         </table></div>
         @if (totalPages > 1) {

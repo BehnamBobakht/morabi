@@ -17,8 +17,6 @@ namespace Cms.Controllers
         public ActionResult Index(int? slid, string slname = "")
         {
             Slider slider = _context.Slider.GetById(slid);
-            _context.Slider.Update(slider);
-            _context.Save();
             ViewBag.CurrentAccount = _context.Account.GetCurrentAccount();
             return PartialView(BaseController.GetView(this), slider);
         }

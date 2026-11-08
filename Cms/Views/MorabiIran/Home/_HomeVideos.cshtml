@@ -1,0 +1,23 @@
+@using DataLayer.ViewModels
+@model IEnumerable<HomePostCardVm>
+
+@foreach (var item in Model)
+{
+    <a class="video-card tilt" href="@item.PostUrl" aria-label="مشاهده ویدئو @item.Name">
+        <div class="event-shot">
+            <img src="@item.ImageUrl"
+                 alt="@item.Name"
+                 width="640"
+                 height="360"
+                 loading="lazy"
+                 decoding="async"
+                 fetchpriority="low" />
+            <span class="video-play" aria-hidden="true"></span>
+        </div>
+        <h3>@item.Name</h3>
+        @if (!String.IsNullOrWhiteSpace(item.Summary))
+        {
+            <p>@item.Summary</p>
+        }
+    </a>
+}

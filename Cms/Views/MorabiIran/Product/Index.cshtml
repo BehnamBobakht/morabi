@@ -28,6 +28,10 @@
        
         $(function () {
             initializeProductPageScript();
+
+            if (document.getElementById("show-course2")) {
+                showCourse(1);
+            }
         })
 		 $("input[name=addPackage]").change(function () {
             var elm = $(this);

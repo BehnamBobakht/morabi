@@ -18,7 +18,8 @@ namespace Cms.Controllers.Api
         UnitOfWork _context = new UnitOfWork();
 
         [HttpPost]
-        public ApiResult Get(int? accountAnswerId, List<ViewExameAnswer> model, int? courseId,string cId="" /*int? answerId, int? questionId*/, bool isfinish = false, string open ="False")
+        // cId is intentionally omitted to keep this endpoint compatible with the DLL currently deployed on the server.
+        public ApiResult Get(int? accountAnswerId, List<ViewExameAnswer> model, int? courseId /*, string cId = "" */ /*int? answerId, int? questionId*/, bool isfinish = false, string open ="False")
         {
             foreach (var item in model)
             {
@@ -72,8 +73,9 @@ namespace Cms.Controllers.Api
             //exam.QuestionAnswer = exam.QuestionAnswer.Replace(text, "");
             //exam.QuestionAnswer += "-"+text+"-";
            
-            exam.QuestionAnswer = exam.QuestionAnswer.Replace(cId, "");
-            exam.QuestionAnswer += cId;
+            // Kept disabled: this behavior exists only in the newer local Cms.dll, not in the deployed DLL.
+            // exam.QuestionAnswer = exam.QuestionAnswer.Replace(cId, "");
+            // exam.QuestionAnswer += cId;
             _context.ExameAccountAnswer.Update(exam);
             _context.Save();
             ApiResult result = new ApiResult();

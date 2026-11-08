@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="fa-IR">
 <head>
+    <meta charset="utf-8">
     @RenderSection("MetaTag", false)
     @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_MetaTags.cshtml")
     <title>@(TempData["Title"] != null ? TempData["Title"] : DataLayer.Base.BaseContent.WebsiteDetail.IndexTitle)</title>
@@ -13,7 +14,7 @@
 <body>
 
 
-    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_HeaderIndex.cshtml")
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_HeaderRedesign.cshtml")
 
     @RenderBody()
     @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Footer.cshtml")
@@ -22,10 +23,6 @@
     <script>
         initializeCommonScript();
     </script>
-	<script type="text/javascript">
-		$(window).on('load', function() {
-			$('#popIndex').modal('show');
-		});
-		</script>
+
 </body>
 </html>

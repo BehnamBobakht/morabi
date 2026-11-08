@@ -1,0 +1,12 @@
+﻿@model List<DataLayer.Entities.Banner>
+@using DataLayer.Base
+
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <img class="hero-image" src="@item.Picture.GetUrl()" alt="@item.GetName()" width="1672" height="941" decoding="async" fetchpriority="high">
+    }
+}
+

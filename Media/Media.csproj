@@ -71,18 +71,27 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ZarinPal">
+      <HintPath>..\Cms\bin\ZarinPal.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\BaseMediaController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\LearningController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\MyVideosController.cs" />
     <Compile Include="Models\MediaViewModels.cs" />
+    <Compile Include="Models\CheckoutViewModels.cs" />
+    <Compile Include="Models\PaymentViewModels.cs" />
     <Compile Include="Models\LearningViewModels.cs" />
     <Compile Include="Infrastructure\MediaDatabase.cs" />
+    <Compile Include="Infrastructure\MediaPaymentGateway.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -90,11 +99,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\media.css" />
+    <Content Include="Assets\css\anjomanmax.css" />
     <Content Include="Assets\css\private-watch.css" />
     <Content Include="Assets\js\document-reader.js" />
     <Content Include="Assets\js\media.js" />
     <Content Include="Assets\fonts\YekanBakhFaNum-Bold.ttf" />
     <Content Include="Assets\fonts\YekanBakhFaNum-Regular.ttf" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Black.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Black.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Bold.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Bold.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-ExBold.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-ExBold.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-ExLight.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-ExLight.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Light.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Light.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Medium.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Medium.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Regular.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Regular.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-SemiBold.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-SemiBold.woff2" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Thin.woff" />
+    <Content Include="Assets\fonts\AnjomanMax\AnjomanMax-Thin.woff2" />
     <Content Include="Assets\images\banner2.png" />
     <Content Include="Assets\images\courses-hero-v2.png" />
     <Content Include="Assets\images\img1.png" />
@@ -108,6 +136,10 @@
     <Content Include="Assets\images\my-videos-hero-v2.png" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Payment\Result.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Watch.cshtml" />
     <Content Include="Views\Documents\Index.cshtml" />
@@ -140,6 +172,12 @@
   <ItemGroup>
     <Content Include="Views\Banner\_CourseBanner.cshtml" />
     <Content Include="Views\Banner\_VideoBannerMobile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Forget.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,121 +1,154 @@
-﻿@using DataLayer.Base;
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 p-0">
-                <div class="footer-logo central">
-                    <a href="/"><img src="/assets/@BaseWebsite.WebsiteLabel/images/logo.png" alt="@BaseContent.WebsiteDetail.Title"></a>
-                </div>
-            </div>
-            <div class="col-lg-4 p-0">
-                <div class="footer-linkbox">
-                    <span>دسترسی سریع</span>
-                    @Html.Action("Search", "Banner", new { bacategory = "LinkFooter", baviewName = "_FooterLink", baSize = 10 })
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@{ ViewAccount currentUser = BaseWebsite.CurrentAccount; }
+<footer class="morabi-site-footer" dir="rtl">
+    <section class="newsletter">
+    <div class="newsletter-layout">
+    <div>
+    <span>قدم بعدی حرفه‌ای‌تر</span>
+    <h2>همین حالا عضو مربی ایران شوید.</h2>
+    <p>برای اطلاع از دوره‌ها و تخفیف‌ها شماره موبایل خود را وارد نمایید.</p>
+    </div>
+    <form>
+    <input type="tel" inputmode="numeric" autocomplete="tel" dir="rtl" placeholder="برای اطلاع از دوره‌ها و تخفیف‌ها شماره موبایل خود را وارد نمایید">
+    <button>عضویت ←</button>
+    </form>
+    </div>
+    </section>
+    <div class="morabi-footer-content">
+    <div class="stadium-glow" aria-hidden="true"></div>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a class="footer-logo-link" href="/">
+                <img class="site-logo" src="/assets/@BaseWebsite.WebsiteLabel/images/Logo-Morabi-Iran.png" alt="مربی ایران">
+            </a>
+            <p>پایگاه تخصصی آموزش مربیگری بدنسازی و فیتنس برای ساختن نسل بعدی مربیان حرفه‌ای.</p>
+        </div>
+        <div>
+            <b>دوره‌ها</b>
+            <a href="/search/courses">همه دوره‌ها</a>
+            <a href="/search/books">کتاب‌ها</a>
+            <a href="/page/video">ویدئوها</a>
+            <a href="/search/exam">آزمون ها</a>
+        </div>
+        <div>
+            <b>خدمات مشتریان</b>
+            <a href="/st/contactUs">تماس با ما</a>
+            <a href="/st/aboutUs">درباره ما</a>
+            <a href="/post/page?poCategory=blog">مجله مربیگری</a>
+            <a href="/page/news">اخبار</a>
 
-
-                </div>
-            </div>
-            <div class="col-lg-5 p-0">
-                <div class="footer-text">
-                    <p>@Html.Raw(BaseContent.WebsiteDetail.Summary)</p>
-                </div>
-                <div class="footer-addressbox align">
-                    @Html.Action("Search", "Banner", new { bacategory = "MapBanner", baviewName = "_MapBanner", baSize = 1 })
-
-
-                    <div class="footer-address d-flex">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <mask id="mask0_1631_937" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-                                <rect width="24" height="24" fill="white" />
-                            </mask>
-                            <g mask="url(#mask0_1631_937)">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C8.13 3 5 6.13 5 10C5 15.25 12 21 12 21C12 21 19 15.25 19 10C19 6.13 15.87 3 12 3C12 3 8.13 3 12 3ZM12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13C13.6569 13 12 13 12 13Z" fill="white" />
-                            </g>
-                        </svg>
-                        <p>@Html.Raw(BaseContent.WebsiteDetail.Address)</p>
-						<br />
-                        <p>
-                           @Html.Raw(BaseContent.WebsiteDetail.Phone)
-
-                        </p>
-                    </div>
-                </div>
-                <div class="footer-membershipbox">
-                    <div class="footer-membership align">
-                        <input type="text" placeholder="@Resource.Lang.EnterYourEmailToSubscribeToTheNews" data-bind="value:viewModel.NewsLetter.Email">
-                        <a class="btn footer-membership-btn" codeprocess-action="newsletter-add">عضویت</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 p-0">
-                <div class="footer-namad align justify-content-end h-100">
-                    @*<a href="#">
-                            <img src="assets/images/enamad.png" alt="">
-                        </a>
-                        <a href="#">
-                            <img src="assets/images/sazmandehi.png" alt="">
-                        </a>
-						<a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=459583&Code=Jg8NOmDRs1MKVtStnH9XY3pMawmhoRBV'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=459583&Code=Jg8NOmDRs1MKVtStnH9XY3pMawmhoRBV' alt='' style='cursor:pointer' Code='Jg8NOmDRs1MKVtStnH9XY3pMawmhoRBV'></a>
-				*@		
-                </div>
-            </div>
-            <div class="col-lg-12 p-0">
-                <div class="footer-socialmedia central">
-                    <a href="@BaseContent.WebsiteDetail.Aparat">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="16" fill="white" />
-                            <path d="M17.2302 7.28395C13.2005 6.53111 8.96998 9.09177 7.82884 12.9742L8.79691 9.68047C9.40556 7.60961 11.6622 6.24381 13.8116 6.6453L17.2301 7.28399" fill="#2D2D2D" />
-                            <path d="M19.6049 7.98522C23.6364 8.99423 26.1843 13.0962 25.2667 17.1007L26.0451 13.7034C26.5346 11.5674 25.1755 9.37937 23.0251 8.84118L19.6048 7.98522" fill="#2D2D2D" />
-                            <path d="M15.4508 25.0791C19.4804 25.8317 23.7111 23.2712 24.8521 19.3891L23.8841 22.6826C23.2754 24.7533 21.0188 26.1191 18.8694 25.7176L15.4507 25.0791" fill="#2D2D2D" />
-                            <path d="M13.0761 24.3781C9.04448 23.3691 6.49666 19.2671 7.41419 15.2626L6.63579 18.6598C6.14638 20.7959 7.50544 22.9839 9.65586 23.5221L13.0757 24.378" fill="#2D2D2D" />
-                            <path d="M20.0665 16.0052C18.7198 16.0052 17.628 14.9134 17.628 13.5667C17.628 12.22 18.7198 11.1282 20.0665 11.1282C21.4132 11.1282 22.5049 12.22 22.5049 13.5667C22.5049 14.9134 21.4132 16.0052 20.0665 16.0052ZM18.7656 22.4937C17.4189 22.4937 16.3272 21.402 16.3272 20.0553C16.3272 18.7085 17.4189 17.6168 18.7656 17.6168C20.1124 17.6168 21.2041 18.7085 21.2041 20.0553C21.2041 21.402 20.1124 22.4937 18.7656 22.4937ZM15.2064 16.273C15.2064 15.6814 15.686 15.2019 16.2775 15.2019C16.869 15.2019 17.3485 15.6814 17.3485 16.273C17.3485 16.8645 16.869 17.3439 16.2775 17.3439C15.686 17.3439 15.2064 16.8645 15.2064 16.273ZM12.6002 21.2839C11.2534 21.2839 10.1617 20.1921 10.1617 18.8453C10.1617 17.4986 11.2534 16.4069 12.6002 16.4069C13.9469 16.4069 15.0386 17.4986 15.0386 18.8453C15.0386 20.1921 13.9469 21.2839 12.6002 21.2839ZM13.901 9.91834C15.2477 9.91834 16.3395 11.0101 16.3395 12.3568C16.3395 13.7036 15.2477 14.7953 13.901 14.7953C12.5543 14.7953 11.4625 13.7036 11.4625 12.3568C11.4625 11.0101 12.5543 9.91834 13.901 9.91834ZM16.3395 7.56641C11.5789 7.56641 7.71973 11.4256 7.71973 16.1861C7.71973 20.9467 11.5789 24.8058 16.3395 24.8058C21.1001 24.8058 24.9592 20.9467 24.9592 16.1861C24.9592 11.4256 21.1001 7.56641 16.3395 7.56641Z" fill="#2D2D2D" />
-                        </svg>
-                    </a>
-                    <a href="@BaseContent.WebsiteDetail.Whatsapp">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6 21.7C13.6 22.3 14.8 22.6 16 22.6C19.7 22.6 22.6 19.6 22.6 16.1C22.6 14.3 22 12.7 20.7 11.4C19.4 10.2 17.8 9.5 16 9.5C12.4 9.5 9.39999 12.5 9.39999 16.1C9.39999 17.3 9.7 18.5 10.4 19.6L10.6 19.9L9.89999 22.3L12.4 21.6L12.6 21.7ZM18.2 17C18.4 17 19.4 17.5 19.6 17.6C19.6311 17.6156 19.6623 17.6287 19.6931 17.6417C19.8599 17.7121 20.0156 17.7779 20.1 18.2C20.2 18.2 20.2 18.6 20 19.1C19.9 19.5 19.1 20 18.7 20C18.6322 20 18.5673 20.0057 18.498 20.0119C18.1582 20.0419 17.712 20.0814 16.3 19.5C14.5475 18.799 13.3325 17.0999 12.9913 16.6228C12.9431 16.5554 12.9124 16.5124 12.9 16.5C12.883 16.466 12.8485 16.4116 12.8031 16.3399C12.5819 15.9906 12.1 15.2297 12.1 14.4C12.1 13.4 12.6 12.9 12.8 12.7C13 12.5 13.2 12.5 13.3 12.5H13.7C13.8 12.5 14 12.5 14.1 12.8C14.3 13.2 14.7 14.2 14.7 14.3C14.7 14.3333 14.7111 14.3667 14.7222 14.4C14.7445 14.4667 14.7667 14.5333 14.7 14.6C14.65 14.65 14.625 14.7 14.6 14.75C14.575 14.8 14.55 14.85 14.5 14.9L14.2 15.2C14.1 15.3 14 15.4 14.1 15.6C14.2 15.8 14.6 16.5 15.2 17C15.8751 17.5907 16.4078 17.8254 16.6778 17.9443C16.7278 17.9663 16.7688 17.9844 16.8 18C17 18 17.1 18 17.2 17.9C17.25 17.8 17.375 17.65 17.5 17.5C17.625 17.35 17.75 17.2 17.8 17.1C17.9 16.9 18 16.9 18.2 17Z" fill="white" />
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16ZM16 8C18.1 8 20.1 8.8 21.6 10.3C23.1 11.8 24 13.8 24 15.9C24 20.3 20.4 23.9 16 23.9C14.7 23.9 13.4 23.5 12.2 22.9L8 24L9.10001 20C8.40001 18.8 8 17.4 8 16C8 11.6 11.6 8 16 8Z" fill="white" />
-                        </svg>
-                    </a>
-                    <a href="@BaseContent.WebsiteDetail.Telegram">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 32C7.16344 32 0 24.8366 0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32ZM16.6919 12.0074C15.2589 12.6034 12.3949 13.8371 8.09992 15.7083C7.40248 15.9856 7.03714 16.257 7.00388 16.5223C6.94767 16.9706 7.50915 17.1472 8.27374 17.3876C8.37774 17.4203 8.4855 17.4542 8.59598 17.4901C9.34822 17.7346 10.3601 18.0207 10.8862 18.0321C11.3633 18.0424 11.8959 17.8457 12.4839 17.4419C16.4968 14.7331 18.5683 13.3639 18.6983 13.3344C18.7901 13.3136 18.9172 13.2874 19.0034 13.3639C19.0895 13.4405 19.0811 13.5855 19.0719 13.6244C19.0163 13.8615 16.8123 15.9106 15.6717 16.971C15.3161 17.3015 15.0639 17.536 15.0124 17.5896C14.8969 17.7096 14.7791 17.823 14.666 17.9321C13.9672 18.6058 13.4431 19.111 14.695 19.936C15.2967 20.3325 15.7781 20.6603 16.2584 20.9874C16.7829 21.3446 17.306 21.7009 17.9829 22.1446C18.1554 22.2576 18.3201 22.375 18.4805 22.4894C19.0909 22.9246 19.6393 23.3155 20.3168 23.2532C20.7105 23.217 21.1172 22.8468 21.3237 21.7427C21.8118 19.1335 22.7712 13.4801 22.9929 11.1505C23.0123 10.9464 22.9879 10.6851 22.9683 10.5705C22.9486 10.4558 22.9076 10.2924 22.7586 10.1715C22.582 10.0283 22.3095 9.99805 22.1877 10.0001C21.6335 10.01 20.7834 10.3056 16.6919 12.0074Z" fill="white" />
-                        </svg>
-                    </a>
-                    <a href="@BaseContent.WebsiteDetail.Instagram">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 18.8C14.5 18.8 13.2 17.6 13.2 16C13.2 14.5 14.4 13.2 16 13.2C17.5 13.2 18.8 14.4 18.8 16C18.8 17.5 17.5 18.8 16 18.8Z" fill="white" />
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M19.4 9.2H12.6C11.8 9.3 11.4 9.4 11.1 9.5C10.7 9.6 10.4 9.8 10.1 10.1C9.86261 10.3374 9.75045 10.5748 9.61489 10.8617C9.57916 10.9373 9.5417 11.0166 9.5 11.1C9.48453 11.1464 9.46667 11.1952 9.44752 11.2475C9.34291 11.5333 9.2 11.9238 9.2 12.6V19.4C9.3 20.2 9.4 20.6 9.5 20.9C9.6 21.3 9.8 21.6 10.1 21.9C10.3374 22.1374 10.5748 22.2495 10.8617 22.3851C10.9374 22.4209 11.0165 22.4583 11.1 22.5C11.1464 22.5155 11.1952 22.5333 11.2475 22.5525C11.5333 22.6571 11.9238 22.8 12.6 22.8H19.4C20.2 22.7 20.6 22.6 20.9 22.5C21.3 22.4 21.6 22.2 21.9 21.9C22.1374 21.6626 22.2495 21.4252 22.3851 21.1383C22.4209 21.0626 22.4583 20.9835 22.5 20.9C22.5155 20.8536 22.5333 20.8048 22.5525 20.7525C22.6571 20.4667 22.8 20.0762 22.8 19.4V12.6C22.7 11.8 22.6 11.4 22.5 11.1C22.4 10.7 22.2 10.4 21.9 10.1C21.6626 9.86261 21.4252 9.75045 21.1383 9.61488C21.0627 9.57918 20.9833 9.54167 20.9 9.5C20.8536 9.48453 20.8048 9.46666 20.7525 9.44752C20.4667 9.3429 20.0762 9.2 19.4 9.2ZM16 11.7C13.6 11.7 11.7 13.6 11.7 16C11.7 18.4 13.6 20.3 16 20.3C18.4 20.3 20.3 18.4 20.3 16C20.3 13.6 18.4 11.7 16 11.7ZM21.4 11.6C21.4 12.1523 20.9523 12.6 20.4 12.6C19.8477 12.6 19.4 12.1523 19.4 11.6C19.4 11.0477 19.8477 10.6 20.4 10.6C20.9523 10.6 21.4 11.0477 21.4 11.6Z" fill="white" />
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16ZM12.6 7.7H19.4C20.3 7.8 20.9 7.9 21.4 8.1C22 8.4 22.4 8.6 22.9 9.1C23.4 9.6 23.7 10.1 23.9 10.6C24.1 11.1 24.3 11.7 24.3 12.6V19.4C24.2 20.3 24.1 20.9 23.9 21.4C23.6 22 23.4 22.4 22.9 22.9C22.4 23.4 21.9 23.7 21.4 23.9C20.9 24.1 20.3 24.3 19.4 24.3H12.6C11.7 24.2 11.1 24.1 10.6 23.9C10 23.6 9.6 23.4 9.1 22.9C8.6 22.4 8.3 21.9 8.1 21.4C7.9 20.9 7.7 20.3 7.7 19.4V12.6C7.8 11.7 7.9 11.1 8.1 10.6C8.4 10 8.6 9.6 9.1 9.1C9.6 8.6 10.1 8.3 10.6 8.1C11.1 7.9 11.7 7.7 12.6 7.7Z" fill="white" />
-                        </svg>
-                    </a>
-                    <a href="@BaseContent.WebsiteDetail.Youtube">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.6 16L14.4 13.6V18.4L18.6 16Z" fill="white" />
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16ZM22.2 10.7C22.9 10.9 23.4 11.4 23.6 12.1C24 13.4 24 16 24 16C24 16 24 18.6 23.7 19.9C23.5 20.6 23 21.1 22.3 21.3C21 21.6 16 21.6 16 21.6C16 21.6 10.9 21.6 9.7 21.3C9 21.1 8.5 20.6 8.3 19.9C8 18.6 8 16 8 16C8 16 8 13.4 8.2 12.1C8.4 11.4 8.90001 10.9 9.60001 10.7C10.9 10.4 15.9 10.4 15.9 10.4C15.9 10.4 21 10.4 22.2 10.7Z" fill="white" />
-                        </svg>
-                    </a>
-                    <a href="@BaseContent.WebsiteDetail.Facebook">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16ZM16 8C20.4 8 24 11.6 24 16C24 20 21.1 23.4 17.1 24V18.3H19L19.4 16H17.2V14.5C17.2 13.9 17.5 13.3 18.5 13.3H19.5V11.3C19.5 11.3 18.6 11.1 17.7 11.1C15.9 11.1 14.7 12.2 14.7 14.2V16H12.7V18.3H14.7V23.9C10.9 23.3 8 20 8 16C8 11.6 11.6 8 16 8Z" fill="white" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-12 p-0">
-                <div class="footer-signature central">
-                    <a href="https://behpardazan.com/">@Resource.Lang.BehpardazanCompany</a>
-                </div>
-            </div>
+            
         </div>
     </div>
-    <div class="float-icon d-none">
-        <div class="linkitem">
-            <a href="tel:@BaseContent.WebsiteDetail.Mobile"></a>
-            <img src="/assets/@BaseWebsite.WebsiteLabel/images/cosultation.png" alt="@BaseContent.WebsiteDetail.Title">
-        </div>
+    <div class="footer-bottom">
+        <span>تمامی حقوق برای مربی ایران محفوظ است.</span>
+        <a href="https://behpardazan.com/" style="color: inherit; margin-inline-start: 1rem;">شرکت طراحی سایت بهپردازان</a>
+    </div>
     </div>
 </footer>
+<div class="morabi-social-actions">
+<a class="floating-instagram" href="@BaseContent.WebsiteDetail.Instagram" aria-label="اینستاگرام مربی ایران">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="1" class="social-fill" />
+    </svg>
+</a>
+<a class="floating-chat" href="@BaseContent.WebsiteDetail.Telegram" aria-label="پاسخ به سؤالات" title="پاسخ به سؤالات">
+    <span class="chat-pulse">
+    </span>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9.8 9a2.4 2.4 0 1 1 3.2 2.3c-.7.3-1 .8-1 1.7v.3M12 17h.01" />
+    </svg>
+    <span class="chat-copy">
+        <b>
+            پاسخ به سؤالات
+        </b>
+        <small>
+            راهنمایی و پشتیبانی
+        </small>
+    </span>
+</a>
+</div>
+<nav class="morabi-mobile-dock" aria-label="دسترسی سریع موبایل">
+    <a href="/search/courses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 1 4 16.5z"/><path d="M4 16.5A2.5 2.5 0 0 1 6.5 14H20M8 7h8"/></svg><span>دوره‌ها</span></a>
+    <a href="/media/learning"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>ویدئو های دوره</span></a>
+    <a href="@Url.Action(currentUser == null ? "Login" : "Profile", "Account")"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg><span>پروفایل</span></a>
+    <button type="button" class="mr-dock-menu" aria-label="باز کردن منو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>منو</span></button>
+</nav>
+<div class="morabi-dock-menu-panel" id="morabi-dock-menu-panel" aria-hidden="true">
+    <button type="button" class="morabi-dock-menu-close" aria-label="بستن منو">×</button>
+    <a href="/search/books">کتاب‌ها</a>
+    <a href="/media/learning">ویدئوهای دوره</a>
+    <a href="/club/map?typeId=FIELD_CLUB_TEACHERS">سامانه مربیان</a>
+    <a href="/club/map?typeId=FIELD_CLUB_ATHENTES">سامانه ورزشکاران</a>
+    <a href="/club/map?typeId=FIELD_CLUB_OWNER">سامانه باشگاه‌ها</a>
+    <a href="/post/page?poCategory=blog">مجله مربیگری</a>
+    <a href="/st/contactUs">تماس با ما</a>
+    <a href="/st/aboutUs">درباره ما</a>
+</div>
+<div class="morabi-cursor-dot" aria-hidden="true"></div>
+<div class="morabi-cursor-ring" aria-hidden="true"></div>
+<script>
+    (function () {
+        var dockMenuButton = document.querySelector('.mr-dock-menu');
+        var dockMenuPanel = document.getElementById('morabi-dock-menu-panel');
+        var dockMenuClose = document.querySelector('.morabi-dock-menu-close');
+        function setDockMenu(open) {
+            if (!dockMenuPanel) return;
+            dockMenuPanel.classList.toggle('open', open);
+            dockMenuPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+        }
+        if (dockMenuButton) dockMenuButton.addEventListener('click', function (event) { event.preventDefault(); event.stopPropagation(); setDockMenu(!dockMenuPanel.classList.contains('open')); });
+        if (dockMenuClose) dockMenuClose.addEventListener('click', function () { setDockMenu(false); });
+        document.addEventListener('click', function (event) { if (dockMenuPanel && dockMenuPanel.classList.contains('open') && !dockMenuPanel.contains(event.target) && event.target !== dockMenuButton) setDockMenu(false); });
 
+        var mobileChat = document.querySelector('.floating-chat');
+        if (mobileChat) mobileChat.addEventListener('click', function (event) {
+            if (!window.matchMedia('(max-width: 760px)').matches || mobileChat.classList.contains('is-open')) return;
+            event.preventDefault();
+            mobileChat.classList.add('is-open');
+            window.setTimeout(function () { mobileChat.classList.remove('is-open'); }, 3500);
+        });
 
+        if (!window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches) return;
 
+        var dot = document.querySelector('.morabi-cursor-dot');
+        var ring = document.querySelector('.morabi-cursor-ring');
+        var x = -100, y = -100, ringX = -100, ringY = -100, size = 34;
+        var frame = 0;
+
+        function renderCursor() {
+            ringX += (x - ringX) * .17;
+            ringY += (y - ringY) * .17;
+            dot.style.transform = 'translate3d(' + (x - 3.5) + 'px,' + (y - 3.5) + 'px,0)';
+            ring.style.transform = 'translate3d(' + (ringX - size / 2) + 'px,' + (ringY - size / 2) + 'px,0)';
+            frame = Math.abs(x - ringX) + Math.abs(y - ringY) > .1
+                ? requestAnimationFrame(renderCursor)
+                : 0;
+        }
+
+        document.addEventListener('pointermove', function (event) {
+            if (event.pointerType !== 'mouse') return;
+            x = event.clientX;
+            y = event.clientY;
+            dot.classList.add('visible');
+            ring.classList.add('visible');
+            if (!frame) frame = requestAnimationFrame(renderCursor);
+        }, { passive: true });
+
+        document.addEventListener('pointerover', function (event) {
+            var active = event.target instanceof Element && event.target.closest('a,button,input,.tilt');
+            ring.classList.toggle('action', !!active);
+            size = active ? 54 : 34;
+            if (!frame) frame = requestAnimationFrame(renderCursor);
+        });
+
+        document.documentElement.addEventListener('pointerleave', function () {
+            dot.classList.remove('visible');
+            ring.classList.remove('visible');
+        });
+    })();
+</script>

@@ -211,6 +211,7 @@
       <LastGenOutput>Default.tr1.designer.cs</LastGenOutput>
     </Content>
     <Content Include="Assets\MorabiIran\css\all.css" />
+    <Content Include="Assets\MorabiIran\css\anjomanmax.css" />
     <Content Include="Assets\MorabiIran\css\animate.css" />
     <Content Include="Assets\MorabiIran\css\bootstrap-icons.css" />
     <Content Include="Assets\MorabiIran\css\bootstrap.min.css" />
@@ -266,6 +267,11 @@
     <Content Include="Assets\MorabiIran\images\img4.png" />
     <Content Include="Assets\MorabiIran\images\login.png" />
     <Content Include="Assets\MorabiIran\images\logo.png" />
+    <Content Include="Assets\MorabiIran\images\Logo-Morabi-Iran.png" />
+    <Content Include="Assets\MorabiIran\home-redesign\images\hero-fitness.jpg" />
+    <Content Include="Assets\MorabiIran\home-redesign\icons\partner-placeholder.svg" />
+    <Content Include="Assets\MorabiIran\home-redesign\images\journey-fitness.jpg" />
+    <Content Include="Assets\MorabiIran\home-redesign\images\fitness-coach.jpg" />
     <Content Include="Assets\MorabiIran\images\man.png" />
     <Content Include="Assets\MorabiIran\images\media1.png" />
     <Content Include="Assets\MorabiIran\images\media2.png" />
@@ -883,6 +889,24 @@
     <Content Include="Assets\Plugins\bootstrap-rtl\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\MorabiIran\fonts\bootstrap-icons-fonts\bootstrap-icons.woff" />
     <Content Include="Assets\MorabiIran\fonts\bootstrap-icons-fonts\bootstrap-icons.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Black.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Black.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Bold.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Bold.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-ExBold.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-ExBold.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-ExLight.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-ExLight.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Light.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Light.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Medium.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Medium.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Regular.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Regular.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-SemiBold.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-SemiBold.woff2" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Thin.woff" />
+    <Content Include="Assets\MorabiIran\fonts\AnjomanMax\AnjomanMax-Thin.woff2" />
     <Content Include="Assets\MorabiIran\fonts\Morabba-Black.ttf" />
     <Content Include="Assets\MorabiIran\fonts\Morabba-Bold.ttf" />
     <Content Include="Assets\MorabiIran\fonts\Morabba-ExtraBold.ttf" />
@@ -947,6 +971,7 @@
     <Content Include="Views\MorabiIran\Banner\_MoreSaleProduct.cshtml" />
     <Content Include="Views\MorabiIran\Banner\_OrderFormBanner.cshtml" />
     <Content Include="Views\MorabiIran\Banner\_SliderBanner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_PopUpbanner.cshtml" />
     <Content Include="Views\MorabiIran\Banner\_WorkWithUsBannerOption.cshtml" />
     <Content Include="Views\MorabiIran\Brand\_Pagination.cshtml" />
     <Content Include="Views\MorabiIran\Brand\Index.cshtml" />
@@ -1144,6 +1169,16 @@
     <Content Include="Views\Default\Payment\CallBack3.cshtml" />
     <Content Include="Views\MorabiIran\Product\ProductItemSell.cshtml" />
     <Content Include="Views\MorabiIran\Product\ProductItemSellList.cshtml" />
+    <Content Include="Views\MorabiIran\Shared\_HeaderRedesign.cshtml" />
+    <Content Include="Views\MorabiIran\Home\_HomeBooks.cshtml" />
+    <Content Include="Views\MorabiIran\Home\_HomeCourses.cshtml" />
+    <Content Include="Views\MorabiIran\Home\_HomePosts.cshtml" />
+    <Content Include="Views\MorabiIran\Home\_HomeRedesign.cshtml" />
+    <Content Include="Views\MorabiIran\Home\_HomeVideos.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_Partner.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_Slider.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_Slider2.cshtml" />
+    <Content Include="Views\MorabiIran\Banner\_Slider3.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

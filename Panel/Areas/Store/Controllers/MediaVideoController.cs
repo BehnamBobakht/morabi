@@ -1,4 +1,4 @@
-﻿using DataLayer.Base;
+using DataLayer.Base;
 using DataLayer.Entities;
 using DataLayer.Enumarables;
 using Panel.Areas.Store.Models;
@@ -92,13 +92,13 @@ namespace Panel.Areas.Store.Controllers
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = model.ID == 0
-                    ? @"INSERT dbo.CourseVideoSession(ProductId,Title,Description,VideoUrl,SortOrder,Active,PictureId)
-                        VALUES(@ProductId,@Title,@Description,@VideoUrl,@SortOrder,@Active,@PictureId)"
+                    ? @"INSERT dbo.CourseVideoSession(ProductId,Title,Description,VideoUrl,SortOrder,Active,PictureId,IsDemo)
+                        VALUES(@ProductId,@Title,@Description,@VideoUrl,@SortOrder,@Active,@PictureId,@IsDemo)"
                     : @"UPDATE dbo.CourseVideoSession SET ProductId=@ProductId,Title=@Title,
                         Description=@Description,VideoUrl=@VideoUrl,SortOrder=@SortOrder,
-                        Active=@Active,PictureId=@PictureId,UpdateDateTime=GETDATE() WHERE ID=@ID";
+                        Active=@Active,PictureId=@PictureId,IsDemo=@IsDemo,UpdateDateTime=GETDATE() WHERE ID=@ID";
                 AddSessionParameters(command, model.ProductId, model.Title, model.Description,
-                    model.VideoUrl, model.SortOrder, model.Active, model.PictureId);
+                    model.VideoUrl, model.SortOrder, model.Active, model.PictureId, model.IsDemo);
                 command.Parameters.Add("@ID", SqlDbType.Int).Value = model.ID;
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -237,7 +237,7 @@ namespace Panel.Areas.Store.Controllers
                         UpdateDateTime=GETDATE() WHERE ID=@ID AND VideoCollectionId=@CollectionId";
                 command.Parameters.Add("@CollectionId", SqlDbType.Int).Value = model.VideoCollectionId;
                 AddSessionParameters(command, 0, model.Title, model.Description,
-                    model.VideoUrl, model.SortOrder, model.Active, model.PictureId, false);
+                    model.VideoUrl, model.SortOrder, model.Active, model.PictureId, false, false);
                 command.Parameters.Add("@ID", SqlDbType.Int).Value = model.ID;
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -408,7 +408,8 @@ namespace Panel.Areas.Store.Controllers
             var result = new List<CourseVideoSessionModel>();
             using (var connection = CreateSqlConnection())
             using (var command = new SqlCommand(
-                @"SELECT s.ID,s.ProductId,p.Name ProductName,s.Title,s.Description,s.VideoUrl,s.PictureId,REPLACE(pic.Url,'SYSTEM_TYPE_PANEL','/panel') PictureUrl,s.SortOrder,s.Active
+                @"SELECT s.ID,s.ProductId,p.Name ProductName,s.Title,s.Description,s.VideoUrl,s.PictureId,REPLACE(pic.Url,'SYSTEM_TYPE_PANEL','/panel') PictureUrl,s.SortOrder,s.Active,s.IsDemo,
+                  (SELECT COUNT(*) FROM dbo.CourseVideoVisit v WHERE v.CourseVideoSessionId=s.ID) VisitCount
                   FROM dbo.CourseVideoSession s INNER JOIN dbo.Product p ON p.ID=s.ProductId LEFT JOIN dbo.Picture pic ON pic.ID=s.PictureId
                   WHERE @ProductId IS NULL OR s.ProductId=@ProductId
                   ORDER BY p.Name,s.SortOrder,s.ID", connection))
@@ -425,7 +426,8 @@ namespace Panel.Areas.Store.Controllers
         {
             using (var connection = CreateSqlConnection())
             using (var command = new SqlCommand(
-                @"SELECT s.ID,s.ProductId,p.Name ProductName,s.Title,s.Description,s.VideoUrl,s.PictureId,REPLACE(pic.Url,'SYSTEM_TYPE_PANEL','/panel') PictureUrl,s.SortOrder,s.Active
+                @"SELECT s.ID,s.ProductId,p.Name ProductName,s.Title,s.Description,s.VideoUrl,s.PictureId,REPLACE(pic.Url,'SYSTEM_TYPE_PANEL','/panel') PictureUrl,s.SortOrder,s.Active,s.IsDemo,
+                  (SELECT COUNT(*) FROM dbo.CourseVideoVisit v WHERE v.CourseVideoSessionId=s.ID) VisitCount
                   FROM dbo.CourseVideoSession s INNER JOIN dbo.Product p ON p.ID=s.ProductId LEFT JOIN dbo.Picture pic ON pic.ID=s.PictureId WHERE s.ID=@ID", connection))
             {
                 command.Parameters.Add("@ID", SqlDbType.Int).Value = id;
@@ -444,7 +446,8 @@ namespace Panel.Areas.Store.Controllers
                 Description = DbString(row["Description"]), VideoUrl = Convert.ToString(row["VideoUrl"]),
                 PictureId = row["PictureId"] == DBNull.Value ? (int?)null : (int)row["PictureId"],
                 PictureUrl = DbString(row["PictureUrl"]),
-                SortOrder = (int)row["SortOrder"], Active = (bool)row["Active"]
+                SortOrder = (int)row["SortOrder"], Active = (bool)row["Active"], IsDemo = (bool)row["IsDemo"],
+                VisitCount = (int)row["VisitCount"]
             };
         }
 
@@ -588,7 +591,7 @@ namespace Panel.Areas.Store.Controllers
         }
 
         private static void AddSessionParameters(SqlCommand command, int productId, string title,
-            string description, string videoUrl, int sortOrder, bool active, int? pictureId, bool includeProduct = true)
+            string description, string videoUrl, int sortOrder, bool active, int? pictureId, bool isDemo = false, bool includeProduct = true)
         {
             if (includeProduct) command.Parameters.Add("@ProductId", SqlDbType.Int).Value = productId;
             command.Parameters.Add("@Title", SqlDbType.NVarChar, 250).Value = title.Trim();
@@ -597,6 +600,7 @@ namespace Panel.Areas.Store.Controllers
             command.Parameters.Add("@SortOrder", SqlDbType.Int).Value = sortOrder;
             command.Parameters.Add("@Active", SqlDbType.Bit).Value = active;
             command.Parameters.Add("@PictureId", SqlDbType.Int).Value = (object)pictureId ?? DBNull.Value;
+            if (includeProduct) command.Parameters.Add("@IsDemo", SqlDbType.Bit).Value = isDemo;
         }
 
         private static void Execute(string sql, params SqlParameter[] parameters)

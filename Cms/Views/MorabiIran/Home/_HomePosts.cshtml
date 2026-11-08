@@ -1,0 +1,21 @@
+﻿@using DataLayer.ViewModels
+@model IEnumerable<HomePostCardVm>
+
+@using System.Linq
+@{
+    var posts = Model == null ? new System.Collections.Generic.List<HomePostCardVm>() : Model.ToList();
+}
+@if (posts.Any())
+{
+    var featured = posts.First();
+    <article class="magazine-feature tilt">
+        <img src="@featured.ImageUrl" alt="@featured.Name" width="900" height="620" loading="lazy" decoding="async" fetchpriority="low" />
+        <div><span>@(String.IsNullOrWhiteSpace(featured.CategoryName) ? "مجله مربیگری" : featured.CategoryName)</span><h3>@featured.Name</h3><p>@featured.Summary</p><a href="@featured.PostUrl">ادامه مقاله <b>←</b></a></div>
+    </article>
+    <div class="magazine-list">
+        @foreach (var item in posts.Skip(1).Take(3))
+        {
+            <article class="tilt"><span>@(String.IsNullOrWhiteSpace(item.CategoryName) ? "مجله مربیگری" : item.CategoryName)</span><h3>@item.Name</h3><a href="@item.PostUrl" aria-label="مطالعه @item.Name">←</a></article>
+        }
+    </div>
+}

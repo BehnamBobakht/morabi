@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Media.Models
 {
@@ -6,8 +6,11 @@ namespace Media.Models
     {
         public int ID { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsOwned { get; set; }
         public bool HasVideos { get; set; }
+        public bool HasDemoVideos { get; set; }
         public bool HasDocuments { get; set; }
         public bool HasExam { get; set; }
         public int VideoCount { get; set; }

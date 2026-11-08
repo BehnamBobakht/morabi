@@ -27,118 +27,118 @@
 @if (Model.ProductTypeId == 2)
 {
 
-    <main>
-        @Html.Action("Search", "Banner", new { bacategory = "PopUpbanner", baSize = 1, baviewName = "_PopUpbanner" })
+<main>
+    @Html.Action("Search", "Banner", new { bacategory = "PopUpbanner", baSize = 1, baviewName = "_PopUpbanner" })
 
-        <section class="site_loaction">
-            <div class="container">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        @if (Model.ProductTypeId.HasValue)
-                        {
-                            <li class="breadcrumb-item"><a href="@Model.ProductType.Href">@Model.ProductType.Name</a></li>
+    <section class="site_loaction">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    @if (Model.ProductTypeId.HasValue)
+                    {
+                        <li class="breadcrumb-item"><a href="@Model.ProductType.Href">@Model.ProductType.Name</a></li>
 
-                        }
-                        @if (Model.ProductCategoryId.HasValue)
-                        {
-                            <li class="breadcrumb-item"><a href="@Model.ProductCategory.Href">@Model.ProductCategory.Name</a></li>
-                        }
-                        @if (Model.ProductSubCategoryId.HasValue)
-                        {
-                            <li class="breadcrumb-item"><a href="@Model.ProductSubCategory.Href">@Model.ProductSubCategory.Name</a></li>
+                    }
+                    @if (Model.ProductCategoryId.HasValue)
+                    {
+                        <li class="breadcrumb-item"><a href="@Model.ProductCategory.Href">@Model.ProductCategory.Name</a></li>
+                    }
+                    @if (Model.ProductSubCategoryId.HasValue)
+                    {
+                        <li class="breadcrumb-item"><a href="@Model.ProductSubCategory.Href">@Model.ProductSubCategory.Name</a></li>
 
-                        }
-                    </ol>
-                </nav>
+                    }
+                </ol>
+            </nav>
+        </div>
+    </section>
+    <section class="products section-padding">
+        <div class="container">
+            <div class="section-title position-relative align">
+                <h1>@Model.H1</h1>
             </div>
-        </section>
-        <section class="products section-padding">
-            <div class="container">
-                <div class="section-title position-relative align">
-                    <h1>@Model.H1</h1>
-                </div>
-                <form action="@Url.Action("Search", "Product")">
-                    <div class="row">
-                        <div class="col-lg-3 ">
-                            <div class="filter_box">
-                                <div class="Filter_Product">
-                                    <a class="btn closeFilter"><i class="bi bi-x"></i></a>
-                                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_SearchBox.cshtml", Model)
-                                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_PriceRange.cshtml", Model)
+            <form action="@Url.Action("Search", "Product")">
+                <div class="row">
+                    <div class="col-lg-3 ">
+                        <div class="filter_box">
+                            <div class="Filter_Product">
+                                <a class="btn closeFilter"><i class="bi bi-x"></i></a>
+                                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_SearchBox.cshtml", Model)
+                                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_PriceRange.cshtml", Model)
 
-                                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_Discount.cshtml", Model)
+                                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_Discount.cshtml", Model)
 
-                                    <div class="filtering_item btn">
-                                        <div class="filter_btn">
-                                            <button type="submit"
-                                                    class="btn primary-btn w-100">
-                                                <span>@Resource.Lang.Submit</span>
-                                            </button>
-                                        </div>
+                                <div class="filtering_item btn">
+                                    <div class="filter_btn">
+                                        <button type="submit"
+                                                class="btn primary-btn w-100">
+                                            <span>@Resource.Lang.Submit</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-9 p-0">
-                            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_ExistFilters.cshtml", Model)
-                            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_SortSearch.cshtml", Model)
-
-
-                            <div class="products_box">
-                                <div class="row">
-                                    @foreach (var item in Model.Products)
-                                    {
-                                        <div class="col-lg-4 col-sm-6 p-1">
-                                            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/CourseItemInner.cshtml", item)
-
-
-                                        </div>
-                                    }
-
-
-                                </div>
-                            </div>
-                            <div class="products-bottombox align">
-                                @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_Pagination.cshtml", Model)
-
-
-                            </div>
-                        </div>
-                        @if (!string.IsNullOrEmpty(Model.Description))
-                        {
-                            <div class="seeMoreBox">
-                                <div class="seeMore">
-                                    <div class="title mb-2">
-                                        <strong class="titleText">بیشتر بخوانید</strong>
-                                    </div>
-
-                                    <div class="seeMoreText">
-                                        <div class="totlalText" style="display: none;">
-                                            <p>@Html.Raw(Model.Description)</p>
-                                            <button class="hideMoreTextBtn primary_btn"><span>@Resource.Lang.Close</span></button>
-                                        </div>
-                                        <div class="limitedText">
-                                            @if (!string.IsNullOrEmpty(Model.MinDescription))
-                                            {
-                                                <p>@(Html.Raw(Model.MinDescription) + " ...")</p>
-                                            }
-                                            else
-                                            {
-                                                <p></p>
-                                            }
-                                            <button class="seeMoreButton primary_btn"><span>@Resource.Lang.More</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        }
-
                     </div>
-                </form>
-            </div>
-        </section>
-    </main>
+                    <div class="col-lg-9 p-0">
+                        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_ExistFilters.cshtml", Model)
+                        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_SortSearch.cshtml", Model)
+
+
+                        <div class="products_box">
+                            <div class="row">
+                                @foreach (var item in Model.Products)
+                                {
+                                    <div class="col-lg-4 col-sm-6 p-1">
+                                        @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/CourseItemInner.cshtml", item)
+
+
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                        <div class="products-bottombox align">
+                            @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/_Pagination.cshtml", Model)
+
+
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="seeMoreBox">
+                            <div class="seeMore">
+                                <div class="title mb-2">
+                                    <strong class="titleText">بیشتر بخوانید</strong>
+                                </div>
+
+                                <div class="seeMoreText">
+                                    <div class="totlalText" style="display: none;">
+                                        <p>@Html.Raw(Model.Description)</p>
+                                        <button class="hideMoreTextBtn primary_btn"><span>@Resource.Lang.Close</span></button>
+                                    </div>
+                                    <div class="limitedText">
+                                        @if (!string.IsNullOrEmpty(Model.MinDescription))
+                                        {
+                                            <p>@(Html.Raw(Model.MinDescription) + " ...")</p>
+                                        }
+                                        else
+                                        {
+                                            <p></p>
+                                        }
+                                        <button class="seeMoreButton primary_btn"><span>@Resource.Lang.More</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
 
 }
 else if (Model.ProductTypeId == 3)
@@ -308,7 +308,6 @@ else
                                         var list2 = Model.Products2.Where(s => s.ProductCategoryId == 1004).ToList();
                                         var list3 = Model.Products2.Where(s => s.ProductCategoryId == 1005).ToList();
                                         var list4 = Model.Products2.Where(s => s.ProductCategoryId == 1007).ToList();
-                                        var list6 = Model.Products2.Where(s => s.ProductCategoryId == 1006).ToList();
                                         <h5>@list4.FirstOrDefault().ProductCategoryName</h5>
                                         <hr />
                                         foreach (var item in list4)
@@ -348,19 +347,6 @@ else
 
 
                                             </div>
-                                        }
-                                        if (list6.Any())
-                                        {
-                                            <h5>@list6.FirstOrDefault().ProductCategoryName</h5>
-                                            <hr />
-                                            foreach (var item in list6)
-                                            {
-                                                <div class="col-lg-3 col-sm-4 p-1">
-                                                    @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Product/ExamItem.cshtml", item)
-
-
-                                                </div>
-                                            }
                                         }
                                     }
 

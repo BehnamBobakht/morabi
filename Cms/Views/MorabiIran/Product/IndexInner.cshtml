@@ -50,7 +50,7 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="pro-warning-text d-flex flex-column d-none">
+                    <div class="pro-warning-text d-flex flex-column">
                         <span>تاریخ برگزاری حدودی هست و تاریخ دقیق در کانال دوره اعلام میشود</span>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="product-deadline-item">
                     <span>تاریخ پایان ثبت نام</span>
-                    <span>@Model.EndDatetime.Value.Date.AddDays(-1).ToPersianComplete()</span>
+                    <span>@Model.EndDatetime.ToPersianComplete()</span>
                 </div>
 
                 <div class="product-deadline-item">
@@ -84,11 +84,11 @@
 
 
                 <div>
-                    <p>انتخاب دوره را بزنید و مدارک دوره هایی که قصد دارید براتون ارسال بشه را انتخاب کنید </p>
-                    <p>ادرصورت تمایل برای ارسال مدرک  برای بیش از یک  نفر در بخش سایر اسامی افراد و مدارک را تایپ‌کنید</p>
+                    <p>در صورت درخواست گواهی برای دوره های شرکت شده از لیست  دوره ها دوره خود را انتخاب نمایید</p>
+                    <p>در غیر این صورت گزینه سایر را انتخاب کنید</p>
                     <div>
                         <div class="form-check">
-                            <input class="form-check-input" checked   onchange="showCourse(0)" value="0" type="radio" name="course" id="show-course1">
+                            <input class="form-check-input" onchange="showCourse(0)" value="0" type="radio" name="course" id="show-course1">
                             <label class="form-check-label" for="show-course1">
                                 سایر
                             </label>
@@ -98,7 +98,7 @@
 </textarea>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" onchange="showCourse(1)" value="1" type="radio" name="course" id="show-course2">
+                            <input class="form-check-input" checked onchange="showCourse(1)" value="1" type="radio" name="course" id="show-course2">
                             <label class="form-check-label" for="show-course2">
                                 انتخاب دوره
                             </label>
@@ -466,12 +466,7 @@ typeId = 2
                         }
                         else if (Model.ProductTypeId == 1)
                         {
-                            if (currentUser == null){
- <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket"  href="@Url.Action("Login","Account",new {back=Model.ProductUrl})">درخواست ارسال گواهی</a>
-}
-else{
-<a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1,description="سایر"  })">درخواست ارسال گواهی</a>
-}
+                            <a id="addtocart-btn" class="btn secondary-btn w-100 add-basket" data-ajax="true" data-ajax-begin="startAddToBasket" data-ajax-complete="endAddToBasket" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#cart-badge" sample-href="@(Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID }) + "&count=")" href="@Url.Action("Insert", "Cart", new { quantityId = firstStoreProductQuantity.ID, count = 1,description="سایر"  })">درخواست ارسال گواهی</a>
                         }
                         else
                         {

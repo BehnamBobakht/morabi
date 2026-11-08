@@ -9,7 +9,7 @@
     Layout = "~/Views/" + BaseWebsite.WebsiteLabel + "/Shared/_Layout.cshtml";
     var breadcrumb = new List<BreadcrumbVm>();
 
-    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Cart, Url = BaseWebsite.ShopUrl+"cart" });
+    breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Cart, Url = BaseWebsite.ShopUrl + "cart" });
     breadcrumb.Add(new BreadcrumbVm() { Title = Resource.Lang.Address, Url = "" });
 
 }
@@ -46,28 +46,30 @@
 @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Modal/AddAddress.cshtml")
 @Html.Partial("~/Views/" + BaseWebsite.WebsiteLabel + "/Modal/RemoveAddress.cshtml")
 @section endScripts {
-<script>
-    (function () {
-        if ($('.user_address_item input[type="radio"]:checked').length === 0) {
-            var firstAddress = $('.user_address_item .pro-plus-number').first();
 
-            if (firstAddress.length) {
-                firstAddress[0].click();
+    <script>
+        (function () {
+            if ($('.user_address_item input[type="radio"]:checked').length === 0) {
+                var firstAddress = $('.user_address_item .pro-plus-number').first();
+
+                if (firstAddress.length) {
+                    firstAddress[0].click();
+                }
+            }
+        })();
+    </script>
+    
+    <script>
+
+        function OnSuccess(data) {
+
+            if (data.Status == 1) {
+                window.location.href = data.Message;
+            }
+            else {
+                $(".alert-box").removeClass("d-none");
+                $(".alert-box").html(data.Message);
             }
         }
-    })();
-</script>
-<script>
-
-    function OnSuccess(data) {
-
-        if (data.Status == 1) {
-            window.location.href = data.Message;
-        }
-        else {
-            $(".alert-box").removeClass("d-none");
-            $(".alert-box").html(data.Message);
-        }
-    }
-</script>
+    </script>
 }

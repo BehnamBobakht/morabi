@@ -5,6 +5,34 @@
 @{
    
 }
+<style>
+    .home-course-link.package-item-selected {
+        border: 2px solid #198754;
+        background-color: #157347;
+        box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.16);
+    }
+
+    .home-course-link a[data-ajax="true"] {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .home-course-link input[type="checkbox"][quantityid] {
+        width: 21px;
+        height: 21px;
+        min-width: 21px;
+        margin: 0;
+        accent-color: #198754;
+        pointer-events: none;
+    }
+
+    .home-course-link.package-item-selected span {
+        color: #fff !important;
+    }
+</style>
 <p class="alert alert-warning">با انتخاب هر دوره آن دوره به سبد خرید شما اضافه میشود و برای مبالغ اقساطی در هر بار یک قسط پرداخت میشود</p>
 @foreach (var item in Model.Products2)
 {
@@ -41,13 +69,42 @@
 
     </div>
 }
+<script>
+    (function () {
+        if (window.allPackageSelectionInitialized) {
+            return;
+        }
 
+        window.allPackageSelectionInitialized = true;
 
+        document.addEventListener("click", function (event) {
+            if (!event.target || !event.target.closest) {
+                return;
+            }
 
+            var packageLink = event.target.closest('.home-course-link a[data-ajax="true"]');
 
+            if (!packageLink) {
+                return;
+            }
 
+            var checkbox = packageLink.querySelector('input[type="checkbox"][quantityid]');
 
+            if (!checkbox) {
+                return;
+            }
 
+            window.setTimeout(function () {
+                checkbox.checked = true;
 
+                var packageItem = packageLink.closest(".home-course-link");
 
+                if (packageItem) {
+                    packageItem.classList.add("package-item-selected");
+                }
 
+                packageLink.setAttribute("aria-checked", "true");
+            }, 0);
+        });
+    })();
+</script>

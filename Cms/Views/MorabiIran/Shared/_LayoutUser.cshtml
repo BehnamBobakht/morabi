@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="fa">
 <head>
+    <meta charset="utf-8">
     @RenderSection("MetaTag", false)
     @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_MetaTags.cshtml")
     <title>@(TempData["Title"] != null ? TempData["Title"] : DataLayer.Base.BaseContent.WebsiteDetail.IndexTitle)</title>
@@ -11,7 +12,7 @@
 </head>
 
 <body>
-    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_Header.cshtml")
+    @Html.Partial("~/Views/" + DataLayer.Base.BaseWebsite.WebsiteLabel + "/Shared/_HeaderRedesign.cshtml")
     <section class="profile">
         <div class="container">
             <div class="row">

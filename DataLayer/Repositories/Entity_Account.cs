@@ -180,10 +180,18 @@ namespace DataLayer.Repositories
         }
         public ViewAccount GetCurrentAccount()
         {
-            var CurrentUser = HttpContext.Current.Session["ACCOUNT"];
-            if (CurrentUser != null)
-                return (ViewAccount)HttpContext.Current.Session["ACCOUNT"];
-            HttpCookie loginCookie = HttpContext.Current.Request.Cookies["ACCOUNT"];
+            var http = HttpContext.Current;
+            if (http.Items.Contains(AccountCookieName))
+                return http.Items[AccountCookieName] as ViewAccount;
+
+            var loginCookie = http.Request.Cookies[AccountCookieName];
+            var currentUser = http.Session[AccountCookieName] as ViewAccount;
+            if (loginCookie != null && currentUser != null &&
+                string.Equals(http.Session[AccountCookieSessionKey] as string, loginCookie.Value, StringComparison.Ordinal))
+                return currentUser;
+
+            http.Session.Remove(AccountCookieName);
+            http.Session.Remove(AccountCookieSessionKey);
             if (loginCookie != null)
             {
                 if (
@@ -212,7 +220,7 @@ namespace DataLayer.Repositories
                     if (RememberUser != null)
                     {
                         ViewAccount entity = new ViewAccount(RememberUser);
-                        SetCurrentAccount(entity, Password, true);
+                        CacheCurrentAccount(entity, loginCookie.Value);
                         return entity;
                     }
                     else
@@ -371,8 +379,13 @@ namespace DataLayer.Repositories
         }
         public void Logout()
         {
-            HttpContext.Current.Session.Remove("ACCOUNT");
-            HttpContext.Current.Response.Cookies["ACCOUNT"].Expires = DateTime.Now.AddDays(-1);
+            var http = HttpContext.Current;
+            http.Session.Remove(AccountCookieName);
+            http.Session.Remove(AccountCookieSessionKey);
+            http.Items[AccountCookieName] = null;
+            var expiredCookie = CreateAccountCookie();
+            expiredCookie.Expires = DateTime.UtcNow.AddDays(-1);
+            http.Response.Cookies.Set(expiredCookie);
             HttpContext.Current.Session.Remove(".LOCATION");
             HttpContext.Current.Response.Cookies[".LOCATION"].Expires = DateTime.Now.AddDays(-1);
             HttpContext.Current.Response.Cookies[".intercode"].Expires = DateTime.Now.AddDays(-1);
@@ -399,27 +412,49 @@ namespace DataLayer.Repositories
             return ReagentCode != null ? _context.Account.FirstOrDefault(p => p.ReagentCode == ReagentCode) : null;
         }
 
+        private const string AccountCookieName = "ACCOUNT";
+        private const string AccountCookieSessionKey = "ACCOUNT_COOKIE_VALUE";
+
+        private static HttpCookie CreateAccountCookie()
+        {
+            return new HttpCookie(AccountCookieName)
+            {
+                Path = "/",
+                HttpOnly = true,
+                Secure = HttpContext.Current.Request.IsSecureConnection
+            };
+        }
+
+        private static void CacheCurrentAccount(ViewAccount account, string cookieValue)
+        {
+            var http = HttpContext.Current;
+            http.Session[AccountCookieName] = account;
+            http.Session[AccountCookieSessionKey] = cookieValue;
+            http.Items[AccountCookieName] = account;
+        }
+
+        public void RefreshCurrentAccount(ViewAccount account)
+        {
+            var cookie = HttpContext.Current.Request.Cookies[AccountCookieName];
+            if (cookie != null)
+                CacheCurrentAccount(account, cookie.Value);
+        }
+
         public void SetCurrentAccount(ViewAccount account, string password, bool remember)
         {
-            HttpContext.Current.Session["ACCOUNT"] = account;
-            HttpCookie loginCookie = new HttpCookie("ACCOUNT");
+            var loginCookie = CreateAccountCookie();
+            loginCookie.Values.Add("EMAIL", BaseSecurity.EncryptText(account.Email));
+            loginCookie.Values.Add("MOBILE", BaseSecurity.EncryptText(account.Mobile));
+            loginCookie.Values.Add("NATIONALCODE", BaseSecurity.EncryptText(account.NationalCode));
+            loginCookie.Values.Add("PASSWORD", BaseSecurity.EncryptText(password));
+            loginCookie.Values.Add("USERNAME", BaseSecurity.EncryptText(account.UserName));
             if (remember)
-            {
-                HttpContext.Current.Response.Cookies["ACCOUNT"].Expires = DateTime.Now.AddDays(-6);
+                loginCookie.Expires = DateTime.UtcNow.AddMonths(1);
 
-                loginCookie.Values.Add("EMAIL", BaseSecurity.EncryptText(account.Email));
-                loginCookie.Values.Add("MOBILE", BaseSecurity.EncryptText(account.Mobile));
-                loginCookie.Values.Add("NATIONALCODE", BaseSecurity.EncryptText(account.NationalCode));
-                loginCookie.Values.Add("PASSWORD", BaseSecurity.EncryptText(password));
-                loginCookie.Values.Add("USERNAME", BaseSecurity.EncryptText(account.UserName));
-                loginCookie.Expires = DateTime.Now.AddMonths(1);
-                HttpContext.Current.Response.Cookies.Add(loginCookie);
-            }
-            else
-            {
-                loginCookie.Expires = DateTime.Now.AddMonths(-1);
-            }
+            HttpContext.Current.Response.Cookies.Set(loginCookie);
+            CacheCurrentAccount(account, loginCookie.Value);
         }
+
         public void SetCurrentLocation(int countyId, int cityId, int stateId, int addressId)
         {
             ViewLocation location = new ViewLocation()

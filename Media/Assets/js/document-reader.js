@@ -182,10 +182,13 @@
                 var cssWidth = Math.max(1, holder.clientWidth);
                 var viewport = page.getViewport({ scale: cssWidth / base.width });
                 var deviceRatio = window.devicePixelRatio || 1;
-                var isMobileRender = isIOSDevice() || window.matchMedia("(max-width: 768px)").matches;
-                var pixelRatio = isMobileRender
-                    ? Math.min(deviceRatio * 1.5, 4.5)
-                    : Math.min(Math.max(deviceRatio * 1.5, 2), 3);
+                var isIOSRender = isIOSDevice();
+                var isMobileRender = window.matchMedia("(max-width: 768px)").matches;
+                var pixelRatio = isIOSRender
+                    ? Math.min(deviceRatio * 2, 6)
+                    : isMobileRender
+                        ? Math.min(deviceRatio * 1.5, 4.5)
+                        : Math.min(Math.max(deviceRatio * 1.5, 2), 3);
                 var canvas = document.createElement("canvas");
                 var context = canvas.getContext("2d", { alpha: false });
 
@@ -226,7 +229,7 @@
                 });
             }, {
                 root: frameBox,
-                rootMargin: "120% 0px",
+                rootMargin: isIOSDevice() ? "40% 0px" : "120% 0px",
                 threshold: 0.01
             });
 

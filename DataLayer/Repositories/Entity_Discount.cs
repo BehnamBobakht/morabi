@@ -20,6 +20,11 @@ namespace DataLayer.Repositories
             _context = context;
         }
 
+        private static DateTime IranToday()
+        {
+            return DateTime.UtcNow.AddHours(3.5).Date;
+        }
+
         public List<Discount> GetAllByDiscountGroupId(int GroupId)
         {
             return _context.Discount.Where(p =>
@@ -29,7 +34,7 @@ namespace DataLayer.Repositories
 
         public List<Discount> GetAllByProduct(Product product)
         {
-            DateTime now = DateTime.Now;
+            DateTime now = IranToday();
             string type_shop = Enum_Code.DISCOUNT_TYPE_SHOP.ToString();
             string type_producttype = Enum_Code.DISCOUNT_TYPE_PRODUCTTYPE.ToString();
             string type_productcategory = Enum_Code.DISCOUNT_TYPE_CATEGORY.ToString();
@@ -52,7 +57,7 @@ namespace DataLayer.Repositories
         }
         public List<Discount> GetAllByStoreId(StoreProductQuantity storeProductQuantity)
         {
-            DateTime now = DateTime.Now.Date;
+            DateTime now = IranToday();
             string type_shop = Enum_Code.DISCOUNT_TYPE_SHOP.ToString();
             string type_brand = Enum_Code.DISCOUNT_TYPE_BRAND.ToString();
             string type_producttype = Enum_Code.DISCOUNT_TYPE_PRODUCTTYPE.ToString();
@@ -200,10 +205,10 @@ namespace DataLayer.Repositories
         public ResultVm<CreateDiscountVm> Insert(CreateDiscountVm discount)
         {
             var result = new ResultVm<CreateDiscountVm>();
-            var today = DateTime.Now.Date;
+            var today = IranToday();
             var tomorrow = today.AddDays(1);
             if (discount.StartDatetime.HasValue) { discount.StartDatetime = discount.StartDatetime.Value.Date; };
-            if (discount.EndDatetime.HasValue) { discount.EndDatetime = discount.EndDatetime.Value.Date; };
+            if (discount.EndDatetime.HasValue) { discount.EndDatetime = discount.EndDatetime.Value.Date.AddDays(1).AddTicks(-1); };
             if (discount.TypeId == 0)
             {
                 result.Status = ResultStatus.Error;
@@ -440,6 +445,8 @@ namespace DataLayer.Repositories
         public ResultVm<CreateDiscountVm> Update(CreateDiscountVm discount)
         {
             var result = new ResultVm<CreateDiscountVm>();
+            if (discount.StartDatetime.HasValue) discount.StartDatetime = discount.StartDatetime.Value.Date;
+            if (discount.EndDatetime.HasValue) discount.EndDatetime = discount.EndDatetime.Value.Date.AddDays(1).AddTicks(-1);
             if (discount.ValueTypeId == null)
             {
                 result.Status = ResultStatus.Error;

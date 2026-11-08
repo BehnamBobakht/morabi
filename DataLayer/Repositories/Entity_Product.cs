@@ -6,6 +6,7 @@ using DataLayer.Enumarables;
 using DataLayer.ViewModels;
 using ExpressMapper.Extensions;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Device.Location;
 using System.Linq;
@@ -2113,6 +2114,65 @@ namespace DataLayer.Repositories
         public List<Product> SearchBox(string name = null, int size = 5)
         {
             return Where(GetSearchQuery2(name: name, active: true)).OrderByDescending(s => s.ID).Take(size).ToList();
+        }
+
+        public List<HomeProductCardVm> GetHomeCards(int? productTypeId = null, string customLabel = null, int take = 12, bool orderBySellCount = false, bool prioritizeDiscount = false)
+        {
+            var now = DateTime.Now;
+            IQueryable<Product> query = _context.Product.AsNoTracking().Where(p =>
+                p.Deleted == false && p.Active == true && p.IsHidden != true &&
+                (p.StartDatetime == null || p.StartDatetime <= now) &&
+                (p.EndDatetime == null || p.EndDatetime >= now));
+
+            if (productTypeId.HasValue)
+                query = query.Where(p => p.ProductTypeId == productTypeId.Value);
+
+            if (!string.IsNullOrWhiteSpace(customLabel) && customLabel.ToLower() != "all")
+            {
+                query = query.Where(p =>
+                    p.ProductSubCategory.CustomLabel == customLabel ||
+                    p.ProductType.CustomLabel == customLabel ||
+                    p.ProductCategory.CustomLabel == customLabel ||
+                    p.ProductExteraType.Any(x => x.ProductType.CustomLabel == customLabel) ||
+                    p.ProductExteraCategory.Any(x => x.ProductCategory.CustomLabel == customLabel) ||
+                    p.ProductExteraSubCategory.Any(x => x.ProductSubCategory.CustomLabel == customLabel));
+            }
+
+            if (prioritizeDiscount)
+                query = query.OrderByDescending(p => p.DiscountPercent > 0).ThenByDescending(p => p.ID);
+            else if (orderBySellCount)
+                query = query.OrderByDescending(p => p.SellCount).ThenByDescending(p => p.ID);
+            else
+                query = query.OrderByDescending(p => p.ID);
+
+            var cards = query.Take(take).Select(p => new HomeProductCardVm
+            {
+                ID = p.ID,
+                Name = p.Name,
+                CategoryName = p.ProductCategory.Name,
+                // Use the same primary picture as the product details page.
+                ImageUrl = p.Picture.Url,
+                PictureUrl = p.Image,
+                ProductUrl = p.Url,
+                CurrentPrice = p.InexpensiveItemPrice > 0 ? p.InexpensiveItemPrice : p.MinPrice,
+                BasePrice = p.InexpensiveItemBasePrice,
+                DiscountPercent = p.DiscountPercent,
+                RegistrationExpired = p.EndDatetime != null && p.EndDatetime < now
+            }).ToList();
+
+            foreach (var card in cards)
+            {
+                card.ProductUrl = new Product { ID = card.ID, Name = card.Name, Url = card.ProductUrl }.GetLinkWithUrl();
+                card.HasDiscount = card.DiscountPercent > 0 && card.BasePrice > card.CurrentPrice;
+                if (string.IsNullOrWhiteSpace(card.ImageUrl))
+                    card.ImageUrl = card.PictureUrl;
+                if (!string.IsNullOrWhiteSpace(card.ImageUrl))
+                    card.ImageUrl = card.ImageUrl.Replace(Enum_Code.SYSTEM_TYPE_PANEL.ToString(), BaseWebsite.PanelUrl);
+                if (!string.IsNullOrWhiteSpace(card.ImageUrl) && !card.ImageUrl.StartsWith("http") && !card.ImageUrl.StartsWith("/"))
+                    card.ImageUrl = "/" + card.ImageUrl;
+            }
+
+            return cards;
         }
     }
 }

@@ -1,72 +1,108 @@
-﻿@using System.Linq
+@using System
+@using System.Linq
 @model IEnumerable<Media.Models.LearningCourseViewModel>
-@{ ViewBag.Title = "دوره‌های من"; }
+@{
+    ViewBag.Title = "دوره‌های من";
+    var courses = Model.OrderByDescending(x => x.IsOwned).ThenByDescending(x => x.ID).ToList();
+    var activeCount = courses.Count(x => x.IsOwned);
+}
 
-@Html.Action("Search", "Banner", new { bacategory = "CourseBanner", baSize = 1, baviewName = "_VideoBanner" })
-@Html.Action("Search", "Banner", new { bacategory = "CourseBannerMobile", baSize = 1, baviewName = "_VideoBannerMobile" })
+<section class="container course-section learning-page learning-dashboard">
+    <header class="learning-dashboard-heading">
+        <div>
+            <span class="section-eyebrow">پنل آموزشی من</span>
+            <h1>دوره‌های من</h1>
+            <p>@activeCount دوره با دسترسی فعال</p>
+        </div>
+    </header>
 
-<section class="container course-section learning-page">
-    <div class="section-heading"><h1>دوره‌های من</h1></div>
-    <div class="course-grid">
-        @foreach (var item in Model)
+    <div class="course-grid learning-course-grid">
+        @foreach (var item in courses)
         {
-            <article class="course-card learning-card">
-                <div class="course-image">
+            var progress = item.VideoCount > 0 ? (int)Math.Round(item.ViewedVideoCount * 100d / item.VideoCount) : 0;
+            progress = Math.Max(0, Math.Min(100, progress));
+            var actionText = item.ViewedVideoCount <= 0 ? "شروع دوره" : (item.ViewedVideoCount >= item.VideoCount ? "مرور دوره" : "ادامه دوره");
+            <article class="course-card learning-card @(item.IsOwned ? "owned" : "not-owned")">
+                <div class="course-image learning-course-cover">
                     <img src="@(string.IsNullOrWhiteSpace(item.ImageUrl) ? Url.Content("~/Assets/images/img1.png") : Url.Content(item.ImageUrl))" alt="@item.Title" loading="lazy" />
+                    <span class="course-access-badge @(item.IsOwned ? "owned" : "demo")">@(item.IsOwned ? "✓ دسترسی فعال" : item.HasDemoVideos ? "دارای دموی رایگان" : "نیازمند خرید")</span>
                 </div>
                 <div class="course-card-body">
                     <h3>@item.Title</h3>
+                    <div class="course-content-meta">
+                        @if (item.HasVideos) { <span>@item.VideoCount جلسه</span> }
+                        @if (item.HasDocuments) { <span>@item.DocumentCount فایل و جزوه</span> }
+                    </div>
+                    @if (item.IsOwned && item.HasVideos)
+                    {
+                        <div class="course-progress" aria-label="@progress درصد پیشرفت">
+                            <div class="course-progress-label"><span>پیشرفت دوره</span><strong>@progress٪</strong></div>
+                            <div class="course-progress-track"><span style="width:@progress%"></span></div>
+                        </div>
+                    }
                     <div class="learning-actions">
-                        @if (item.HasVideos)
+                        @if (item.HasVideos && (item.IsOwned || item.HasDemoVideos))
                         {
-                            <a class="learning-button video" href="@Url.Action("Watch", "Courses", new { id = item.ID })">ویدئوهای دوره</a>
-                        }
-                        @if (item.HasDocuments)
+                            <a class="learning-button video" href="@Url.Action("Watch", "Courses", new { id = item.ID })">@(item.IsOwned ? actionText : "ویدئوی دمو")</a>                        }
+                        else if (item.HasVideos)
                         {
-                            <a class="learning-button pdf" href="@Url.Action("Index", "Documents", new { id = item.ID })">PDFهای دوره</a>
+                            <button class="learning-button locked purchase-lock" type="button" data-product-id="@item.ID" data-product-title="@item.Title">ویدئوها</button>
                         }
-                        @if (item.HasExam)
+                        <button class="learning-button course-description-button" type="button" data-description-source="course-description-@item.ID" data-course-title="@item.Title">توضیحات</button>
+                        <div id="course-description-@item.ID" class="course-description-source" hidden>@Html.Raw(item.Description)</div>
+                        @if (item.HasDocuments && item.IsOwned)
+                        {
+                            <a class="learning-button pdf" href="@Url.Action("Index", "Documents", new { id = item.ID })">فایل‌ها</a>
+                        }
+                        @if (item.HasExam && item.IsOwned)
                         {
                             if (item.ExamUnlocked)
-                            {
-                                @* آدرس آزمون را در href زیر قرار دهید. *@
-                                <a class="learning-button exam" href="/account/searchaccountorder2?aoViewName=OrderExame&statusId2=2068-2073&typeId=5">آزمون دوره</a>
-                            }
+                            { <a class="learning-button exam" href="/account/searchaccountorder2?aoViewName=OrderExame&statusId2=2068-2073&typeId=5">آزمون</a> }
                             else
-                            {
-                                <button class="learning-button exam locked" type="button" data-learning-lock>آزمون دوره</button>
-                            }
+                            { <button class="learning-button exam locked exam-lock" type="button" title="پس از تکمیل دوره فعال می‌شود">آزمون</button> }
+                        }
+                        @if (!item.IsOwned)
+                        {
+                            <a class="learning-button quick-buy" href="@Url.Action("Index", "Checkout", new { id = item.ID })">خرید سریع دوره</a>
                         }
                     </div>
                 </div>
             </article>
         }
-        @if (!Model.Any())
-        {
-            <div class="empty-state">دوره‌ای دارای ویدئو یا PDF برای نمایش وجود ندارد.</div>
-        }
+        @if (!courses.Any()) { <div class="empty-state">در حال حاضر محتوای آموزشی فعالی وجود ندارد.</div> }
     </div>
 </section>
 
-<div class="learning-modal" id="learning-lock-modal" hidden>
-    <div class="learning-modal-card" role="dialog" aria-modal="true" aria-labelledby="learning-modal-title">
+<div class="learning-modal" id="course-description-modal" hidden>
+    <div class="learning-modal-card course-description-modal-card" role="dialog" aria-modal="true" aria-labelledby="course-description-title">
         <button type="button" class="learning-modal-close" aria-label="بستن">×</button>
-        <h2 id="learning-modal-title">آزمون هنوز فعال نیست</h2>
-        <p>برای ورود به آزمون باید ابتدا همه ویدئوها و PDFهای این دوره را مشاهده کنید.</p>
-        <button type="button" class="primary-button learning-modal-ok">متوجه شدم</button>
+        <h2 id="course-description-title">توضیحات دوره</h2>
+        <div id="course-description-content" class="course-description-content"></div>
+        <button type="button" class="secondary-modal-button">بستن</button>
     </div>
+</div>
+<div class="learning-modal" id="purchase-modal" hidden>
+    <div class="learning-modal-card purchase-modal-card" role="dialog" aria-modal="true" aria-labelledby="purchase-modal-title">
+        <button type="button" class="learning-modal-close" aria-label="بستن">×</button><span class="modal-lock-icon">🔒</span>
+        <h2 id="purchase-modal-title">این ویدئو ویژه خریداران دوره است</h2>
+        <p>برای مشاهده جلسات کامل باید ابتدا دوره <strong id="purchase-course-title"></strong> را خریداری کنید.</p>
+        <div class="modal-actions"><a id="purchase-modal-link" class="primary-button" href="#">خرید دوره</a><button type="button" class="secondary-modal-button">فعلاً نه</button></div>
+    </div>
+</div>
+<div class="learning-modal" id="exam-modal" hidden>
+    <div class="learning-modal-card" role="dialog" aria-modal="true"><button type="button" class="learning-modal-close" aria-label="بستن">×</button><h2>آزمون هنوز فعال نیست</h2><p>پس از تکمیل ویدئوها و فایل‌های دوره، آزمون برای شما فعال می‌شود.</p><button type="button" class="primary-button secondary-modal-button">متوجه شدم</button></div>
 </div>
 
 @section scripts {
-    <script>
-        (function () {
-            var modal = document.getElementById('learning-lock-modal');
-            function close() { modal.hidden = true; document.body.classList.remove('modal-open'); }
-            document.querySelectorAll('[data-learning-lock]').forEach(function (button) { button.addEventListener('click', function () { modal.hidden = false; document.body.classList.add('modal-open'); }); });
-            modal.querySelector('.learning-modal-close').addEventListener('click', close);
-            modal.querySelector('.learning-modal-ok').addEventListener('click', close);
-            modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
-        })();
-    </script>
+<script>
+(function(){
+ function wireModal(modal){function close(){modal.hidden=true;document.body.classList.remove('modal-open');}modal.querySelectorAll('.learning-modal-close,.secondary-modal-button').forEach(function(x){x.addEventListener('click',close);});modal.addEventListener('click',function(e){if(e.target===modal)close();});return function(){modal.hidden=false;document.body.classList.add('modal-open');};}
+ var purchase=document.getElementById('purchase-modal'),openPurchase=wireModal(purchase),exam=document.getElementById('exam-modal'),openExam=wireModal(exam);
+ var courseDescription=document.getElementById('course-description-modal'),openCourseDescription=wireModal(courseDescription);
+ document.querySelectorAll('.course-description-button').forEach(function(button){button.addEventListener('click',function(){var source=document.getElementById(button.getAttribute('data-description-source'));document.getElementById('course-description-title').textContent=button.getAttribute('data-course-title');var html=source?source.innerHTML.trim():'';document.getElementById('course-description-content').innerHTML=html||'<p>برای این دوره هنوز توضیحاتی ثبت نشده است.</p>';openCourseDescription();});});
+ document.querySelectorAll('.purchase-lock').forEach(function(button){button.addEventListener('click',function(){document.getElementById('purchase-course-title').textContent=button.getAttribute('data-product-title');document.getElementById('purchase-modal-link').href='@Url.Action("Index", "Checkout")/'+button.getAttribute('data-product-id');openPurchase();});});
+ document.querySelectorAll('.exam-lock').forEach(function(button){button.addEventListener('click',openExam);});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'){purchase.hidden=true;exam.hidden=true;courseDescription.hidden=true;document.body.classList.remove('modal-open');}});
+})();
+</script>
 }

@@ -51,6 +51,8 @@ namespace Cms.Controllers
             return PartialView(BaseController.GetView(this), shop);
         }
 
+        // Temporarily disable online certificate rendering.
+#if false
         [HttpGet]
         public ActionResult PrintCertificate(int id)
         {
@@ -200,6 +202,7 @@ namespace Cms.Controllers
             imageIn.Save(ms, imageFormat);
             return ms.ToArray();
         }
+#endif
         public ActionResult Report(int exameId)
         {
             ViewBag.ExameId = exameId;
@@ -777,8 +780,8 @@ namespace Cms.Controllers
             if (updateAccount.UserName != null)
             {
                 string uName = updateAccount.UserName;
-                var accountList = _context.Account.GetAll().Find(a => a.UserName == uName && a.ID != updateAccount.ID);
-                if (accountList != null)
+                var duplicateAccount = _context.Account.FirstOrDefault(a => a.UserName == uName && a.ID != account.ID);
+                if (duplicateAccount != null)
                 {
                     //ViewBag.Message = BaseMessage.GetMessage(Enum_Message.DUPLICATED_ACCOUNT_USERNAME);
                     return RedirectToAction("EditProfile", new { controller = "account", back = "EditProfile" });
@@ -848,7 +851,7 @@ namespace Cms.Controllers
                 _context.Account.Update(account);
                 _context.Save();
                 tempAccount = new ViewAccount(account);
-                _context.Account.SetCurrentAccount(tempAccount, tempAccount.Password, false);
+                _context.Account.RefreshCurrentAccount(tempAccount);
                 return PartialView(BaseController.GetView(this), account);
             }
             else
@@ -912,7 +915,7 @@ namespace Cms.Controllers
                 _context.Account.Update(account);
                 _context.Save();
                 tempAccount = new ViewAccount(account);
-                _context.Account.SetCurrentAccount(tempAccount, tempAccount.Password, false);
+                _context.Account.RefreshCurrentAccount(tempAccount);
                 return View(BaseController.GetView(this), account);
             }
             else

@@ -1,0 +1,23 @@
+/* AnjomanMax v2.4 - licensed FontIran files supplied by the project owner. */
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-Thin.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-Thin.woff") format("woff");font-weight:100;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-ExLight.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-ExLight.woff") format("woff");font-weight:200;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-Light.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-Light.woff") format("woff");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-Regular.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-Regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-Medium.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-Medium.woff") format("woff");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-SemiBold.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-SemiBold.woff") format("woff");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-Bold.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-Bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-ExBold.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-ExBold.woff") format("woff");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"AnjomanMax";src:url("../fonts/AnjomanMax/AnjomanMax-Black.woff2") format("woff2"),url("../fonts/AnjomanMax/AnjomanMax-Black.woff") format("woff");font-weight:900;font-style:normal;font-display:swap}
+
+html,body,button,input,select,textarea,optgroup{
+    font-family:"AnjomanMax",Tahoma,sans-serif!important;
+    font-feature-settings:"ss05";
+    -moz-font-feature-settings:"ss05";
+    -webkit-font-feature-settings:"ss05";
+}
+
+table,.table,input[type="number"],[data-tabular-numbers]{
+    font-feature-settings:"ss05","ss06";
+    -moz-font-feature-settings:"ss05","ss06";
+    -webkit-font-feature-settings:"ss05","ss06";
+}

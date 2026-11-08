@@ -1,0 +1,460 @@
+﻿@using DataLayer.Base
+@using DataLayer.ViewModels
+@{ ViewAccount currentUser = BaseWebsite.CurrentAccount; }
+<main id="main">
+    <section class="hero">
+        @Html.Action("Search", "Banner", new { bacategory = "Slider1", baSize = 20, baviewName = "_Slider" })
+        <div class="hero-shade">
+        </div>
+        <div class="hero-grid">
+        </div>
+        <div class="hero-statements" aria-label="سابقه و گستره فعالیت مربی ایران">
+            <div class="hero-statement-primary">مربی ایران برگزار کننده دوره های آموزشی ورزشی بین المللی</div>
+            <div class="hero-experience">
+                <strong>مربی ایران با تجربه فعالیت ۱۳ ساله در ایران</strong>
+                <span>برگزار کننده دوره در ۲۳ استان ایران و ۱۰ کشور</span>
+            </div>
+        </div>
+        <div class="container hero-content reveal">
+            @*<span class="eyebrow">
+                <i>
+                </i>
+                آکادمی تخصصی مربیگری بدنسازی و فیتنس
+            </span>
+            <h1>
+                <em>
+                    مربی ایران
+                </em>
+                <small>
+                    بیش از یک دوره
+                </small>
+                یک مسیر حرفه‌ای
+            </h1>
+            <p>
+                تجربه‌ای متفاوت برای یادگیری بدنسازی، فیتنس و آمادگی جسمانی.
+            </p>*@
+            <div class="hero-actions">
+                <a class="button primary" href="/search/courses">
+                    مشاهده دوره‌ها
+                    <span>
+                        ←
+                    </span>
+                </a>
+                <a class="button glass" href="/st/aboutus">
+                    درباره ما
+                    <span>
+                        ▶
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="journey dark-section" id="journey">
+        <div class="container journey-layout">
+            <div class="journey-visual reveal">
+                @Html.Action("Search", "Banner", new { bacategory = "Slider2", baSize = 20, baviewName = "_Slider2" })
+                <div class="visual-quote">
+                    BETTER TRAINERS
+                    <br>
+                    BRIGHTER FUTURE
+                </div>
+            </div>
+            <div class="journey-copy reveal">
+                <span class="section-label">
+                    نقشه راه یادگیری
+                </span>
+                <h2>
+                    یک مسیر حرفه‌ای،
+                    <br>
+                    <em>
+                        گام‌به‌گام تا مربیگری
+                    </em>
+                </h2>
+                <p>
+                    با برنامه‌ای ساختاریافته و حمایت مستمر، مهارت‌های مربیگری را از پایه تا سطح حرفه‌ای یاد بگیرید.
+                </p>
+                <ul class="mini-checks">
+                    <li>
+                        یادگیری مهارت‌محور و کاربردی
+                    </li>
+                    <li>
+                        اساتید با تجربه
+                    </li>
+                    <li>
+                        دسترسی دائمی به دوره‌ها
+                    </li>
+                    <li>
+                        ارتباط مستقیم با منتور
+                    </li>
+                </ul>
+                <div class="timeline" aria-label="مراحل مسیر حرفه‌ای">
+                    <article>
+                        <i>
+                            ۱
+                        </i>
+                        <span>
+                            <b>
+                                آغاز مسیر
+                            </b>
+                            <small>
+                                انتخاب مسیر و شناخت هدف
+                            </small>
+                        </span>
+                    </article>
+                    <article>
+                        <i>
+                            ۲
+                        </i>
+                        <span>
+                            <b>
+                                یادگیری
+                            </b>
+                            <small>
+                                آموزش علمی و تمرین تخصصی
+                            </small>
+                        </span>
+                    </article>
+                    <article>
+                        <i>
+                            ۳
+                        </i>
+                        <span>
+                            <b>
+                                تجربه و اجرا
+                            </b>
+                            <small>
+                                پیاده‌سازی در زمین واقعی
+                            </small>
+                        </span>
+                    </article>
+                    <article>
+                        <i>
+                            ۴
+                        </i>
+                        <span>
+                            <b>
+                                موفقیت
+                            </b>
+                            <small>
+                                تبدیل شدن به مربی حرفه‌ای
+                            </small>
+                        </span>
+                    </article>
+                    <svg viewBox="0 0 240 420" preserveAspectRatio="none" aria-hidden="true">
+                        <path d="M120 10 C210 80 30 120 120 200 S210 320 120 410" />
+                    </svg>
+                </div>
+                <a class="button primary" href="#courses">
+                    شروع مسیر مربیگری
+                    <span>
+                        ←
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="section courses" id="courses">
+        <div class="container">
+            <header class="section-heading">
+                <div>
+                    <span class="section-label dark-label">
+                        منتخب آکادمی
+                    </span>
+                    <h2>
+                        دوره‌های برگزیده ما
+                    </h2>
+                    <p>
+                        آموزش‌های تخصصی از مربیان و متخصصان برجسته
+                    </p>
+                </div>
+                <a class="outline-link" href="/search/courses">
+                    مشاهده همه دوره‌ها ←
+                </a>
+            </header>
+            <div class="slider-shell">
+                <button class="slider-btn prev" data-slider="courses-track">
+                    ›
+                </button>
+                <div class="card-track" id="courses-track">
+                    @Html.Action("HomeCourses", "Home", new { take = 12 })
+                </div>
+                <button class="slider-btn next" data-slider="courses-track">
+                    ‹
+                </button>
+            </div>
+        </div>
+    </section>
+    <section class="limited-offer">
+        <div class="container limited-offer-inner">
+            <div>
+                <span>
+                    فرصت محدود
+                </span>
+                <h2>
+                    ثبت‌نام دوره‌های ویژه با ظرفیت محدود
+                </h2>
+                <p>
+                    مسیر حرفه‌ای خود را با تخفیف شروع کنید.
+                </p>
+            </div>
+            <a class="button limited-button" href="/search/courses">
+                مشاهده فرصت‌ها
+                <span>
+                    ←
+                </span>
+            </a>
+        </div>
+    </section>
+    <section class="section books" id="books">
+        <div class="gold-wave">
+        </div>
+        <div class="container">
+            <header class="section-heading light-heading">
+                <div>
+                    <span class="section-label">
+                        کتابخانه مربی
+                    </span>
+                    <h2>
+                        کتاب‌های تخصصی مربیگری
+                    </h2>
+                    <p>
+                        منابع منتخب برای ارتقای دانش شما
+                    </p>
+                </div>
+                <a class="outline-link light" href="/search/books">
+                    مشاهده همه کتاب‌ها ←
+                </a>
+            </header>
+            <div class="slider-shell">
+                <button class="slider-btn dark prev" data-slider="books-track">
+                    ›
+                </button>
+                <div class="book-track" id="books-track">
+                    @Html.Action("HomeBooks", "Home", new { take = 12 })
+                </div>
+                <button class="slider-btn dark next" data-slider="books-track">
+                    ‹
+                </button>
+            </div>
+        </div>
+    </section>
+    <section class="section videos" id="videos">
+        <div class="container">
+            <header class="section-heading">
+                <div>
+                    <span class="section-label dark-label">
+                        تماشا و یادگیری
+                    </span>
+                    <h2>
+                        ویدئوهای منتخب مربی ایران
+                    </h2>
+                    <p>
+                        از کلاس‌ها، کارگاه‌ها و رویدادهای تخصصی
+                    </p>
+                </div>
+                <a class="outline-link" href="/page/video">
+                    مشاهده همه ویدئوها ←
+                </a>
+            </header>
+            <div class="slider-shell">
+                <button class="slider-btn prev" data-slider="videos-track" aria-label="قبلی">
+                    ›
+                </button>
+                <div class="video-track" id="videos-track" dir="rtl">
+                    @Html.Action("HomeVideos", "Home", new { take = 6 })
+                </div>
+                <button class="slider-btn next" data-slider="videos-track" aria-label="بعدی">
+                    ‹
+                </button>
+            </div>
+        </div>
+    </section>
+    <section class="home-partners section" aria-labelledby="partners-title">
+        <div class="container">
+            <header class="section-heading compact"><div><span class="section-label dark-label">همراهان حرفه‌ای ما</span><h2 id="partners-title">مجموعه‌هایی که با آن‌ها همکاری کرده‌ایم</h2></div></header>
+            <div class="slider-shell partners-slider">
+                <button class="slider-btn prev" data-slider="partners-track" aria-label="همکار قبلی">›</button>
+                <div class="partners-track" id="partners-track" dir="rtl">
+                    @Html.Action("Search", "Banner", new { bacategory = "Partner", baSize = 20, baviewName = "_Partner" })
+                    
+                </div>
+                <button class="slider-btn next" data-slider="partners-track" aria-label="همکار بعدی">‹</button>
+            </div>
+        </div>
+    </section>
+    <section class="watch-cta">
+        @Html.Action("Search", "Banner", new { bacategory = "Slider3", baSize = 20, baviewName = "_Slider3" })
+        <div class="container watch-content reveal">
+            <span>
+                آماده تغییر هستی؟
+            </span>
+            <h2>
+                فقط تماشا نکن
+                <br>
+                <em>
+                    یک دوره بهتر شو!
+                </em>
+            </h2>
+            <p>
+                همین حالا به جمع مربیان حرفه‌ای بپیوندید.
+            </p>
+            <a class="button primary" href="/media/learning">
+                مشاهده دوره‌ها
+                <span>
+                    ←
+                </span>
+            </a>
+        </div>
+        <ul>
+            <li>
+                دسترسی دائمی به محتوا
+            </li>
+            <li>
+                آپدیت منظم و رایگان
+            </li>
+            <li>
+                گواهی معتبر پایان دوره
+            </li>
+            <li>
+                پشتیبانی تخصصی
+            </li>
+        </ul>
+    </section>
+    <section class="section coaching-magazine" id="magazine">
+        <div class="container">
+            <header class="section-heading">
+                <div>
+                    <span class="section-label dark-label">
+                        دانش و تجربه
+                    </span>
+                    <h2>
+                        مجله مربیگری
+                    </h2>
+                    <p>
+                        تحلیل و تجربه‌های تازه برای رشد روزانه شما
+                    </p>
+                </div>
+                <a class="outline-link" href="/post/page?poCategory=blog">
+                    همه مقاله‌ها ←
+                </a>
+            </header>
+            <div class="magazine-grid">
+                @Html.Action("HomePosts", "Home", new { categoryLabel = "blog", take = 4 })
+            </div>
+        </div>
+    </section>
+    <section class="systems section" id="systems">
+        <div class="container">
+            <header class="section-heading">
+                <div>
+                    <span class="section-label dark-label">
+                        درگاه‌های اختصاصی
+                    </span>
+                    <h2>
+                        سامانه‌های مربی ایران
+                    </h2>
+                    <p>
+                        دسترسی سریع به خدمات تخصصی مجموعه
+                    </p>
+                </div>
+            </header>
+            <div class="systems-grid">
+                <a href="/club/map?typeId=FIELD_CLUB_TEACHERS" class="system-card tilt">
+                    <span>
+                        ♙
+                    </span>
+                    <b>
+                        سامانه مربیان
+                    </b>
+                    <small>
+                        مدیریت پروفایل و مسیر حرفه‌ای
+                    </small>
+                    <i>
+                        ←
+                    </i>
+                </a>
+                <a href="/club/map?typeId=FIELD_CLUB_OWNER" class="system-card tilt">
+                    <span>
+                        ⌂
+                    </span>
+                    <b>
+                        سامانه باشگاه‌داران
+                    </b>
+                    <small>
+                        خدمات ویژه مدیران باشگاه
+                    </small>
+                    <i>
+                        ←
+                    </i>
+                </a>
+                <a href="/club/map?typeId=FIELD_CLUB_ATHENTES" class="system-card tilt">
+                    <span>
+                        ◎
+                    </span>
+                    <b>
+                        سامانه ورزشکاران
+                    </b>
+                    <small>
+                        پیگیری برنامه و آموزش‌ها
+                    </small>
+                    <i>
+                        ←
+                    </i>
+                </a>
+                <a href="@Url.Content("~/search/exam")" class="system-card tilt">
+                    <span>
+                        ✓
+                    </span>
+                    <b>
+                        آزمون‌ها
+                    </b>
+                    <small>
+                        ثبت‌نام و مشاهده نتایج آزمون
+                    </small>
+                    <i>
+                        ←
+                    </i>
+                </a>
+                @if (currentUser == null)
+                {
+                    <a href="@Url.Action("Login","Account",new {back="~/pr/1034/post" })" class="system-card tilt">
+                        <span>
+                            ▤
+                        </span>
+                        <b>
+                            ارسال گواهی
+                        </b>
+                        <small>
+                            ثبت و پیگیری درخواست گواهی
+                        </small>
+                        <i>
+                            ←
+                        </i>
+                    </a>
+
+                }
+                else
+                {
+                    <a href="@Url.Content("~/pr/1034/post")" class="system-card tilt">
+                        <span>
+                            ▤
+                        </span>
+                        <b>
+                            ارسال گواهی
+                        </b>
+                        <small>
+                            ثبت و پیگیری درخواست گواهی
+                        </small>
+                        <i>
+                            ←
+                        </i>
+                    </a>
+                    
+
+                }
+
+            </div>
+        </div>
+    </section>
+</main>
+<script src="/assets/@BaseWebsite.WebsiteLabel/js/home-live.js?v=8"></script>

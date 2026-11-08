@@ -1,0 +1,29 @@
+﻿@using DataLayer.ViewModels
+@model IEnumerable<HomeProductCardVm>
+
+@foreach (var item in Model)
+{
+    <article class="book-card">
+        <a href="@item.ProductUrl" aria-label="مشاهده @item.Name">
+            <div>
+                <img src="@item.ImageUrl" alt="@item.Name" width="600" height="600" loading="lazy" decoding="async" fetchpriority="low" />
+                @if (item.HasDiscount)
+                {
+                    <span class="book-discount">@item.DiscountPercent٪</span>
+                }
+            </div>
+            <h3>@item.Name</h3>
+            <small>@(String.IsNullOrWhiteSpace(item.CategoryName) ? "کتاب تخصصی مربیگری" : item.CategoryName)</small>
+            <b>
+                @if (item.HasDiscount)
+                {
+                    <del>@item.BasePrice.ToString("n0") تومان</del>
+                }
+                @item.CurrentPrice.ToString("n0") تومان
+            </b>
+            <button type="button" aria-label="افزودن کتاب به سبد خرید">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 4.5h2l2.1 9.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 1.9-1.5l1.4-6.5H6.2"/><circle cx="9.5" cy="19.5" r="1.25"/><circle cx="17.5" cy="19.5" r="1.25"/></svg>
+            </button>
+        </a>
+    </article>
+}

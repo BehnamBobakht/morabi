@@ -951,7 +951,9 @@ namespace Panel.Areas.Store.Controllers
         {
             if (!string.IsNullOrEmpty(storeId))
             {
-                ViewBag.ProductId = new SelectList(_context.Product.SearchVm(storeId: storeId, pageSize: 10000, typeId: productTypeId, categoryId: productcategoryId, subCategoryId: productSubCategoryId).Products, "ID", "NameId", value);
+                var products = _context.Product.SearchVm(storeId: storeId, pageSize: 10000, typeId: productTypeId, categoryId: productcategoryId, subCategoryId: productSubCategoryId)
+                    .Products.OrderByDescending(p => p.ID).ToList();
+                ViewBag.ProductId = new SelectList(products, "ID", "NameId", value);
             }
             else
             {

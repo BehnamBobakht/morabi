@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Media.Models
 {
@@ -18,7 +18,11 @@ namespace Media.Models
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public int SortOrder { get; set; }
+        public int WatchedSeconds { get; set; }
+        public int? DurationSeconds { get; set; }
         public bool IsCompleted { get; set; }
+        public bool IsDemo { get; set; }
+        public bool IsLocked { get; set; }
     }
 
     public class MediaWatchViewModel
@@ -28,6 +32,8 @@ namespace Media.Models
         public MediaSessionViewModel Current { get; set; }
         public IList<MediaSessionViewModel> Sessions { get; set; }
         public string StreamUrl { get; set; }
+        public string ProgressUrl { get; set; }
+        public bool OwnsCourse { get; set; }
 
     }
 }

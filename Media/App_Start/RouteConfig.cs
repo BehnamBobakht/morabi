@@ -9,6 +9,12 @@ namespace Media
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute("MediaLogin", "login", new { controller = "Account", action = "Login" });
+            routes.MapRoute("MediaRegister", "register", new { controller = "Account", action = "Register" });
+            routes.MapRoute("MediaForget", "forget", new { controller = "Account", action = "Forget" });
+            routes.MapRoute("MediaLogout", "logout", new { controller = "Account", action = "Logout" });
+            routes.MapRoute("MediaQuickCheckout", "checkout/quick-buy/{id}", new { controller = "Checkout", action = "Index", id = UrlParameter.Optional });
+
             routes.MapRoute("LearningDocumentRead", "learning/documents/read/{id}", new { controller = "Documents", action = "Read", id = UrlParameter.Optional });
             routes.MapRoute("LearningDocuments", "learning/documents/{id}", new { controller = "Documents", action = "Index", id = UrlParameter.Optional });
             routes.MapRoute("Learning", "learning", new { controller = "Learning", action = "Index" });

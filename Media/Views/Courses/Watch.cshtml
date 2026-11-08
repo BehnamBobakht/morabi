@@ -6,110 +6,70 @@
     var sessions = Model.Sessions.ToList();
     var completedCount = sessions.Count(x => x.IsCompleted);
     var currentIndex = sessions.FindIndex(x => x.ID == Model.Current.ID);
-    var previousSession = currentIndex > 0 ? sessions[currentIndex - 1] : null;
-    var nextSession = currentIndex >= 0 && currentIndex < sessions.Count - 1 ? sessions[currentIndex + 1] : null;
+    var currentNumber = currentIndex + 1;
+    var nextSession = currentIndex >= 0 ? sessions.Skip(currentIndex + 1).FirstOrDefault(x => !x.IsLocked) : null;
+    var progress = sessions.Count > 0 ? (int)Math.Round(completedCount * 100d / sessions.Count) : 0;
+    Func<int?, string> durationText = seconds => !seconds.HasValue || seconds.Value <= 0 ? "--:--" : TimeSpan.FromSeconds(seconds.Value).ToString(seconds.Value >= 3600 ? @"h\:mm\:ss" : @"mm\:ss");
 }
-<div class="container player-page" data-protected-media="true">
-    <nav class="breadcrumbs">
-        <a href="@Url.Action("Index")">بازگشت</a><span>/</span><span>@Model.OwnerTitle</span>
-    </nav>
-
+<div class="container player-page modern-player-page" data-protected-media="true">
+    <nav class="breadcrumbs"><a href="@Url.Action("Index", "Learning")">دوره‌های من</a><span>/</span><span>@Model.OwnerTitle</span></nav>
     <div class="player-layout">
         <section class="player-column">
-            <div class="video-shell">
-                <video id="protected-video" controls playsinline webkit-playsinline="true" controlsList="nodownload noremoteplayback" disablePictureInPicture preload="metadata" poster="@(string.IsNullOrWhiteSpace(Model.Current.ImageUrl) ? Url.Content("~/Assets/images/img1.png") : Url.Content(Model.Current.ImageUrl))">
-                    <source src="@Model.StreamUrl" />
-                </video>
-            </div>
-
+            <div class="video-shell"><video id="protected-video" controls playsinline webkit-playsinline="true" controlsList="nodownload noremoteplayback" disablePictureInPicture preload="metadata" poster="@(string.IsNullOrWhiteSpace(Model.Current.ImageUrl) ? Url.Content("~/Assets/images/img1.png") : Url.Content(Model.Current.ImageUrl))"><source src="@Model.StreamUrl" /></video></div>
             <article class="lesson-details">
-                <span class="lesson-kicker">جلسه در حال پخش</span>
+                <span class="lesson-kicker">@(Model.Current.IsDemo ? "دموی رایگان" : "جلسه " + currentNumber + " از " + sessions.Count)</span>
                 <h1>@Model.Current.Title</h1>
-                @if (!string.IsNullOrWhiteSpace(Model.Current.Description))
-                {
-                    <p>@Model.Current.Description</p>
-                }
-
-                @if (previousSession != null || nextSession != null)
-                {
-                    <nav class="lesson-navigation" aria-label="جابه‌جایی بین جلسات">
-                        @if (previousSession != null)
-                        {
-                            <a class="lesson-nav previous" href="@Url.Action("Watch", new { id = Model.OwnerId, sessionId = previousSession.ID })">
-                                <small>جلسه قبل</small>
-                                <strong>@previousSession.Title</strong>
-                                <span aria-hidden="true">←</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="lesson-nav-placeholder"></span>
-                        }
-
-                        @if (nextSession != null)
-                        {
-                            <a class="lesson-nav next" href="@Url.Action("Watch", new { id = Model.OwnerId, sessionId = nextSession.ID })">
-                                <small>جلسه بعد</small>
-                                <strong>@nextSession.Title</strong>
-                                <span aria-hidden="true">→</span>
-                            </a>
-                        }
-                    </nav>
-                }
+                <div class="course-progress watch-progress" aria-label="@progress درصد پیشرفت دوره">
+                    <div class="course-progress-label"><span>پیشرفت کل دوره</span><strong>@progress٪</strong></div>
+                    <div class="course-progress-track"><span style="width:@progress%"></span></div>
+                </div>
+                <div class="lesson-footer-actions">
+                    @if (!string.IsNullOrWhiteSpace(Model.Current.Description)) { <button class="outline-button lesson-description-button" type="button" data-description-source="current-description">توضیحات جلسه</button><span id="current-description" hidden>@Model.Current.Description</span> }                    @if(nextSession!=null){<a class="next-lesson-button" href="@Url.Action("Watch",new{id=Model.OwnerId,sessionId=nextSession.ID})">جلسه بعد <span aria-hidden="true">←</span></a>}
+                </div>
             </article>
         </section>
-
         <aside class="sessions-panel">
-            <div class="sessions-heading">
-                <div class="sessions-title-row">
-                    <div>
-                        <h2>فهرست جلسات</h2>
-                        <span>@sessions.Count جلسه</span>
-                    </div>
-                    <span class="viewed-count">@completedCount مشاهده‌شده</span>
-                </div>
-                <div class="course-progress-summary">
-                    <div class="progress-label">
-                        <strong>وضعیت مشاهده</strong>
-                        <span>@completedCount از @sessions.Count جلسه مشاهده‌شده</span>
-                    </div>
-                </div>
+            <div class="course-tabs" aria-label="بخش‌های دوره">
+                <a class="active" href="#course-sessions">جلسات</a>
+                @if(Model.OwnsCourse){<a href="@Url.Action("Index","Documents",new{id=Model.OwnerId})">فایل‌ها و جزوه‌ها</a>}
+                <button type="button" id="course-info-button">اطلاعات دوره</button>
             </div>
-
+            <div class="sessions-heading" id="course-sessions"><div class="sessions-title-row"><div><h2>فهرست جلسات</h2><span>@sessions.Count جلسه</span></div><span class="viewed-count">@completedCount مشاهده‌شده</span></div></div>
             <div class="session-list">
-                @foreach (var item in sessions)
-                {
-                    var isCurrent = item.ID == Model.Current.ID;
-                    var isCompleted = item.IsCompleted;
-                    <a class="session-item @(isCurrent ? "active" : "") @(isCompleted ? "done" : "")" href="@Url.Action("Watch", new { id = Model.OwnerId, sessionId = item.ID })">
-                        <span class="session-action" aria-hidden="true">
-                            @if (isCurrent)
-                            {
-                                <span class="pause-icon"></span>
-                            }
-                            else if (isCompleted)
-                            {
-                                <span class="check-icon">✓</span>
-                            }
-                            else
-                            {
-                                <span class="play-triangle"></span>
-                            }
-                        </span>
-                        <span class="session-copy">
-                            <strong class="session-name">@item.Title</strong>
-                            <small>@(isCompleted ? "مشاهده‌شده" : "مشاهده نشده")</small>
-                        </span>
-                    </a>
-                }
+            @for(var index=0;index<sessions.Count;index++)
+            {
+                var item=sessions[index]; var isCurrent=item.ID==Model.Current.ID; var descriptionId="session-description-"+item.ID;
+                <div class="session-row @(isCurrent?"active":"") @(item.IsCompleted?"done":"")">
+                    @if(item.IsLocked){
+                        <button class="session-item locked-session" type="button" data-locked-video data-product-title="@Model.OwnerTitle"><span class="session-action">🔒</span><span class="session-copy"><strong class="session-name">جلسه @(index+1) · @item.Title</strong><small>ویژه خریداران دوره</small></span><span class="session-duration">@durationText(item.DurationSeconds)</span></button>
+                    }else{
+                        <a class="session-item" href="@Url.Action("Watch",new{id=Model.OwnerId,sessionId=item.ID})"><span class="session-action">@(item.IsCompleted?"✓":isCurrent?"❚❚":"▶")</span><span class="session-copy"><strong class="session-name">جلسه @(index+1) · @item.Title</strong><small>@(item.IsDemo?"دموی رایگان":item.IsCompleted?"مشاهده‌شده":item.WatchedSeconds>0?"در حال مشاهده":"مشاهده نشده")</small></span><span class="session-duration">@durationText(item.DurationSeconds)</span></a>
+                    }
+                    @if(!string.IsNullOrWhiteSpace(item.Description)){<button class="session-description-button" type="button" data-description-source="@descriptionId" data-label="توضیحات" aria-label="توضیحات @item.Title" title="توضیحات"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><path d="M12 8h.01"></path></svg></button><span id="@descriptionId" hidden>@item.Description</span>}
+                </div>
+            }
             </div>
+            @if(!Model.OwnsCourse){<div class="sessions-buy-box"><strong>برای دسترسی به تمام جلسات آماده‌اید؟</strong><a class="primary-button" href="@Url.Action("Index","Checkout",new{id=Model.OwnerId})">خرید سریع دوره</a></div>}
         </aside>
     </div>
-
 </div>
+@using (Html.BeginForm()) { @Html.AntiForgeryToken() }
+<div class="learning-modal" id="lesson-description-modal" hidden><div class="learning-modal-card description-modal-card" role="dialog" aria-modal="true" aria-labelledby="lesson-description-title"><button type="button" class="learning-modal-close" aria-label="بستن">×</button><h2 id="lesson-description-title">توضیحات جلسه</h2><p id="lesson-description-text"></p><button type="button" class="secondary-modal-button">بستن</button></div></div>
+<div class="learning-modal" id="course-info-modal" hidden><div class="learning-modal-card description-modal-card" role="dialog" aria-modal="true"><button type="button" class="learning-modal-close" aria-label="بستن">×</button><h2>@Model.OwnerTitle</h2><p>این دوره شامل @sessions.Count جلسه آموزشی است و تا اینجا @completedCount جلسه را مشاهده کرده‌اید.</p><button type="button" class="secondary-modal-button">بستن</button></div></div>
+<div class="learning-modal" id="video-purchase-modal" hidden><div class="learning-modal-card purchase-modal-card" role="dialog" aria-modal="true"><button type="button" class="learning-modal-close">×</button><span class="modal-lock-icon">🔒</span><h2>این جلسه قفل است</h2><p>برای مشاهده این ویدئو باید دوره را خریداری کنید.</p><div class="modal-actions"><a class="primary-button" href="@Url.Action("Index","Checkout",new{id=Model.OwnerId})">خرید سریع دوره</a><button type="button" class="secondary-modal-button">فعلاً نه</button></div></div></div>
 <script>
 (function(){
-    document.addEventListener('contextmenu',function(e){if(e.target.closest('[data-protected-media]'))e.preventDefault();});
-    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&(e.key==='s'||e.key==='u'||e.key==='p'))e.preventDefault();if(e.key==='F12'||((e.ctrlKey||e.metaKey)&&e.shiftKey&&(e.key==='I'||e.key==='J'||e.key==='C')))e.preventDefault();});
+ var video=document.getElementById('protected-video'),lastSaved=0,viewRegistered=false,saveInFlight=false,pending=null,lastBeaconAt=0;
+ function body(done){var token=document.querySelector('input[name="__RequestVerificationToken"]');return 'id=@Model.Current.ID&watchedSeconds='+Math.floor(video.currentTime||0)+'&durationSeconds='+(isFinite(video.duration)?Math.floor(video.duration):'')+'&completed='+(done?'true':'false')+'&__RequestVerificationToken='+encodeURIComponent(token.value);}
+ function save(done,useBeacon){var data=body(done);if(useBeacon&&navigator.sendBeacon){navigator.sendBeacon('@Model.ProgressUrl',new Blob([data],{type:'application/x-www-form-urlencoded'}));return;}if(saveInFlight){pending={done:done};return;}saveInFlight=true;fetch('@Model.ProgressUrl',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data,credentials:'same-origin'}).then(finish,finish);function finish(){saveInFlight=false;if(pending){var next=pending;pending=null;save(next.done,false);}}}
+ function flush(){var now=Date.now();if(now-lastBeaconAt<2000)return;lastBeaconAt=now;save(false,true);}
+ if(video){video.addEventListener('play',function(){if(!viewRegistered){viewRegistered=true;lastSaved=video.currentTime||0;save(false,false);}});video.addEventListener('timeupdate',function(){if(video.currentTime-lastSaved>=60){lastSaved=video.currentTime;save(false,false);}});video.addEventListener('pause',function(){if(viewRegistered&&!video.ended&&Math.abs((video.currentTime||0)-lastSaved)>=5){lastSaved=video.currentTime||0;save(false,false);}});video.addEventListener('ended',function(){lastSaved=video.currentTime||0;save(true,false);});document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'&&viewRegistered&&!video.ended)flush();});window.addEventListener('beforeunload',function(){if(viewRegistered&&!video.ended)flush();});}
+ document.addEventListener('contextmenu',function(e){if(e.target.closest('[data-protected-media]'))e.preventDefault();});
+ function wireModal(modal){function close(){modal.hidden=true;document.body.classList.remove('modal-open');}modal.querySelectorAll('.learning-modal-close,.secondary-modal-button').forEach(function(x){x.addEventListener('click',close);});modal.addEventListener('click',function(e){if(e.target===modal)close();});return {open:function(){modal.hidden=false;document.body.classList.add('modal-open');},close:close};}
+ var purchase=wireModal(document.getElementById('video-purchase-modal')),description=wireModal(document.getElementById('lesson-description-modal')),info=wireModal(document.getElementById('course-info-modal'));
+ document.querySelectorAll('[data-locked-video]').forEach(function(x){x.addEventListener('click',purchase.open);});
+ document.querySelectorAll('[data-description-source]').forEach(function(button){button.addEventListener('click',function(){var source=document.getElementById(button.getAttribute('data-description-source'));document.getElementById('lesson-description-text').textContent=source?source.textContent.trim():'';description.open();});});
+ document.getElementById('course-info-button').addEventListener('click',info.open);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'){purchase.close();description.close();info.close();}});
 })();
 </script>

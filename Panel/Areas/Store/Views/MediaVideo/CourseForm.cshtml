@@ -34,7 +34,9 @@
             <div style="margin-top:10px"><img src="@Url.Content(Model.PictureUrl)" alt="کاور" style="width:180px;max-height:110px;object-fit:cover;border-radius:5px" /></div>
         }
         @Html.ValidationMessageFor(x => x.PictureId, "", new { @class = "text-danger" })
-    </div>    <div class=""><label>@Html.CheckBoxFor(x => x.Active) فعال</label></div>
+    </div>
+    <div class=""><label>@Html.CheckBoxFor(x => x.IsDemo) ویدئوی دمو (برای همه کاربران واردشده قابل مشاهده)</label></div>
+    <div class=""><label>@Html.CheckBoxFor(x => x.Active) فعال</label></div>
     <button class="btn btn-success">ذخیره</button>
     <a class="btn btn-default" href="@Url.Action("Index")">بازگشت</a>
 }
